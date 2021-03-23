@@ -492,7 +492,6 @@ public static class Input {
     public static void ResetInputAxes() {
         UnityEngine.Input.ResetInputAxes();
     }
-    public static void TestA(){}
 }
 
 #endif
