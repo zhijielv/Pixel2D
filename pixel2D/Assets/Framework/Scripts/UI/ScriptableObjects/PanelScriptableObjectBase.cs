@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Framework;
-using Framework.Manager;
+using Framework.Scripts.Manager;
 using Framework.Scripts.UI.Base;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UI.UiEnumConstant;
 using UnityEngine;
 
-namespace UI.ScriptableObjects
+namespace Framework.Scripts.UI.ScriptableObjects
 {
     public class PanelScriptableObjectBase : SerializedScriptableObject
     {
@@ -76,6 +75,7 @@ namespace UI.ScriptableObjects
             return false;
         }
         #endregion
+        
 
         // private void OnValidate()
         // {

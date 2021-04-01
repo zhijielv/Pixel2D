@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
+﻿using System.Linq;
+using Framework.Scripts.UI.ScriptableObjects;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
-using UI.ScriptableObjects;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Framework.Manager
+namespace Framework.Scripts.Manager
 {
     [HideMonoScript]
     [SirenixGlobalConfig]
