@@ -235,7 +235,7 @@ GameObject:
   - component: {fileID: 5112038183850463442}
   - component: {fileID: 8781402222104178897}
   - component: {fileID: -1623593028124384981}
-  - component: {fileID: -7004401655707784161}
+  - component: {fileID: -2052699718556898453}
   m_Layer: 5
   m_Name: Test_View
   m_TagString: Untagged
@@ -312,7 +312,7 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &-7004401655707784161
+--- !u!114 &-2052699718556898453
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -324,6 +324,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b82859a96c029b74586398eb58ad4dd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  widgetDic: []
-  _canvasGroup: {fileID: -1623593028124384981}
-  target: {fileID: 1545018393044260286}
+  canvasGroup: {fileID: -1623593028124384981}
+  target: {fileID: 0}
+  Test_Button: {fileID: 0}

@@ -16,6 +16,8 @@ namespace Framework.Scripts.Manager
         [ReadOnly]
         [ListDrawerSettings(Expanded = true)]
         public PanelScriptableObjectBase[] UiScriptableObjectsList;
+        
+        public bool isGenerateCode = false;
 
         // 刷新列表
 #if UNITY_EDITOR

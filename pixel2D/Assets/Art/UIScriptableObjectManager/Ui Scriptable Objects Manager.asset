@@ -15,3 +15,4 @@ MonoBehaviour:
   UiScriptableObjectsList:
   - {fileID: 0}
   - {fileID: 11400000, guid: 1c07b07004a666e439813c2fbcd844e4, type: 2}
+  isGenerateCode: 1

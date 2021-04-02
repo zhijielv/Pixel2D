@@ -25,5 +25,6 @@ namespace Framework.Scripts.UI.View
         CenterTop_Text,
         RightTop_Text,
         Center_Text,
+        CenterRight_Text,
     }
 }

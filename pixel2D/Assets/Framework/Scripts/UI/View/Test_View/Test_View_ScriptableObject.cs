@@ -12,7 +12,7 @@ namespace Framework.Scripts.UI.View
 {
     using ScriptableObjects;
     
-    public class Main_View_ScriptableObject : PanelScriptableObjectBase
+    public class Test_View_ScriptableObject : PanelScriptableObjectBase
     {
     }
 }

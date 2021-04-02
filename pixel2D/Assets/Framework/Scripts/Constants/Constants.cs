@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using Sirenix.Utilities;
 using UnityEngine;
 
 namespace Framework
@@ -53,6 +54,25 @@ namespace Framework
 
             strBuffer.Append(oldStr.Substring(tail));
             return strBuffer.ToString();
+        }
+
+        
+        public static Type GetWIdgetTypeByName(string widgetName)
+        {
+            string[] tmpStrs = widgetName.Split(new []{"_"}, StringSplitOptions.RemoveEmptyEntries);
+            string typeName = tmpStrs[tmpStrs.Length - 1];
+            
+            if (Enum.TryParse(typeName, true, out UIConfig tmpUiType))
+            {
+                if(tmpUiType < UIConfig.___UnityEngine_UI)
+                    return AssemblyUtilities.GetTypeByCachedFullName("UnityEngine.UI." + typeName);
+                if (tmpUiType < UIConfig.___CustomView)
+                    return AssemblyUtilities.GetTypeByCachedFullName(UiNameSpace + widgetName);
+                if(tmpUiType < UIConfig.___GameObject)
+                    return AssemblyUtilities.GetTypeByCachedFullName("UnityEngine.GameObject");
+            }
+
+            return null;
         }
     }
 }

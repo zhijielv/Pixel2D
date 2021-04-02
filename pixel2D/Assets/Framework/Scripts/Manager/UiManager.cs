@@ -31,25 +31,37 @@ namespace Manager
         #region Enum类型获取
         public UiWidgetBase GetWidget(Enum viewName, Enum widgetName)
         {
-            return GetWidgetObj(viewName, widgetName).GetComponent<UiWidgetBase>();
+            var obj = GetWidgetObj(viewName, widgetName) as Component;
+            return obj.GetComponent<UiWidgetBase>();
         }
 
-        public GameObject GetWidgetObj(Enum targetViewName, Enum targetWidgetName)
+        public T GetWidgetComponent<T>(Enum viewName, Enum widgetName)
+        {
+            return (T) GetWidgetObj(viewName, widgetName);
+        }
+        
+        public object GetWidgetComponent(Enum viewName, Enum widgetName)
+        {
+            return GetWidgetObj(viewName, widgetName);
+        }
+
+        public object GetWidgetObj(Enum targetViewName, Enum targetWidgetName)
         {
             string viewName = targetViewName.ToString();
             string widgetName = targetWidgetName.ToString();
+            // Debug.Log($"{viewName}    {widgetName}");
             return GetOrCreateViewObj(viewName, widgetName);
         }
         #endregion
         
         #region 泛型类型获取
-        public UiWidgetBase GetWidget<T>(Enum viewName = null) where T : ViewBase
+        public object GetWidget<T>(Enum viewName = null) where T : ViewBase
         {
-            return GetWidgetObj<T>(viewName).GetComponent<UiWidgetBase>();
+            return GetWidgetObj<T>(viewName);
         }
 
         // todo UICanvas Parent
-        public GameObject GetWidgetObj<T>(Enum targetWidgetName = null) where T : ViewBase
+        public object GetWidgetObj<T>(Enum targetWidgetName = null) where T : ViewBase
         {
             string viewName = typeof(T).Name;
             string widgetName = viewName;
@@ -63,12 +75,12 @@ namespace Manager
 
         #region private
 
-        private GameObject GetOrCreateViewObj(string viewName, string widgetName)
+        private object GetOrCreateViewObj(string viewName, string widgetName)
         {
             if (widgetName.IsNullOrWhitespace()) widgetName = viewName;
             if (uiList.ContainsKey(viewName))
             {
-                return uiList[viewName].GetWidget(widgetName).gameObject;
+                return uiList[viewName].GetWidget(widgetName);
             }
 
             Debug.Log("Create View : " + viewName);
@@ -79,7 +91,7 @@ namespace Manager
                 // todo 设置parent
                 GameObject tmpView = Instantiate(tmpSoBase.PanelObj, mainCanvas.transform);
                 RegistView(tmpView);
-                return tmpView;
+                return tmpView.GetComponent<ViewBase>().GetWidget(widgetName);
             }
 
             Debug.Log(viewName + " has not widget : " + widgetName);
@@ -88,7 +100,6 @@ namespace Manager
         private void RegistView(GameObject widgetObj)
         {
             string viewName = Constants.ReplaceString(widgetObj.name, "(Clone)", "");
-            Debug.Log(viewName);
             if (!uiList.ContainsKey(viewName))
             {
                 Type type = Type.GetType(Constants.UiNameSpace + viewName);

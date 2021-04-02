@@ -5,66 +5,48 @@
 */
 
 using System;
-using System.Collections.Generic;
+using System.Reflection;
 using Manager;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 namespace Framework.Scripts.UI.Base
 {
     public class ViewBase : UiWidgetBase
     {
-        [ShowInInspector]
-        // [ReadOnly]
-        [OnValueChanged("Valuechange")]
-        public List<GameObject> widgetDic;
-        public CanvasGroup canvasGroup;
-
-        public GameObject target;
+        [ShowInInspector] [ReadOnly] public CanvasGroup canvasGroup;
 
         #region private
+
         #endregion
 
-        public void Valuechange(List<GameObject> widgetDic)
-        {
-            Debug.Log(widgetDic.Count);
-        }
         #region public
-        public UiWidgetBase GetWidget(string widgetName)
+        
+        internal virtual object GetWidget(string widgetName)
         {
-            foreach (GameObject o in widgetDic)
+            Type viewType = GetType();
+            // 反射赋值
+            FieldInfo[] fieldInfos = viewType
+                .GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+            foreach (FieldInfo fieldInfo in fieldInfos)
             {
-                if (o.name.EndsWith(widgetName))
-                    return o.GetComponent<UiWidgetBase>();
-            }
-            // if (widgetDic.ContainsKey(widgetName))
-            // {
-            //     return widgetDic[widgetName].GetComponent<UiWidgetBase>();
-            // }
-            Debug.LogError(gameObject.name + " has not widget : " + widgetName);
-            return null;
-        }
-#if UNITY_EDITOR
-        public void ResetData()
-        {
-            Debug.Log("reset Data");
-            // target = transform.GetChild(0).gameObject;
-            widgetDic = new List<GameObject>();
-            foreach (UiWidgetBase uiWidgetBase in transform.GetComponentsInChildren<UiWidgetBase>())
-            {
-                widgetDic.Add(uiWidgetBase.gameObject);
+                if (fieldInfo.Name != widgetName) continue;
+                var obj = fieldInfo.GetValue(gameObject.GetComponent<ViewBase>());
+                var o = Convert.ChangeType(obj, fieldInfo.FieldType);
+                return o;
             }
 
-            canvasGroup = (CanvasGroup) Constants.AddOrGetComponent(gameObject, typeof(CanvasGroup));
-        }  
-#endif
+            return null;
+        }
+
         public void ChangePanel<T>() where T : ViewBase
         {
+            if (typeof(T) == GetType()) return;
             ShowWithHiddenTurn();
-            ViewBase targetView =  (ViewBase) UiManager.Instance.GetWidget<T>();
+            ViewBase targetView = (ViewBase) UiManager.Instance.GetWidget<T>();
             targetView.ShowWithHiddenTurn();
         }
 
@@ -94,7 +76,7 @@ namespace Framework.Scripts.UI.Base
         }
 
         public void AddToggleValueChangedEvent(string widgetName, UnityAction<bool> callback)
-        { 
+        {
             AddToggleValueChangedEvent(callback);
         }
 
@@ -176,6 +158,7 @@ namespace Framework.Scripts.UI.Base
 
         public void ShowWithHiddenTurn()
         {
+            canvasGroup = (CanvasGroup) Constants.AddOrGetComponent(gameObject, typeof(CanvasGroup));
             canvasGroup.alpha = Mathf.Abs(canvasGroup.alpha - 1);
             canvasGroup.interactable = !canvasGroup.interactable;
             canvasGroup.blocksRaycasts = !canvasGroup.blocksRaycasts;
@@ -184,13 +167,6 @@ namespace Framework.Scripts.UI.Base
         #endregion
 
         #region virtual
-
-        // todo 使用子类的Enum调用
-        public virtual UiWidgetBase GetWidget(Enum @enum = null)
-        {
-            if (@enum != null) return GetWidget(@enum.ToString());
-            return GetWidget(gameObject.name);
-        }
 
         #endregion
     }

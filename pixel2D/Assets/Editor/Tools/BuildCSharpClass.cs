@@ -6,6 +6,7 @@ using System.IO;
 using System.Reflection;
 using DG.DemiEditor;
 using Framework;
+using Framework.Scripts.Manager;
 using Framework.Scripts.UI.Base;
 using Framework.Scripts.UI.ScriptableObjects;
 using Sirenix.Utilities;
@@ -23,21 +24,33 @@ namespace Editor.Tools
         ScriptableObject,
     }
 
-    public class BuildCSharpClass
+    public static class BuildCSharpClass
     {
-        /// <summary>
-        /// 快捷键 Ctrl + Shift + G 生成所有代码
-        /// </summary>
-        [MenuItem("Assets/FrameWork View/Generate All View #%G", false, -2)]
-        public static void GenerateAllUiScriptObject()
+        [MenuItem("Assets/FrameWork View/Set View Value", false, -1)]
+        public static void SetViewObj()
         {
-            
-            GenerateObjList(GetAllViewPrefab().ToArray());
+            GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode = true;
+            AutoGenerateEnd();
         }
         
+        /// <summary>
+        /// 快捷键 Ctrl + Shift + G 生成所有代码
+        /// 会删掉其他代码，尽量不用
+        /// </summary>
+        // [MenuItem("Assets/FrameWork View/Generate All View #%G", false, -2)]
+        public static void GenerateAllUiScriptObject()
+        {
+            GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode = true;
+            GenerateObjList(GetAllViewPrefab().ToArray());
+        }
+
+        /// <summary>
+        /// 生成选中的View预制体代码
+        /// </summary>
         [MenuItem("Assets/FrameWork View/Generate Select View", false)]
         public static void GenerateUiScriptObject()
         {
+            GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode = true;
             Object[] views = Selection.GetFiltered(typeof(UnityEngine.Object), SelectionMode.Assets);
             GenerateObjList(views);
         }
@@ -48,27 +61,12 @@ namespace Editor.Tools
             foreach (var t in views)
             {
                 if (!t.name.EndsWith("_View")) continue;
-                
+
                 try
                 {
                     GameObject tmpView = t as GameObject;
                     List<string> tmpMember = GetScriptableObjectWidgetList(t.name, tmpView);
                     AutoGeneratView(t.name, tmpMember);
-                    // 强制刷新unity目录
-                    AssetDatabase.Refresh();
-                    string tname = Constants.UiNameSpace + t.name;
-                    Type type = AssemblyUtilities.GetTypeByCachedFullName(tname);
-                    if (type == null)
-                    {
-                        Debug.Log(Constants.UiNameSpace + t.name);
-                        Debug.LogError($"{tmpView.name} is not Generate");
-                    }
-                    else
-                    {
-                        Debug.LogWarning($"{tmpView.name} is generate, and add component {type.FullName}");
-                    }
-                    ViewBase viewBase = (ViewBase) Constants.AddOrGetComponent(tmpView, type);
-                    viewBase.ResetData();
                 }
                 catch (Exception e)
                 {
@@ -106,33 +104,36 @@ namespace Editor.Tools
             asset.ResetWidgets();
             return asset.widgetList;
         }
-        
+
         //实例
         private static void AutoGeneratView(string className, List<string> tmpMember)
         {
             GenerateScriptableObjectClass(className);
             GenerateViewWidget(className, tmpMember);
-            GenerateViewClass(className);
+            GenerateViewClass(className, tmpMember);
+            // 强制刷新unity目录
+            AssetDatabase.Refresh();
         }
 
         private static void GenerateAllView()
         {
             string allViewEnumName = "AllViewEnum";
             Object[] views = GetAllViewPrefab().ToArray();
-            
+
             CodeCompileUnit unit = new CodeCompileUnit();
             CodeNamespace enumNamespace = new CodeNamespace("Framework.Scripts.UI.View");
-            CodeTypeDeclaration allViewEnum = new CodeTypeDeclaration(allViewEnumName){IsEnum = true};
-            
+            CodeTypeDeclaration allViewEnum = new CodeTypeDeclaration(allViewEnumName) {IsEnum = true};
+
             foreach (Object view in views)
             {
                 if (!view.name.EndsWith("_View")) continue;
                 CodeTypeMember member = new CodeMemberField((CodeTypeReference) null, view.name);
                 allViewEnum.Members.Add(member);
             }
+
             CodeTypeMember maxMember = new CodeMemberField((CodeTypeReference) null, "MaxValue");
             allViewEnum.Members.Add(maxMember);
-            
+
             enumNamespace.Types.Add(allViewEnum);
             unit.Namespaces.Add(enumNamespace);
             ExportCSharpFile(unit, allViewEnumName, ViewScriptType.Module, false);
@@ -150,11 +151,12 @@ namespace Editor.Tools
             unit.Namespaces.Add(myNamespace);
             ExportCSharpFile(unit, className, ViewScriptType.ScriptableObject);
         }
+
         private static void GenerateViewWidget(string className, List<string> tmpMember)
         {
             CodeCompileUnit unit = new CodeCompileUnit();
             CodeNamespace enumNamespace = new CodeNamespace("Framework.Scripts.UI.View");
-            CodeTypeDeclaration panelEnum = new CodeTypeDeclaration(className + "_Panel"){IsEnum = true};
+            CodeTypeDeclaration panelEnum = new CodeTypeDeclaration(className + "_Panel") {IsEnum = true};
             CodeTypeDeclaration widgetEnum = new CodeTypeDeclaration(className + "_Widget") {IsEnum = true};
             foreach (string s in tmpMember)
             {
@@ -162,26 +164,72 @@ namespace Editor.Tools
                 if (s.EndsWith("_Panel")) panelEnum.Members.Add(member);
                 else widgetEnum.Members.Add(member);
             }
+
             enumNamespace.Types.Add(panelEnum);
             enumNamespace.Types.Add(widgetEnum);
             unit.Namespaces.Add(enumNamespace);
             ExportCSharpFile(unit, className, ViewScriptType.Module);
         }
 
-        private static void GenerateViewClass(string className)
+        private static void GenerateViewClass(string className, List<string> tmpMember)
         {
             CodeCompileUnit unit = new CodeCompileUnit();
             CodeNamespace myNamespace = new CodeNamespace("Framework.Scripts.UI.View");
             myNamespace.Imports.Add(new CodeNamespaceImport("Base"));
-            CodeTypeDeclaration myClass = new CodeTypeDeclaration(className) {IsClass = true};
+            myNamespace.Imports.Add(new CodeNamespaceImport("System"));
+            myNamespace.Imports.Add(new CodeNamespaceImport("UnityEngine"));
+            CodeTypeDeclaration myClass = new CodeTypeDeclaration(className)
+            {
+                IsClass = true, TypeAttributes = TypeAttributes.Public
+            };
             myClass.BaseTypes.Add("ViewBase");
-            myClass.TypeAttributes = TypeAttributes.Public;
+
+            foreach (string s in tmpMember)
+            {
+                Type type = Constants.GetWIdgetTypeByName(s);
+                if (type == null)
+                {
+                    Debug.LogWarning(s + " is not UI");
+                    continue;
+                }
+
+                CodeTypeMember member = new CodeMemberField(type, s);
+                member.Attributes = MemberAttributes.Public;
+                myClass.Members.Add(member);
+            }
+
+///////////////////////////////////////////////////////////////////////////////////////////
+            // 添加override方法
+            CodeMemberMethod method = new CodeMemberMethod()
+            {
+                Name = "GetWidget",
+                Attributes = MemberAttributes.Override | MemberAttributes.FamilyAndAssembly,
+                ReturnType = new CodeTypeReference(typeof(object)),
+            };
+            method.Parameters.Add(new CodeParameterDeclarationExpression(typeof(string), "widgetName"));
+            CodeConditionStatement statement = new CodeConditionStatement(
+                new CodeVariableReferenceExpression($"!Enum.TryParse(widgetName, true, out {className + "_Widget"} _)"),
+                new CodeStatement[]
+                {
+                    new CodeCommentStatement(
+                        "Debug.LogError(gameObject.name + \" has not widget : \" + widgetName);"),
+                    new CodeMethodReturnStatement(new CodeSnippetExpression("null"))
+                },
+                new CodeStatement[]
+                {
+                    new CodeMethodReturnStatement(
+                        new CodeArgumentReferenceExpression("base.GetWidget(widgetName)"))
+                });
+            method.Statements.Add(statement);
+            myClass.Members.Add(method);
+///////////////////////////////////////////////////////////////////////////////////////////
             myNamespace.Types.Add(myClass);
             unit.Namespaces.Add(myNamespace);
             ExportCSharpFile(unit, className, ViewScriptType.View);
         }
-        
-        private static void ExportCSharpFile(CodeCompileUnit unit, string className, ViewScriptType viewScriptType, bool isNeedFolder = true)
+
+        private static void ExportCSharpFile(CodeCompileUnit unit, string className, ViewScriptType viewScriptType,
+            bool isNeedFolder = true)
         {
             CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
             CodeGeneratorOptions options = new CodeGeneratorOptions();
@@ -208,7 +256,7 @@ namespace Editor.Tools
                     fileName = className + "_ScriptableObject.cs";
                     break;
             }
-            
+
             //保存
             using (StreamWriter sw = new StreamWriter(outputFile + fileName))
             {
@@ -218,48 +266,57 @@ namespace Editor.Tools
             }
         }
 
-        // todo 改为导出view代码时调用
+
+        #region EndCompile
+
+        // 编译完成后调用
         [UnityEditor.Callbacks.DidReloadScripts]
-        private static void Test()
+        private static void AutoGenerateEnd()
         {
+            if (!GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode) return;
             Object[] viewPrefabs = GetAllViewPrefab().ToArray();
-            Type[] viewScripts = new Type[viewPrefabs.Length];
-            for (int i = 0; i < viewPrefabs.Length; i++)
+            foreach (Object t in viewPrefabs)
             {
-                viewScripts[i] = AssemblyUtilities.GetTypeByCachedFullName(Constants.UiNameSpace + viewPrefabs[i].name);
-                FieldInfo[] fieldInfos = viewScripts[i].GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+                // 添加脚本
+                GameObject tmpView = t as GameObject;
+                Type viewType = AssemblyUtilities.GetTypeByCachedFullName(Constants.UiNameSpace + t.name);
+                if (viewType == null)
+                {
+                    Debug.LogError($"{tmpView.name} is not Generate");
+                    return;
+                }
+
+                Debug.LogWarning($"{tmpView.name} is generate, and add component {viewType.FullName}");
+                Constants.AddOrGetComponent(tmpView, viewType);
+                // 反射赋值
+                FieldInfo[] fieldInfos = viewType
+                    .GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
                 foreach (FieldInfo fieldInfo in fieldInfos)
                 {
-                    string[] tmpStrs = fieldInfo.Name.Split(new []{"_"}, StringSplitOptions.RemoveEmptyEntries);
-                    string typeName = tmpStrs[tmpStrs.Length - 1];
-                    Type fieldType = AssemblyUtilities.GetTypeByCachedFullName("UnityEngine.UI." + typeName);
-                    GameObject viewPrefab = viewPrefabs[i] as GameObject;
-                    UiWidgetBase[] children = viewPrefab.transform.GetComponentsInChildren<UiWidgetBase>();
-                    // if (fieldInfo.GetValue(fieldType) != null)
-                    // {
-                    //     Debug.Log(fieldInfo.GetValue(fieldType));
-                    //     continue;
-                    // }
-                    // todo 把获取到的成员通过反射赋值
+                    Type widgetType = Constants.GetWIdgetTypeByName(fieldInfo.Name);
+                    UiWidgetBase[] children = tmpView.transform.GetComponentsInChildren<UiWidgetBase>();
+
                     foreach (UiWidgetBase uiWidgetBase in children)
                     {
-                        if(!uiWidgetBase.name.EndsWith(fieldInfo.Name)) continue;
-                        // Debug.Log($"{fieldType}           {uiWidgetBase.GetComponent(fieldType).GetType()}");
-                        // Debug.Log(fieldType);
-                        // Debug.Log(uiWidgetBase.GetComponent(fieldType));
-                        
-                        // fieldInfo.SetValue(fieldType, uiWidgetBase.GetComponent(fieldType));
-                        Debug.Log(fieldType.ToString());
-
-                        Debug.Log(viewScripts[i].GetProperty(fieldType.ToString()));
-                        Type propertyType = viewScripts[i].GetProperty(fieldType.ToString()).PropertyType;
-                        Debug.Log(propertyType);
-                        object v = Convert.ChangeType(uiWidgetBase.GetComponent(fieldType), propertyType);
-                        viewScripts[i].GetProperty(fieldType.ToString()).SetValue(v, uiWidgetBase.GetComponent(fieldType));
+                        if (!uiWidgetBase.name.EndsWith(fieldInfo.Name)) continue;
+                        try
+                        {
+                            fieldInfo.SetValue(tmpView.GetComponent<ViewBase>(), uiWidgetBase.GetComponent(widgetType));
+                        }
+                        catch (Exception e)
+                        {
+                            fieldInfo.SetValue(tmpView.GetComponent<ViewBase>(), uiWidgetBase.gameObject);
+                            // Debug.LogWarning($"{e}     get GameObject");
+                        }
                     }
                 }
+                EditorUtility.SetDirty(t);
             }
+
+            GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode = false;
         }
+
+        #endregion
     }
 #endif
 }
