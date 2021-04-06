@@ -201,6 +201,9 @@ MonoBehaviour:
   CenterRight_Text: {fileID: 7972336026278910457}
   Bottom_Panel: {fileID: 5120339881567954584}
   Bottom2_Panel: {fileID: 1532434795523566199}
+  text: "\u6D4B\u8BD5\u4EE3\u7801"
+  _AllViewList: 0
+  _MainViewWidget: 0
 --- !u!1 &2435453935268825859
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,7 +240,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 203.75, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6114885821597230922
@@ -343,7 +346,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 473.25, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4576048750707350646

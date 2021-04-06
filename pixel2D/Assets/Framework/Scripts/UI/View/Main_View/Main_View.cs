@@ -8,13 +8,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Data;
 using Sirenix.OdinInspector;
+using UnityEngine.UI;
 
 namespace Framework.Scripts.UI.View
 {
     using Base;
     using System;
     using UnityEngine;
+    
     public class Main_View : ViewBase
     {
         public UnityEngine.GameObject Top_Panel;
@@ -26,6 +29,22 @@ namespace Framework.Scripts.UI.View
         public UnityEngine.UI.Text CenterRight_Text;
         public UnityEngine.GameObject Bottom_Panel;
         public UnityEngine.GameObject Bottom2_Panel;
+        
+        [Tooltip("测试代码")]
+        public string text = "测试代码";
+
+        public AllViewEnum _AllViewList;
+        public Main_View_Widget _MainViewWidget;
+        private UiWidgetBase widgetObj;
+        private Text MainViewCenterText;
+
+        private void Update()
+        {
+            // LeftTop_Text.text = System.DateTime.Now.ToString("yyyy-MM-dd dddd");
+            // Center_Text.text = System.DateTime.Now.ToString("HH:mm");
+            // CenterRight_Text.text = System.DateTime.Now.Second.ToString();
+        }
+
         internal override object GetWidget(string widgetName)
         {
             if (!Enum.TryParse(widgetName, true, out Main_View_Widget _))

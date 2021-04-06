@@ -26,7 +26,7 @@ namespace Framework.Scripts.UI.View
             }
             else
             {
-                return base.GetWidget(widgetName);;
+                return base.GetWidget(widgetName);
             }
         }
     }
