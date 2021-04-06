@@ -16,40 +16,29 @@ using UnityEngine.UI;
 
 public class Main : MonoBehaviour
 {
-    [Tooltip("测试代码")]
-    public string text = "测试代码";
-
-    public AllViewEnum _AllViewList;
-    public Main_View_Widget _MainViewWidget;
-    private UiWidgetBase widgetObj;
-    private Text MainViewCenterText;
+    private Text leftTopText;
+    private Text centerText;
+    private UiWidgetBase centerRightText;
     private void Awake()
     {
         gameObject.AddComponent<UiManager>();
         UiManager.Instance.mainCanvas = GameObject.FindWithTag("MainCanvas").GetComponent<Canvas>();
     }
 
-    private void Update()
+    private void Start()
     {
-        MainViewCenterText = UiManager.Instance.GetWidgetComponent<Text>(AllViewEnum.Main_View, Main_View_Widget.Center_Text);
-        MainViewCenterText.text = DateTime.Now.ToShortTimeString();
+        leftTopText = (Text) UiManager.Instance.GetWidget<Main_View>(Main_View_Widget.LeftTop_Text);
+        centerText = UiManager.Instance.GetWidget(AllViewEnum.Main_View, Main_View_Widget.Center_Text).GetComponent<Text>();
+        centerRightText = UiManager.Instance.GetWidget(AllViewEnum.Main_View, Main_View_Widget.CenterRight_Text);
+        UiManager.Instance.GetWidgetComponent<Text>(AllViewEnum.Main_View, Main_View_Widget.CenterTop_Text).text = "";
+        Text rightTopText = (Text) UiManager.Instance.GetWidgetObj<Main_View>(Main_View_Widget.RightTop_Text);
+        rightTopText.text = "";
     }
 
-    [Button("任意类型")]
-    public void TestGetMain_View()
+    private void Update()
     {
-        UiManager.Instance.GetWidgetComponent<Text>(_AllViewList, _MainViewWidget).text = text;
-        
-        object component = UiManager.Instance.GetWidgetComponent(_AllViewList, _MainViewWidget);
-        Debug.Log($"获取到：{component}         类型为：{component.GetType()}");
-    }
-    
-    [Button("Enum 获取 widget")]
-    public void TestGetMain_View2()
-    {
-        widgetObj = UiManager.Instance.GetWidget(_AllViewList, _MainViewWidget);
-        Debug.Log(widgetObj.name);
-        widgetObj.GetComponent<UiWidgetBase>().TextWrite(text);
-        // Debug.Log(widgetObj.name);
+        leftTopText.text = System.DateTime.Now.ToString("yyyy-MM-dd dddd");
+        centerText.text = System.DateTime.Now.ToString("HH:mm");
+        centerRightText.TextWrite(System.DateTime.Now.ToString("ss"));
     }
 }
