@@ -57,7 +57,7 @@ namespace Framework
         }
 
         
-        public static Type GetWIdgetTypeByName(string widgetName)
+        public static Type GetWidgetTypeByName(string widgetName)
         {
             string[] tmpStrs = widgetName.Split(new []{"_"}, StringSplitOptions.RemoveEmptyEntries);
             string typeName = tmpStrs[tmpStrs.Length - 1];
