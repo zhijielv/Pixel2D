@@ -57,7 +57,7 @@ namespace Framework
             return strBuffer.ToString();
         }
 
-
+#if UNITY_EDITOR
         public static Type GetWidgetTypeByName(string widgetName)
         {
             string[] tmpStrs = widgetName.Split(new[] {"_"}, StringSplitOptions.RemoveEmptyEntries);
@@ -76,5 +76,6 @@ namespace Framework
 
             return null;
         }
+#endif
     }
 }

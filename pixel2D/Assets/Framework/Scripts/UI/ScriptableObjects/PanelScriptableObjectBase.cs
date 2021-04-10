@@ -17,7 +17,9 @@ namespace Framework.Scripts.UI.ScriptableObjects
 
         public void ResetWidgets()
         {
+#if UNITY_EDITOR
             GlobalConfig<UiScriptableObjectsManager>.Instance.ResetAllViewObjOverview();
+#endif
             RegistWidgets(PanelObj.transform);
         }
 
