@@ -12,4 +12,10 @@
         Panel,
         ___GameObject,
     }
+
+    // 不需要自动生成的类型
+    public enum IgnoreUI
+    {
+        View,
+    }
 }

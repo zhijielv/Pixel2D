@@ -86,7 +86,7 @@ namespace Manager
             Debug.Log("Create View : " + viewName);
             PanelScriptableObjectBase tmpSoBase =
                 GlobalConfig<UiScriptableObjectsManager>.Instance.GetUiViewSO(viewName);
-            if (tmpSoBase.widgetList.Contains(widgetName))
+            if (tmpSoBase.widgetList.Contains(widgetName) || viewName.Equals(widgetName))
             {
                 // todo 设置parent
                 GameObject tmpView = Instantiate(tmpSoBase.PanelObj, mainCanvas.transform);

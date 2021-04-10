@@ -16,6 +16,7 @@ namespace Framework
         ////////////////////////////////////////////  Name  ///////////////////////////////////////////////////////
         public const string UiScriptableObjectsManager = "Ui Scriptable Objects Manager.asset";
         public const string UiNameSpace = "Framework.Scripts.UI.View.";
+        public const string CustomUiNameSpace = "Framework.Scripts.UI.CustomUI.";
 
         ////////////////////////////////////////////  Function  ///////////////////////////////////////////////////////
         public static Component AddOrGetComponent(GameObject go, Type componentType)
@@ -56,19 +57,20 @@ namespace Framework
             return strBuffer.ToString();
         }
 
-        
+
         public static Type GetWidgetTypeByName(string widgetName)
         {
-            string[] tmpStrs = widgetName.Split(new []{"_"}, StringSplitOptions.RemoveEmptyEntries);
+            string[] tmpStrs = widgetName.Split(new[] {"_"}, StringSplitOptions.RemoveEmptyEntries);
             string typeName = tmpStrs[tmpStrs.Length - 1];
-            
-            if (Enum.TryParse(typeName, true, out UIConfig tmpUiType))
+
+            if (Enum.TryParse(typeName, true, out UIConfig tmpUiType) &&
+                !Enum.TryParse(typeName, true, out IgnoreUI ignoreUI))
             {
-                if(tmpUiType < UIConfig.___UnityEngine_UI)
+                if (tmpUiType < UIConfig.___UnityEngine_UI)
                     return AssemblyUtilities.GetTypeByCachedFullName("UnityEngine.UI." + typeName);
                 if (tmpUiType < UIConfig.___CustomView)
-                    return AssemblyUtilities.GetTypeByCachedFullName(UiNameSpace + widgetName);
-                if(tmpUiType < UIConfig.___GameObject)
+                    return AssemblyUtilities.GetTypeByCachedFullName(CustomUiNameSpace + widgetName);
+                if (tmpUiType < UIConfig.___GameObject)
                     return AssemblyUtilities.GetTypeByCachedFullName("UnityEngine.GameObject");
             }
 

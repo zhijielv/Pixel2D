@@ -27,23 +27,25 @@ public class Main : MonoBehaviour
 
     private void Start()
     {
+        // 获取或创建界面
+        UiManager.Instance.GetWidget<Main_View>();
         // 四种获取ui组件或界面的方法
         // 1
-        leftTopText = (Text) UiManager.Instance.GetWidget<Main_View>(Main_View_Widget.LeftTop_Text);
+        // leftTopText = (Text) UiManager.Instance.GetWidget<Main_View>(Main_View_Widget.LeftTop_Text);
         // 2
-        centerText = UiManager.Instance.GetWidget(AllViewEnum.Main_View, Main_View_Widget.Center_Text).GetComponent<Text>();
-        centerRightText = UiManager.Instance.GetWidget(AllViewEnum.Main_View, Main_View_Widget.CenterRight_Text);
+        // centerText = UiManager.Instance.GetWidget(AllViewEnum.Main_View, Main_View_Widget.Center_Text).GetComponent<Text>();
+        // centerRightText = UiManager.Instance.GetWidget(AllViewEnum.Main_View, Main_View_Widget.CenterRight_Text);
         // 3
-        UiManager.Instance.GetWidgetComponent<Text>(AllViewEnum.Main_View, Main_View_Widget.CenterTop_Text).text = "";
+        // UiManager.Instance.GetWidgetComponent<Text>(AllViewEnum.Main_View, Main_View_Widget.CenterTop_Text).text = "";
         // 4
-        Text rightTopText = (Text) UiManager.Instance.GetWidgetObj<Main_View>(Main_View_Widget.RightTop_Text);
-        rightTopText.text = "";
+        // Text rightTopText = (Text) UiManager.Instance.GetWidgetObj<Main_View>(Main_View_Widget.RightTop_Text);
+        // rightTopText.text = "";
     }
 
     private void Update()
     {
-        leftTopText.text = System.DateTime.Now.ToString("yyyy-MM-dd dddd");
-        centerText.text = System.DateTime.Now.ToString("HH:mm");
-        centerRightText.TextWrite(System.DateTime.Now.ToString("ss"));
+        // leftTopText.text = System.DateTime.Now.ToString("yyyy-MM-dd dddd");
+        // centerText.text = System.DateTime.Now.ToString("HH:mm");
+        // centerRightText.TextWrite(System.DateTime.Now.ToString("ss"));
     }
 }

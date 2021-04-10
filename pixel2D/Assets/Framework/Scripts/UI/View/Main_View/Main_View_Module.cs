@@ -19,7 +19,7 @@ namespace Framework.Scripts.UI.View
     }
     public enum Main_View_Widget
     {
-        Main_View,
+        BG_Image,
         LeftTop_Text,
         CenterTop_Text,
         RightTop_Text,

@@ -7,11 +7,10 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-
 using System.Data;
+using Manager;
 using Sirenix.OdinInspector;
 using UnityEngine.UI;
-
 namespace Framework.Scripts.UI.View
 {
     using Base;
@@ -20,6 +19,7 @@ namespace Framework.Scripts.UI.View
     
     public class Main_View : ViewBase
     {
+        public UnityEngine.UI.Image BG_Image;
         public UnityEngine.GameObject Top_Panel;
         public UnityEngine.UI.Text LeftTop_Text;
         public UnityEngine.UI.Text CenterTop_Text;
@@ -28,23 +28,6 @@ namespace Framework.Scripts.UI.View
         public UnityEngine.UI.Text Center_Text;
         public UnityEngine.UI.Text CenterRight_Text;
         public UnityEngine.GameObject Bottom_Panel;
-        public UnityEngine.GameObject Bottom2_Panel;
-        
-        [Tooltip("测试代码")]
-        public string text = "测试代码";
-
-        public AllViewEnum _AllViewList;
-        public Main_View_Widget _MainViewWidget;
-        private UiWidgetBase widgetObj;
-        private Text MainViewCenterText;
-
-        private void Update()
-        {
-            // LeftTop_Text.text = System.DateTime.Now.ToString("yyyy-MM-dd dddd");
-            // Center_Text.text = System.DateTime.Now.ToString("HH:mm");
-            // CenterRight_Text.text = System.DateTime.Now.Second.ToString();
-        }
-
         internal override object GetWidget(string widgetName)
         {
             if (!Enum.TryParse(widgetName, true, out Main_View_Widget _))
@@ -56,6 +39,23 @@ namespace Framework.Scripts.UI.View
             {
                 return base.GetWidget(widgetName);
             }
+        }
+        
+        private void Start()
+        {
+            LeftTop_Text.text = "";
+            RightTop_Text.text = "";
+            BG_Image.SetNativeSize();
+            float scale = BG_Image.rectTransform.sizeDelta.x /
+                          UiManager.Instance.mainCanvas.GetComponent<CanvasScaler>().referenceResolution.x;
+            BG_Image.rectTransform.sizeDelta /= scale;
+        }
+        
+        private void Update()
+        {
+            CenterTop_Text.text = System.DateTime.Now.ToString("yyyy-MM-dd dddd");
+            Center_Text.text = System.DateTime.Now.ToString("HH:mm");
+            CenterRight_Text.text = System.DateTime.Now.ToString("ss");
         }
     }
 }
