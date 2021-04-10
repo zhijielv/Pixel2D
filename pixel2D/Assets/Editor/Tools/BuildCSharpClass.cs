@@ -67,6 +67,7 @@ namespace Editor.Tools
                     GameObject tmpView = t as GameObject;
                     List<string> tmpMember = GetScriptableObjectWidgetList(t.name, tmpView);
                     AutoGeneratView(t.name, tmpMember);
+                    SetViewObj();
                 }
                 catch (Exception e)
                 {
@@ -306,7 +307,7 @@ namespace Editor.Tools
                         catch (Exception e)
                         {
                             fieldInfo.SetValue(tmpView.GetComponent<ViewBase>(), uiWidgetBase.gameObject);
-                            // Debug.LogWarning($"{e}     get GameObject");
+                            Debug.Log($"{e}     get GameObject");
                         }
                     }
                 }
