@@ -16,7 +16,6 @@ namespace Framework.Scripts.UI.View
         Top_Panel,
         Center_Panel,
         Bottom_Panel,
-        Bottom2_Panel,
     }
     public enum Main_View_Widget
     {

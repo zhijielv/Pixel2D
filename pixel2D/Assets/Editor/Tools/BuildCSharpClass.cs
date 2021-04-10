@@ -186,7 +186,7 @@ namespace Editor.Tools
 
             foreach (string s in tmpMember)
             {
-                Type type = Constants.GetWIdgetTypeByName(s);
+                Type type = Constants.GetWidgetTypeByName(s);
                 if (type == null)
                 {
                     Debug.LogWarning(s + " is not UI");
@@ -293,7 +293,7 @@ namespace Editor.Tools
                     .GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
                 foreach (FieldInfo fieldInfo in fieldInfos)
                 {
-                    Type widgetType = Constants.GetWIdgetTypeByName(fieldInfo.Name);
+                    Type widgetType = Constants.GetWidgetTypeByName(fieldInfo.Name);
                     UiWidgetBase[] children = tmpView.transform.GetComponentsInChildren<UiWidgetBase>();
 
                     foreach (UiWidgetBase uiWidgetBase in children)
