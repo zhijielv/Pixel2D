@@ -16,7 +16,6 @@ namespace Framework.Scripts.UI.View
     }
     public enum Test_View_Widget
     {
-        Test_View,
         Test_Button,
     }
 }
