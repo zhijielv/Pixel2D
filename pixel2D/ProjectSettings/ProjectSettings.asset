@@ -12,8 +12,8 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
-  productName: TestPlugins
+  companyName: BaoZiPi
+  productName: Pixel2D
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 1, g: 0.23529412, b: 0, a: 1}
@@ -129,7 +129,7 @@ PlayerSettings:
     16:10: 0
     16:9: 1
     Others: 0
-  bundleVersion: 1.9
+  bundleVersion: 0.0.1
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -149,7 +149,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Android: com.moremountains.topdownengine
-    Standalone: unity.MoreMountains.TopDown
+    Standalone: com.BaoZiPi.Pixel2D
     Tizen: com.Company.ProductName
     iPhone: com.moremountains.topdownengine
     tvOS: com.Company.ProductName
