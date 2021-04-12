@@ -85,7 +85,7 @@ namespace TileWorld
                     // Make sure we have a mesh filter & renderer
                     if (_g.GetComponent(typeof(MeshFilter)) == null)
                         _g.gameObject.AddComponent(typeof(MeshFilter));
-                    if (!_g.GetComponent("MeshRenderer"))
+                    if (!_g.GetComponent("UnityEngine.MeshRenderer"))
                         _g.gameObject.AddComponent<MeshRenderer>(); //("MeshRenderer");
 
                     MeshFilter filter = (MeshFilter)_g.GetComponent(typeof(MeshFilter));
