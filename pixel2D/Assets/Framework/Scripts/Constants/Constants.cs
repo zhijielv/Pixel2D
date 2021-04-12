@@ -18,6 +18,8 @@ namespace Framework
         public const string UiNameSpace = "Framework.Scripts.UI.View.";
         public const string CustomUiNameSpace = "Framework.Scripts.UI.CustomUI.";
 
+        public const string ArtDirPath = "Assets/Art/";
+
         ////////////////////////////////////////////  Function  ///////////////////////////////////////////////////////
         public static Component AddOrGetComponent(GameObject go, Type componentType)
         {
