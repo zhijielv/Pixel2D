@@ -16,8 +16,8 @@ namespace Editor.Tools
 {
     public class AnimationClipTool : OdinEditorWindow
     {
-        [ReadOnly] [LabelText("角色")] public string avatarName = "";
-        [LabelText("每几帧一个图")] public int frame = 5;
+        [LabelText("角色")] public string avatarName = "";
+        [LabelText("每几帧一个图")] public int frame = 2;
         [LabelText("动画名称")] public string animName = "New anim";
         
         //todo 帧率设置
