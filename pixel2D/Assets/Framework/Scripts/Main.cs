@@ -21,6 +21,7 @@ public class Main : MonoBehaviour
     private UiWidgetBase centerRightText;
     private void Awake()
     {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
         gameObject.AddComponent<UiManager>();
         UiManager.Instance.mainCanvas = GameObject.FindWithTag("MainCanvas").GetComponent<Canvas>();
     }
