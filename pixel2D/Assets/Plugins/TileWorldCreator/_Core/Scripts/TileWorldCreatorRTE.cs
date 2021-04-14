@@ -935,10 +935,11 @@ namespace TileWorld
         void OnDrawGizmosSelected()
         {
 #if UNITY_EDITOR
-            if (PrefabUtility.GetPrefabType(this.gameObject) != PrefabType.DisconnectedPrefabInstance)
-            {
-                PrefabUtility.DisconnectPrefabInstance(this.gameObject);
-            }
+            // if (PrefabUtility.GetPrefabType(this.gameObject) != PrefabType.DisconnectedPrefabInstance)
+            // {
+                // PrefabUtility.DisconnectPrefabInstance(this.gameObject);
+                // PrefabUtility.UnpackPrefabInstance(gameObject, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
+            // }
 #endif
         }
     }

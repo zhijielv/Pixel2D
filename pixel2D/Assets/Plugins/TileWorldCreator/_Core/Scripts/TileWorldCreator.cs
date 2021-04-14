@@ -2858,7 +2858,8 @@ namespace TileWorld
 #if UNITY_EDITOR
             if (PrefabUtility.GetPrefabType(this.gameObject) != PrefabType.DisconnectedPrefabInstance)
             {
-                PrefabUtility.DisconnectPrefabInstance(this.gameObject);
+                // PrefabUtility.DisconnectPrefabInstance(this.gameObject);
+                // PrefabUtility.UnpackPrefabInstance(gameObject, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
 
                 if (configuration.presets.Count == 0)
                 {
