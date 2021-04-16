@@ -50,8 +50,9 @@ namespace Editor.Tools
         [MenuItem("Assets/FrameWork View/Generate Select View", false)]
         public static void GenerateUiScriptObject()
         {
-            GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode = true;
             Object[] views = Selection.GetFiltered(typeof(UnityEngine.Object), SelectionMode.Assets);
+            GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode = true;
+            GlobalConfig<UiScriptableObjectsManager>.Instance.selectViews = views;
             GenerateObjList(views);
         }
 
@@ -78,12 +79,13 @@ namespace Editor.Tools
 
             Debug.Log("Generate all View Prefab End");
         }
-
-        private static List<Object> GetAllViewPrefab()
+        
+        private static List<Object> GetAllViewPrefab(string srcPath = null)
         {
+            if (srcPath == null) srcPath = Constants.ViewPrefabDir;
             List<Object> tmpObjList = new List<Object>();
             string tmpName = "";
-            foreach (string path in Directory.GetFiles(Constants.ViewPrefabDir))
+            foreach (string path in Directory.GetFiles(srcPath, "*.prefab", SearchOption.AllDirectories))
             {
                 tmpName = path.FileOrDirectoryName();
                 if (tmpName.EndsWith("_View"))
@@ -275,7 +277,8 @@ namespace Editor.Tools
         private static void AutoGenerateEnd()
         {
             if (!GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode) return;
-            Object[] viewPrefabs = GetAllViewPrefab().ToArray();
+            // Object[] viewPrefabs = GetAllViewPrefab().ToArray();
+            Object[] viewPrefabs = GlobalConfig<UiScriptableObjectsManager>.Instance.selectViews;
             foreach (Object t in viewPrefabs)
             {
                 // 添加脚本
