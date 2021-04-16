@@ -1,7 +1,202 @@
 fileFormatVersion: 2
 guid: a079bc84f122d7949b558c7808eb940d
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 2571547486660042291
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_0
+  - first:
+      213: -8508713679754678561
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_1
+  - first:
+      213: 5420883515510600472
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_2
+  - first:
+      213: -1658118968687907749
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_3
+  - first:
+      213: 3871453350083484419
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_4
+  - first:
+      213: 1266368593752875850
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_5
+  - first:
+      213: 3347239256434299755
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_6
+  - first:
+      213: -7440908889589647115
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_7
+  - first:
+      213: -3209537143429538421
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_8
+  - first:
+      213: -9141181689504871513
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_9
+  - first:
+      213: 8972722893090750176
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_10
+  - first:
+      213: -7888829821683113751
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_11
+  - first:
+      213: -2959079149741347377
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_12
+  - first:
+      213: -4448937825336198625
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_13
+  - first:
+      213: 1804484847956640744
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_14
+  - first:
+      213: 5853908946871044679
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_15
+  - first:
+      213: 6032306057394782152
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_16
+  - first:
+      213: -718834032427880482
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_17
+  - first:
+      213: 7913116121999574737
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_18
+  - first:
+      213: -5215653032755054879
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_19
+  - first:
+      213: -6789892267759562526
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_20
+  - first:
+      213: 8489695135445899684
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_21
+  - first:
+      213: 6602531400736969682
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_22
+  - first:
+      213: -9091022881643986877
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_23
+  - first:
+      213: 6629220106056662308
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_24
+  - first:
+      213: -2075949015267105162
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_25
+  - first:
+      213: -9056960164114887599
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_26
+  - first:
+      213: -1728923338557545513
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_27
+  - first:
+      213: 5944034720919676288
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_28
+  - first:
+      213: 482339984540898167
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_29
+  - first:
+      213: -5255172612210434519
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_30
+  - first:
+      213: -8968876015719108813
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_31
+  - first:
+      213: -3415623502726753650
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_32
+  - first:
+      213: 6427209017672681148
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_33
+  - first:
+      213: 2121132142590171066
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_34
+  - first:
+      213: -4865379295171533743
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_35
+  - first:
+      213: -597158467695265025
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_36
+  - first:
+      213: -8574709838350960349
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_37
+  - first:
+      213: 6701793439104707445
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_38
+  - first:
+      213: -1486787483606060938
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_39
+  - first:
+      213: -2721626218166069423
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_40
+  - first:
+      213: 5293004162215701698
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_41
+  - first:
+      213: 2777549930241242780
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_42
+  - first:
+      213: -8255425033251066598
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_43
+  - first:
+      213: -8164909827307610840
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_44
+  - first:
+      213: -3579652287436992015
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_45
+  - first:
+      213: -4997688302221531381
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_46
+  - first:
+      213: -6188350628521862714
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_47
+  - first:
+      213: -8249840132522647199
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_48
+  - first:
+      213: 4741406645412218947
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_49
+  - first:
+      213: -4718912074917955034
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_50
+  - first:
+      213: 767211632042210292
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_51
+  - first:
+      213: -4473995236215807397
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_52
+  - first:
+      213: 6527224904681934273
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_53
+  - first:
+      213: -7809657517812423584
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_54
+  - first:
+      213: -5042648335276018082
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_55
+  - first:
+      213: 7095314934824118385
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_56
+  - first:
+      213: 5591570242731146005
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_57
+  - first:
+      213: 3423841247759392825
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_58
+  - first:
+      213: -4952416023270891110
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_59
+  - first:
+      213: -2241691206050793
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_60
+  - first:
+      213: 332839673413218947
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_61
+  - first:
+      213: 4265098777176845736
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_62
+  - first:
+      213: 8038935901532962699
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_63
+  - first:
+      213: -7216728636757858531
+    second: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_64
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -75,9 +270,1386 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 432
+        width: 18
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33e9b6180d8ffa320800000000000000
+      internalID: 2571547486660042291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_1
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 410
+        width: 20
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fde27b64df9fae980800000000000000
+      internalID: -8508713679754678561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_2
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 410
+        width: 26
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 813b7c616d8da3b40800000000000000
+      internalID: 5420883515510600472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_3
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 380
+        width: 15
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5c2504459d2df8e0800000000000000
+      internalID: -1658118968687907749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_4
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 383
+        width: 19
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30bd8306f4a2ab530800000000000000
+      internalID: 3871453350083484419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_5
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 383
+        width: 19
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a43e959c68b039110800000000000000
+      internalID: 1266368593752875850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_6
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 383
+        width: 19
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b63520a8e58c37e20800000000000000
+      internalID: 3347239256434299755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_7
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 349
+        width: 35
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f876fdd9c49cb890800000000000000
+      internalID: -7440908889589647115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 358
+        width: 31
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8dd57019fe6573d0800000000000000
+      internalID: -3209537143429538421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_9
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 356
+        width: 27
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7abc1c97faff32180800000000000000
+      internalID: -9141181689504871513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_10
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 357
+        width: 19
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ee70b68ee3858c70800000000000000
+      internalID: 8972722893090750176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_11
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 332
+        width: 30
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e0e111f21f358290800000000000000
+      internalID: -7888829821683113751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_12
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 331
+        width: 30
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fcde661f03d3fe6d0800000000000000
+      internalID: -2959079149741347377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_13
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 331
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1a790d8e923242c0800000000000000
+      internalID: -4448937825336198625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_14
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 335
+        width: 19
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e3c70d9861da0910800000000000000
+      internalID: 1804484847956640744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_15
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 324
+        width: 22
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74acabdfb234d3150800000000000000
+      internalID: 5853908946871044679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_16
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 305
+        width: 28
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8cff37f066e07b350800000000000000
+      internalID: 6032306057394782152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_17
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 298
+        width: 23
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: edfacac81403606f0800000000000000
+      internalID: -718834032427880482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_18
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 309
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d6833eff2901dd60800000000000000
+      internalID: 7913116121999574737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_19
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 306
+        width: 19
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e632fe43374e97b0800000000000000
+      internalID: -5215653032755054879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_20
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 300
+        width: 20
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e01505f4f475c1a0800000000000000
+      internalID: -6789892267759562526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_21
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 277
+        width: 27
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a95d9fceb471d570800000000000000
+      internalID: 8489695135445899684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_22
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 267
+        width: 23
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d31a47c357e0ab50800000000000000
+      internalID: 6602531400736969682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_23
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 270
+        width: 23
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34089aefad236d180800000000000000
+      internalID: -9091022881643986877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_24
+      rect:
+        serializedVersion: 2
+        x: 93
+        y: 279
+        width: 23
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42d72673098bffb50800000000000000
+      internalID: 6629220106056662308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_25
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 279
+        width: 36
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 676ae259e5fb033e0800000000000000
+      internalID: -2075949015267105162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_26
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 266
+        width: 38
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15c811177b63f4280800000000000000
+      internalID: -9056960164114887599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_27
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 249
+        width: 38
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d325614261a108e0800000000000000
+      internalID: -1728923338557545513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_28
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 239
+        width: 27
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0856109f5147d7250800000000000000
+      internalID: 5944034720919676288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_29
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 239
+        width: 23
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 773178f09ad91b600800000000000000
+      internalID: 482339984540898167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_30
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 249
+        width: 23
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92ed5df2a50e117b0800000000000000
+      internalID: -5255172612210434519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_31
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 249
+        width: 23
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33faa8868c6288380800000000000000
+      internalID: -8968876015719108813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_32
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 249
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e821f7165844990d0800000000000000
+      internalID: -3415623502726753650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_33
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 203
+        width: 43
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb6419b7c88023950800000000000000
+      internalID: 6427209017672681148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_34
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 193
+        width: 43
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab710c80276cf6d10800000000000000
+      internalID: 2121132142590171066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_35
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 210
+        width: 31
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 154a2c51f43ba7cb0800000000000000
+      internalID: -4865379295171533743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_36
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 217
+        width: 25
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffa386a998776b7f0800000000000000
+      internalID: -597158467695265025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_37
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 217
+        width: 16
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3293b0135d2800980800000000000000
+      internalID: -8574709838350960349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_38
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 217
+        width: 28
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57b21ef00ad810d50800000000000000
+      internalID: 6701793439104707445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_39
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 159
+        width: 43
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 670f92739aedd5be0800000000000000
+      internalID: -1486787483606060938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_40
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 150
+        width: 43
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15752d6df57da3ad0800000000000000
+      internalID: -2721626218166069423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_41
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 181
+        width: 35
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2cce783fd37847940800000000000000
+      internalID: 5293004162215701698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_42
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 184
+        width: 25
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c96b0f902f6db8620800000000000000
+      internalID: 2777549930241242780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_43
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 188
+        width: 25
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1de33fdba6de6d80800000000000000
+      internalID: -8255425033251066598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_44
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 188
+        width: 28
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82ddb3885c960be80800000000000000
+      internalID: -8164909827307610840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_45
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 109
+        width: 38
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f157ebd535825ec0800000000000000
+      internalID: -3579652287436992015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_46
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 128
+        width: 35
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b07e5ffc7f4a4aab0800000000000000
+      internalID: -4997688302221531381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_47
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 157
+        width: 45
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c9936104ef8e1aa0800000000000000
+      internalID: -6188350628521862714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_48
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 155
+        width: 25
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 161e937eb1ea28d80800000000000000
+      internalID: -8249840132522647199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_49
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 108
+        width: 43
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 348c873193cdcc140800000000000000
+      internalID: 4741406645412218947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_50
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 131
+        width: 37
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62ab630487e038eb0800000000000000
+      internalID: -4718912074917955034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_51
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 121
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f37c6b1aeea5aa00800000000000000
+      internalID: 767211632042210292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_52
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 119
+        width: 28
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b522192790d29e1c0800000000000000
+      internalID: -4473995236215807397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_53
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 65
+        width: 45
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1cd46a4d77c559a50800000000000000
+      internalID: 6527224904681934273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_54
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 64
+        width: 43
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 064e4596dd58e9390800000000000000
+      internalID: -7809657517812423584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_55
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 87
+        width: 46
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5678a06e0ae40ab0800000000000000
+      internalID: -5042648335276018082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_56
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 88
+        width: 45
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17827b3375f977260800000000000000
+      internalID: 7095314934824118385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_57
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 87
+        width: 25
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51b72a6a28f399d40800000000000000
+      internalID: 5591570242731146005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_58
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 2
+        width: 60
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 930670c797de38f20800000000000000
+      internalID: 3423841247759392825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_59
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 43
+        width: 43
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a916cf8addb754bb0800000000000000
+      internalID: -4952416023270891110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_60
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 2
+        width: 94
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71c97f7913908fff0800000000000000
+      internalID: -2241691206050793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_61
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 1
+        width: 43
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 382b3f46beb7e9400800000000000000
+      internalID: 332839673413218947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_62
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 11
+        width: 7
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ad24998dbca03b30800000000000000
+      internalID: 4265098777176845736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_63
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 27
+        width: 31
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8fb10f3c99009f60800000000000000
+      internalID: 8038935901532962699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteAtlasTexture-alien (Group 0)-256x512-fmt13_64
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 0
+        width: 33
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d17a8ad6a8709db90800000000000000
+      internalID: -7216728636757858531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
