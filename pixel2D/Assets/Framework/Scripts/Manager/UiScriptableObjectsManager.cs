@@ -19,6 +19,9 @@ namespace Framework.Scripts.Manager
         
         public bool isGenerateCode = false;
 
+        [ReadOnly]
+        public Object[] selectViews;
+
         // 刷新列表
 #if UNITY_EDITOR
         [Button(ButtonSizes.Medium), PropertyOrder(-1)]

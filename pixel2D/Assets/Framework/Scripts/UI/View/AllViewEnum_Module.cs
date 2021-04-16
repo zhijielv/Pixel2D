@@ -15,6 +15,7 @@ namespace Framework.Scripts.UI.View
     {
         Main_View,
         Test_View,
+        BiaoTi_View,
         MaxValue,
     }
 }

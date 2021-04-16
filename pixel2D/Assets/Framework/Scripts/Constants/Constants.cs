@@ -8,7 +8,7 @@ namespace Framework
     public static class Constants
     {
         ////////////////////////////////////////////  Path  ///////////////////////////////////////////////////////
-        public static readonly string ScriptableObjectDir = "Assets/Art/UIScriptableObject/";
+        public static readonly string ScriptableObjectDir = "Assets/Art/ScriptableObject/UIScriptableObject/";
         public static readonly string ScriptableObjectScriptDir = "Assets/Framework/Scripts/UI/ScriptableObjects/";
         public static readonly string ViewScriptDir = "/Framework/Scripts/UI/View/";
         public static readonly string ViewPrefabDir = "Assets/Art/Prefabs/UI/View/";
