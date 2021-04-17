@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Framework.Scripts.Constants;
 using Framework.Scripts.Singleton;
+using UnityEngine;
 
 namespace Framework.Scripts.Manager
 {
@@ -63,7 +64,7 @@ namespace Framework.Scripts.Manager
         /// </summary>
         /// <param name="type">事件类型</param>
         /// <param name="data">事件的数据(可为null)</param>
-        public void DispatchEvent(EventConstants type, object data)
+        public void DispatchEvent(EventConstants type, object data = null)
         {
             if (!EventConstantsListeners.ContainsKey(type))
             {

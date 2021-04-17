@@ -5,10 +5,13 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Framework.Scripts.Constants;
 using Framework.Scripts.Manager;
+using Rewired;
 using Sirenix.OdinInspector;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -18,14 +21,61 @@ namespace Framework.Scripts.UI.Base
 {
     public class ViewBase : UiWidgetBase
     {
-        [ShowInInspector] [ReadOnly] public CanvasGroup canvasGroup;
+        [ShowInInspector] [Sirenix.OdinInspector.ReadOnly]
+        public CanvasGroup canvasGroup;
 
-        #region private
+        readonly struct EventItem
+        {
+            public readonly EventConstants EventType;
+            public readonly DelegateEvent.EventHandler ListenerFunc;
+
+            public EventItem(EventConstants type, DelegateEvent.EventHandler listenerFunc)
+            {
+                EventType = type;
+                ListenerFunc = listenerFunc;
+            }
+        }
+
+        #region EventHandler
+
+        private readonly List<EventItem> _eventItems = new List<EventItem>();
+
+        private readonly List<Action<InputActionEventData>> inputEventDelegateActions =
+            new List<Action<InputActionEventData>>();
+
+        protected void AddEventListener(EventConstants type, DelegateEvent.EventHandler listenerFunc)
+        {
+            EventManager.Instance.AddEventListener(type, listenerFunc);
+            _eventItems.Add(new EventItem(type, listenerFunc));
+        }
+
+        protected void AddInputEventDelegate(Action<InputActionEventData> callback,
+            UpdateLoopType updateLoop,
+            InputActionEventType eventType,
+            string actionName)
+        {
+            if (!ReInput.isReady) return;
+            Player player = ReInput.players.GetPlayer(0);
+            if (player == null) return;
+            inputEventDelegateActions.Add(callback);
+            player.AddInputEventDelegate(callback, updateLoop, eventType, actionName);
+        }
+
+        protected void Disable()
+        {
+            foreach (EventItem eventItem in _eventItems)
+                EventManager.Instance.RemoveEventListener(eventItem.EventType, eventItem.ListenerFunc);
+
+            if (!ReInput.isReady) return;
+            Player player = ReInput.players.GetPlayer(0);
+            foreach (Action<InputActionEventData> action in inputEventDelegateActions)
+                player.RemoveInputEventDelegate(action);
+        }
 
         #endregion
 
         #region public
-        
+
         internal virtual object GetWidget(string widgetName)
         {
             Type viewType = GetType();

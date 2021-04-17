@@ -12,6 +12,7 @@ using Framework.Scripts.Manager;
 using Sirenix.OdinInspector;
 using UnityEngine.UI;
 using System;
+using Framework.Scripts.Constants;
 using Rewired;
 using UnityEngine;
 namespace Framework.Scripts.UI.View
@@ -65,29 +66,25 @@ namespace Framework.Scripts.UI.View
         {
             if(!ReInput.isReady) return;
             Player player = ReInput.players.GetPlayer(0);
-            if(player == null) return;
-            
             // Subscribe to input events
-            player.AddInputEventDelegate(TestX, UpdateLoopType.Update, InputActionEventType.AxisActive, "MoveX");
-            player.AddInputEventDelegate(TestX, UpdateLoopType.Update, InputActionEventType.AxisInactive, "MoveX");
-            player.AddInputEventDelegate(TestY, UpdateLoopType.Update, InputActionEventType.AxisActive, "MoveY");
-            player.AddInputEventDelegate(TestY, UpdateLoopType.Update, InputActionEventType.AxisInactive, "MoveY");
-            player.AddInputEventDelegate(TestButton, UpdateLoopType.Update, InputActionEventType.ButtonJustPressed, "Fire");
-            player.AddInputEventDelegate(TestButton, UpdateLoopType.Update, InputActionEventType.ButtonJustReleased, "Fire");
+            AddInputEventDelegate(TestX, UpdateLoopType.Update, InputActionEventType.AxisActive, "MoveX");
+            AddInputEventDelegate(TestX, UpdateLoopType.Update, InputActionEventType.AxisInactive, "MoveX");
+            AddInputEventDelegate(TestY, UpdateLoopType.Update, InputActionEventType.AxisActive, "MoveY");
+            AddInputEventDelegate(TestY, UpdateLoopType.Update, InputActionEventType.AxisInactive, "MoveY");
+            AddInputEventDelegate(TestButton, UpdateLoopType.Update, InputActionEventType.ButtonJustPressed, "Fire");
+            AddInputEventDelegate(TestButton, UpdateLoopType.Update, InputActionEventType.ButtonJustReleased, "Fire");
+            
+            AddEventListener(EventConstants.StartGame, TestListenerFunc);
         }
         
+
+        private void TestListenerFunc(EventData data)
+        {
+            Debug.Log($"{data.Type}    {data.Data}");
+        }
+
         private void OnDisable() {
-            if(!ReInput.isReady) return;
-
-            Player player = ReInput.players.GetPlayer(0);
-            if(player == null) return;
-
-            // Unsubscribe from input events
-            player.RemoveInputEventDelegate(TestX);
-            player.RemoveInputEventDelegate(TestX);
-            player.RemoveInputEventDelegate(TestButton);
-            player.RemoveInputEventDelegate(TestY);
-            player.RemoveInputEventDelegate(TestY);
+            Disable();
         }
         public void TestX(InputActionEventData data)
         {
@@ -102,6 +99,7 @@ namespace Framework.Scripts.UI.View
         public void TestButton(InputActionEventData data)
         {
             Center_Text.text = data.GetButton().ToString();
+            EventManager.Instance.DispatchEvent(EventConstants.StartGame);
         }
     }
 }
