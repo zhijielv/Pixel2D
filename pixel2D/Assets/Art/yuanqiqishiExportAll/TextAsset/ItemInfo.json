@@ -1,0 +1,650 @@
+{
+  "blueprints": [
+    {
+      "name": "blueprint_m_mech_5",
+      "targetObject": "m_mech_5",
+      "price": 0,
+      "isHidden": true
+    },
+    {
+      "name": "blueprint_m_mech_4",
+      "targetObject": "m_mech_4",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_m_mech_3",
+      "targetObject": "m_mech_3",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_m_mech_2",
+      "targetObject": "m_mech_2",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_weapon_189",
+      "targetObject": "weapon_189",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_weapon_195",
+      "targetObject": "weapon_195",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_weapon_237",
+      "targetObject": "weapon_237",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_weapon_238",
+      "targetObject": "weapon_238",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_weapon_242",
+      "targetObject": "weapon_242",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_weapon_333",
+      "targetObject": "weapon_333",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_weapon_211",
+      "targetObject": "weapon_211",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_weapon_212",
+      "targetObject": "weapon_212",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_weapon_223",
+      "targetObject": "weapon_223",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_weapon_188",
+      "targetObject": "weapon_188",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_weapon_213",
+      "targetObject": "weapon_213",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_weapon_184",
+      "targetObject": "weapon_184",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_weapon_224",
+      "targetObject": "weapon_224",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_weapon_321",
+      "targetObject": "weapon_321",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_weapon_294",
+      "targetObject": "weapon_294",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_weapon_217",
+      "targetObject": "weapon_217",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_weapon_240",
+      "targetObject": "weapon_240",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_weapon_252",
+      "targetObject": "weapon_252",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_skill_Druid_1",
+      "targetObject": "skill_Druid_1",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_skill_Officer_2",
+      "targetObject": "skill_Officer_2",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_skill_Paladin_2",
+      "targetObject": "skill_Paladin_2",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_skill_Priest_1",
+      "targetObject": "skill_Priest_1",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_skill_Viking_2",
+      "targetObject": "skill_Viking_2",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_skin_alchemist_8",
+      "targetObject": "skin_alchemist_8",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_skin_elves_9",
+      "targetObject": "skin_elves_9",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_skin_ranger_6",
+      "targetObject": "skin_ranger_6",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_room_decorate_drink_seller",
+      "targetObject": "room_decorate_drink_seller",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_room_decorate_fishbowl",
+      "targetObject": "room_decorate_fishbowl",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_room_decorate_magic_well",
+      "targetObject": "room_decorate_magic_well",
+      "price": 0,
+      "isHidden": false
+    },
+    {
+      "name": "blueprint_room_decorate_mysteriou_statue",
+      "targetObject": "room_decorate_mysteriou_statue",
+      "price": 0,
+      "isHidden": false
+    }
+  ],
+  "materials": [
+    {
+      "name": "material_gem",
+      "targetObject": null,
+      "price": 1,
+      "isHidden": false
+    },
+    {
+      "name": "material_battery",
+      "targetObject": null,
+      "price": 30,
+      "isHidden": false
+    },
+    {
+      "name": "material_cell",
+      "targetObject": null,
+      "price": 30,
+      "isHidden": false
+    },
+    {
+      "name": "material_fish",
+      "targetObject": null,
+      "price": 30,
+      "isHidden": false
+    },
+    {
+      "name": "material_fragment_c6h8o6",
+      "targetObject": null,
+      "price": 30,
+      "isHidden": false
+    },
+    {
+      "name": "material_fragment_zulan",
+      "targetObject": null,
+      "price": 30,
+      "isHidden": false
+    },
+    {
+      "name": "material_gear",
+      "targetObject": null,
+      "price": 30,
+      "isHidden": false
+    },
+    {
+      "name": "material_iron",
+      "targetObject": null,
+      "price": 30,
+      "isHidden": false
+    },
+    {
+      "name": "material_wood",
+      "targetObject": null,
+      "price": 30,
+      "isHidden": false
+    },
+    {
+      "name": "material_fertilize",
+      "targetObject": null,
+      "price": 200,
+      "isHidden": false
+    },
+    {
+      "name": "material_magic_black",
+      "targetObject": null,
+      "price": 200,
+      "isHidden": false
+    },
+    {
+      "name": "material_magic_blue",
+      "targetObject": null,
+      "price": 200,
+      "isHidden": false
+    },
+    {
+      "name": "material_magic_green",
+      "targetObject": null,
+      "price": 200,
+      "isHidden": false
+    },
+    {
+      "name": "material_magic_orange",
+      "targetObject": null,
+      "price": 200,
+      "isHidden": false
+    },
+    {
+      "name": "material_magic_purple",
+      "targetObject": null,
+      "price": 200,
+      "isHidden": false
+    },
+    {
+      "name": "material_magic_red",
+      "targetObject": null,
+      "price": 200,
+      "isHidden": false
+    },
+    {
+      "name": "material_skill_Druid_1",
+      "targetObject": null,
+      "price": 200,
+      "isHidden": false
+    },
+    {
+      "name": "material_skill_Officer_2",
+      "targetObject": null,
+      "price": 200,
+      "isHidden": false
+    },
+    {
+      "name": "material_skill_Paladin_2",
+      "targetObject": null,
+      "price": 200,
+      "isHidden": false
+    },
+    {
+      "name": "material_skill_Priest_1",
+      "targetObject": null,
+      "price": 200,
+      "isHidden": false
+    },
+    {
+      "name": "material_skill_Viking_2",
+      "targetObject": null,
+      "price": 200,
+      "isHidden": false
+    },
+    {
+      "name": "material_plantpot_1",
+      "targetObject": null,
+      "price": 500,
+      "isHidden": false
+    },
+    {
+      "name": "material_plantpot_2",
+      "targetObject": null,
+      "price": 500,
+      "isHidden": false
+    },
+    {
+      "name": "material_plantpot_3",
+      "targetObject": null,
+      "price": 500,
+      "isHidden": false
+    },
+    {
+      "name": "material_plantpot_4",
+      "targetObject": null,
+      "price": 500,
+      "isHidden": false
+    },
+    {
+      "name": "material_rebornCard",
+      "targetObject": null,
+      "price": 500,
+      "isHidden": false
+    },
+    {
+      "name": "material_ticket",
+      "targetObject": null,
+      "price": 500,
+      "isHidden": false
+    },
+    {
+      "name": "material_ticket_bossrush",
+      "targetObject": null,
+      "price": 500,
+      "isHidden": false
+    },
+    {
+      "name": "material_skin_fragment_boss01",
+      "targetObject": null,
+      "price": 800,
+      "isHidden": false
+    },
+    {
+      "name": "material_skin_fragment_boss02",
+      "targetObject": null,
+      "price": 800,
+      "isHidden": false
+    },
+    {
+      "name": "material_skin_fragment_boss07",
+      "targetObject": null,
+      "price": 800,
+      "isHidden": false
+    },
+    {
+      "name": "material_skin_fragment_boss10",
+      "targetObject": null,
+      "price": 800,
+      "isHidden": false
+    },
+    {
+      "name": "material_skin_fragment_boss15",
+      "targetObject": null,
+      "price": 800,
+      "isHidden": false
+    },
+    {
+      "name": "material_skin_fragment_boss16",
+      "targetObject": null,
+      "price": 800,
+      "isHidden": false
+    },
+    {
+      "name": "material_skin_fragment_boss18",
+      "targetObject": null,
+      "price": 800,
+      "isHidden": false
+    },
+    {
+      "name": "material_skin_fragment_boss19",
+      "targetObject": null,
+      "price": 800,
+      "isHidden": false
+    },
+    {
+      "name": "material_skin_fragment_c12_s6",
+      "targetObject": null,
+      "price": 800,
+      "isHidden": false
+    },
+    {
+      "name": "material_skin_fragment_flag",
+      "targetObject": null,
+      "price": 800,
+      "isHidden": false
+    },
+    {
+      "name": "material_skin_fragment_law",
+      "targetObject": null,
+      "price": 800,
+      "isHidden": false
+    },
+    {
+      "name": "material_skin_fragment_shop",
+      "targetObject": null,
+      "price": 800,
+      "isHidden": false
+    },
+    {
+      "name": "material_skin_fragment_c12_s06",
+      "targetObject": null,
+      "price": 1200,
+      "isHidden": false
+    },
+    {
+      "name": "material_skin_fragment_c5_s8",
+      "targetObject": null,
+      "price": 1200,
+      "isHidden": false
+    }
+  ],
+  "seeds": [
+    {
+      "name": "plant_carrot_seed",
+      "targetObject": "plant_carrot",
+      "price": 50,
+      "isHidden": false
+    },
+    {
+      "name": "plant_shallot_seed",
+      "targetObject": "plant_shallot",
+      "price": 50,
+      "isHidden": false
+    },
+    {
+      "name": "plant_vine_seed",
+      "targetObject": "plant_vine",
+      "price": 50,
+      "isHidden": false
+    },
+    {
+      "name": "plant_gear_flower_seed",
+      "targetObject": "plant_gear_flower",
+      "price": 75,
+      "isHidden": false
+    },
+    {
+      "name": "plant_iron_tree_seed",
+      "targetObject": "plant_iron_tree",
+      "price": 75,
+      "isHidden": false
+    },
+    {
+      "name": "plant_gem_flower_seed",
+      "targetObject": "plant_gem_flower",
+      "price": 100,
+      "isHidden": false
+    },
+    {
+      "name": "plant_tree_seed",
+      "targetObject": "plant_tree",
+      "price": 100,
+      "isHidden": false
+    },
+    {
+      "name": "plant_trumpet_seed",
+      "targetObject": "plant_trumpet",
+      "price": 100,
+      "isHidden": false
+    },
+    {
+      "name": "plant_eator_seed",
+      "targetObject": "plant_eator",
+      "price": 300,
+      "isHidden": false
+    },
+    {
+      "name": "plant_heptacolor_seed",
+      "targetObject": "plant_heptacolor",
+      "price": 300,
+      "isHidden": false
+    },
+    {
+      "name": "plant_binary_tree_seed",
+      "targetObject": "plant_binary_tree",
+      "price": 400,
+      "isHidden": false
+    },
+    {
+      "name": "plant_fantastic_flower_seed",
+      "targetObject": "plant_fantastic_flower",
+      "price": 400,
+      "isHidden": false
+    },
+    {
+      "name": "plant_lycoris_seed",
+      "targetObject": "plant_lycoris",
+      "price": 400,
+      "isHidden": false
+    },
+    {
+      "name": "plant_mirror_plane_flower_seed",
+      "targetObject": "plant_mirror_plane_flower",
+      "price": 400,
+      "isHidden": false
+    },
+    {
+      "name": "plant_radar_seed",
+      "targetObject": "plant_radar",
+      "price": 400,
+      "isHidden": false
+    },
+    {
+      "name": "plant_strange_flower_seed",
+      "targetObject": "plant_strange_flower",
+      "price": 400,
+      "isHidden": false
+    },
+    {
+      "name": "plant_watermelon_seed",
+      "targetObject": "plant_watermelon",
+      "price": 400,
+      "isHidden": false
+    },
+    {
+      "name": "plant_lotus_seed",
+      "targetObject": "plant_lotus",
+      "price": 750,
+      "isHidden": false
+    },
+    {
+      "name": "plant_defend_flower_seed",
+      "targetObject": "plant_defend_flower",
+      "price": 999,
+      "isHidden": false
+    },
+    {
+      "name": "plant_banboo_seed",
+      "targetObject": "plant_banboo",
+      "price": 1000,
+      "isHidden": false
+    },
+    {
+      "name": "plant_xmas_seed",
+      "targetObject": "plant_xmas",
+      "price": 1000,
+      "isHidden": false
+    },
+    {
+      "name": "plant_cactus_seed",
+      "targetObject": "plant_cactus",
+      "price": 3000,
+      "isHidden": false
+    },
+    {
+      "name": "plant_gem_tree_seed",
+      "targetObject": "plant_gem_tree",
+      "price": 3000,
+      "isHidden": false
+    },
+    {
+      "name": "plant_magic_flower_seed",
+      "targetObject": "plant_magic_flower",
+      "price": 3000,
+      "isHidden": false
+    },
+    {
+      "name": "plant_mushroom_gold_seed",
+      "targetObject": "plant_mushroom_gold",
+      "price": 3000,
+      "isHidden": false
+    },
+    {
+      "name": "plant_mushroom_seed",
+      "targetObject": "plant_mushroom",
+      "price": 3000,
+      "isHidden": false
+    },
+    {
+      "name": "plant_pumpkin_seed",
+      "targetObject": "plant_pumpkin",
+      "price": 3000,
+      "isHidden": false
+    },
+    {
+      "name": "plant_datura_seed",
+      "targetObject": "plant_datura",
+      "price": 10000,
+      "isHidden": false
+    },
+    {
+      "name": "plant_dragon_tree_seed",
+      "targetObject": "plant_dragon_tree",
+      "price": 10000,
+      "isHidden": false
+    },
+    {
+      "name": "plant_mandrake_seed",
+      "targetObject": "plant_mandrake",
+      "price": 10000,
+      "isHidden": false
+    },
+    {
+      "name": "plant_worm_seed",
+      "targetObject": "plant_worm",
+      "price": 10000,
+      "isHidden": false
+    }
+  ]
+}

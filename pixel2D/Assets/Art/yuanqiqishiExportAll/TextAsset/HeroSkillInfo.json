@@ -1,0 +1,344 @@
+{
+  "skillInfo": {
+    "Knight": [
+      {
+        "Key": 0,
+        "Value": {
+          "price": 0
+        }
+      },
+      {
+        "Key": 1,
+        "Value": {
+          "price": 5000
+        }
+      },
+      {
+        "Key": 2,
+        "Value": {
+          "price": 6000
+        }
+      }
+    ],
+    "Ranger": [
+      {
+        "Key": 0,
+        "Value": {
+          "price": 0
+        }
+      },
+      {
+        "Key": 1,
+        "Value": {
+          "price": 0
+        }
+      },
+      {
+        "Key": 2,
+        "Value": {
+          "price": 0
+        }
+      }
+    ],
+    "Mage": [
+      {
+        "Key": 0,
+        "Value": {
+          "price": 0
+        }
+      },
+      {
+        "Key": 1,
+        "Value": {
+          "price": 6000
+        }
+      },
+      {
+        "Key": 2,
+        "Value": {
+          "price": 0
+        }
+      }
+    ],
+    "Assassin": [
+      {
+        "Key": 0,
+        "Value": {
+          "price": 0
+        }
+      },
+      {
+        "Key": 1,
+        "Value": {
+          "price": 7000
+        }
+      },
+      {
+        "Key": 2,
+        "Value": {
+          "price": 7000
+        }
+      }
+    ],
+    "Alchemist": [
+      {
+        "Key": 0,
+        "Value": {
+          "price": 0
+        }
+      },
+      {
+        "Key": 1,
+        "Value": {
+          "price": 8000
+        }
+      },
+      {
+        "Key": 2,
+        "Value": {
+          "price": 0
+        }
+      }
+    ],
+    "Engineer": [
+      {
+        "Key": 0,
+        "Value": {
+          "price": 0
+        }
+      },
+      {
+        "Key": 1,
+        "Value": {
+          "price": 0
+        }
+      },
+      {
+        "Key": 2,
+        "Value": {
+          "price": 0
+        }
+      }
+    ],
+    "Vampire": [
+      {
+        "Key": 0,
+        "Value": {
+          "price": 0
+        }
+      },
+      {
+        "Key": 1,
+        "Value": {
+          "price": 0
+        }
+      },
+      {
+        "Key": 2,
+        "Value": {
+          "price": 10000
+        }
+      }
+    ],
+    "Paladin": [
+      {
+        "Key": 0,
+        "Value": {
+          "price": 0
+        }
+      },
+      {
+        "Key": 1,
+        "Value": {
+          "price": 0
+        }
+      },
+      {
+        "Key": 2,
+        "Value": {
+          "price": -1
+        }
+      }
+    ],
+    "Elves": [
+      {
+        "Key": 0,
+        "Value": {
+          "price": 0
+        }
+      },
+      {
+        "Key": 1,
+        "Value": {
+          "price": 0
+        }
+      },
+      {
+        "Key": 2,
+        "Value": {
+          "price": 10000
+        }
+      }
+    ],
+    "Werewolf": [
+      {
+        "Key": 0,
+        "Value": {
+          "price": 0
+        }
+      },
+      {
+        "Key": 1,
+        "Value": {
+          "price": 12000
+        }
+      },
+      {
+        "Key": 2,
+        "Value": {
+          "price": 0
+        }
+      }
+    ],
+    "Priest": [
+      {
+        "Key": 0,
+        "Value": {
+          "price": 0
+        }
+      },
+      {
+        "Key": 1,
+        "Value": {
+          "price": -1
+        }
+      },
+      {
+        "Key": 2,
+        "Value": {
+          "price": 0
+        }
+      }
+    ],
+    "Druid": [
+      {
+        "Key": 0,
+        "Value": {
+          "price": 0
+        }
+      },
+      {
+        "Key": 1,
+        "Value": {
+          "price": -1
+        }
+      },
+      {
+        "Key": 2,
+        "Value": {
+          "price": 10000
+        }
+      }
+    ],
+    "Robot": [
+      {
+        "Key": 0,
+        "Value": {
+          "price": 0
+        }
+      },
+      {
+        "Key": 1,
+        "Value": {
+          "price": 0
+        }
+      },
+      {
+        "Key": 2,
+        "Value": {
+          "price": 8000
+        }
+      }
+    ],
+    "Viking": [
+      {
+        "Key": 0,
+        "Value": {
+          "price": 0
+        }
+      },
+      {
+        "Key": 1,
+        "Value": {
+          "price": 0
+        }
+      },
+      {
+        "Key": 2,
+        "Value": {
+          "price": -1
+        }
+      }
+    ],
+    "Necromancer": [
+      {
+        "Key": 0,
+        "Value": {
+          "price": 0
+        }
+      },
+      {
+        "Key": 1,
+        "Value": {
+          "price": 0
+        }
+      },
+      {
+        "Key": 2,
+        "Value": {
+          "price": 0
+        }
+      }
+    ],
+    "Officer": [
+      {
+        "Key": 0,
+        "Value": {
+          "price": 0
+        }
+      },
+      {
+        "Key": 1,
+        "Value": {
+          "price": 8000
+        }
+      },
+      {
+        "Key": 2,
+        "Value": {
+          "price": -1
+        }
+      }
+    ],
+    "Taoist": [
+      {
+        "Key": 0,
+        "Value": {
+          "price": 0
+        }
+      },
+      {
+        "Key": 1,
+        "Value": {
+          "price": 0
+        }
+      },
+      {
+        "Key": 2,
+        "Value": {
+          "price": 10000
+        }
+      }
+    ]
+  }
+}
