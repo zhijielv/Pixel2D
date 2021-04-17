@@ -7,9 +7,9 @@
 using System;
 using System.Globalization;
 using System.Reflection;
+using Framework.Scripts.Manager;
 using Framework.Scripts.UI.Base;
 using Framework.Scripts.UI.View;
-using Manager;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,6 +23,7 @@ public class Main : MonoBehaviour
     {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         gameObject.AddComponent<UiManager>();
+        gameObject.AddComponent<EventManager>();
         UiManager.Instance.mainCanvas = GameObject.FindWithTag("MainCanvas").GetComponent<Canvas>();
     }
 

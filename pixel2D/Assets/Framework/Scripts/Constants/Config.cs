@@ -1,4 +1,4 @@
-﻿namespace Framework
+﻿namespace Framework.Scripts.Constants
 {
     // 保存需要Generate的UI类型
     public enum UIConfig
@@ -7,7 +7,7 @@
         Button,
         Image,
         ___UnityEngine_UI,
-        tmpCustomScroll,
+        TMPCustomScroll,
         ___CustomView,
         Panel,
         ___GameObject,

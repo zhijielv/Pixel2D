@@ -3,7 +3,7 @@ using System.Text;
 using Sirenix.Utilities;
 using UnityEngine;
 
-namespace Framework
+namespace Framework.Scripts.Constants
 {
     public static class Constants
     {

@@ -8,9 +8,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using System.Data;
-using Manager;
+using Framework.Scripts.Manager;
 using Sirenix.OdinInspector;
 using UnityEngine.UI;
+using System;
+using Rewired;
+using UnityEngine;
 namespace Framework.Scripts.UI.View
 {
     using Base;
@@ -53,9 +56,52 @@ namespace Framework.Scripts.UI.View
         
         private void Update()
         {
-            CenterTop_Text.text = System.DateTime.Now.ToString("yyyy-MM-dd dddd");
-            Center_Text.text = System.DateTime.Now.ToString("HH:mm");
-            CenterRight_Text.text = System.DateTime.Now.ToString("ss");
+            // CenterTop_Text.text = System.DateTime.Now.ToString("yyyy-MM-dd dddd");
+            // Center_Text.text = System.DateTime.Now.ToString("HH:mm");
+            // CenterRight_Text.text = System.DateTime.Now.ToString("ss");
+        }
+        
+        private void OnEnable()
+        {
+            if(!ReInput.isReady) return;
+            Player player = ReInput.players.GetPlayer(0);
+            if(player == null) return;
+            
+            // Subscribe to input events
+            player.AddInputEventDelegate(TestX, UpdateLoopType.Update, InputActionEventType.AxisActive, "MoveX");
+            player.AddInputEventDelegate(TestX, UpdateLoopType.Update, InputActionEventType.AxisInactive, "MoveX");
+            player.AddInputEventDelegate(TestY, UpdateLoopType.Update, InputActionEventType.AxisActive, "MoveY");
+            player.AddInputEventDelegate(TestY, UpdateLoopType.Update, InputActionEventType.AxisInactive, "MoveY");
+            player.AddInputEventDelegate(TestButton, UpdateLoopType.Update, InputActionEventType.ButtonJustPressed, "Fire");
+            player.AddInputEventDelegate(TestButton, UpdateLoopType.Update, InputActionEventType.ButtonJustReleased, "Fire");
+        }
+        
+        private void OnDisable() {
+            if(!ReInput.isReady) return;
+
+            Player player = ReInput.players.GetPlayer(0);
+            if(player == null) return;
+
+            // Unsubscribe from input events
+            player.RemoveInputEventDelegate(TestX);
+            player.RemoveInputEventDelegate(TestX);
+            player.RemoveInputEventDelegate(TestButton);
+            player.RemoveInputEventDelegate(TestY);
+            player.RemoveInputEventDelegate(TestY);
+        }
+        public void TestX(InputActionEventData data)
+        {
+            LeftTop_Text.text = data.GetAxis().ToString();
+        }
+        
+        public void TestY(InputActionEventData data)
+        {
+            CenterTop_Text.text = data.GetAxis().ToString();
+        }
+
+        public void TestButton(InputActionEventData data)
+        {
+            Center_Text.text = data.GetButton().ToString();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Framework.Singleton
+namespace Framework.Scripts.Singleton
 {
     public class ManagerSingleton<T> : MonoBehaviour where T : ManagerSingleton<T>
     {

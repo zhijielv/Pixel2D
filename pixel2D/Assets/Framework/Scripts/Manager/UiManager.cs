@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Framework;
-using Framework.Scripts.Manager;
+using Framework.Scripts.Singleton;
 using Framework.Scripts.UI.Base;
 using Framework.Scripts.UI.ScriptableObjects;
-using Framework.Singleton;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEngine;
 
-namespace Manager
+namespace Framework.Scripts.Manager
 {
     public class UiManager : ManagerSingleton<UiManager>
     {
@@ -99,16 +97,16 @@ namespace Manager
         }
         private void RegistView(GameObject widgetObj)
         {
-            string viewName = Constants.ReplaceString(widgetObj.name, "(Clone)", "");
+            string viewName = Constants.Constants.ReplaceString(widgetObj.name, "(Clone)", "");
             if (!uiList.ContainsKey(viewName))
             {
-                Type type = Type.GetType(Constants.UiNameSpace + viewName);
+                Type type = Type.GetType(Constants.Constants.UiNameSpace + viewName);
                 if (type == null)
                 {
                     Debug.LogError($"{widgetObj.name} is not Generate");
                     return;
                 }
-                ViewBase viewBase = (ViewBase) Constants.AddOrGetComponent(widgetObj, type);
+                ViewBase viewBase = (ViewBase) Constants.Constants.AddOrGetComponent(widgetObj, type);
                 uiList.Add(viewName, viewBase);
             }
             else

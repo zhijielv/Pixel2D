@@ -1,4 +1,4 @@
-﻿namespace Framework
+﻿namespace Framework.Scripts.Constants
 {
     public class Common
     {

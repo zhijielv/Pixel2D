@@ -6,7 +6,8 @@
 
 using System;
 using System.Reflection;
-using Manager;
+using Framework.Scripts.Constants;
+using Framework.Scripts.Manager;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -158,7 +159,7 @@ namespace Framework.Scripts.UI.Base
 
         public void ShowWithHiddenTurn()
         {
-            canvasGroup = (CanvasGroup) Constants.AddOrGetComponent(gameObject, typeof(CanvasGroup));
+            canvasGroup = (CanvasGroup) Constants.Constants.AddOrGetComponent(gameObject, typeof(CanvasGroup));
             canvasGroup.alpha = Mathf.Abs(canvasGroup.alpha - 1);
             canvasGroup.interactable = !canvasGroup.interactable;
             canvasGroup.blocksRaycasts = !canvasGroup.blocksRaycasts;

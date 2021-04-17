@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Framework.Scripts.Constants;
 using Framework.Scripts.Manager;
 using Framework.Scripts.UI.Base;
 using Sirenix.OdinInspector;
@@ -36,7 +37,7 @@ namespace Framework.Scripts.UI.ScriptableObjects
                     case UIConfig.Button:
                     case UIConfig.Image:
                     case UIConfig.Panel:
-                        Constants.AddOrGetComponent(child.gameObject, typeof(UiWidgetBase));
+                        Constants.Constants.AddOrGetComponent(child.gameObject, typeof(UiWidgetBase));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

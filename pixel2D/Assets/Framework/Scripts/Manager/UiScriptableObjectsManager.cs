@@ -9,7 +9,7 @@ namespace Framework.Scripts.Manager
 {
     [HideMonoScript]
     [SirenixGlobalConfig]
-    [GlobalConfig("Art/UIScriptableObjectManager")]
+    [GlobalConfig("Art/ScriptableObject/UIScriptableObjectManager")]
     public class UiScriptableObjectsManager : GlobalConfig<UiScriptableObjectsManager>
     {
         [ShowInInspector]
