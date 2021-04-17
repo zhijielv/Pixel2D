@@ -182,6 +182,10 @@ namespace Editor.Tools
             myNamespace.Imports.Add(new CodeNamespaceImport("Base"));
             myNamespace.Imports.Add(new CodeNamespaceImport("System"));
             myNamespace.Imports.Add(new CodeNamespaceImport("UnityEngine"));
+            
+            // todo 判断代码是否存在，存在则只修改成员变量
+            // CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
+            // string outputFile = Application.dataPath + Constants.ViewScriptDir + className + "/" + className + ".cs";
             CodeTypeDeclaration myClass = new CodeTypeDeclaration(className)
             {
                 IsClass = true, TypeAttributes = TypeAttributes.Public
