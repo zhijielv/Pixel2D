@@ -31,6 +31,9 @@ public class Main : MonoBehaviour
     {
         // 获取或创建界面
         UiManager.Instance.GetWidget<Main_View>();
+        // 切换Ui
+        // Main_View mainView = (Main_View) UiManager.Instance.GetWidget<Main_View>();
+        // mainView.ChangePanel<Test_View>();
         // 四种获取ui组件或界面的方法
         // 1
         // leftTopText = (Text) UiManager.Instance.GetWidget<Main_View>(Main_View_Widget.LeftTop_Text);
