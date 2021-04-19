@@ -16,7 +16,10 @@ namespace Framework.Scripts.UI.View
     
     public class Test_View : ViewBase
     {
-        public UnityEngine.UI.Button Test_Button;
+        // member
+		public UnityEngine.UI.Button Test_Button;
+		public UnityEngine.UI.Button Test3_Button;
+        // member end
         internal override object GetWidget(string widgetName)
         {
             if (!Enum.TryParse(widgetName, true, out Test_View_Widget _))

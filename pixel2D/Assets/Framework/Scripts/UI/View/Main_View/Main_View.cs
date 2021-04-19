@@ -15,23 +15,26 @@ using System;
 using Framework.Scripts.Constants;
 using Rewired;
 using UnityEngine;
+
 namespace Framework.Scripts.UI.View
 {
     using Base;
     using System;
     using UnityEngine;
-    
+
     public class Main_View : ViewBase
     {
-        public UnityEngine.UI.Image BG_Image;
-        public UnityEngine.GameObject Top_Panel;
-        public UnityEngine.UI.Text LeftTop_Text;
-        public UnityEngine.UI.Text CenterTop_Text;
-        public UnityEngine.UI.Text RightTop_Text;
-        public UnityEngine.GameObject Center_Panel;
-        public UnityEngine.UI.Text Center_Text;
-        public UnityEngine.UI.Text CenterRight_Text;
-        public UnityEngine.GameObject Bottom_Panel;
+        // member
+		public UnityEngine.UI.Image BG_Image;
+		public UnityEngine.GameObject Top_Panel;
+		public UnityEngine.UI.Text LeftTop_Text;
+		public UnityEngine.UI.Text CenterTop_Text;
+		public UnityEngine.UI.Text RightTop_Text;
+		public UnityEngine.GameObject Center_Panel;
+		public UnityEngine.UI.Text Center_Text;
+		public UnityEngine.UI.Text CenterRight_Text;
+		public UnityEngine.GameObject Bottom_Panel;
+        // member end
         internal override object GetWidget(string widgetName)
         {
             if (!Enum.TryParse(widgetName, true, out Main_View_Widget _))
@@ -44,7 +47,7 @@ namespace Framework.Scripts.UI.View
                 return base.GetWidget(widgetName);
             }
         }
-        
+
         private void Start()
         {
             LeftTop_Text.text = "";
@@ -54,17 +57,17 @@ namespace Framework.Scripts.UI.View
                           UiManager.Instance.mainCanvas.GetComponent<CanvasScaler>().referenceResolution.x;
             BG_Image.rectTransform.sizeDelta /= scale;
         }
-        
+
         private void Update()
         {
             // CenterTop_Text.text = System.DateTime.Now.ToString("yyyy-MM-dd dddd");
             // Center_Text.text = System.DateTime.Now.ToString("HH:mm");
             // CenterRight_Text.text = System.DateTime.Now.ToString("ss");
         }
-        
+
         private void OnEnable()
         {
-            if(!ReInput.isReady) return;
+            if (!ReInput.isReady) return;
             Player player = ReInput.players.GetPlayer(0);
             // Subscribe to input events
             AddInputEventDelegate(TestX, UpdateLoopType.Update, InputActionEventType.AxisActive, "MoveX");
@@ -73,24 +76,26 @@ namespace Framework.Scripts.UI.View
             AddInputEventDelegate(TestY, UpdateLoopType.Update, InputActionEventType.AxisInactive, "MoveY");
             AddInputEventDelegate(TestButton, UpdateLoopType.Update, InputActionEventType.ButtonJustPressed, "Fire");
             AddInputEventDelegate(TestButton, UpdateLoopType.Update, InputActionEventType.ButtonJustReleased, "Fire");
-            
+
             AddEventListener(EventConstants.StartGame, TestListenerFunc);
         }
-        
+
 
         private void TestListenerFunc(EventData data)
         {
             Debug.Log($"{data.Type}    {data.Data}");
         }
 
-        private void OnDisable() {
+        private void OnDisable()
+        {
             Disable();
         }
+
         public void TestX(InputActionEventData data)
         {
             LeftTop_Text.text = data.GetAxis().ToString();
         }
-        
+
         public void TestY(InputActionEventData data)
         {
             CenterTop_Text.text = data.GetAxis().ToString();

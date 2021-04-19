@@ -4,12 +4,13 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using DG.DemiEditor;
-using Framework;
 using Framework.Scripts.Constants;
 using Framework.Scripts.Manager;
 using Framework.Scripts.UI.Base;
 using Framework.Scripts.UI.ScriptableObjects;
+using Framework.Scripts.UI.View;
 using Sirenix.Utilities;
 using UnityEditor;
 using UnityEngine;
@@ -33,7 +34,7 @@ namespace Editor.Tools
             GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode = true;
             AutoGenerateEnd();
         }
-        
+
         /// <summary>
         /// 快捷键 Ctrl + Shift + G 生成所有代码
         /// 会删掉其他代码，尽量不用
@@ -69,7 +70,7 @@ namespace Editor.Tools
                     GameObject tmpView = t as GameObject;
                     List<string> tmpMember = GetScriptableObjectWidgetList(t.name, tmpView);
                     AutoGeneratView(t.name, tmpMember);
-                    SetViewObj();
+                    // SetViewObj();
                 }
                 catch (Exception e)
                 {
@@ -80,7 +81,7 @@ namespace Editor.Tools
 
             Debug.Log("Generate all View Prefab End");
         }
-        
+
         private static List<Object> GetAllViewPrefab(string srcPath = null)
         {
             if (srcPath == null) srcPath = Constants.ViewPrefabDir;
@@ -182,37 +183,87 @@ namespace Editor.Tools
             myNamespace.Imports.Add(new CodeNamespaceImport("Base"));
             myNamespace.Imports.Add(new CodeNamespaceImport("System"));
             myNamespace.Imports.Add(new CodeNamespaceImport("UnityEngine"));
-            
+
             // todo 判断代码是否存在，存在则只修改成员变量
-            // CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
-            // string outputFile = Application.dataPath + Constants.ViewScriptDir + className + "/" + className + ".cs";
+            string outputFile = Application.dataPath + Constants.ViewScriptDir + className + "/" + className + ".cs";
+            if (File.Exists(outputFile))
+            {
+                StreamReader streamReader = File.OpenText(outputFile);
+                StringBuilder stringBuilder = new StringBuilder();
+                string readLine = streamReader.ReadLine();
+                while (!streamReader.EndOfStream)
+                {
+                    if (readLine != null && readLine.EndsWith("// member"))
+                    {
+                        stringBuilder.AppendLine(readLine);
+                        foreach (var t in tmpMember)
+                        {
+                            stringBuilder.AppendLine(
+                                $"\t\tpublic {Constants.GetWidgetTypeByName(t)} {t};"
+                            );
+                        }
+
+                        while (!readLine.EndsWith("// member end"))
+                        {
+                            readLine = streamReader.ReadLine();
+                        }
+                    }
+
+                    // 逐行读取写入
+                    stringBuilder.Append(readLine + "\n");
+                    readLine = streamReader.ReadLine();
+                    // 最后一行写入
+                    if (!streamReader.EndOfStream) continue;
+                    stringBuilder.AppendLine(readLine);
+                    break;
+                }
+
+                streamReader.Dispose();
+
+                StreamWriter streamWriter = new StreamWriter(outputFile);
+                streamWriter.Write(stringBuilder);
+                streamWriter.Dispose();
+                // SetViewObj();
+                return;
+            }
+
             CodeTypeDeclaration myClass = new CodeTypeDeclaration(className)
             {
                 IsClass = true, TypeAttributes = TypeAttributes.Public
             };
             myClass.BaseTypes.Add("ViewBase");
 
-            foreach (string s in tmpMember)
+            for (int i = 0; i < tmpMember.Count; i++)
             {
-                Type type = Constants.GetWidgetTypeByName(s);
+                Type type = Constants.GetWidgetTypeByName(tmpMember[i]);
                 if (type == null)
                 {
-                    Debug.LogWarning(s + " is not UI");
+                    Debug.LogWarning(tmpMember[i] + " is not UI");
                     continue;
                 }
 
-                CodeTypeMember member = new CodeMemberField(type, s);
+                CodeTypeMember member = new CodeMemberField(type, tmpMember[i]);
+                // 添加注释，member    
+                if (i == 0)
+                {
+                    member.Comments.Add(new CodeCommentStatement("member"));
+                }
+
                 member.Attributes = MemberAttributes.Public;
                 myClass.Members.Add(member);
             }
 
-///////////////////////////////////////////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////////////////////////////////////////
             // 添加override方法
             CodeMemberMethod method = new CodeMemberMethod()
             {
                 Name = "GetWidget",
                 Attributes = MemberAttributes.Override | MemberAttributes.FamilyAndAssembly,
                 ReturnType = new CodeTypeReference(typeof(object)),
+                Comments =
+                {
+                    new CodeCommentStatement("member end"),
+                }
             };
             method.Parameters.Add(new CodeParameterDeclarationExpression(typeof(string), "widgetName"));
             CodeConditionStatement statement = new CodeConditionStatement(
@@ -271,6 +322,7 @@ namespace Editor.Tools
                 //为指定的代码文档对象模型(CodeDOM) 编译单元生成代码并将其发送到指定的文本编写器，使用指定的选项。(官方解释)
                 //将自定义代码编译器(代码内容)、和代码格式写入到sw中
                 provider.GenerateCodeFromCompileUnit(unit, sw, options);
+                provider.Dispose();
             }
         }
 
@@ -319,6 +371,7 @@ namespace Editor.Tools
                         }
                     }
                 }
+
                 EditorUtility.SetDirty(t);
             }
 

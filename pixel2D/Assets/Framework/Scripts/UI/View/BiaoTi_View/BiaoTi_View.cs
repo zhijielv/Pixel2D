@@ -16,6 +16,8 @@ namespace Framework.Scripts.UI.View
     
     public class BiaoTi_View : ViewBase
     {
+        // member
+        // member end
         internal override object GetWidget(string widgetName)
         {
             if (!Enum.TryParse(widgetName, true, out BiaoTi_View_Widget _))
