@@ -24,13 +24,14 @@ public class Main : MonoBehaviour
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         gameObject.AddComponent<UiManager>();
         gameObject.AddComponent<EventManager>();
+        gameObject.AddComponent<TimerManager>();
         UiManager.Instance.mainCanvas = GameObject.FindWithTag("MainCanvas").GetComponent<Canvas>();
     }
 
     private void Start()
     {
         // 获取或创建界面
-        UiManager.Instance.GetWidget<Main_View>();
+        // UiManager.Instance.GetWidget<Main_View>();
         // 切换Ui
         // Main_View mainView = (Main_View) UiManager.Instance.GetWidget<Main_View>();
         // mainView.ChangePanel<Test_View>();
