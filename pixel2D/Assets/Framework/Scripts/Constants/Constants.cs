@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Sirenix.Utilities;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Framework.Scripts.Constants
 {
@@ -79,5 +82,25 @@ namespace Framework.Scripts.Constants
             return null;
         }
 #endif
+        public static List<T> GetRandomValueFromList<T>(List<T> objects, int num)
+        {
+            T[] srcObjects = objects.ToArray();
+            T[] tmpList = new T[num];
+            if (num > objects.Count)
+            {
+                Debug.LogError($"{num} is greater than {objects}");
+                return null;
+            }
+            
+            for (int i = 0; i < num; )
+            {
+                int tmpIndex = Random.Range(0, objects.Count);
+                if(tmpList.Contains(objects[tmpIndex])) continue;
+                tmpList[i] = srcObjects[tmpIndex];
+                i++;
+            }
+
+            return tmpList.ToList();
+        }
     }
 }
