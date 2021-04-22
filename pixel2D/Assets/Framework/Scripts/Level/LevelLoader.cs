@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Json;
+﻿using System;
+using System.Collections.Generic;
+using Framework.Scripts.Constants;
+using Framework.Scripts.Manager;
+using Framework.Scripts.Utils;
 using Sirenix.OdinInspector;
-using Sirenix.Serialization;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,70 +11,68 @@ namespace Framework.Scripts.Level
 {
     public class LevelLoader : MonoBehaviour
     {
-        public GameObject ImagePrefab;
+        public GameObject imagePrefab;
+        public Transform mapRoot;
+        [ShowInInspector] public Level level;
 
-        public GameObject MapRoot;
-
-        [ShowInInspector] public Level level = new Level();
-
-        [Button(ButtonSizes.Large)]
-        public void LoadLevel()
+        private void Awake()
         {
-            level.SetSize();
-            SetBorder(level);
+            level = LevelManager.Instance.GetLevel();
         }
 
-        public void SetBorder(Level level)
+#if UNITY_EDITOR
+        [OnValueChanged("LoadLevel")] public LevelType levelType;
+
+        public void LoadLevel(LevelType levelType)
         {
-            for (int i = 0; i < level.LevelMap.GetLength(0); i++)
+            level = new Level();
+            LeveljsonClass tmpLeveljsonClass = new LeveljsonClass();
+            var list = JsonHelper.JsonReader<List<LeveljsonClass>>(Constants.Constants.JsonPath);
+            foreach (var leveljsonClass in list)
             {
-                level.LevelMap[i, 0] = 1;
-                level.LevelMap[i, level.Height - 1] = 1;
+                if (!leveljsonClass.LevelType.Equals(levelType.ToString())) continue;
+                tmpLeveljsonClass = leveljsonClass;
             }
 
-            for (int i = 0; i < level.LevelMap.GetLength(1); i++)
-            {
-                level.LevelMap[0, i] = 1;
-                level.LevelMap[level.Width - 1, i] = 1;
-            }
+            level.GenerateLevelValueFromJson(tmpLeveljsonClass);
+
+            level.SetLevelMap();
         }
 
-        [Button("testRandom")]
-        public void testGetRandom()
+        [OnInspectorInit]
+        public void Init()
         {
-            List<Sprite> sprites = level.LevelItem[(LevelItemType) level.LevelMap[0, 0]];
-            List<Sprite> list = Constants.Constants.GetRandomValueFromList(sprites, 1);
-            foreach (Sprite sprite in list)
-            {
-                Debug.Log($"{sprite.name}");
-            }
+            LoadLevel(levelType);
         }
 
-        public void CreateLevel(Level level)
+#endif
+
+        [HorizontalGroup("Button")]
+        [Button("创建关卡", ButtonSizes.Large)]
+        public void CreateLevel()
         {
-            int name = 0;
+            level.ClearLevelObj();
+            level.ChangeSize(0);
+            int tmpObjName = 0;
             for (int i = 0; i < level.LevelMap.GetLength(0); i++)
             {
                 for (int j = 0; j < level.LevelMap.GetLength(1); j++)
                 {
-                    List<Sprite> sprites = level.LevelItem[(LevelItemType) level.LevelMap[i, j]];
-                    Sprite sprite = Constants.Constants.GetRandomValueFromList(sprites, 1)[0];
-                    GameObject o = Instantiate(ImagePrefab, transform);
-                    o.name = name.ToString();
-                    name++;
+                    List<Sprite> sprites = level.LevelItem[level.LevelMap[i, j]] ?? level.LevelItem[LevelItemType.Road];
+                    Sprite sprite = Constants.RandomHelper.GetRandomValueFromList(sprites, 1)[0];
+                    GameObject o = Instantiate(imagePrefab, mapRoot);
+                    o.name = tmpObjName.ToString();
+                    tmpObjName++;
                     o.GetComponent<Image>().sprite = sprite;
                     o.GetComponent<Image>().SetNativeSize();
                     o.GetComponent<RectTransform>().anchoredPosition = new Vector2(
-                        (i - level.Width) * sprite.rect.width,
-                        (j - level.Height) * sprite.rect.height);
+                        (i - level.Width / 2) * sprite.rect.width,
+                        -1 * (j - level.Height / 2) * sprite.rect.height);
                     level.LevelObj.Add(o);
 
                     switch (level.LevelMap[i, j])
                     {
-                        case (int) LevelItemType.Door:
-                            o.GetComponent<Collider2D>().isTrigger = true;
-                            break;
-                        case (int) LevelItemType.Road:
+                        case LevelItemType.Road:
                             DestroyImmediate(o.GetComponent<Collider2D>());
                             break;
                     }
@@ -82,14 +80,14 @@ namespace Framework.Scripts.Level
             }
         }
 
-
-        [Button]
+        [HorizontalGroup("Button")]
+        [Button("清空场景", ButtonSizes.Large)]
         public void ClearChildren()
         {
             List<GameObject> tmpDesObjs = new List<GameObject>();
-            for (int i = 0; i < transform.childCount; i++)
+            for (int i = 0; i < mapRoot.childCount; i++)
             {
-                tmpDesObjs.Add(transform.GetChild(i).gameObject);
+                tmpDesObjs.Add(mapRoot.GetChild(i).gameObject);
             }
 
             foreach (var t in tmpDesObjs)

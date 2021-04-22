@@ -7,7 +7,9 @@
 using System;
 using System.Globalization;
 using System.Reflection;
+using Framework.Scripts.Constants;
 using Framework.Scripts.Manager;
+using Framework.Scripts.Singleton;
 using Framework.Scripts.UI.Base;
 using Framework.Scripts.UI.View;
 using Sirenix.OdinInspector;
@@ -22,10 +24,16 @@ public class Main : MonoBehaviour
     private void Awake()
     {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
-        gameObject.AddComponent<UiManager>();
-        gameObject.AddComponent<EventManager>();
-        gameObject.AddComponent<TimerManager>();
+        AddManager<UiManager>();
+        AddManager<EventManager>();
+        AddManager<TimerManager>();
+        AddManager<LevelManager>();
         UiManager.Instance.mainCanvas = GameObject.FindWithTag("MainCanvas").GetComponent<Canvas>();
+    }
+
+    private void AddManager<T>() where T : ManagerSingleton<T>
+    {
+        Constants.AddOrGetComponent(gameObject, typeof(T));
     }
 
     private void Start()

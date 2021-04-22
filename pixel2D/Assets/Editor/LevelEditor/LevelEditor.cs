@@ -1,6 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+using Framework.Scripts.Constants;
+using Framework.Scripts.Level;
+using Framework.Scripts.Manager;
+using Framework.Scripts.Utils;
 using LitJson;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
@@ -9,7 +12,7 @@ using Sirenix.Utilities.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace Framework.Scripts.Level
+namespace Editor.LevelEditor
 {
     public class LevelEditor : OdinMenuEditorWindow
     {
@@ -33,7 +36,7 @@ namespace Framework.Scripts.Level
         {
             OdinMenuTree tree = new OdinMenuTree(true)
             {
-                {"Level Tool", _levelTool}
+                {"Level Tool", _levelTool},
             };
             return tree;
         }
@@ -41,59 +44,26 @@ namespace Framework.Scripts.Level
 
     public class LevelTool
     {
-        [ReadOnly] private const string jsonPath = "Assets/Framework/Json/" + "Map.json";
+        [ReadOnly] private string jsonPath = Constants.JsonPath;
         [OnValueChanged("LoadLevel")] public LevelType levelType = LevelType.ludi;
-        [ShowInInspector] public Level level;
-        
-        private List<LeveljsonClass> LevelJsonlist;
+        [ShowInInspector] public Level Level;
+
+        private List<LeveljsonClass> _levelJsonList;
         private LeveljsonClass _leveljsonClass;
 
         public LevelTool()
         {
-            LoadLevel(levelType);
+            Level = ReadMapJson(levelType);
         }
 
-        public void GetLevelValue(LeveljsonClass data)
-        {
-            level = new Level
-            {
-                Width = data.Width,
-                Height = data.Height
-            };
-            Enum.TryParse(data.LevelType, out level.LevelType);
-            foreach (JsonData data1 in data.RoadList)
-            {
-                level.LevelItem[LevelItemType.Road]
-                    .Add((Sprite) AssetDatabase.LoadAssetAtPath(data1.ToString(), typeof(Sprite)));
-            }
-
-            foreach (JsonData data1 in data.WallList)
-            {
-                level.LevelItem[LevelItemType.Wall]
-                    .Add((Sprite) AssetDatabase.LoadAssetAtPath(data1.ToString(), typeof(Sprite)));
-            }
-
-            foreach (JsonData data1 in data.BoxList)
-            {
-                level.LevelItem[LevelItemType.Box]
-                    .Add((Sprite) AssetDatabase.LoadAssetAtPath(data1.ToString(), typeof(Sprite)));
-            }
-
-            foreach (JsonData data1 in data.DoorList)
-            {
-                level.LevelItem[LevelItemType.Door]
-                    .Add((Sprite) AssetDatabase.LoadAssetAtPath(data1.ToString(), typeof(Sprite)));
-            }
-
-            foreach (JsonData data1 in data.ObstructionList)
-            {
-                level.LevelItem[LevelItemType.Obstruction]
-                    .Add((Sprite) AssetDatabase.LoadAssetAtPath(data1.ToString(), typeof(Sprite)));
-            }
-        }
-        
         public void LoadLevel(LevelType levelType)
         {
+            Level = ReadMapJson(levelType);
+        }
+        
+        public Level ReadMapJson(LevelType levelType)
+        {
+            Level tmpLevel = new Level {LevelType = levelType};
             if (!File.Exists(jsonPath))
             {
                 Debug.Log("创建 Map.json at " + jsonPath);
@@ -103,62 +73,65 @@ namespace Framework.Scripts.Level
                 streamWriter.Close();
                 fileStream.Close();
             }
-            
-            level = new Level {LevelType = levelType};
-            StreamReader streamReader = new StreamReader(jsonPath);
-            string json = streamReader.ReadToEnd();
-            streamReader.Close();
-            LevelJsonlist = JsonMapper.ToObject<List<LeveljsonClass>>(json);
+            _levelJsonList = JsonHelper.JsonReader<List<LeveljsonClass>>(jsonPath);
             _leveljsonClass = null;
-            foreach (LeveljsonClass data in LevelJsonlist)
+            foreach (LeveljsonClass data in _levelJsonList)
             {
                 if (!data.LevelType.Equals(levelType.ToString())) continue;
                 _leveljsonClass = data;
-                GetLevelValue(_leveljsonClass);
+                tmpLevel.GenerateLevelValueFromJson(_leveljsonClass);
                 break;
             }
+            
+            return tmpLevel;
         }
-        
+
         [Button]
         public void Save2Json()
         {
             if (_leveljsonClass == null)
             {
                 _leveljsonClass = new LeveljsonClass();
-                LevelJsonlist.Add(_leveljsonClass);
+                _levelJsonList.Add(_leveljsonClass);
             }
 
             _leveljsonClass.LevelType = levelType.ToString();
-            _leveljsonClass.Height = level.Height;
-            _leveljsonClass.Width = level.Width;
-            foreach (KeyValuePair<LevelItemType, List<Sprite>> keyValuePair in level.LevelItem)
+            _leveljsonClass.Height = Level.Height;
+            _leveljsonClass.Width = Level.Width;
+            _leveljsonClass.WidgetDictionary = new Dictionary<string, int>();
+            foreach (KeyValuePair<LevelItemType,int> valuePair in Level.ItemWidget)
+            {
+                _leveljsonClass.WidgetDictionary.Add(valuePair.Key.ToString(), valuePair.Value);
+            }
+            
+            foreach (KeyValuePair<LevelItemType, List<Sprite>> keyValuePair in Level.LevelItem)
             {
                 switch (keyValuePair.Key)
                 {
                     case LevelItemType.Road:
+                        _leveljsonClass.RoadList.Clear();
                         foreach (Sprite sprite in keyValuePair.Value)
                             _leveljsonClass.RoadList.Add(AssetDatabase.GetAssetPath(sprite));
                         break;
                     case LevelItemType.Wall:
+                        _leveljsonClass.WallList.Clear();
                         foreach (Sprite sprite in keyValuePair.Value)
                             _leveljsonClass.WallList.Add(AssetDatabase.GetAssetPath(sprite));
                         break;
                     case LevelItemType.Box:
+                        _leveljsonClass.BoxList.Clear();
                         foreach (Sprite sprite in keyValuePair.Value)
                             _leveljsonClass.BoxList.Add(AssetDatabase.GetAssetPath(sprite));
                         break;
-                    case LevelItemType.Door:
-                        foreach (Sprite sprite in keyValuePair.Value)
-                            _leveljsonClass.DoorList.Add(AssetDatabase.GetAssetPath(sprite));
-                        break;
                     case LevelItemType.Obstruction:
+                        _leveljsonClass.ObstructionList.Clear();
                         foreach (Sprite sprite in keyValuePair.Value)
                             _leveljsonClass.ObstructionList.Add(AssetDatabase.GetAssetPath(sprite));
                         break;
                 }
             }
 
-            string json = JsonMapper.ToJson(LevelJsonlist);
+            string json = JsonMapper.ToJson(_levelJsonList);
             StreamWriter streamWriter = new StreamWriter(jsonPath) {AutoFlush = true};
             streamWriter.Write(json);
             streamWriter.Close();
