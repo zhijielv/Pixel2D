@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using HutongGames.PlayMaker;
 using LitJson;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
@@ -42,18 +41,16 @@ namespace Framework.Scripts.Level
 
     public class LevelTool
     {
-        [ReadOnly] public string jsonPath = "Assets/Framework/Json/";
-        [InlineButton("LoadLevel")] public LevelType levelType;
+        [ReadOnly] private const string jsonPath = "Assets/Framework/Json/" + "Map.json";
+        [OnValueChanged("LoadLevel")] public LevelType levelType = LevelType.ludi;
         [ShowInInspector] public Level level;
         
         private List<LeveljsonClass> LevelJsonlist;
         private LeveljsonClass _leveljsonClass;
-        private bool hideSave = true;
 
         public LevelTool()
         {
-            hideSave = true;
-            LoadLevel();
+            LoadLevel(levelType);
         }
 
         public void GetLevelValue(LeveljsonClass data)
@@ -95,24 +92,24 @@ namespace Framework.Scripts.Level
             }
         }
         
-        public void LoadLevel()
+        public void LoadLevel(LevelType levelType)
         {
-            if (!File.Exists(jsonPath + "Map.json"))
+            if (!File.Exists(jsonPath))
             {
                 Debug.Log("创建 Map.json at " + jsonPath);
-                FileStream fileStream = File.Create(jsonPath + "Map.json");
+                FileStream fileStream = File.Create(jsonPath);
                 StreamWriter streamWriter = new StreamWriter(fileStream);
                 streamWriter.Write("[]");
                 streamWriter.Close();
                 fileStream.Close();
-                level = new Level();
-                return;
             }
-
-            StreamReader streamReader = new StreamReader(jsonPath + "Map.json");
+            
+            level = new Level {LevelType = levelType};
+            StreamReader streamReader = new StreamReader(jsonPath);
             string json = streamReader.ReadToEnd();
             streamReader.Close();
             LevelJsonlist = JsonMapper.ToObject<List<LeveljsonClass>>(json);
+            _leveljsonClass = null;
             foreach (LeveljsonClass data in LevelJsonlist)
             {
                 if (!data.LevelType.Equals(levelType.ToString())) continue;
@@ -120,16 +117,20 @@ namespace Framework.Scripts.Level
                 GetLevelValue(_leveljsonClass);
                 break;
             }
-            hideSave = false;
         }
         
-        [Sirenix.OdinInspector.HideIf("hideSave")]
+        [Button]
         public void Save2Json()
         {
-            if (level != null) return;
-            _leveljsonClass ??= new LeveljsonClass();
-            LevelJsonlist.Add(_leveljsonClass);
-            
+            if (_leveljsonClass == null)
+            {
+                _leveljsonClass = new LeveljsonClass();
+                LevelJsonlist.Add(_leveljsonClass);
+            }
+
+            _leveljsonClass.LevelType = levelType.ToString();
+            _leveljsonClass.Height = level.Height;
+            _leveljsonClass.Width = level.Width;
             foreach (KeyValuePair<LevelItemType, List<Sprite>> keyValuePair in level.LevelItem)
             {
                 switch (keyValuePair.Key)
@@ -158,9 +159,11 @@ namespace Framework.Scripts.Level
             }
 
             string json = JsonMapper.ToJson(LevelJsonlist);
-            StreamWriter streamWriter = new StreamWriter(jsonPath + "Map.json") {AutoFlush = true};
+            StreamWriter streamWriter = new StreamWriter(jsonPath) {AutoFlush = true};
             streamWriter.Write(json);
             streamWriter.Close();
+            _leveljsonClass = null;
+            AssetDatabase.Refresh();
         }
     }
 }
