@@ -10,6 +10,7 @@ namespace Framework.Scripts.Manager
     {
         public LevelType levelType = LevelType.ludi;
         public List<LeveljsonClass> leveljsonClasses;
+        public GameObject levelLoaderObj;
         public LevelManager()
         {
             leveljsonClasses = JsonHelper.JsonReader<List<LeveljsonClass>>(Constants.Constants.JsonPath);
@@ -17,9 +18,10 @@ namespace Framework.Scripts.Manager
 
         public void LoadLevel(Transform mapRoot = null)
         {
-            GameObject levelLoader = new GameObject("LevelLoader");
-            LevelLoader loader = (LevelLoader) Constants.Constants.AddOrGetComponent(levelLoader, typeof(LevelLoader));
-            levelLoader.transform.parent = mapRoot == null ? transform : mapRoot;
+            if(levelLoaderObj != null) Destroy(levelLoaderObj);
+            levelLoaderObj = new GameObject("LevelLoader");
+            LevelLoader loader = (LevelLoader) Constants.Constants.AddOrGetComponent(levelLoaderObj, typeof(LevelLoader));
+            levelLoaderObj.transform.parent = mapRoot == null ? transform : mapRoot;
 
             loader.LoadLevel(levelType);
             loader.CreateLevel();

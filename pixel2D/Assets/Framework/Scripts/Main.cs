@@ -27,13 +27,20 @@ public class Main : MonoBehaviour
         AddManager<UiManager>();
         AddManager<EventManager>();
         AddManager<TimerManager>();
-        AddManager<LevelManager>();
+        CreateManager<LevelManager>();
         FrameWorkInit();
     }
 
     private void AddManager<T>() where T : ManagerSingleton<T>
     {
         Constants.AddOrGetComponent(gameObject, typeof(T));
+    }
+
+    private void CreateManager<T>() where T : ManagerSingleton<T>
+    {
+        GameObject managerObj = new GameObject(typeof(T).Name);
+        managerObj.AddComponent<T>();
+        managerObj.transform.SetParent(transform);
     }
 
     private void FrameWorkInit()
@@ -80,7 +87,7 @@ public class Main : MonoBehaviour
 
     private void Start()
     {
-        // UiManager.Instance.GetWidget<Player_View>();
+        UiManager.Instance.GetWidget<Player_View>();
         // UiManager.Instance.GetWidget<Test_View>();
         // 获取或创建界面
         // UiManager.Instance.GetWidget<Main_View>();

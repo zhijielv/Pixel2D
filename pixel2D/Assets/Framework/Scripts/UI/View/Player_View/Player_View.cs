@@ -53,6 +53,8 @@ namespace Framework.Scripts.UI.View
             AddInputEventDelegate(TestButton, UpdateLoopType.Update, InputActionEventType.ButtonJustReleased, "Fire");
 
             AddEventListener(EventConstants.StartGame, TestListenerFunc);
+            
+            AddButtonClickEvent(LoadLevel_Button, LoadLevel);
         }
         
         private void TestListenerFunc(EventData data)
@@ -81,7 +83,7 @@ namespace Framework.Scripts.UI.View
         public void LoadLevel()
         {
             LevelManager.Instance.levelType = LevelType.yanjiang;
-            LevelManager.Instance.LoadLevel(transform);
+            LevelManager.Instance.LoadLevel(UiManager.Instance.mainCanvas.transform);
         }
     }
 }

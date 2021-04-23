@@ -14,6 +14,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Framework.Scripts.UI.Base
 {
@@ -99,9 +100,9 @@ namespace Framework.Scripts.UI.Base
             targetView.ShowWithHiddenTurn();
         }
 
-        public void AddButtonClickEvent(string widgetName, UnityAction callback)
+        public void AddButtonClickEvent(Button button, UnityAction callback)
         {
-            AddButtonClickEvent(callback);
+            button.GetComponent<UiWidgetBase>().AddButtonClickEvent(callback);
         }
 
         public void AddInputFieldValueChangedEvent(string widgetName, UnityAction<string> callback)
