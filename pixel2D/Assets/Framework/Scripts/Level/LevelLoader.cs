@@ -4,6 +4,7 @@ using Framework.Scripts.Constants;
 using Framework.Scripts.Manager;
 using Framework.Scripts.Utils;
 using Sirenix.OdinInspector;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,11 +19,12 @@ namespace Framework.Scripts.Level
         private void Awake()
         {
             level = LevelManager.Instance.GetLevel();
+            imagePrefab = AssetDatabase.LoadAssetAtPath<GameObject>(Constants.Constants.LevelPrefabDir + "Wall/f601/wall.prefab");
+            mapRoot = transform;
         }
-
-#if UNITY_EDITOR
+        
         [OnValueChanged("LoadLevel")] public LevelType levelType;
-
+        // 加载Level数据
         public void LoadLevel(LevelType levelType)
         {
             level = new Level();
@@ -39,14 +41,14 @@ namespace Framework.Scripts.Level
             level.SetLevelMap();
         }
 
+        // 仅Inspector显示用
         [OnInspectorInit]
         public void Init()
         {
             LoadLevel(levelType);
         }
 
-#endif
-
+        // 创建关卡到游戏中
         [HorizontalGroup("Button")]
         [Button("创建关卡", ButtonSizes.Large)]
         public void CreateLevel()

@@ -38,6 +38,7 @@ public class Main : MonoBehaviour
 
     private void Start()
     {
+        UiManager.Instance.GetWidget<Test_View>();
         // 获取或创建界面
         // UiManager.Instance.GetWidget<Main_View>();
         // 切换Ui

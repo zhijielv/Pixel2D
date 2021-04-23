@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using Framework.Scripts.Level;
 using Framework.Scripts.Singleton;
 using Framework.Scripts.Utils;
-using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace Framework.Scripts.Manager
 {
@@ -12,6 +13,16 @@ namespace Framework.Scripts.Manager
         public LevelManager()
         {
             leveljsonClasses = JsonHelper.JsonReader<List<LeveljsonClass>>(Constants.Constants.JsonPath);
+        }
+
+        public void LoadLevel(Transform mapRoot = null)
+        {
+            GameObject levelLoader = new GameObject("LevelLoader");
+            LevelLoader loader = (LevelLoader) Constants.Constants.AddOrGetComponent(levelLoader, typeof(LevelLoader));
+            levelLoader.transform.parent = mapRoot == null ? transform : mapRoot;
+
+            loader.LoadLevel(levelType);
+            loader.CreateLevel();
         }
 
         public Level.Level GetLevel(LevelType levelType = LevelType.ludi)

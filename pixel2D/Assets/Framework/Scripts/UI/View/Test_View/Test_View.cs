@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Framework.Scripts.Manager;
+
 namespace Framework.Scripts.UI.View
 {
     using Base;
@@ -31,6 +33,12 @@ namespace Framework.Scripts.UI.View
             {
                 return base.GetWidget(widgetName);
             }
+        }
+
+        private void Start()
+        {
+            LevelManager.Instance.levelType = LevelType.yanjiang;
+            LevelManager.Instance.LoadLevel(transform);
         }
     }
 }
