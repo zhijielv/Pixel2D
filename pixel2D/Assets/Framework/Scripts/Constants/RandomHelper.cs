@@ -6,6 +6,7 @@ namespace Framework.Scripts.Constants
 {
     public static class RandomHelper
     {
+        // 从列表随机出num个数
         public static List<T> GetRandomValueFromList<T>(List<T> objects, int num)
         {
             T[] srcObjects = objects.ToArray();
@@ -26,7 +27,9 @@ namespace Framework.Scripts.Constants
 
             return tmpList.ToList();
         }
-
+        
+        // todo 取最大公约数，节省数组空间
+        // 按权重获取随机值
         public static T GetWidgetRandom<T>(Dictionary<T, int> dictionary)
         {
             int widgetSum = 0;
