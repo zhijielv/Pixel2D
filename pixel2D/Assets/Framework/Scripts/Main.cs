@@ -4,15 +4,14 @@
 ** Description: 
 */
 
-using System;
-using System.Globalization;
-using System.Reflection;
 using Framework.Scripts.Constants;
 using Framework.Scripts.Manager;
 using Framework.Scripts.Singleton;
 using Framework.Scripts.UI.Base;
 using Framework.Scripts.UI.View;
-using Sirenix.OdinInspector;
+using Rewired;
+using Rewired.Integration.UnityUI;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,6 +20,7 @@ public class Main : MonoBehaviour
     private Text leftTopText;
     private Text centerText;
     private UiWidgetBase centerRightText;
+
     private void Awake()
     {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
@@ -28,7 +28,7 @@ public class Main : MonoBehaviour
         AddManager<EventManager>();
         AddManager<TimerManager>();
         AddManager<LevelManager>();
-        UiManager.Instance.mainCanvas = GameObject.FindWithTag("MainCanvas").GetComponent<Canvas>();
+        FrameWorkInit();
     }
 
     private void AddManager<T>() where T : ManagerSingleton<T>
@@ -36,9 +36,52 @@ public class Main : MonoBehaviour
         Constants.AddOrGetComponent(gameObject, typeof(T));
     }
 
+    private void FrameWorkInit()
+    {
+        DontDestroyOnLoad(transform);
+        GameObject mainCanvas = GameObject.FindWithTag("MainCanvas");
+        if (mainCanvas == null)
+        {
+            mainCanvas = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(Constants.MainCanvasObj));
+            mainCanvas.name = Constants.ReplaceString(mainCanvas.name, "(Clone)", "");
+        }
+
+        UiManager.Instance.mainCanvas = mainCanvas.GetComponent<Canvas>();
+
+        GameObject rewiredInputManagerObj = GameObject.Find("Rewired Input Manager");
+        if (rewiredInputManagerObj == null)
+        {
+            rewiredInputManagerObj =
+                Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(Constants.RewiredInputManagerObj));
+            rewiredInputManagerObj.name = Constants.ReplaceString(rewiredInputManagerObj.name, "(Clone)", "");
+        }
+
+        GameObject rewiredEventSystemGameObject = GameObject.Find("Rewired Event System");
+        if (rewiredEventSystemGameObject == null)
+            rewiredEventSystemGameObject = new GameObject {name = "Rewired Event System"};
+
+        RewiredEventSystem rewiredEventSystem =
+            (RewiredEventSystem) Constants.AddOrGetComponent(rewiredEventSystemGameObject, typeof(RewiredEventSystem));
+        rewiredEventSystem.pixelDragThreshold = 5;
+
+        RewiredStandaloneInputModule rewiredStandaloneInputModule =
+            (RewiredStandaloneInputModule) Constants.AddOrGetComponent(rewiredEventSystemGameObject,
+                typeof(RewiredStandaloneInputModule));
+        rewiredStandaloneInputModule.UseAllRewiredGamePlayers = true;
+        rewiredStandaloneInputModule.UseRewiredSystemPlayer = true;
+        rewiredStandaloneInputModule.RewiredInputManager =
+            rewiredInputManagerObj.GetComponent<InputManager_Base>();
+        
+        transform.name = "[FrameWork]";
+        mainCanvas.transform.SetParent(transform);
+        rewiredInputManagerObj.transform.SetParent(transform);
+        rewiredEventSystemGameObject.transform.SetParent(transform);
+    }
+
     private void Start()
     {
-        UiManager.Instance.GetWidget<Test_View>();
+        // UiManager.Instance.GetWidget<Player_View>();
+        // UiManager.Instance.GetWidget<Test_View>();
         // 获取或创建界面
         // UiManager.Instance.GetWidget<Main_View>();
         // 切换Ui

@@ -19,11 +19,25 @@ namespace Framework.Scripts.Level
         private void Awake()
         {
             level = LevelManager.Instance.GetLevel();
-            imagePrefab = AssetDatabase.LoadAssetAtPath<GameObject>(Constants.Constants.LevelPrefabDir + "Wall/f601/wall.prefab");
+            imagePrefab =
+                AssetDatabase.LoadAssetAtPath<GameObject>(Constants.Constants.LevelPrefabDir + "Wall/f601/wall.prefab");
             mapRoot = transform;
         }
-        
+
+        private void Start()
+        {
+            ResetTransform();
+        }
+
+        private void ResetTransform()
+        {
+            transform.localPosition = Vector3.zero;
+            transform.localRotation = new Quaternion(0, 0, 0, 1);
+            transform.localScale = Vector3.one;
+        }
+
         [OnValueChanged("LoadLevel")] public LevelType levelType;
+
         // 加载Level数据
         public void LoadLevel(LevelType levelType)
         {

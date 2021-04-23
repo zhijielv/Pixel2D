@@ -64,47 +64,5 @@ namespace Framework.Scripts.UI.View
             // Center_Text.text = System.DateTime.Now.ToString("HH:mm");
             // CenterRight_Text.text = System.DateTime.Now.ToString("ss");
         }
-
-        private void OnEnable()
-        {
-            if (!ReInput.isReady) return;
-            Player player = ReInput.players.GetPlayer(0);
-            // Subscribe to input events
-            AddInputEventDelegate(TestX, UpdateLoopType.Update, InputActionEventType.AxisActive, "MoveX");
-            AddInputEventDelegate(TestX, UpdateLoopType.Update, InputActionEventType.AxisInactive, "MoveX");
-            AddInputEventDelegate(TestY, UpdateLoopType.Update, InputActionEventType.AxisActive, "MoveY");
-            AddInputEventDelegate(TestY, UpdateLoopType.Update, InputActionEventType.AxisInactive, "MoveY");
-            AddInputEventDelegate(TestButton, UpdateLoopType.Update, InputActionEventType.ButtonJustPressed, "Fire");
-            AddInputEventDelegate(TestButton, UpdateLoopType.Update, InputActionEventType.ButtonJustReleased, "Fire");
-
-            AddEventListener(EventConstants.StartGame, TestListenerFunc);
-        }
-
-
-        private void TestListenerFunc(EventData data)
-        {
-            Debug.Log($"{data.Type}    {data.Data}");
-        }
-
-        private void OnDisable()
-        {
-            Disable();
-        }
-
-        public void TestX(InputActionEventData data)
-        {
-            LeftTop_Text.text = data.GetAxis().ToString();
-        }
-
-        public void TestY(InputActionEventData data)
-        {
-            CenterTop_Text.text = data.GetAxis().ToString();
-        }
-
-        public void TestButton(InputActionEventData data)
-        {
-            Center_Text.text = data.GetButton().ToString();
-            EventManager.Instance.DispatchEvent(EventConstants.StartGame);
-        }
     }
 }

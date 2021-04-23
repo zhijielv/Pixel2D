@@ -12,7 +12,7 @@ namespace Framework.Scripts.UI.ScriptableObjects
     public class PanelScriptableObjectBase : SerializedScriptableObject
     {
         [ReadOnly] public List<string> widgetList = new List<string>();
-        [ReadOnly] public GameObject PanelObj;
+        [ReadOnly] public GameObject panelObj;
 
         #region Reset RegistPanelObj
 
@@ -21,7 +21,7 @@ namespace Framework.Scripts.UI.ScriptableObjects
 #if UNITY_EDITOR
             GlobalConfig<UiScriptableObjectsManager>.Instance.ResetAllViewObjOverview();
 #endif
-            RegistWidgets(PanelObj.transform);
+            RegistWidgets(panelObj.transform);
         }
 
         private void RegistWidgets(Transform obj)
@@ -64,7 +64,7 @@ namespace Framework.Scripts.UI.ScriptableObjects
                 return false;
             }
 
-            if (Enum.TryParse(lastName, out UIConfig uiEnum) && !Enum.TryParse(lastName, true, out IgnoreUI ignoreUI))
+            if (Enum.TryParse(lastName, out UIConfig uiEnum) && !Enum.TryParse(lastName, true, out IgnoreUI ignoreUi))
             {
                 uiType = uiEnum;
                 return true;
@@ -75,12 +75,5 @@ namespace Framework.Scripts.UI.ScriptableObjects
         }
 
         #endregion
-
-
-        // private void OnValidate()
-        // {
-        //     widgetList?.Clear();
-        //     ResetWidgets();
-        // }
     }
 }

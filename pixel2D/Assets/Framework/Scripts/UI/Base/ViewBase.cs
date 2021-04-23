@@ -11,17 +11,15 @@ using Framework.Scripts.Constants;
 using Framework.Scripts.Manager;
 using Rewired;
 using Sirenix.OdinInspector;
-using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace Framework.Scripts.UI.Base
 {
     public class ViewBase : UiWidgetBase
     {
-        [ShowInInspector] [Sirenix.OdinInspector.ReadOnly]
+        [ShowInInspector] [ReadOnly]
         public CanvasGroup canvasGroup;
 
         readonly struct EventItem
@@ -40,7 +38,7 @@ namespace Framework.Scripts.UI.Base
 
         private readonly List<EventItem> _eventItems = new List<EventItem>();
 
-        private readonly List<Action<InputActionEventData>> inputEventDelegateActions =
+        private readonly List<Action<InputActionEventData>> _inputEventDelegateActions =
             new List<Action<InputActionEventData>>();
 
         protected void AddEventListener(EventConstants type, DelegateEvent.EventHandler listenerFunc)
@@ -57,7 +55,7 @@ namespace Framework.Scripts.UI.Base
             if (!ReInput.isReady) return;
             Player player = ReInput.players.GetPlayer(0);
             if (player == null) return;
-            inputEventDelegateActions.Add(callback);
+            _inputEventDelegateActions.Add(callback);
             player.AddInputEventDelegate(callback, updateLoop, eventType, actionName);
         }
 
@@ -68,7 +66,7 @@ namespace Framework.Scripts.UI.Base
 
             if (!ReInput.isReady) return;
             Player player = ReInput.players.GetPlayer(0);
-            foreach (Action<InputActionEventData> action in inputEventDelegateActions)
+            foreach (Action<InputActionEventData> action in _inputEventDelegateActions)
                 player.RemoveInputEventDelegate(action);
         }
 

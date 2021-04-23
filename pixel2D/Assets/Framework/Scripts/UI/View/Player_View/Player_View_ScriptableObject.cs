@@ -10,13 +10,9 @@
 
 namespace Framework.Scripts.UI.View
 {
+    using ScriptableObjects;
     
-    public enum AllViewEnum
+    public class Player_View_ScriptableObject : PanelScriptableObjectBase
     {
-        Main_View,
-        Test_View,
-        BiaoTi_View,
-        Player_View,
-        MaxValue,
     }
 }

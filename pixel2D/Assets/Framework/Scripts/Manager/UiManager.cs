@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Framework.Scripts.Singleton;
 using Framework.Scripts.UI.Base;
-using Framework.Scripts.UI.ScriptableObjects;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEngine;
@@ -15,6 +14,7 @@ namespace Framework.Scripts.Manager
         [ShowInInspector, ReadOnly] public Dictionary<string, ViewBase> uiList = new Dictionary<string, ViewBase>();
 
         #region public
+
         public void RemoveWidget(string panelName)
         {
             if (!uiList.ContainsKey(panelName))
@@ -27,6 +27,7 @@ namespace Framework.Scripts.Manager
         }
 
         #region Enum类型获取
+
         public UiWidgetBase GetWidget(Enum viewName, Enum widgetName)
         {
             var obj = GetWidgetObj(viewName, widgetName) as Component;
@@ -37,7 +38,7 @@ namespace Framework.Scripts.Manager
         {
             return (T) GetWidgetObj(viewName, widgetName);
         }
-        
+
         public object GetWidgetComponent(Enum viewName, Enum widgetName)
         {
             return GetWidgetObj(viewName, widgetName);
@@ -50,9 +51,11 @@ namespace Framework.Scripts.Manager
             // Debug.Log($"{viewName}    {widgetName}");
             return GetOrCreateViewObj(viewName, widgetName);
         }
+
         #endregion
-        
+
         #region 泛型类型获取
+
         public object GetWidget<T>(Enum viewName = null) where T : ViewBase
         {
             return GetWidgetObj<T>(viewName);
@@ -67,8 +70,9 @@ namespace Framework.Scripts.Manager
                 widgetName = targetWidgetName.ToString();
             return GetOrCreateViewObj(viewName, widgetName);
         }
+
         #endregion
-        
+
         #endregion
 
         #region private
@@ -82,19 +86,17 @@ namespace Framework.Scripts.Manager
             }
 
             Debug.Log("Create View : " + viewName);
-            PanelScriptableObjectBase tmpSoBase =
-                GlobalConfig<UiScriptableObjectsManager>.Instance.GetUiViewSO(viewName);
-            if (tmpSoBase.widgetList.Contains(widgetName) || viewName.Equals(widgetName))
-            {
-                // todo 设置parent
-                GameObject tmpView = Instantiate(tmpSoBase.PanelObj, mainCanvas.transform);
-                RegistView(tmpView);
-                return tmpView.GetComponent<ViewBase>().GetWidget(widgetName);
-            }
-
+            // todo 设置parent
+            GameObject viewPanelObj =
+                GlobalConfig<UiScriptableObjectsManager>.Instance.GetUiViewObj(viewName);
+            GameObject tmpView = Instantiate(viewPanelObj, mainCanvas.transform);
+            RegistView(tmpView);
+            GameObject widgetObj = (GameObject) tmpView.GetComponent<ViewBase>().GetWidget(widgetName);
+            if (widgetObj != null) return widgetObj;
             Debug.Log(viewName + " has not widget : " + widgetName);
             return null;
         }
+
         private void RegistView(GameObject widgetObj)
         {
             string viewName = Constants.Constants.ReplaceString(widgetObj.name, "(Clone)", "");
@@ -106,6 +108,7 @@ namespace Framework.Scripts.Manager
                     Debug.LogError($"{widgetObj.name} is not Generate");
                     return;
                 }
+
                 ViewBase viewBase = (ViewBase) Constants.Constants.AddOrGetComponent(widgetObj, type);
                 uiList.Add(viewName, viewBase);
             }

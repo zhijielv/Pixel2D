@@ -10,7 +10,6 @@ using Framework.Scripts.Constants;
 using Framework.Scripts.Manager;
 using Framework.Scripts.UI.Base;
 using Framework.Scripts.UI.ScriptableObjects;
-using Framework.Scripts.UI.View;
 using Sirenix.Utilities;
 using UnityEditor;
 using UnityEngine;
@@ -36,10 +35,9 @@ namespace Editor.Tools
         }
 
         /// <summary>
-        /// 快捷键 Ctrl + Shift + G 生成所有代码
-        /// 会删掉其他代码，尽量不用
+        /// 快捷键 Ctrl + G 生成所有代码
         /// </summary>
-        // [MenuItem("Assets/FrameWork View/Generate All View #%G", false, -2)]
+        [MenuItem("Assets/FrameWork View/Generate All View %G", false, -2)]
         public static void GenerateAllUiScriptObject()
         {
             GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode = true;
@@ -105,7 +103,7 @@ namespace Editor.Tools
             PanelScriptableObjectBase asset = ScriptableObject.CreateInstance<PanelScriptableObjectBase>();
             AssetDatabase.CreateAsset(asset, Constants.ScriptableObjectDir + name + ".asset");
             AssetDatabase.SaveAssets();
-            asset.PanelObj = obj;
+            asset.panelObj = obj;
             asset.ResetWidgets();
             return asset.widgetList;
         }
@@ -146,6 +144,10 @@ namespace Editor.Tools
 
         private static void GenerateScriptableObjectClass(string className)
         {
+            // 判断代码是否存在，存在则只修改成员变量
+            string outputFile = Application.dataPath + Constants.ViewScriptDir + className + "/" + className + "_ScriptableObject" + ".cs";
+            if (File.Exists(outputFile))
+                return;
             CodeCompileUnit unit = new CodeCompileUnit();
             CodeNamespace myNamespace = new CodeNamespace("Framework.Scripts.UI.View");
             myNamespace.Imports.Add(new CodeNamespaceImport("ScriptableObjects"));
@@ -184,7 +186,7 @@ namespace Editor.Tools
             myNamespace.Imports.Add(new CodeNamespaceImport("System"));
             myNamespace.Imports.Add(new CodeNamespaceImport("UnityEngine"));
 
-            // todo 判断代码是否存在，存在则只修改成员变量
+            // 判断代码是否存在，存在则只修改成员变量
             string outputFile = Application.dataPath + Constants.ViewScriptDir + className + "/" + className + ".cs";
             if (File.Exists(outputFile))
             {
@@ -260,11 +262,11 @@ namespace Editor.Tools
                 Name = "GetWidget",
                 Attributes = MemberAttributes.Override | MemberAttributes.FamilyAndAssembly,
                 ReturnType = new CodeTypeReference(typeof(object)),
-                Comments =
-                {
-                    new CodeCommentStatement("member end"),
-                }
             };
+            if (tmpMember.Count == 0)
+                method.Comments.Add(new CodeCommentStatement("member"));
+            
+            method.Comments.Add(new CodeCommentStatement("member end"));
             method.Parameters.Add(new CodeParameterDeclarationExpression(typeof(string), "widgetName"));
             CodeConditionStatement statement = new CodeConditionStatement(
                 new CodeVariableReferenceExpression($"!Enum.TryParse(widgetName, true, out {className + "_Widget"} _)"),

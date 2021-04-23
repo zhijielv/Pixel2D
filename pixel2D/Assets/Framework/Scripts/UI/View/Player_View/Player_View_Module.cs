@@ -11,12 +11,11 @@
 namespace Framework.Scripts.UI.View
 {
     
-    public enum AllViewEnum
+    public enum Player_View_Panel
     {
-        Main_View,
-        Test_View,
-        BiaoTi_View,
-        Player_View,
-        MaxValue,
+    }
+    public enum Player_View_Widget
+    {
+        LoadLevel_Button,
     }
 }

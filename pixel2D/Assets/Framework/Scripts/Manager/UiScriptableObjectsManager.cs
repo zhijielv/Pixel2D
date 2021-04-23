@@ -12,35 +12,33 @@ namespace Framework.Scripts.Manager
     [GlobalConfig("Art/ScriptableObject/UIScriptableObjectManager")]
     public class UiScriptableObjectsManager : GlobalConfig<UiScriptableObjectsManager>
     {
-        [ShowInInspector]
-        [ReadOnly]
-        [ListDrawerSettings(Expanded = true)]
+        [ShowInInspector] [ReadOnly] [ListDrawerSettings(Expanded = true)]
         public PanelScriptableObjectBase[] UiScriptableObjectsList;
-        
+
         public bool isGenerateCode = false;
 
-        [ReadOnly]
-        public Object[] selectViews;
+        [ReadOnly] public Object[] selectViews;
 
         // 刷新列表
 #if UNITY_EDITOR
         [Button(ButtonSizes.Medium), PropertyOrder(-1)]
         public void ResetAllViewObjOverview()
         {
-            this.UiScriptableObjectsList = AssetDatabase.FindAssets("t:PanelScriptableObjectBase")
-                .Select(guid => AssetDatabase.LoadAssetAtPath<PanelScriptableObjectBase>(AssetDatabase.GUIDToAssetPath(guid)))
+            UiScriptableObjectsList = AssetDatabase.FindAssets("t:PanelScriptableObjectBase")
+                .Select(guid =>
+                    AssetDatabase.LoadAssetAtPath<PanelScriptableObjectBase>(AssetDatabase.GUIDToAssetPath(guid)))
                 .ToArray();
         }
 #endif
-        
-        
-        public PanelScriptableObjectBase GetUiViewSO(string viewName)
+
+
+        public GameObject GetUiViewObj(string viewName)
         {
             foreach (PanelScriptableObjectBase objectBase in UiScriptableObjectsList)
             {
-                if (objectBase.PanelObj.name.Equals(viewName))
+                if (objectBase.panelObj.name.Equals(viewName))
                 {
-                    return objectBase;
+                    return objectBase.panelObj;
                 }
             }
 

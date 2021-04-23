@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 109a8831c0591bb44944814e79e4f4f4, type: 3}
-  m_Name: Test_View
+  m_Name: Player_View
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2

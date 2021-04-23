@@ -22,4 +22,4 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   widgetList: []
-  PanelObj: {fileID: 0}
+  panelObj: {fileID: 0}

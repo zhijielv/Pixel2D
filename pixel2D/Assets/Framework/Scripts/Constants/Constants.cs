@@ -18,13 +18,17 @@ namespace Framework.Scripts.Constants
         public static readonly string JsonPath = "Assets/Framework/Json/" + "Map.json";
         public static readonly string LevelPrefabDir = "Assets/Art/Prefabs/Level/";
 
+        ////////////////////////////////////////////  GameObject  ///////////////////////////////////////////////////////
+        public const string MainCanvasObj = "Assets/Art/Prefabs/UI/Canvas/_MainCanvas.prefab";
+        public const string RewiredInputManagerObj = "Assets/Art/Prefabs/Rewired/Rewired Input Manager.prefab";
+        
         ////////////////////////////////////////////  Name  ///////////////////////////////////////////////////////
         public const string UiScriptableObjectsManager = "Ui Scriptable Objects Manager.asset";
         public const string UiNameSpace = "Framework.Scripts.UI.View.";
         public const string CustomUiNameSpace = "Framework.Scripts.UI.CustomUI.";
 
         public const string ArtDirPath = "Assets/Art/";
-
+        
         ////////////////////////////////////////////  Function  ///////////////////////////////////////////////////////
         public static Component AddOrGetComponent(GameObject go, Type componentType)
         {
