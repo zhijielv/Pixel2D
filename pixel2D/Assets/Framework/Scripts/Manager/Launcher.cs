@@ -29,14 +29,6 @@ namespace Framework.Scripts.Manager
         private void FrameWorkInit()
         {
             Debug.Log("******************** Framework Init **********************");
-            // if (Common.MainCanvas == null)
-            // {
-            //     Addressables.LoadAssetAsync<GameObject>(Constants.Constants.MainCanvasObj).Completed += handle =>
-            //     {
-            //         Common.MainCanvas = Instantiate(handle.Result, Common.FrameWorkObj.transform, true);
-            //         Common.MainCanvas.name = Constants.Constants.ReplaceString(Common.MainCanvas.name, "(Clone)", "");
-            //     };
-            // }
             if (Common.MainCanvas == null)
             {
                 Addressables.InstantiateAsync(Constants.Constants.MainCanvasObj, Common.FrameWorkObj.transform)
@@ -52,10 +44,10 @@ namespace Framework.Scripts.Manager
             GameObject rewiredInputManagerObj = GameObject.Find("Rewired Input Manager");
             if (rewiredInputManagerObj == null)
             {
-                Addressables.LoadAssetAsync<GameObject>(Constants.Constants.RewiredInputManagerObj).Completed +=
+                Addressables.InstantiateAsync(Constants.Constants.RewiredInputManagerObj, Common.FrameWorkObj.transform).Completed +=
                     handle =>
                     {
-                        rewiredInputManagerObj = Instantiate(handle.Result, Common.FrameWorkObj.transform, true);
+                        rewiredInputManagerObj = handle.Result;
                         rewiredInputManagerObj.name =
                             Constants.Constants.ReplaceString(rewiredInputManagerObj.name, "(Clone)", "");
                         GameObject rewiredEventSystemGameObject = GameObject.Find("Rewired Event System");

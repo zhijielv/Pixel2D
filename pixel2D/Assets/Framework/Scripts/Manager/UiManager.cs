@@ -88,6 +88,7 @@ namespace Framework.Scripts.Manager
             }
 
             Debug.Log("Create View : " + viewName);
+            // todo 设置异步加载，添加回调方法
             GameObject viewPanelObj =
                 GlobalConfig<UiScriptableObjectsManager>.Instance.GetUiViewObj(viewName);
             // todo 设置加载View的parent，默认是MainCanvas

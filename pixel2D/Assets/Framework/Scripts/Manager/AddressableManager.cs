@@ -2,16 +2,19 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceLocations;
 
 namespace Framework.Scripts.Manager
 {
     public class AddressableManager : ManagerSingleton<AddressableManager>
     {
         private static bool _initialized = false;
-        public static bool Ready => _initialized;
-
+        public bool Ready => _initialized;
+        
         static void InitDone(AsyncOperationHandle<IResourceLocator> obj)
         {
             _initialized = true;
@@ -65,6 +68,11 @@ namespace Framework.Scripts.Manager
             }
 
             return op.Result;
+        }
+
+        public void ReleaseInstance(GameObject gameobject)
+        {
+            Addressables.ReleaseInstance(gameobject);
         }
     }
 }

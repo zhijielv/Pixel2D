@@ -7,6 +7,7 @@ using UnityEngine.AddressableAssets;
 
 namespace Editor.Tools
 {
+#if UNITY_EDITOR
     public class HierarchyTool
     {
         [MenuItem("GameObject/Scene Init", false, -100)]
@@ -58,4 +59,5 @@ namespace Editor.Tools
             }
         }
     }
+#endif
 }
