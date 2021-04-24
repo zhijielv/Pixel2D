@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Framework.Scripts.Constants;
 using Framework.Scripts.Singleton;
 using Framework.Scripts.UI.Base;
 using Sirenix.OdinInspector;
@@ -10,7 +11,6 @@ namespace Framework.Scripts.Manager
 {
     public class UiManager : ManagerSingleton<UiManager>
     {
-        public Canvas mainCanvas;
         [ShowInInspector, ReadOnly] public Dictionary<string, ViewBase> uiList = new Dictionary<string, ViewBase>();
 
         #region public
@@ -86,10 +86,10 @@ namespace Framework.Scripts.Manager
             }
 
             Debug.Log("Create View : " + viewName);
-            // todo 设置parent
+            // todo 设置加载View的parent
             GameObject viewPanelObj =
                 GlobalConfig<UiScriptableObjectsManager>.Instance.GetUiViewObj(viewName);
-            GameObject tmpView = Instantiate(viewPanelObj, mainCanvas.transform);
+            GameObject tmpView = Instantiate(viewPanelObj, Common.MainCanvas.transform);
             RegistView(tmpView);
             GameObject widgetObj = (GameObject) tmpView.GetComponent<ViewBase>().GetWidget(widgetName);
             if (widgetObj != null) return widgetObj;

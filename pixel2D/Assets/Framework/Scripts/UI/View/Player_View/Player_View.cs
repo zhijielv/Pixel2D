@@ -25,7 +25,7 @@ namespace Framework.Scripts.UI.View
     public class Player_View : ViewBase
     {
         // member
-        public UnityEngine.UI.Button LoadLevel_Button;
+		public UnityEngine.UI.Button LoadLevel_Button;
         // member end
         internal override object GetWidget(string widgetName)
         {
@@ -83,7 +83,7 @@ namespace Framework.Scripts.UI.View
         public void LoadLevel()
         {
             LevelManager.Instance.levelType = LevelType.yanjiang;
-            LevelManager.Instance.LoadLevel(UiManager.Instance.mainCanvas.transform);
+            LevelManager.Instance.LoadLevel(Common.MainCanvas.transform);
         }
     }
 }

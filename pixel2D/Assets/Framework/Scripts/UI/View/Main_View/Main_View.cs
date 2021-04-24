@@ -54,7 +54,7 @@ namespace Framework.Scripts.UI.View
             RightTop_Text.text = "";
             BG_Image.SetNativeSize();
             float scale = BG_Image.rectTransform.sizeDelta.x /
-                          UiManager.Instance.mainCanvas.GetComponent<CanvasScaler>().referenceResolution.x;
+                          Common.MainCanvas.GetComponent<CanvasScaler>().referenceResolution.x;
             BG_Image.rectTransform.sizeDelta /= scale;
         }
 

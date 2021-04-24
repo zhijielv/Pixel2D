@@ -19,8 +19,8 @@ namespace Framework.Scripts.Constants
         public static readonly string LevelPrefabDir = "Assets/Art/Prefabs/Level/";
 
         ////////////////////////////////////////////  GameObject  ///////////////////////////////////////////////////////
-        public const string MainCanvasObj = "Assets/Art/Prefabs/UI/Canvas/_MainCanvas.prefab";
-        public const string RewiredInputManagerObj = "Assets/Art/Prefabs/Rewired/Rewired Input Manager.prefab";
+        public const string MainCanvasObj = "_MainCanvas";
+        public const string RewiredInputManagerObj = "Rewired Input Manager";
         
         ////////////////////////////////////////////  Name  ///////////////////////////////////////////////////////
         public const string UiScriptableObjectsManager = "Ui Scriptable Objects Manager.asset";
@@ -46,7 +46,7 @@ namespace Framework.Scripts.Constants
 
             if (oldStr.IndexOf(oldValue, StringComparison.Ordinal) == -1)
             {
-                Debug.Log("没有找到需要替换的关键字符串!");
+                Debug.Log("没有找到需要替换的字符串!");
                 return oldStr;
             }
 
