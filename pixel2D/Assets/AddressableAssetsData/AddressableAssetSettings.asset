@@ -73,6 +73,7 @@ MonoBehaviour:
     m_LabelNames:
     - default
     - preload
+    - view
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 75a6769d8e021054dab4308c9829ff9c, type: 2}
