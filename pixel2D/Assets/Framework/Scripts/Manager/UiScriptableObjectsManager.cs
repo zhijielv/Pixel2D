@@ -1,12 +1,20 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Framework.Scripts.UI.ScriptableObjects;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Framework.Scripts.Manager
 {
+    /// <summary>
+    /// todo 测试打包
+    /// 1. 设置view到address
+    /// 2. 仅设置此资源打包，加载view
+    /// </summary>
     [HideMonoScript]
     [SirenixGlobalConfig]
     [GlobalConfig("Art/ScriptableObject/UIScriptableObjectManager")]

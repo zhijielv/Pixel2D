@@ -23,19 +23,30 @@ namespace Framework.Scripts.Manager
         private void StartLauncher()
         {
             FrameWorkInit();
-            UiManager.Instance.GetWidget<Player_View>();
+            // UiManager.Instance.GetWidget<Player_View>();
         }
 
         private void FrameWorkInit()
         {
             Debug.Log("******************** Framework Init **********************");
+            // if (Common.MainCanvas == null)
+            // {
+            //     Addressables.LoadAssetAsync<GameObject>(Constants.Constants.MainCanvasObj).Completed += handle =>
+            //     {
+            //         Common.MainCanvas = Instantiate(handle.Result, Common.FrameWorkObj.transform, true);
+            //         Common.MainCanvas.name = Constants.Constants.ReplaceString(Common.MainCanvas.name, "(Clone)", "");
+            //     };
+            // }
             if (Common.MainCanvas == null)
             {
-                Addressables.LoadAssetAsync<GameObject>(Constants.Constants.MainCanvasObj).Completed += handle =>
-                {
-                    Common.MainCanvas = Instantiate(handle.Result, Common.FrameWorkObj.transform, true);
-                    Common.MainCanvas.name = Constants.Constants.ReplaceString(Common.MainCanvas.name, "(Clone)", "");
-                };
+                Addressables.InstantiateAsync(Constants.Constants.MainCanvasObj, Common.FrameWorkObj.transform)
+                        .Completed +=
+                    handle =>
+                    {
+                        Common.MainCanvas = handle.Result;
+                        Common.MainCanvas.name =
+                            Constants.Constants.ReplaceString(Common.MainCanvas.name, "(Clone)", "");
+                    };
             }
 
             GameObject rewiredInputManagerObj = GameObject.Find("Rewired Input Manager");

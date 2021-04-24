@@ -15,6 +15,7 @@ using UnityEngine.UI;
 using System;
 using Framework.Scripts.Constants;
 using Rewired;
+using Sirenix.Utilities;
 using UnityEngine;
 namespace Framework.Scripts.UI.View
 {
@@ -59,6 +60,7 @@ namespace Framework.Scripts.UI.View
         
         private void TestListenerFunc(EventData data)
         {
+            Debug.Log(GlobalConfig<UiScriptableObjectsManager>.Instance.UiScriptableObjectsList.Length);
             Debug.Log($"{data.Type}    {data.Data}");
         }
 
