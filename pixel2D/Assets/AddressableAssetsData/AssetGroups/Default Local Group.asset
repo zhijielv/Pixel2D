@@ -22,19 +22,15 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - preload
-    m_MainAsset: {fileID: 7231806749614847857, guid: fbc5d083a35731e44b57addf7cd70715,
-      type: 3}
-    m_TargetAsset: {fileID: 7231806749614847857, guid: fbc5d083a35731e44b57addf7cd70715,
-      type: 3}
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   - m_GUID: 5528fd196611f43469e391829f09f037
     m_Address: _MainCanvas
     m_ReadOnly: 0
     m_SerializedLabels:
     - preload
-    m_MainAsset: {fileID: 2456020677703500327, guid: 5528fd196611f43469e391829f09f037,
-      type: 3}
-    m_TargetAsset: {fileID: 2456020677703500327, guid: 5528fd196611f43469e391829f09f037,
-      type: 3}
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cc1ef71ad71ad124cac3229a7e1dd5ba, type: 2}
   m_SchemaSet:
