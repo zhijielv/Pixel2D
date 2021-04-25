@@ -42,6 +42,7 @@ namespace Editor.Tools
         {
             GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode = true;
             GenerateObjList(GetAllViewPrefab().ToArray());
+            AddressableAssetsTool.Add2AddressablesGroups();
         }
 
         /// <summary>
@@ -145,7 +146,8 @@ namespace Editor.Tools
         private static void GenerateScriptableObjectClass(string className)
         {
             // 判断代码是否存在，存在则只修改成员变量
-            string outputFile = Application.dataPath + Constants.ViewScriptDir + className + "/" + className + "_ScriptableObject" + ".cs";
+            string outputFile = Application.dataPath + Constants.ViewScriptDir + className + "/" + className +
+                                "_ScriptableObject" + ".cs";
             if (File.Exists(outputFile))
                 return;
             CodeCompileUnit unit = new CodeCompileUnit();
@@ -265,7 +267,7 @@ namespace Editor.Tools
             };
             if (tmpMember.Count == 0)
                 method.Comments.Add(new CodeCommentStatement("member"));
-            
+
             method.Comments.Add(new CodeCommentStatement("member end"));
             method.Parameters.Add(new CodeParameterDeclarationExpression(typeof(string), "widgetName"));
             CodeConditionStatement statement = new CodeConditionStatement(
@@ -327,7 +329,6 @@ namespace Editor.Tools
                 provider.Dispose();
             }
         }
-
 
         #region EndCompile
 
