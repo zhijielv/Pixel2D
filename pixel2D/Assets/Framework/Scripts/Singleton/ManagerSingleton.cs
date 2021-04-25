@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Framework.Scripts.Singleton
 {
@@ -17,6 +18,10 @@ namespace Framework.Scripts.Singleton
             {
                 Destroy(gameObject);
             }
+        }
+
+        public virtual async Task Init()
+        {
         }
     }
 }

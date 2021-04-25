@@ -16,7 +16,31 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 6cdec645d9499d54299c8e0bf200c490
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 34ea16582ab73854bb70116ccebfaadc
+    m_Address: BiaoTi_View
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: c429e501c6c20534a85c191ac733190b
+    m_Address: Main_View
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: eca8510546a7ca5418ccd979d6f6180d
+    m_Address: Player_View
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 1c07b07004a666e439813c2fbcd844e4
+    m_Address: Test_View
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 11400000, guid: 1c07b07004a666e439813c2fbcd844e4, type: 2}
+    m_TargetAsset: {fileID: 11400000, guid: 1c07b07004a666e439813c2fbcd844e4, type: 2}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cc1ef71ad71ad124cac3229a7e1dd5ba, type: 2}
   m_SchemaSet:

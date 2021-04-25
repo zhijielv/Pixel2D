@@ -35,10 +35,10 @@ namespace Framework.Scripts.UI.View
             }
         }
 
-        private void Start()
+        private async void Start()
         {
             LevelManager.Instance.levelType = LevelType.yanjiang;
-            LevelManager.Instance.LoadLevel(transform);
+            await LevelManager.Instance.LoadLevel(transform);
         }
     }
 }

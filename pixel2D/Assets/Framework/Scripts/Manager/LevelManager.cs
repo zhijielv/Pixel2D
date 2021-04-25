@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Framework.Scripts.Level;
 using Framework.Scripts.Singleton;
 using Framework.Scripts.Utils;
@@ -16,21 +17,21 @@ namespace Framework.Scripts.Manager
             leveljsonClasses = JsonHelper.JsonReader<List<LeveljsonClass>>(Constants.Constants.JsonPath);
         }
 
-        public void LoadLevel(Transform mapRoot = null)
+        public async Task LoadLevel(Transform mapRoot = null)
         {
             if(levelLoaderObj != null) Destroy(levelLoaderObj);
             levelLoaderObj = new GameObject("LevelLoader");
             LevelLoader loader = (LevelLoader) Constants.Constants.AddOrGetComponent(levelLoaderObj, typeof(LevelLoader));
             levelLoaderObj.transform.parent = mapRoot == null ? transform : mapRoot;
 
-            loader.LoadLevel(levelType);
+            await loader.LoadLevel(levelType);
             loader.CreateLevel();
         }
 
-        public Level.Level GetLevel(LevelType levelType = LevelType.ludi)
+        public async Task<Level.Level> GetLevel(LevelType levelType = LevelType.ludi)
         {
             Level.Level level = new Level.Level();
-            level.GenerateLevelValueFromJson(GetLeveljsonClass(levelType));
+            await level.GenerateLevelValueFromJson(GetLeveljsonClass(levelType));
             return level;
         } 
 

@@ -82,10 +82,10 @@ namespace Framework.Scripts.UI.View
             EventManager.Instance.DispatchEvent(EventConstants.StartGame);
         }
 
-        public void LoadLevel()
+        public async void LoadLevel()
         {
             LevelManager.Instance.levelType = LevelType.yanjiang;
-            LevelManager.Instance.LoadLevel(Common.MainCanvas.transform);
+            await LevelManager.Instance.LoadLevel(Common.MainCanvas.transform);
         }
     }
 }

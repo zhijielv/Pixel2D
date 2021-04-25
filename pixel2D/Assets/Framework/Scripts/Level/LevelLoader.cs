@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Framework.Scripts.Constants;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Framework.Scripts.Manager;
 using Framework.Scripts.Utils;
 using Sirenix.OdinInspector;
@@ -16,11 +15,12 @@ namespace Framework.Scripts.Level
         public Transform mapRoot;
         [ShowInInspector] public Level level;
 
-        private void Awake()
+        private async void Awake()
         {
-            level = LevelManager.Instance.GetLevel();
+            level = await LevelManager.Instance.GetLevel();
             imagePrefab =
-                AssetDatabase.LoadAssetAtPath<GameObject>(Constants.Constants.LevelPrefabDir + "Wall/f601/wall.prefab");
+                await AddressableManager.Instance.LoadAsset<GameObject>(Constants.Constants.LevelPrefabDir +
+                                                                        "Wall/f601/wall.prefab");
             mapRoot = transform;
         }
 
@@ -39,7 +39,7 @@ namespace Framework.Scripts.Level
         [OnValueChanged("LoadLevel")] public LevelType levelType;
 
         // 加载Level数据
-        public void LoadLevel(LevelType levelType)
+        public async Task LoadLevel(LevelType levelType)
         {
             level = new Level();
             LeveljsonClass tmpLeveljsonClass = new LeveljsonClass();
@@ -50,16 +50,16 @@ namespace Framework.Scripts.Level
                 tmpLeveljsonClass = leveljsonClass;
             }
 
-            level.GenerateLevelValueFromJson(tmpLeveljsonClass);
+            await level.GenerateLevelValueFromJson(tmpLeveljsonClass);
 
             level.SetLevelMap();
         }
 
         // 仅Inspector显示用
         [OnInspectorInit]
-        public void Init()
+        public async void Init()
         {
-            LoadLevel(levelType);
+            await LoadLevel(levelType);
         }
 
         // 创建关卡到游戏中

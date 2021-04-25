@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Framework.Scripts.Constants;
 using Framework.Scripts.Manager;
-using Framework.Scripts.Utils;
 using LitJson;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
-using Sirenix.Utilities.Editor;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
-using Random = UnityEngine.Random;
 
 namespace Framework.Scripts.Level
 {
@@ -28,8 +26,10 @@ namespace Framework.Scripts.Level
 
 
         public bool showTable = false;
+#if UNITY_EDITOR
         [TableMatrix(DrawElementMethod = "DrawTableMatrix")] [ReadOnly]
-        [ShowIf("showTable")]
+        [ShowIf("showTable")]  
+#endif
         public LevelItemType[,] LevelMap;
 
         [ListDrawerSettings(Expanded = true)]
@@ -122,7 +122,7 @@ namespace Framework.Scripts.Level
         //     }
         // }
 
-        public void GenerateLevelValueFromJson(LeveljsonClass data)
+        public async Task GenerateLevelValueFromJson(LeveljsonClass data)
         {
             SetSize(data.Width, data.Height);
             Enum.TryParse(data.LevelType, out LevelType);
@@ -135,29 +135,57 @@ namespace Framework.Scripts.Level
             }
             foreach (JsonData data1 in data.RoadList)
             {
+#if UNITY_EDITOR
                 LevelItem[LevelItemType.Road]
                     .Add((Sprite) AssetDatabase.LoadAssetAtPath(data1.ToString(), typeof(Sprite)));
+#else
+                string path = Constants.Constants.ReplaceString(data1.ToString(), "Assets/Art/", "");
+                Sprite sprite = await AddressableManager.Instance.LoadAsset<Sprite>(path);
+                LevelItem[LevelItemType.Road]
+                    .Add(sprite);
+#endif
             }
 
             foreach (JsonData data1 in data.WallList)
             {
+#if UNITY_EDITOR
                 LevelItem[LevelItemType.Wall]
                     .Add((Sprite) AssetDatabase.LoadAssetAtPath(data1.ToString(), typeof(Sprite)));
+#else
+                string path = Constants.Constants.ReplaceString(data1.ToString(), "Assets/Art/", "");
+                Sprite sprite = await AddressableManager.Instance.LoadAsset<Sprite>(path);
+                LevelItem[LevelItemType.Wall]
+                    .Add(sprite);
+#endif
             }
 
             foreach (JsonData data1 in data.BoxList)
             {
+#if UNITY_EDITOR
                 LevelItem[LevelItemType.Box]
                     .Add((Sprite) AssetDatabase.LoadAssetAtPath(data1.ToString(), typeof(Sprite)));
+#else
+                string path = Constants.Constants.ReplaceString(data1.ToString(), "Assets/Art/", "");
+                Sprite sprite = await AddressableManager.Instance.LoadAsset<Sprite>(path);
+                LevelItem[LevelItemType.Box]
+                    .Add(sprite);
+#endif
             }
 
             foreach (JsonData data1 in data.ObstructionList)
             {
+#if UNITY_EDITOR
                 LevelItem[LevelItemType.Obstruction]
                     .Add((Sprite) AssetDatabase.LoadAssetAtPath(data1.ToString(), typeof(Sprite)));
+#else
+                string path = Constants.Constants.ReplaceString(data1.ToString(), "Assets/Art/", "");
+                Sprite sprite = await AddressableManager.Instance.LoadAsset<Sprite>(path);
+                LevelItem[LevelItemType.Obstruction]
+                    .Add(sprite);
+#endif
             }
         }
-
+#if UNITY_EDITOR
         static LevelItemType DrawTableMatrix(Rect rect, LevelItemType value)
         {
             switch (value)
@@ -175,5 +203,6 @@ namespace Framework.Scripts.Level
             }
             return value;
         }
+#endif
     }
 }

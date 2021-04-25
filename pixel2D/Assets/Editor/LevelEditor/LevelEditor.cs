@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Framework.Scripts.Constants;
 using Framework.Scripts.Level;
 using Framework.Scripts.Manager;
@@ -14,6 +15,8 @@ using UnityEngine;
 
 namespace Editor.LevelEditor
 {
+#if UNITY_EDITOR
+
     public class LevelEditor : OdinMenuEditorWindow
     {
         private LevelTool _levelTool;
@@ -53,15 +56,15 @@ namespace Editor.LevelEditor
 
         public LevelTool()
         {
-            Level = ReadMapJson(levelType);
+            Level = ReadMapJson(levelType).Result;
         }
 
-        public void LoadLevel(LevelType levelType)
+        public async void LoadLevel(LevelType levelType)
         {
-            Level = ReadMapJson(levelType);
+            Level = await ReadMapJson(levelType);
         }
         
-        public Level ReadMapJson(LevelType levelType)
+        public async Task<Level> ReadMapJson(LevelType levelType)
         {
             Level tmpLevel = new Level {LevelType = levelType};
             if (!File.Exists(jsonPath))
@@ -79,7 +82,7 @@ namespace Editor.LevelEditor
             {
                 if (!data.LevelType.Equals(levelType.ToString())) continue;
                 _leveljsonClass = data;
-                tmpLevel.GenerateLevelValueFromJson(_leveljsonClass);
+                await tmpLevel.GenerateLevelValueFromJson(_leveljsonClass);
                 break;
             }
             
@@ -138,5 +141,6 @@ namespace Editor.LevelEditor
             _leveljsonClass = null;
             AssetDatabase.Refresh();
         }
-    }
+    }    
+#endif
 }

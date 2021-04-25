@@ -1,10 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Sirenix.Utilities;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Framework.Scripts.Constants
 {
@@ -28,8 +27,11 @@ namespace Framework.Scripts.Constants
         public const string CustomUiNameSpace = "Framework.Scripts.UI.CustomUI.";
 
         public const string ArtDirPath = "Assets/Art/";
+        public const string UIAssets = "UIScriptableObject/";
+        public const string UIView = "UIView/";
         
         ////////////////////////////////////////////  Function  ///////////////////////////////////////////////////////
+        // 添加或获取组件
         public static Component AddOrGetComponent(GameObject go, Type componentType)
         {
             Component c = go.GetComponent(componentType);
@@ -38,6 +40,7 @@ namespace Framework.Scripts.Constants
             return c;
         }
 
+        // 字符串替换
         public static string ReplaceString(string oldStr, string oldValue, string newValue)
         {
             StringBuilder strBuffer = new StringBuilder();
@@ -66,6 +69,36 @@ namespace Framework.Scripts.Constants
 
             strBuffer.Append(oldStr.Substring(tail));
             return strBuffer.ToString();
+        }
+        
+        
+        // 单帧处理协程
+        public static IEnumerator ToFixedCoroutine(IEnumerator enumerator)
+        {
+            var parentsStack = new Stack<IEnumerator>();
+            var currentEnumerator = enumerator;
+
+            parentsStack.Push(currentEnumerator);
+
+            while (parentsStack.Count > 0)
+            {
+                currentEnumerator = parentsStack.Pop();
+
+                while (currentEnumerator.MoveNext())
+                {
+                    var subEnumerator = currentEnumerator.Current as IEnumerator;
+                    if (subEnumerator != null)
+                    {
+                        parentsStack.Push(currentEnumerator);
+                        currentEnumerator = subEnumerator;
+                    }
+                    else
+                    {
+                        if (currentEnumerator.Current is bool && (bool)currentEnumerator.Current) continue;
+                        yield return currentEnumerator.Current;
+                    }
+                }
+            }
         }
 
 #if UNITY_EDITOR

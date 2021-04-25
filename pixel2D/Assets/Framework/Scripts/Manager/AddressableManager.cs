@@ -2,11 +2,9 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.AddressableAssets.ResourceLocators;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.ResourceManagement.ResourceLocations;
+using System.Threading.Tasks;
+using UnityEditor;
+using Object = UnityEngine.Object;
 
 namespace Framework.Scripts.Manager
 {
@@ -14,60 +12,46 @@ namespace Framework.Scripts.Manager
     {
         private static bool _initialized = false;
         public bool Ready => _initialized;
-        
-        static void InitDone(AsyncOperationHandle<IResourceLocator> obj)
+
+        public override async Task Init()
         {
+            await Addressables.InitializeAsync().Task;
+            await Addressables.DownloadDependenciesAsync("preload").Task;
             _initialized = true;
         }
 
-        public void Start()
-        {
-            Addressables.InitializeAsync().Completed += InitDone;
-            Addressables.DownloadDependenciesAsync("preload");
-        }
-
-        public T LoadAsset<T>(object key)
+        public async Task<T> LoadAsset<T>(object key) where T : Object
         {
             if (!_initialized)
-                throw new Exception("Whoa there friend!  We haven't init'd yet!");
-
-            var op = Addressables.LoadAssetAsync<T>(key);
-
-            if (!op.IsDone)
-                throw new Exception("Sync LoadAsset failed to load in a sync way! " + key);
-
-            if (op.Result == null)
+                throw new Exception("AddressableManager has not initialized!");
+#if UNITY_EDITOR
+            T op = AssetDatabase.LoadAssetAtPath<T>((string) key);
+#else
+            T op = await Addressables.LoadAssetAsync<T>(key).Task;
+#endif
+            
+            if (op == null)
             {
                 var message = "Sync LoadAsset has null result " + key;
-                if (op.OperationException != null)
-                    message += " Exception: " + op.OperationException;
-
                 throw new Exception(message);
             }
 
-            return op.Result;
+            return op;
         }
 
-        public GameObject Instantiate(object key, Transform parent = null, bool instantiateInWorldSpace = false)
+        public async Task<GameObject> Instantiate(object key, Transform parent = null, bool instantiateInWorldSpace = false)
         {
             if (!_initialized)
-                throw new Exception("Whoa there friend!  We haven't init'd yet!");
+                throw new Exception("AddressableManager has not initialized!");
 
-            var op = Addressables.InstantiateAsync(key, parent, instantiateInWorldSpace);
-
-            if (!op.IsDone)
-                throw new Exception("Sync Instantiate failed to finish! " + key);
-
-            if (op.Result == null)
+            GameObject op = await Addressables.InstantiateAsync(key, parent, instantiateInWorldSpace).Task;
+            if (op == null)
             {
                 var message = "Sync Instantiate has null result " + key;
-                if (op.OperationException != null)
-                    message += " Exception: " + op.OperationException;
-
                 throw new Exception(message);
             }
 
-            return op.Result;
+            return op;
         }
 
         public void ReleaseInstance(GameObject gameobject)

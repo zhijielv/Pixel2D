@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Framework.Scripts.Constants;
 using Framework.Scripts.Singleton;
 using Framework.Scripts.UI.Base;
@@ -79,7 +80,7 @@ namespace Framework.Scripts.Manager
 
         #region private
 
-        private object GetOrCreateViewObj(string viewName, string widgetName)
+        private async Task<object> GetOrCreateViewObj(string viewName, string widgetName)
         {
             if (widgetName.IsNullOrWhitespace()) widgetName = viewName;
             if (uiList.ContainsKey(viewName))
@@ -88,11 +89,8 @@ namespace Framework.Scripts.Manager
             }
 
             Debug.Log("Create View : " + viewName);
-            // todo 设置异步加载，添加回调方法
-            GameObject viewPanelObj =
-                GlobalConfig<UiScriptableObjectsManager>.Instance.GetUiViewObj(viewName);
             // todo 设置加载View的parent，默认是MainCanvas
-            GameObject tmpView = Instantiate(viewPanelObj, Common.MainCanvas.transform);
+            GameObject tmpView = await AddressableManager.Instance.Instantiate(viewName, Common.MainCanvas.transform);
             RegistView(tmpView);
             GameObject widgetObj = (GameObject) tmpView.GetComponent<ViewBase>().GetWidget(widgetName);
             if (widgetObj != null) return widgetObj;

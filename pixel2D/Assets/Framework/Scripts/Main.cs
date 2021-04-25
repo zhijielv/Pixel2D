@@ -4,6 +4,7 @@
 ** Description: 
 */
 
+using System.Threading.Tasks;
 using Framework.Scripts.Constants;
 using Framework.Scripts.Manager;
 using Framework.Scripts.Singleton;
@@ -21,13 +22,14 @@ public class Main : MonoBehaviour
     private Text centerText;
     private UiWidgetBase centerRightText;
 
-    private void Awake()
+    private async void Awake()
     {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
-        AddManager<Launcher>();
-        AddManager<UiManager>();
-        AddManager<EventManager>();
-        AddManager<TimerManager>();
+        await AddManager<AddressableManager>();
+        await AddManager<EventManager>();
+        await AddManager<TimerManager>();
+        await AddManager<UiManager>();
+        await AddManager<Launcher>();
         CreateManager<LevelManager>();
         DontDestroyOnLoad(transform);
         GameObject frameWorkObj = GameObject.Find("[FrameWork]");
@@ -38,9 +40,10 @@ public class Main : MonoBehaviour
         }
     }
 
-    private void AddManager<T>() where T : ManagerSingleton<T>
+    private async Task AddManager<T>() where T : ManagerSingleton<T>
     {
         Constants.AddOrGetComponent(gameObject, typeof(T));
+        await ManagerSingleton<T>.Instance.Init();
     }
 
     private void CreateManager<T>() where T : ManagerSingleton<T>

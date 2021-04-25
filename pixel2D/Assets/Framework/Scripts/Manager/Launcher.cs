@@ -1,74 +1,69 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 using Framework.Scripts.Constants;
 using Framework.Scripts.Singleton;
 using Framework.Scripts.UI.View;
 using Rewired;
 using Rewired.Integration.UnityUI;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace Framework.Scripts.Manager
 {
     public class Launcher : ManagerSingleton<Launcher>
     {
-        private void Start()
+        private async void Start()
         {
             if (!Common.Initialized)
             {
-                StartLauncher();
+                await StartLauncher();
                 Common.Initialized = true;
             }
         }
 
-        private void StartLauncher()
+        private async Task StartLauncher()
         {
-            FrameWorkInit();
-            // UiManager.Instance.GetWidget<Player_View>();
+            await FrameWorkInit();
+            UiManager.Instance.GetWidget<Player_View>();
         }
 
-        private void FrameWorkInit()
+        private async Task FrameWorkInit()
         {
             Debug.Log("******************** Framework Init **********************");
             if (Common.MainCanvas == null)
             {
-                Addressables.InstantiateAsync(Constants.Constants.MainCanvasObj, Common.FrameWorkObj.transform)
-                        .Completed +=
-                    handle =>
-                    {
-                        Common.MainCanvas = handle.Result;
-                        Common.MainCanvas.name =
-                            Constants.Constants.ReplaceString(Common.MainCanvas.name, "(Clone)", "");
-                    };
+                Common.MainCanvas = await AddressableManager.Instance.Instantiate(Constants.Constants.MainCanvasObj,
+                    Common.FrameWorkObj.transform);
+                Common.MainCanvas.name =
+                    Constants.Constants.ReplaceString(Common.MainCanvas.name, "(Clone)", "");
             }
 
+            // 实例化Rewired Input Manager
             GameObject rewiredInputManagerObj = GameObject.Find("Rewired Input Manager");
             if (rewiredInputManagerObj == null)
             {
-                Addressables.InstantiateAsync(Constants.Constants.RewiredInputManagerObj, Common.FrameWorkObj.transform).Completed +=
-                    handle =>
-                    {
-                        rewiredInputManagerObj = handle.Result;
-                        rewiredInputManagerObj.name =
-                            Constants.Constants.ReplaceString(rewiredInputManagerObj.name, "(Clone)", "");
-                        GameObject rewiredEventSystemGameObject = GameObject.Find("Rewired Event System");
-                        if (rewiredEventSystemGameObject == null)
-                            rewiredEventSystemGameObject = new GameObject {name = "Rewired Event System"};
-                        rewiredEventSystemGameObject.transform.SetParent(Common.FrameWorkObj.transform);
+                rewiredInputManagerObj =
+                    await AddressableManager.Instance.Instantiate(Constants.Constants.RewiredInputManagerObj,
+                        Common.FrameWorkObj.transform);
+                rewiredInputManagerObj.name =
+                    Constants.Constants.ReplaceString(rewiredInputManagerObj.name, "(Clone)", "");
+                GameObject rewiredEventSystemGameObject = GameObject.Find("Rewired Event System");
+                // 创建Rewired Event System
+                if (rewiredEventSystemGameObject == null)
+                    rewiredEventSystemGameObject = new GameObject {name = "Rewired Event System"};
+                rewiredEventSystemGameObject.transform.SetParent(Common.FrameWorkObj.transform);
 
-                        RewiredEventSystem rewiredEventSystem =
-                            (RewiredEventSystem) Constants.Constants.AddOrGetComponent(rewiredEventSystemGameObject,
-                                typeof(RewiredEventSystem));
-                        rewiredEventSystem.pixelDragThreshold = 5;
+                RewiredEventSystem rewiredEventSystem =
+                    (RewiredEventSystem) Constants.Constants.AddOrGetComponent(rewiredEventSystemGameObject,
+                        typeof(RewiredEventSystem));
+                rewiredEventSystem.pixelDragThreshold = 5;
 
-                        RewiredStandaloneInputModule rewiredStandaloneInputModule =
-                            (RewiredStandaloneInputModule) Constants.Constants.AddOrGetComponent(
-                                rewiredEventSystemGameObject,
-                                typeof(RewiredStandaloneInputModule));
-                        rewiredStandaloneInputModule.UseAllRewiredGamePlayers = true;
-                        rewiredStandaloneInputModule.UseRewiredSystemPlayer = true;
-                        rewiredStandaloneInputModule.RewiredInputManager =
-                            rewiredInputManagerObj.GetComponent<InputManager_Base>();
-                    };
+                RewiredStandaloneInputModule rewiredStandaloneInputModule =
+                    (RewiredStandaloneInputModule) Constants.Constants.AddOrGetComponent(
+                        rewiredEventSystemGameObject,
+                        typeof(RewiredStandaloneInputModule));
+                rewiredStandaloneInputModule.UseAllRewiredGamePlayers = true;
+                rewiredStandaloneInputModule.UseRewiredSystemPlayer = true;
+                rewiredStandaloneInputModule.RewiredInputManager =
+                    rewiredInputManagerObj.GetComponent<InputManager_Base>();
             }
         }
     }
