@@ -15,6 +15,9 @@ namespace Framework.Scripts.Manager
 
         public override async Task Init()
         {
+#if !UNITY_EDITOR
+            PlayerPrefs.DeleteKey(Addressables.kAddressablesRuntimeDataPath);
+#endif
             await Addressables.InitializeAsync().Task;
             await Addressables.DownloadDependenciesAsync("preload").Task;
             _initialized = true;
