@@ -2,6 +2,7 @@
 ** Created by fengling
 ** DateTime:    2021-03-21 14:09:20
 ** Description: UI界面基类
+** TODO 添加生命周期，隐藏N秒后自动销毁
 */
 
 using System;

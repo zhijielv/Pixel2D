@@ -12,18 +12,20 @@ namespace Framework.Scripts.Manager
         public LevelType levelType = LevelType.ludi;
         public List<LeveljsonClass> leveljsonClasses;
         public GameObject levelLoaderObj;
-        public LevelManager()
+        bool init = false;
+        public override async Task Init()
         {
-            leveljsonClasses = JsonHelper.JsonReader<List<LeveljsonClass>>(Constants.Constants.JsonPath);
+            leveljsonClasses = await JsonHelper.JsonReader<List<LeveljsonClass>>(Constants.Constants.MapJson);
+            init = true;
         }
 
         public async Task LoadLevel(Transform mapRoot = null)
         {
             if(levelLoaderObj != null) Destroy(levelLoaderObj);
-            levelLoaderObj = new GameObject("LevelLoader");
-            LevelLoader loader = (LevelLoader) Constants.Constants.AddOrGetComponent(levelLoaderObj, typeof(LevelLoader));
+            levelLoaderObj = new GameObject("LevelLoader"); 
             levelLoaderObj.transform.parent = mapRoot == null ? transform : mapRoot;
-
+            LevelLoader loader = (LevelLoader) Constants.Constants.AddOrGetComponent(levelLoaderObj, typeof(LevelLoader));
+            await loader.Init();
             await loader.LoadLevel(levelType);
             loader.CreateLevel();
         }
@@ -31,13 +33,14 @@ namespace Framework.Scripts.Manager
         public async Task<Level.Level> GetLevel(LevelType levelType = LevelType.ludi)
         {
             Level.Level level = new Level.Level();
-            await level.GenerateLevelValueFromJson(GetLeveljsonClass(levelType));
+            await level.GenerateLevelValueFromJson(await GetLeveljsonClass(levelType));
             return level;
         } 
 
-        public LeveljsonClass GetLeveljsonClass(LevelType levelType = LevelType.ludi)
+        public async Task<LeveljsonClass> GetLeveljsonClass(LevelType levelType = LevelType.ludi)
         {
             LeveljsonClass tmpLeveljsonClass = new LeveljsonClass();
+            leveljsonClasses ??= await JsonHelper.JsonReader<List<LeveljsonClass>>(Constants.Constants.MapJson);
             foreach (LeveljsonClass leveljsonClass in leveljsonClasses)
             {
                 if (!leveljsonClass.LevelType.Equals(levelType.ToString())) continue;

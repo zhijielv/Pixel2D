@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using Editor.Tools;
 using Framework.Scripts.Constants;
 using Framework.Scripts.Level;
 using Framework.Scripts.Manager;
@@ -47,7 +49,7 @@ namespace Editor.LevelEditor
 
     public class LevelTool
     {
-        [ReadOnly] private string jsonPath = Constants.JsonPath;
+        [ReadOnly] private string jsonPath = "Assets/Framework/Json/Map.json";
         [OnValueChanged("LoadLevel")] public LevelType levelType = LevelType.ludi;
         [ShowInInspector] public Level Level;
 
@@ -63,7 +65,7 @@ namespace Editor.LevelEditor
         {
             Level = await ReadMapJson(levelType);
         }
-        
+
         public async Task<Level> ReadMapJson(LevelType levelType)
         {
             Level tmpLevel = new Level {LevelType = levelType};
@@ -75,8 +77,14 @@ namespace Editor.LevelEditor
                 streamWriter.Write("[]");
                 streamWriter.Close();
                 fileStream.Close();
+                AddAllJson2AddressGroup();
             }
-            _levelJsonList = JsonHelper.JsonReader<List<LeveljsonClass>>(jsonPath);
+
+            // _levelJsonList = await JsonHelper.JsonReader<List<LeveljsonClass>>("Map.json");
+            StreamReader streamReader = new StreamReader(jsonPath);
+            string json = streamReader.ReadToEnd();
+            streamReader.Close();
+            _levelJsonList = JsonMapper.ToObject<List<LeveljsonClass>>(json);
             _leveljsonClass = null;
             foreach (LeveljsonClass data in _levelJsonList)
             {
@@ -85,8 +93,17 @@ namespace Editor.LevelEditor
                 await tmpLevel.GenerateLevelValueFromJson(_leveljsonClass);
                 break;
             }
-            
+
             return tmpLevel;
+        }
+
+        public void AddAllJson2AddressGroup()
+        {
+            AssetDatabase.Refresh();
+            List<TextAsset> textAssets = AssetDatabase.FindAssets("t:TextAsset", new[] {"Assets/Framework/Json"})
+                .Select(guid =>
+                    AssetDatabase.LoadAssetAtPath<TextAsset>(AssetDatabase.GUIDToAssetPath(guid))).ToList();
+            AddressableAssetsTool.Add2AddressablesGroupsByName(textAssets, "Json");
         }
 
         [Button]
@@ -102,11 +119,11 @@ namespace Editor.LevelEditor
             _leveljsonClass.Height = Level.Height;
             _leveljsonClass.Width = Level.Width;
             _leveljsonClass.WidgetDictionary = new Dictionary<string, int>();
-            foreach (KeyValuePair<LevelItemType,int> valuePair in Level.ItemWidget)
+            foreach (KeyValuePair<LevelItemType, int> valuePair in Level.ItemWidget)
             {
                 _leveljsonClass.WidgetDictionary.Add(valuePair.Key.ToString(), valuePair.Value);
             }
-            
+
             foreach (KeyValuePair<LevelItemType, List<Sprite>> keyValuePair in Level.LevelItem)
             {
                 switch (keyValuePair.Key)
@@ -140,7 +157,8 @@ namespace Editor.LevelEditor
             streamWriter.Close();
             _leveljsonClass = null;
             AssetDatabase.Refresh();
+            AddAllJson2AddressGroup();
         }
-    }    
+    }
 #endif
 }

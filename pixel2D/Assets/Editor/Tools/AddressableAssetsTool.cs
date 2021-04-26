@@ -37,7 +37,7 @@ namespace Editor.Tools
             Add2AddressablesGroupsByName(viewObjects, "UIView");
         }
 
-        private static void Add2AddressablesGroupsByName<T>(List<T> srcList, string addressablesGropsName)
+        public static void Add2AddressablesGroupsByName<T>(List<T> srcList, string addressablesGropsName)
             where T : UnityEngine.Object
         {
             AddressableAssetGroup findGroup =

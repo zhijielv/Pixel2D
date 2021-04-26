@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Framework.Scripts.Manager;
 using Framework.Scripts.Utils;
 using Sirenix.OdinInspector;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,17 +14,13 @@ namespace Framework.Scripts.Level
         public Transform mapRoot;
         [ShowInInspector] public Level level;
 
-        private async void Awake()
+        public async Task Init()
         {
             level = await LevelManager.Instance.GetLevel();
             imagePrefab =
                 await AddressableManager.Instance.LoadAsset<GameObject>(Constants.Constants.LevelPrefabDir +
                                                                         "Wall/f601/wall.prefab");
             mapRoot = transform;
-        }
-
-        private void Start()
-        {
             ResetTransform();
         }
 
@@ -43,7 +38,7 @@ namespace Framework.Scripts.Level
         {
             level = new Level();
             LeveljsonClass tmpLeveljsonClass = new LeveljsonClass();
-            var list = JsonHelper.JsonReader<List<LeveljsonClass>>(Constants.Constants.JsonPath);
+            var list = await JsonHelper.JsonReader<List<LeveljsonClass>>(Constants.Constants.MapJson);
             foreach (var leveljsonClass in list)
             {
                 if (!leveljsonClass.LevelType.Equals(levelType.ToString())) continue;
@@ -57,7 +52,7 @@ namespace Framework.Scripts.Level
 
         // 仅Inspector显示用
         [OnInspectorInit]
-        public async void Init()
+        public async void InspectorInit()
         {
             await LoadLevel(levelType);
         }
