@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Settings
   m_EditorClassIdentifier: 
   _isEnabled: 1
-  _uiInputMode: 0
+  _uiInputMode: 1
   _defaultTab: 0
   _triggerEnableMode: 0
   _triggerBehaviour: 0
@@ -22,9 +22,9 @@ MonoBehaviour:
   _keyboardShortcuts: []
   _newKeyboardShortcuts:
   - Action: 1
-    Alt: 0
-    Control: 1
-    Key: 282
+    Alt: 1
+    Control: 0
+    Key: 9
     Shift: 1
   - Action: 2
     Alt: 0
@@ -63,7 +63,7 @@ MonoBehaviour:
   _consoleAlignment: 0
   _triggerPosition: 0
   _maximumConsoleEntries: 1500
-  _enableEventSystemCreation: 0
+  _enableEventSystemCreation: 1
   _automaticShowCursor: 1
   _uiScale: 1
   _unloadOnClose: 0
