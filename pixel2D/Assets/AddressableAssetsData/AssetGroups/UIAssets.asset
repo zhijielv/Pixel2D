@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: UIAssets
   m_Data:
     m_SerializedData: []
-  m_GUID: 6cdec645d9499d54299c8e0bf200c490
+  m_GUID: 2ebf3389c2314184399d52959c48bc54
   m_SerializeEntries:
   - m_GUID: 34ea16582ab73854bb70116ccebfaadc
     m_Address: BiaoTi_View
@@ -39,9 +39,11 @@ MonoBehaviour:
     m_Address: Test_View
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 11400000, guid: 1c07b07004a666e439813c2fbcd844e4, type: 2}
-    m_TargetAsset: {fileID: 11400000, guid: 1c07b07004a666e439813c2fbcd844e4, type: 2}
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cc1ef71ad71ad124cac3229a7e1dd5ba, type: 2}
   m_SchemaSet:
-    m_Schemas: []
+    m_Schemas:
+    - {fileID: 11400000, guid: 692c5a24699c23448991d1c49c25dc6d, type: 2}
+    - {fileID: 11400000, guid: af0dbd5e38369ad4d8187cfd3dd55467, type: 2}

@@ -15,35 +15,11 @@ MonoBehaviour:
   m_GroupName: UIView
   m_Data:
     m_SerializedData: []
-  m_GUID: aa3f2bf68261cfb45a300884877841dc
-  m_SerializeEntries:
-  - m_GUID: 83663e4edac1de74a83fcbb7dbc066b1
-    m_Address: BiaoTi_View
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    m_MainAsset: {fileID: 5283514310514889536, guid: 83663e4edac1de74a83fcbb7dbc066b1,
-      type: 3}
-    m_TargetAsset: {fileID: 5283514310514889536, guid: 83663e4edac1de74a83fcbb7dbc066b1,
-      type: 3}
-  - m_GUID: 41bae8e906e667a4b8f0abc983a2552c
-    m_Address: Main_View
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
-  - m_GUID: e4cfd5b8e90507846b853767bff1897f
-    m_Address: Player_View
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
-  - m_GUID: 0834b0a8b2a86cc4da9ac7720a5b177a
-    m_Address: Test_View
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
+  m_GUID: e0f1dca656cf7994ab92f5bfc39f3d26
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cc1ef71ad71ad124cac3229a7e1dd5ba, type: 2}
   m_SchemaSet:
-    m_Schemas: []
+    m_Schemas:
+    - {fileID: 11400000, guid: 12534f33c04492a40a16827789a26196, type: 2}
+    - {fileID: 11400000, guid: 93c1fc9965437774db302274ac622efb, type: 2}

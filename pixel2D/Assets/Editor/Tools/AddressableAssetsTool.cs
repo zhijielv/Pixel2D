@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+** Created by fengling
+** DateTime:    2021-04-25 11:36:57
+** Description:
+*/
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +14,7 @@ using Sirenix.Utilities;
 using UnityEditor;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
+using UnityEditor.AddressableAssets.Settings.GroupSchemas;
 using UnityEditor.Build.Utilities;
 using UnityEngine;
 
@@ -39,9 +46,11 @@ namespace Editor.Tools
             {
                 AddressableAssetSettingsDefaultObject.Settings.RemoveGroup(findGroup);
             }
-            AddressableAssetSettingsDefaultObject.Settings.CreateGroup(addressablesGropsName, false, false, false,
+            
+            findGroup = AddressableAssetSettingsDefaultObject.Settings.CreateGroup(addressablesGropsName, false, false, false,
                 null);
-
+            findGroup.AddSchema<BundledAssetGroupSchema>();
+            findGroup.AddSchema<ContentUpdateGroupSchema>();
             foreach (T t in srcList)
             {
                 string path = AssetDatabase.GetAssetPath(t);

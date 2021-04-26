@@ -1,4 +1,10 @@
-﻿using Framework.Scripts.Singleton;
+﻿/*
+** Created by fengling
+** DateTime:    2021-04-25 11:36:57
+** Description:
+*/
+
+using Framework.Scripts.Singleton;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using System;
