@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: UIView
   m_Data:
     m_SerializedData: []
-  m_GUID: e0f1dca656cf7994ab92f5bfc39f3d26
+  m_GUID: a69a2308cd105c340bdd15a72bb1bcd3
   m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cc1ef71ad71ad124cac3229a7e1dd5ba, type: 2}
