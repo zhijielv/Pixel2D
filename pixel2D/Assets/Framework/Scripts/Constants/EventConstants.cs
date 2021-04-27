@@ -7,6 +7,8 @@
     public enum EventConstants
     {
         StartGame,
-        ClickBlock
+        ClickBlock,
+        
+        RedDot,
     }
 }
