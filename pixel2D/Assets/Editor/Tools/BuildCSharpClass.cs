@@ -31,7 +31,9 @@ namespace Editor.Tools
         [MenuItem("Assets/FrameWork View/Set View Value", false, -1)]
         public static void SetViewObj()
         {
+            Object[] views = Selection.GetFiltered(typeof(Object), SelectionMode.Assets);
             GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode = true;
+            GlobalConfig<UiScriptableObjectsManager>.Instance.selectViews = views;
             AutoGenerateEnd();
         }
 
@@ -52,7 +54,7 @@ namespace Editor.Tools
         [MenuItem("Assets/FrameWork View/Generate Select View", false)]
         public static void GenerateUiScriptObject()
         {
-            Object[] views = Selection.GetFiltered(typeof(UnityEngine.Object), SelectionMode.Assets);
+            Object[] views = Selection.GetFiltered(typeof(Object), SelectionMode.Assets);
             GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode = true;
             GlobalConfig<UiScriptableObjectsManager>.Instance.selectViews = views;
             GenerateObjList(views);
@@ -268,45 +270,6 @@ namespace Editor.Tools
             myNamespace.Types.Add(myClass);
             unit.Namespaces.Add(myNamespace);
             ExportCSharpFile(unit, className, ViewScriptType.View);
-            /*{
-                StreamReader streamReader = File.OpenText(outputFile);
-                StringBuilder stringBuilder = new StringBuilder();
-                string readLine = streamReader.ReadLine();
-                while (!streamReader.EndOfStream)
-                {
-                    if (readLine != null && readLine.EndsWith("// member"))
-                    {
-                        stringBuilder.AppendLine(readLine);
-                        foreach (var t in tmpMember)
-                        {
-                            stringBuilder.AppendLine(
-                                $"\t\tpublic {Constants.GetWidgetTypeByName(t)} {t};"
-                            );
-                        }
-
-                        while (!readLine.EndsWith("// member end"))
-                        {
-                            readLine = streamReader.ReadLine();
-                        }
-                    }
-
-                    // 逐行读取写入
-                    stringBuilder.Append(readLine + "\n");
-                    readLine = streamReader.ReadLine();
-                    // 最后一行写入
-                    if (!streamReader.EndOfStream) continue;
-                    stringBuilder.AppendLine(readLine);
-                    break;
-                }
-
-                streamReader.Dispose();
-
-                StreamWriter streamWriter = new StreamWriter(outputFile);
-                streamWriter.Write(stringBuilder);
-                streamWriter.Dispose();
-                // SetViewObj();
-                return;
-            }*/
         }
 
         private static void ExportCSharpFile(CodeCompileUnit unit, string className, ViewScriptType viewScriptType,
@@ -378,6 +341,7 @@ namespace Editor.Tools
                     .GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
                 foreach (FieldInfo fieldInfo in fieldInfos)
                 {
+                    Debug.Log(fieldInfo.Name);
                     Type widgetType = Constants.GetWidgetTypeByName(fieldInfo.Name);
                     UiWidgetBase[] children = tmpView.transform.GetComponentsInChildren<UiWidgetBase>();
 

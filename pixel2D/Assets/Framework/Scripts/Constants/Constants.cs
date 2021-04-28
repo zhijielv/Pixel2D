@@ -30,6 +30,7 @@ namespace Framework.Scripts.Constants
         public const string ArtDirPath = "Assets/Art/";
         public const string UIAssets = "UIScriptableObject/";
         public const string UIView = "UIView/";
+        public const string ObjectUnit = "ObjectUnit";
         
         ////////////////////////////////////////////  Function  ///////////////////////////////////////////////////////
         // 添加或获取组件

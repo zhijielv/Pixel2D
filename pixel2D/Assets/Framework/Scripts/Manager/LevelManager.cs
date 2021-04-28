@@ -4,6 +4,7 @@ using Framework.Scripts.Level;
 using Framework.Scripts.Singleton;
 using Framework.Scripts.Utils;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Framework.Scripts.Manager
 {
@@ -16,7 +17,13 @@ namespace Framework.Scripts.Manager
         public override async Task Init()
         {
             leveljsonClasses = await JsonHelper.JsonReader<List<LeveljsonClass>>(Constants.Constants.MapJson);
+            transform.localScale = new Vector3(3, 3, 3);
             init = true;
+        }
+
+        public async Task ChangeLevel(object key, LoadSceneMode loadSceneMode)
+        {
+            await AddressableManager.Instance.LoadScene(key, loadSceneMode);
         }
 
         public async Task LoadLevel(Transform mapRoot = null)

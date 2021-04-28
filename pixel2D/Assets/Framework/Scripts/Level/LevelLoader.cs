@@ -4,7 +4,6 @@ using Framework.Scripts.Manager;
 using Framework.Scripts.Utils;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Framework.Scripts.Level
 {
@@ -17,9 +16,10 @@ namespace Framework.Scripts.Level
         public async Task Init()
         {
             level = await LevelManager.Instance.GetLevel();
-            imagePrefab =
-                await AddressableManager.Instance.LoadAsset<GameObject>(Constants.Constants.LevelPrefabDir +
-                                                                        "Wall/f601/wall.prefab");
+            // imagePrefab =
+            // await AddressableManager.Instance.LoadAsset<GameObject>(Constants.Constants.LevelPrefabDir +
+            // "Wall/f601/wall.prefab");
+            imagePrefab = await ObjectManager.Instance.LoadUnit();
             mapRoot = transform;
             ResetTransform();
         }
@@ -74,11 +74,11 @@ namespace Framework.Scripts.Level
                     GameObject o = Instantiate(imagePrefab, mapRoot);
                     o.name = tmpObjName.ToString();
                     tmpObjName++;
-                    o.GetComponent<Image>().sprite = sprite;
-                    o.GetComponent<Image>().SetNativeSize();
-                    o.GetComponent<RectTransform>().anchoredPosition = new Vector2(
-                        (i - level.Width / 2) * sprite.rect.width,
-                        -1 * (j - level.Height / 2) * sprite.rect.height);
+                    o.GetComponent<SpriteRenderer>().sprite = sprite;
+                    // o.GetComponent<Image>().SetNativeSize();
+                    o.GetComponent<Transform>().localPosition = new Vector2(
+                        (i - level.Width / 2) * sprite.rect.width / 100,
+                        -1 * (j - level.Height / 2) * sprite.rect.height / 100);
                     level.LevelObj.Add(o);
 
                     switch (level.LevelMap[i, j])

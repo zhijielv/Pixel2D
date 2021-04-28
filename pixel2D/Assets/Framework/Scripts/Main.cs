@@ -4,16 +4,14 @@
 ** Description: 
 */
 
+using System;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Framework.Scripts.Constants;
 using Framework.Scripts.Manager;
 using Framework.Scripts.Singleton;
 using Framework.Scripts.UI.Base;
-using Framework.Scripts.UI.View;
-using Rewired;
-using Rewired.Integration.UnityUI;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 
 public class Main : MonoBehaviour
@@ -25,12 +23,6 @@ public class Main : MonoBehaviour
     private async void Awake()
     {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
-        await AddManager<AddressableManager>();
-        await AddManager<EventManager>();
-        await AddManager<TimerManager>();
-        await AddManager<UiManager>();
-        await AddManager<Launcher>();
-        CreateManager<LevelManager>();
         DontDestroyOnLoad(transform);
         GameObject frameWorkObj = GameObject.Find("[FrameWork]");
         if (frameWorkObj == null)
@@ -38,6 +30,14 @@ public class Main : MonoBehaviour
             transform.name = "[FrameWork]";
             Common.FrameWorkObj = gameObject;
         }
+
+        await AddManager<AddressableManager>();
+        await AddManager<ObjectManager>();
+        await AddManager<EventManager>();
+        await AddManager<TimerManager>();
+        await AddManager<UiManager>();
+        await AddManager<Launcher>();
+        await CreateManager<LevelManager>();
     }
 
     private async Task AddManager<T>() where T : ManagerSingleton<T>
@@ -46,11 +46,12 @@ public class Main : MonoBehaviour
         await ManagerSingleton<T>.Instance.Init();
     }
 
-    private void CreateManager<T>() where T : ManagerSingleton<T>
+    private async Task CreateManager<T>(Transform parent = null) where T : ManagerSingleton<T>
     {
         GameObject managerObj = new GameObject(typeof(T).Name);
-        managerObj.AddComponent<T>();
-        managerObj.transform.SetParent(transform);
+        Constants.AddOrGetComponent(managerObj, typeof(T));
+        await ManagerSingleton<T>.Instance.Init();
+        managerObj.transform.SetParent(parent);
     }
 
     private void Start()

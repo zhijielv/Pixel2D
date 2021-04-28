@@ -18,6 +18,7 @@ namespace Framework.Scripts.UI.View
     {
         // member
         public UnityEngine.UI.Button LoadLevel_Button;
+        public UnityEngine.UI.Button LoadAvatar_Button;
         // member end
         internal override object GetWidget(string widgetName)
         {

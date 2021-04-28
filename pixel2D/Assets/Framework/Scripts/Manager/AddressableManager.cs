@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using System;
 using System.Threading.Tasks;
-using UnityEditor;
+using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
 namespace Framework.Scripts.Manager
@@ -33,11 +33,11 @@ namespace Framework.Scripts.Manager
         {
             if (!_initialized)
                 throw new Exception("AddressableManager has not initialized!");
-#if UNITY_EDITOR
-            T op = AssetDatabase.LoadAssetAtPath<T>((string) key);
-#else
+// #if UNITY_EDITOR
+            // T op = AssetDatabase.LoadAssetAtPath<T>((string) key);
+// #else
             T op = await Addressables.LoadAssetAsync<T>(key).Task;
-#endif
+// #endif
             
             if (op == null)
             {
@@ -61,6 +61,13 @@ namespace Framework.Scripts.Manager
             }
 
             return op;
+        }
+
+        public async Task LoadScene(object key, LoadSceneMode loadSceneMode, bool activateOnLoad = true)
+        {
+            if (!_initialized)
+                throw new Exception("AddressableManager has not initialized!");
+            await Addressables.LoadSceneAsync(key, loadSceneMode, activateOnLoad).Task;
         }
 
         public void ReleaseInstance(GameObject gameobject)

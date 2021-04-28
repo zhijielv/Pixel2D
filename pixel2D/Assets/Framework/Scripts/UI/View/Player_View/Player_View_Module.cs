@@ -17,5 +17,6 @@ namespace Framework.Scripts.UI.View
     public enum Player_View_Widget
     {
         LoadLevel_Button,
+        LoadAvatar_Button,
     }
 }

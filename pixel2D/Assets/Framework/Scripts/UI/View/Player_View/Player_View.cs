@@ -13,10 +13,15 @@ using Framework.Scripts.Manager;
 using Sirenix.OdinInspector;
 using UnityEngine.UI;
 using System;
+using DG.Tweening;
 using Framework.Scripts.Constants;
 using Rewired;
 using Sirenix.Utilities;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.ResourceProviders;
+using UnityEngine.SceneManagement;
+
 namespace Framework.Scripts.UI.View
 {
     using Base;
@@ -25,6 +30,9 @@ namespace Framework.Scripts.UI.View
     
     public partial class Player_View : ViewBase
     {
+        public string HeroName = "Sprite/Hero/c01/c01_0.png";
+        public float speed = 1f;
+        public GameObject Player;
         private void OnEnable()
         {
             if (!ReInput.isReady) return;
@@ -40,6 +48,7 @@ namespace Framework.Scripts.UI.View
             AddEventListener(EventConstants.StartGame, TestListenerFunc);
             
             AddButtonClickEvent(LoadLevel_Button, LoadLevel);
+            AddButtonClickEvent(LoadAvatar_Button, LoadAvatar);
         }
         
         private void TestListenerFunc(EventData data)
@@ -55,10 +64,14 @@ namespace Framework.Scripts.UI.View
 
         public void TestX(InputActionEventData data)
         {
+            if(Player == null) return;
+            Player.transform.GetComponent<Transform>().DOBlendableMoveBy(Vector3.right * data.GetAxis() / 100 * speed, 0.1f);
         }
 
         public void TestY(InputActionEventData data)
         {
+            if(Player == null) return;
+            Player.transform.GetComponent<Transform>().DOBlendableMoveBy(Vector3.up * data.GetAxis() / 100 * speed, 0.1f);
         }
 
         public void TestButton(InputActionEventData data)
@@ -69,7 +82,12 @@ namespace Framework.Scripts.UI.View
         public async void LoadLevel()
         {
             LevelManager.Instance.levelType = LevelType.yanjiang;
-            await LevelManager.Instance.LoadLevel(Common.MainCanvas.transform);
+            await LevelManager.Instance.LoadLevel();
+        }
+
+        public async void LoadAvatar()
+        {
+            Player = await ObjectManager.Instance.LoadAvatar(HeroName, LevelManager.Instance.transform);
         }
     }
 }
