@@ -15,12 +15,16 @@ namespace Framework.Scripts.UI.View
     using Base;
     using System;
     using UnityEngine;
+    using Base.RedDot;
+    using Constants;
     
     public class Test_View : ViewBase
     {
         // member
 		public UnityEngine.UI.Button Test_Button;
 		public UnityEngine.UI.Button Test3_Button;
+        public RedDotBase RedDot;
+        public RedDotBase RedDot2;
         // member end
         internal override object GetWidget(string widgetName)
         {
@@ -35,10 +39,25 @@ namespace Framework.Scripts.UI.View
             }
         }
 
-        private async void Start()
+        private void Update()
         {
-            LevelManager.Instance.levelType = LevelType.yanjiang;
-            await LevelManager.Instance.LoadLevel(transform);
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                EventManager.Instance.DispatchEvent(EventConstants.RedDot);
+            }
+
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                EventManager.Instance.DispatchEvent(EventConstants.StartGame);
+            }
+        }
+
+        private void Start()
+        {
+            // LevelManager.Instance.levelType = LevelType.yanjiang;
+            // await LevelManager.Instance.LoadLevel(transform);
+            RedDot.AddRedDotEventListener(EventConstants.RedDot);
+            RedDot2.AddRedDotEventListener(EventConstants.StartGame);
         }
     }
 }

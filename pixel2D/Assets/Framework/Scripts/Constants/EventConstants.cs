@@ -10,5 +10,7 @@
         ClickBlock,
         
         RedDot,
+        ItemChangeNum,
+        BagpackChange,
     }
 }

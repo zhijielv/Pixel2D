@@ -16,7 +16,7 @@ namespace Framework.Scripts.UI.Base.RedDot
         public RedDotBase parentRedDot = null;
         [ShowInInspector] public List<RedDotBase> childrenRedDots = new List<RedDotBase>();
 
-        private void SetRedDot()
+        public void ShowRedDot()
         {
             // 叶子节点 设为1
             if (childrenRedDots.Count == 0)
@@ -26,11 +26,11 @@ namespace Framework.Scripts.UI.Base.RedDot
                 RefreshRadDotNum();
             SetState(true);
             if (parentRedDot && !isShow)
-                parentRedDot.SetRedDot();
+                parentRedDot.ShowRedDot();
             isShow = true;
         }
 
-        private void UpdateRedDot()
+        public void UpdateRedDot()
         {
             RefreshRadDotNum();
             // 更新父节点

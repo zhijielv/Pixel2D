@@ -8,6 +8,7 @@ using DG.Tweening;
 using Framework.Scripts.Constants;
 using Framework.Scripts.Manager;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -15,11 +16,10 @@ namespace Framework.Scripts.UI.Base.RedDot
 {
     public partial class RedDotBase : UiWidgetBase
     {
-        public int aaa = 9;
         public Image redImage;
 
         // 添加红点监听
-        public void AddEventListener(EventConstants type)
+        public void AddRedDotEventListener(EventConstants type)
         {
             EventManager.Instance.AddEventListener(type, OnShow);
         }
@@ -27,7 +27,7 @@ namespace Framework.Scripts.UI.Base.RedDot
         // 红点
         public void OnShow(EventData data)
         {
-            SetRedDot();
+            ShowRedDot();
         }
         
         private void Start()
