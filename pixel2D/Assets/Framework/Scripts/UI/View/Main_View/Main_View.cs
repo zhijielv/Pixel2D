@@ -22,32 +22,8 @@ namespace Framework.Scripts.UI.View
     using System;
     using UnityEngine;
 
-    public class Main_View : ViewBase
+    public partial class Main_View : ViewBase
     {
-        // member
-		public UnityEngine.UI.Image BG_Image;
-		public UnityEngine.GameObject Top_Panel;
-		public UnityEngine.UI.Text LeftTop_Text;
-		public UnityEngine.UI.Text CenterTop_Text;
-		public UnityEngine.UI.Text RightTop_Text;
-		public UnityEngine.GameObject Center_Panel;
-		public UnityEngine.UI.Text Center_Text;
-		public UnityEngine.UI.Text CenterRight_Text;
-		public UnityEngine.GameObject Bottom_Panel;
-        // member end
-        internal override object GetWidget(string widgetName)
-        {
-            if (!Enum.TryParse(widgetName, true, out Main_View_Widget _))
-            {
-                // Debug.LogError(gameObject.name + " has not widget : " + widgetName);
-                return null;
-            }
-            else
-            {
-                return base.GetWidget(widgetName);
-            }
-        }
-
         private void Start()
         {
             LeftTop_Text.text = "";

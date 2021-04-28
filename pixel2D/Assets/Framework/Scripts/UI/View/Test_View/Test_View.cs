@@ -18,27 +18,10 @@ namespace Framework.Scripts.UI.View
     using Base.RedDot;
     using Constants;
     
-    public class Test_View : ViewBase
+    public partial class Test_View : ViewBase
     {
-        // member
-		public UnityEngine.UI.Button Test_Button;
-		public UnityEngine.UI.Button Test3_Button;
         public RedDotBase RedDot;
         public RedDotBase RedDot2;
-        // member end
-        internal override object GetWidget(string widgetName)
-        {
-            if (!Enum.TryParse(widgetName, true, out Test_View_Widget _))
-            {
-                // Debug.LogError(gameObject.name + " has not widget : " + widgetName);
-                return null;
-            }
-            else
-            {
-                return base.GetWidget(widgetName);
-            }
-        }
-
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.A))

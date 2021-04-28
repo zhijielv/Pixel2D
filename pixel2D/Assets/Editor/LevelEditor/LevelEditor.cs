@@ -3,11 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Editor.Tools;
-using Framework.Scripts.Constants;
 using Framework.Scripts.Level;
 using Framework.Scripts.Manager;
-using Framework.Scripts.Utils;
-using LitJson;
+using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities;
@@ -84,7 +82,7 @@ namespace Editor.LevelEditor
             StreamReader streamReader = new StreamReader(jsonPath);
             string json = streamReader.ReadToEnd();
             streamReader.Close();
-            _levelJsonList = JsonMapper.ToObject<List<LeveljsonClass>>(json);
+            _levelJsonList = JsonConvert.DeserializeObject<List<LeveljsonClass>>(json);
             _leveljsonClass = null;
             foreach (LeveljsonClass data in _levelJsonList)
             {
@@ -151,7 +149,7 @@ namespace Editor.LevelEditor
                 }
             }
 
-            string json = JsonMapper.ToJson(_levelJsonList);
+            string json = JsonConvert.SerializeObject(_levelJsonList);
             StreamWriter streamWriter = new StreamWriter(jsonPath) {AutoFlush = true};
             streamWriter.Write(json);
             streamWriter.Close();

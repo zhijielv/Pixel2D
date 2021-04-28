@@ -21,6 +21,7 @@ namespace Editor.Tools
     public enum ViewScriptType
     {
         View,
+        ViewMember,
         Module,
         ScriptableObject,
     }
@@ -114,7 +115,8 @@ namespace Editor.Tools
         {
             GenerateScriptableObjectClass(className);
             GenerateViewWidget(className, tmpMember);
-            GenerateViewClass(className, tmpMember);
+            GenerateViewMember(className, tmpMember);
+            GenerateViewClass(className);
             // 强制刷新unity目录
             AssetDatabase.Refresh();
         }
@@ -180,18 +182,93 @@ namespace Editor.Tools
             ExportCSharpFile(unit, className, ViewScriptType.Module);
         }
 
-        private static void GenerateViewClass(string className, List<string> tmpMember)
+        private static void GenerateViewMember(string className, List<string> tmpMember)
         {
             CodeCompileUnit unit = new CodeCompileUnit();
             CodeNamespace myNamespace = new CodeNamespace("Framework.Scripts.UI.View");
             myNamespace.Imports.Add(new CodeNamespaceImport("Base"));
             myNamespace.Imports.Add(new CodeNamespaceImport("System"));
             myNamespace.Imports.Add(new CodeNamespaceImport("UnityEngine"));
+            CodeTypeDeclaration myClass = new CodeTypeDeclaration(className)
+            {
+                IsClass = true, TypeAttributes = TypeAttributes.Public, IsPartial = true,
+            };
+            myClass.BaseTypes.Add("ViewBase");
 
+            for (int i = 0; i < tmpMember.Count; i++)
+            {
+                Type type = Constants.GetWidgetTypeByName(tmpMember[i]);
+                if (type == null)
+                {
+                    Debug.LogWarning(tmpMember[i] + " is not UI");
+                    continue;
+                }
+
+                CodeTypeMember member = new CodeMemberField(type, tmpMember[i]);
+                // 添加注释，member    
+                if (i == 0)
+                {
+                    member.Comments.Add(new CodeCommentStatement("member"));
+                }
+
+                member.Attributes = MemberAttributes.Public;
+                myClass.Members.Add(member);
+            }
+
+///////////////////////////////////////////////////////////////////////////////////////////
+            // 添加override方法
+            CodeMemberMethod method = new CodeMemberMethod()
+            {
+                Name = "GetWidget",
+                Attributes = MemberAttributes.Override | MemberAttributes.FamilyAndAssembly,
+                ReturnType = new CodeTypeReference(typeof(object)),
+            };
+            if (tmpMember.Count == 0)
+                method.Comments.Add(new CodeCommentStatement("member"));
+
+            method.Comments.Add(new CodeCommentStatement("member end"));
+            method.Parameters.Add(new CodeParameterDeclarationExpression(typeof(string), "widgetName"));
+            CodeConditionStatement statement = new CodeConditionStatement(
+                new CodeVariableReferenceExpression($"!Enum.TryParse(widgetName, true, out {className + "_Widget"} _)"),
+                new CodeStatement[]
+                {
+                    new CodeCommentStatement(
+                        "Debug.LogError(gameObject.name + \" has not widget : \" + widgetName);"),
+                    new CodeMethodReturnStatement(new CodeSnippetExpression("null"))
+                },
+                new CodeStatement[]
+                {
+                    new CodeMethodReturnStatement(
+                        new CodeArgumentReferenceExpression("base.GetWidget(widgetName)"))
+                });
+            method.Statements.Add(statement);
+            myClass.Members.Add(method);
+///////////////////////////////////////////////////////////////////////////////////////////
+            myNamespace.Types.Add(myClass);
+            unit.Namespaces.Add(myNamespace);
+            ExportCSharpFile(unit, className, ViewScriptType.ViewMember);
+        }
+        
+        private static void GenerateViewClass(string className)
+        {
             // 判断代码是否存在，存在则只修改成员变量
             string outputFile = Application.dataPath + Constants.ViewScriptDir + className + "/" + className + ".cs";
-            if (File.Exists(outputFile))
+            if (File.Exists(outputFile)) return;
+            
+            CodeCompileUnit unit = new CodeCompileUnit();
+            CodeNamespace myNamespace = new CodeNamespace("Framework.Scripts.UI.View");
+            myNamespace.Imports.Add(new CodeNamespaceImport("Base"));
+            myNamespace.Imports.Add(new CodeNamespaceImport("System"));
+            myNamespace.Imports.Add(new CodeNamespaceImport("UnityEngine"));
+            CodeTypeDeclaration myClass = new CodeTypeDeclaration(className)
             {
+                IsClass = true, TypeAttributes = TypeAttributes.Public, IsPartial = true,
+            };
+            myClass.BaseTypes.Add("ViewBase");
+            myNamespace.Types.Add(myClass);
+            unit.Namespaces.Add(myNamespace);
+            ExportCSharpFile(unit, className, ViewScriptType.View);
+            /*{
                 StreamReader streamReader = File.OpenText(outputFile);
                 StringBuilder stringBuilder = new StringBuilder();
                 string readLine = streamReader.ReadLine();
@@ -229,66 +306,7 @@ namespace Editor.Tools
                 streamWriter.Dispose();
                 // SetViewObj();
                 return;
-            }
-
-            CodeTypeDeclaration myClass = new CodeTypeDeclaration(className)
-            {
-                IsClass = true, TypeAttributes = TypeAttributes.Public
-            };
-            myClass.BaseTypes.Add("ViewBase");
-
-            for (int i = 0; i < tmpMember.Count; i++)
-            {
-                Type type = Constants.GetWidgetTypeByName(tmpMember[i]);
-                if (type == null)
-                {
-                    Debug.LogWarning(tmpMember[i] + " is not UI");
-                    continue;
-                }
-
-                CodeTypeMember member = new CodeMemberField(type, tmpMember[i]);
-                // 添加注释，member    
-                if (i == 0)
-                {
-                    member.Comments.Add(new CodeCommentStatement("member"));
-                }
-
-                member.Attributes = MemberAttributes.Public;
-                myClass.Members.Add(member);
-            }
-
-            ///////////////////////////////////////////////////////////////////////////////////////////
-            // 添加override方法
-            CodeMemberMethod method = new CodeMemberMethod()
-            {
-                Name = "GetWidget",
-                Attributes = MemberAttributes.Override | MemberAttributes.FamilyAndAssembly,
-                ReturnType = new CodeTypeReference(typeof(object)),
-            };
-            if (tmpMember.Count == 0)
-                method.Comments.Add(new CodeCommentStatement("member"));
-
-            method.Comments.Add(new CodeCommentStatement("member end"));
-            method.Parameters.Add(new CodeParameterDeclarationExpression(typeof(string), "widgetName"));
-            CodeConditionStatement statement = new CodeConditionStatement(
-                new CodeVariableReferenceExpression($"!Enum.TryParse(widgetName, true, out {className + "_Widget"} _)"),
-                new CodeStatement[]
-                {
-                    new CodeCommentStatement(
-                        "Debug.LogError(gameObject.name + \" has not widget : \" + widgetName);"),
-                    new CodeMethodReturnStatement(new CodeSnippetExpression("null"))
-                },
-                new CodeStatement[]
-                {
-                    new CodeMethodReturnStatement(
-                        new CodeArgumentReferenceExpression("base.GetWidget(widgetName)"))
-                });
-            method.Statements.Add(statement);
-            myClass.Members.Add(method);
-///////////////////////////////////////////////////////////////////////////////////////////
-            myNamespace.Types.Add(myClass);
-            unit.Namespaces.Add(myNamespace);
-            ExportCSharpFile(unit, className, ViewScriptType.View);
+            }*/
         }
 
         private static void ExportCSharpFile(CodeCompileUnit unit, string className, ViewScriptType viewScriptType,
@@ -314,6 +332,9 @@ namespace Editor.Tools
                     break;
                 case ViewScriptType.View:
                     fileName = className + ".cs";
+                    break;
+                case ViewScriptType.ViewMember:
+                    fileName = className + "_Member.cs";
                     break;
                 case ViewScriptType.ScriptableObject:
                     fileName = className + "_ScriptableObject.cs";

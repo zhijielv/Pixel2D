@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Framework.Scripts.Constants;
 using Framework.Scripts.Manager;
-using LitJson;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEditor;
@@ -133,11 +132,12 @@ namespace Framework.Scripts.Level
                 Enum.TryParse(valuePair.Key, out tmpType);
                 ItemWidget.Add(tmpType, valuePair.Value);
             }
-            foreach (JsonData data1 in data.RoadList)
+            
+            foreach (string data1 in data.RoadList)
             {
 #if UNITY_EDITOR
                 LevelItem[LevelItemType.Road]
-                    .Add((Sprite) AssetDatabase.LoadAssetAtPath(data1.ToString(), typeof(Sprite)));
+                    .Add((Sprite) AssetDatabase.LoadAssetAtPath(data1, typeof(Sprite)));
 #else
                 string path = Constants.Constants.ReplaceString(data1.ToString(), "Assets/Art/", "");
                 Sprite sprite = await AddressableManager.Instance.LoadAsset<Sprite>(path);
@@ -146,11 +146,11 @@ namespace Framework.Scripts.Level
 #endif
             }
 
-            foreach (JsonData data1 in data.WallList)
+            foreach (string data1 in data.WallList)
             {
 #if UNITY_EDITOR
                 LevelItem[LevelItemType.Wall]
-                    .Add((Sprite) AssetDatabase.LoadAssetAtPath(data1.ToString(), typeof(Sprite)));
+                    .Add((Sprite) AssetDatabase.LoadAssetAtPath(data1, typeof(Sprite)));
 #else
                 string path = Constants.Constants.ReplaceString(data1.ToString(), "Assets/Art/", "");
                 Sprite sprite = await AddressableManager.Instance.LoadAsset<Sprite>(path);
@@ -159,11 +159,11 @@ namespace Framework.Scripts.Level
 #endif
             }
 
-            foreach (JsonData data1 in data.BoxList)
+            foreach (string data1 in data.BoxList)
             {
 #if UNITY_EDITOR
                 LevelItem[LevelItemType.Box]
-                    .Add((Sprite) AssetDatabase.LoadAssetAtPath(data1.ToString(), typeof(Sprite)));
+                    .Add((Sprite) AssetDatabase.LoadAssetAtPath(data1, typeof(Sprite)));
 #else
                 string path = Constants.Constants.ReplaceString(data1.ToString(), "Assets/Art/", "");
                 Sprite sprite = await AddressableManager.Instance.LoadAsset<Sprite>(path);
@@ -172,11 +172,11 @@ namespace Framework.Scripts.Level
 #endif
             }
 
-            foreach (JsonData data1 in data.ObstructionList)
+            foreach (string data1 in data.ObstructionList)
             {
 #if UNITY_EDITOR
                 LevelItem[LevelItemType.Obstruction]
-                    .Add((Sprite) AssetDatabase.LoadAssetAtPath(data1.ToString(), typeof(Sprite)));
+                    .Add((Sprite) AssetDatabase.LoadAssetAtPath(data1, typeof(Sprite)));
 #else
                 string path = Constants.Constants.ReplaceString(data1.ToString(), "Assets/Art/", "");
                 Sprite sprite = await AddressableManager.Instance.LoadAsset<Sprite>(path);

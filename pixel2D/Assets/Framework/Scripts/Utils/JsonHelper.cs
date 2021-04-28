@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Framework.Scripts.Manager;
-using LitJson;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Framework.Scripts.Utils
@@ -10,7 +10,7 @@ namespace Framework.Scripts.Utils
         public static async Task<T> JsonReader<T>(string jsonName)
         {
             TextAsset jsonFile = await AddressableManager.Instance.LoadAsset<TextAsset>(jsonName);
-            T t = JsonMapper.ToObject<T>(jsonFile.text);
+            T t = JsonConvert.DeserializeObject<T>(jsonFile.text);
             return t;
         }
     }

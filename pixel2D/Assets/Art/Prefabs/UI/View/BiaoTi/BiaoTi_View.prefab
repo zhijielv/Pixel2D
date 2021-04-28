@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 1216221287962728286}
   - component: {fileID: 4186447678233350242}
   - component: {fileID: 2069999560810187468}
-  - component: {fileID: -962654928437037054}
+  - component: {fileID: 5377755865065991503}
   m_Layer: 5
   m_Name: BiaoTi_View
   m_TagString: Untagged
@@ -167,7 +167,7 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &-962654928437037054
+--- !u!114 &5377755865065991503
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
