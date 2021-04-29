@@ -2268,6 +2268,12 @@ namespace Rewired.Integration.PlayMaker {
         GreaterThanOrEqualTo = 5,
         GreaterThan = 6
     }
+    
+    public enum CompareEqual {
+        None = 0,
+        EqualTo = 1,
+        NotEqualTo = 2,
+    }
 
     public enum ControllerTemplateType {
         Gamepad = 0,

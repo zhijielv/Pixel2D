@@ -11,6 +11,9 @@ namespace HutongGames.PlayMaker.Actions
 		[RequiredField]
 		[Tooltip("The game object to translate.")]
 		public FsmOwnerDefault gameObject;
+
+		[Tooltip("A translation vector. NOTE:The translate speed.")]
+		public FsmFloat speed;
 		
 		[UIHint(UIHint.Variable), Readonly]
 		[Tooltip("A translation vector. NOTE: You can override individual axis below.")]
@@ -44,6 +47,7 @@ namespace HutongGames.PlayMaker.Actions
 		{
 			gameObject = null;
 			vector = null;
+			speed = new FsmFloat{UseVariable = true} ;
 			// default axis to variable dropdown with None selected.
 			x = new FsmFloat { UseVariable = true };
 			y = new FsmFloat { UseVariable = true };
@@ -128,11 +132,11 @@ namespace HutongGames.PlayMaker.Actions
 			
 			if (!perSecond)
 			{
-				go.transform.Translate(translate, space);
+				go.transform.Translate(translate * speed.Value, space);
 			}
 			else
 			{
-				go.transform.Translate(translate * Time.deltaTime, space);
+				go.transform.Translate(translate * speed.Value * Time.deltaTime, space);
 			}
 		}
 
