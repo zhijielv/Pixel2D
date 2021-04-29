@@ -56,7 +56,7 @@
       "url": "https://packages.unity.cn"
     },
     "com.unity.cinemachine": {
-      "version": "2.7.1",
+      "version": "2.7.3",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
