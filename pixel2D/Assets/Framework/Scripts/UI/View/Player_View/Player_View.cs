@@ -104,7 +104,6 @@ namespace Framework.Scripts.UI.View
         {
             if(!Player) return;
             FsmFloat fsmSpeed = Player.GetComponent<PlayMakerFSM>().FsmVariables.FindFsmFloat("Speed");
-            Debug.Log(fsmSpeed.Value);
             float inputSpeed = Convert.ToSingle(Speed_InputField.text);
             if (inputSpeed > 0)
             {

@@ -341,7 +341,6 @@ namespace Editor.Tools
                     .GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
                 foreach (FieldInfo fieldInfo in fieldInfos)
                 {
-                    Debug.Log(fieldInfo.Name);
                     Type widgetType = Constants.GetWidgetTypeByName(fieldInfo.Name);
                     UiWidgetBase[] children = tmpView.transform.GetComponentsInChildren<UiWidgetBase>();
 
