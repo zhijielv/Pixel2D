@@ -71,7 +71,7 @@ namespace Editor.Tools
 
             AnimationClip clip = new AnimationClip();
             EditorCurveBinding curveBinding = new EditorCurveBinding();
-            curveBinding.type = typeof(Image);
+            curveBinding.type = typeof(SpriteRenderer);
             curveBinding.path = "";
             curveBinding.propertyName = "m_Sprite";
             ObjectReferenceKeyframe[] keyframes = new ObjectReferenceKeyframe[sprites.Count];
