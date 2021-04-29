@@ -5,6 +5,9 @@ using Framework.Scripts.Manager;
 using Framework.Scripts.UI.Base;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
+#if UNITY_EDITOR
+using UnityEditor;    
+#endif
 using UnityEngine;
 
 namespace Framework.Scripts.UI.ScriptableObjects
@@ -37,6 +40,7 @@ namespace Framework.Scripts.UI.ScriptableObjects
                     case UIConfig.Button:
                     case UIConfig.Image:
                     case UIConfig.Panel:
+                    case UIConfig.InputField:
                         Constants.Constants.AddOrGetComponent(child.gameObject, typeof(UiWidgetBase));
                         break;
                     default:
@@ -45,6 +49,9 @@ namespace Framework.Scripts.UI.ScriptableObjects
 
                 widgetList.Add(child.name);
             }
+#if UNITY_EDITOR
+            AssetDatabase.Refresh();
+#endif
         }
 
         private bool CheckName(string objName, out UIConfig? uiType)

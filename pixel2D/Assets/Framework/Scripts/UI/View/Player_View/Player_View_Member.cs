@@ -17,8 +17,10 @@ namespace Framework.Scripts.UI.View
     public partial class Player_View : ViewBase
     {
         // member
+        public UnityEngine.UI.Button SetSpeed_Button;
         public UnityEngine.UI.Button LoadLevel_Button;
         public UnityEngine.UI.Button LoadAvatar_Button;
+        public UnityEngine.UI.InputField Speed_InputField;
         // member end
         internal override object GetWidget(string widgetName)
         {

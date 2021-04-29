@@ -41,5 +41,16 @@ namespace Framework.Scripts.Manager
             boxCollider2D.size = spriteRenderer.sprite.bounds.size;
             return unit;
         }
+        
+        // 创建玩家控制角色
+        public async Task<GameObject> LoadPlayerAvatar(string key = null, Transform parent = null)
+        {
+            key = "Avatar/" + key + "/" + key + ".prefab";
+            GameObject unit = await AddressableManager.Instance.Instantiate(key, parent);
+            // 设置层级
+            SpriteRenderer spriteRenderer = unit.GetComponent<SpriteRenderer>();
+            spriteRenderer.sortingOrder = 1;
+            return unit;
+        }
     }
 }

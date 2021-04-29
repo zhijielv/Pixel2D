@@ -16,7 +16,9 @@ namespace Framework.Scripts.UI.View
     }
     public enum Player_View_Widget
     {
+        SetSpeed_Button,
         LoadLevel_Button,
         LoadAvatar_Button,
+        Speed_InputField,
     }
 }

@@ -6,6 +6,7 @@
         Text,
         Button,
         Image,
+        InputField,
         ___UnityEngine_UI,
         TMPCustomScroll,
         ___CustomView,

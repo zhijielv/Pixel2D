@@ -15,6 +15,7 @@ using UnityEngine.UI;
 using System;
 using DG.Tweening;
 using Framework.Scripts.Constants;
+using HutongGames.PlayMaker;
 using Rewired;
 using Sirenix.Utilities;
 using UnityEngine;
@@ -30,25 +31,29 @@ namespace Framework.Scripts.UI.View
     
     public partial class Player_View : ViewBase
     {
-        public string HeroName = "Sprite/Hero/c01/c01_0.png";
-        public float speed = 1f;
+        public string HeroName = "";
+        public float speed = 4f;
         public GameObject Player;
         private void OnEnable()
         {
             if (!ReInput.isReady) return;
             Player player = ReInput.players.GetPlayer(0);
             // Subscribe to input events
-            AddInputEventDelegate(TestX, UpdateLoopType.Update, InputActionEventType.AxisActive, "MoveX");
-            AddInputEventDelegate(TestX, UpdateLoopType.Update, InputActionEventType.AxisInactive, "MoveX");
-            AddInputEventDelegate(TestY, UpdateLoopType.Update, InputActionEventType.AxisActive, "MoveY");
-            AddInputEventDelegate(TestY, UpdateLoopType.Update, InputActionEventType.AxisInactive, "MoveY");
+            // AddInputEventDelegate(TestX, UpdateLoopType.Update, InputActionEventType.AxisActive, "MoveX");
+            // AddInputEventDelegate(TestX, UpdateLoopType.Update, InputActionEventType.AxisInactive, "MoveX");
+            // AddInputEventDelegate(TestY, UpdateLoopType.Update, InputActionEventType.AxisActive, "MoveY");
+            // AddInputEventDelegate(TestY, UpdateLoopType.Update, InputActionEventType.AxisInactive, "MoveY");
+            // Rewired按钮，获取Action为Fire，按下和释放的回调；
             AddInputEventDelegate(TestButton, UpdateLoopType.Update, InputActionEventType.ButtonJustPressed, "Fire");
             AddInputEventDelegate(TestButton, UpdateLoopType.Update, InputActionEventType.ButtonJustReleased, "Fire");
 
+            // TestListenerFunc方法监听EventConstants.StartGame事件
             AddEventListener(EventConstants.StartGame, TestListenerFunc);
             
+            // 自己拼的ui，监听事件
             AddButtonClickEvent(LoadLevel_Button, LoadLevel);
             AddButtonClickEvent(LoadAvatar_Button, LoadAvatar);
+            AddButtonClickEvent(SetSpeed_Button, SetSpeed);
         }
         
         private void TestListenerFunc(EventData data)
@@ -76,7 +81,8 @@ namespace Framework.Scripts.UI.View
 
         public void TestButton(InputActionEventData data)
         {
-            EventManager.Instance.DispatchEvent(EventConstants.StartGame);
+            
+            // EventManager.Instance.DispatchEvent(EventConstants.StartGame);
         }
 
         public async void LoadLevel()
@@ -87,7 +93,24 @@ namespace Framework.Scripts.UI.View
 
         public async void LoadAvatar()
         {
-            Player = await ObjectManager.Instance.LoadAvatar(HeroName, LevelManager.Instance.transform);
+            if (Player != null) AddressableManager.Instance.ReleaseInstance(Player);
+            Player = await ObjectManager.Instance.LoadPlayerAvatar(HeroName, LevelManager.Instance.transform);
+            FsmFloat fsmSpeed = Player.GetComponent<PlayMakerFSM>().FsmVariables.FindFsmFloat("Speed");
+            fsmSpeed = speed;
+            Speed_InputField.text = speed.ToString();
+        }
+
+        public void SetSpeed()
+        {
+            if(!Player) return;
+            FsmFloat fsmSpeed = Player.GetComponent<PlayMakerFSM>().FsmVariables.FindFsmFloat("Speed");
+            Debug.Log(fsmSpeed.Value);
+            float inputSpeed = Convert.ToSingle(Speed_InputField.text);
+            if (inputSpeed > 0)
+            {
+                fsmSpeed.Value = inputSpeed;
+                speed = inputSpeed;
+            }
         }
     }
 }
