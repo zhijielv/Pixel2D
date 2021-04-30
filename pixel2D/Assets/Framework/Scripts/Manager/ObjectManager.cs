@@ -12,6 +12,8 @@ namespace Framework.Scripts.Manager
 {
     public class ObjectManager : ManagerSingleton<ObjectManager>
     {
+        public GameObject MainPlayer;
+
         // 加载通过2DUnit，自带Collider2D和SpritRender
         public async Task<GameObject> LoadUnit(object key = null, Transform parent = null, bool instantiate = false)
         {
@@ -24,7 +26,7 @@ namespace Framework.Scripts.Manager
                 asset.GetComponent<SpriteRenderer>().sprite = await AddressableManager.Instance.LoadAsset<Sprite>(key);
             return asset;
         }
-        
+
         // 创建人物
         public async Task<GameObject> LoadAvatar(object key = null, Transform parent = null)
         {
@@ -41,15 +43,23 @@ namespace Framework.Scripts.Manager
             boxCollider2D.size = spriteRenderer.sprite.bounds.size;
             return unit;
         }
-        
+
         // 创建玩家控制角色
         public async Task<GameObject> LoadPlayerAvatar(string key = null, Transform parent = null)
         {
+            if (!LevelManager.Instance.isLevelLoaded)
+            {
+                Debug.LogError("Level is not load!");
+                return null;
+            }
+
             key = "Avatar/" + key + "/" + key + ".prefab";
             GameObject unit = await AddressableManager.Instance.Instantiate(key, parent);
             // 设置层级
             SpriteRenderer spriteRenderer = unit.GetComponent<SpriteRenderer>();
             spriteRenderer.sortingOrder = 1;
+            MainPlayer = unit;
+            MainPlayer.name = "MainPlayer";
             return unit;
         }
     }

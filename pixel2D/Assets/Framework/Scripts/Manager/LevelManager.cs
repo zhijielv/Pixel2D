@@ -13,6 +13,7 @@ namespace Framework.Scripts.Manager
         public LevelType levelType = LevelType.ludi;
         public List<LeveljsonClass> leveljsonClasses;
         public GameObject levelLoaderObj;
+        public bool isLevelLoaded = false;
         bool init = false;
         public override async Task Init()
         {

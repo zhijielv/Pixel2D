@@ -89,6 +89,8 @@ namespace Framework.Scripts.Level
                     }
                 }
             }
+
+            LevelManager.Instance.isLevelLoaded = true;
         }
 
         [HorizontalGroup("Button")]

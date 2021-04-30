@@ -37,6 +37,7 @@ public class Main : MonoBehaviour
         await AddManager<TimerManager>();
         await AddManager<UiManager>();
         await AddManager<Launcher>();
+        await AddManager<CameraManager>();
         await CreateManager<LevelManager>();
     }
 

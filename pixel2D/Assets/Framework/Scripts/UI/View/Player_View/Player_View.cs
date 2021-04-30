@@ -33,7 +33,6 @@ namespace Framework.Scripts.UI.View
     {
         public string HeroName = "";
         public float speed = 4f;
-        public GameObject Player;
         private void OnEnable()
         {
             if (!ReInput.isReady) return;
@@ -69,14 +68,14 @@ namespace Framework.Scripts.UI.View
 
         public void TestX(InputActionEventData data)
         {
-            if(Player == null) return;
-            Player.transform.GetComponent<Transform>().DOBlendableMoveBy(Vector3.right * data.GetAxis() / 100 * speed, 0.1f);
+            if(ObjectManager.Instance.MainPlayer == null) return;
+            ObjectManager.Instance.MainPlayer.transform.GetComponent<Transform>().DOBlendableMoveBy(Vector3.right * data.GetAxis() / 100 * speed, 0.1f);
         }
 
         public void TestY(InputActionEventData data)
         {
-            if(Player == null) return;
-            Player.transform.GetComponent<Transform>().DOBlendableMoveBy(Vector3.up * data.GetAxis() / 100 * speed, 0.1f);
+            if(ObjectManager.Instance.MainPlayer == null) return;
+            ObjectManager.Instance.MainPlayer.transform.GetComponent<Transform>().DOBlendableMoveBy(Vector3.up * data.GetAxis() / 100 * speed, 0.1f);
         }
 
         public void TestButton(InputActionEventData data)
@@ -93,17 +92,19 @@ namespace Framework.Scripts.UI.View
 
         public async void LoadAvatar()
         {
-            if (Player != null) AddressableManager.Instance.ReleaseInstance(Player);
-            Player = await ObjectManager.Instance.LoadPlayerAvatar(HeroName, LevelManager.Instance.transform);
-            FsmFloat fsmSpeed = Player.GetComponent<PlayMakerFSM>().FsmVariables.FindFsmFloat("Speed");
+            if (ObjectManager.Instance.MainPlayer != null) AddressableManager.Instance.ReleaseInstance(ObjectManager.Instance.MainPlayer);
+            await ObjectManager.Instance.LoadPlayerAvatar(HeroName, LevelManager.Instance.transform);
+            FsmFloat fsmSpeed = ObjectManager.Instance.MainPlayer.GetComponent<PlayMakerFSM>().FsmVariables.FindFsmFloat("Speed");
             fsmSpeed = speed;
             Speed_InputField.text = speed.ToString();
+            
+            CameraManager.Instance.CreatePlayerCamera();
         }
 
         public void SetSpeed()
         {
-            if(!Player) return;
-            FsmFloat fsmSpeed = Player.GetComponent<PlayMakerFSM>().FsmVariables.FindFsmFloat("Speed");
+            if(!ObjectManager.Instance.MainPlayer) return;
+            FsmFloat fsmSpeed = ObjectManager.Instance.MainPlayer.GetComponent<PlayMakerFSM>().FsmVariables.FindFsmFloat("Speed");
             float inputSpeed = Convert.ToSingle(Speed_InputField.text);
             if (inputSpeed > 0)
             {
