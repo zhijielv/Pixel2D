@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using Framework.Scripts.Manager;
 using Framework.Scripts.UI.ScriptableObjects;
+using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEditor;
 using UnityEditor.AddressableAssets;
@@ -17,6 +18,8 @@ using UnityEditor.AddressableAssets.Settings;
 using UnityEditor.AddressableAssets.Settings.GroupSchemas;
 using UnityEditor.Build.Utilities;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using Object = UnityEngine.Object;
 
 namespace Editor.Tools
 {
@@ -25,6 +28,37 @@ namespace Editor.Tools
     {
         #region AddressableAssetsTool
 
+        [ShowInInspector]
+        private string _addressablesGropsName = "";
+        
+        [Button("添加选中文件夹下所有资源", ButtonSizes.Large)]
+        public void AddSelectFolderAssets2AddressGroup()
+        {
+            Object[] objects = Selection.GetFiltered(typeof(Object), SelectionMode.DeepAssets);
+            if(objects.Length == 0) return;
+            List<string> tmpFolder = new List<string>();
+            foreach (Object o in objects)
+            {
+                string assetPath = AssetDatabase.GetAssetPath(o);
+                if (Directory.Exists(assetPath))
+                {
+                    tmpFolder.Add(assetPath);
+                }
+            }
+
+            string[] findAssets = AssetDatabase.FindAssets("t:Object", tmpFolder.ToArray());
+            List<Object> tmpObjs = new List<Object>();
+            foreach (string findAsset in findAssets)
+            {
+                if(Directory.Exists(AssetDatabase.GUIDToAssetPath(findAsset))) continue;
+                Object obj = AssetDatabase.LoadAssetAtPath<Object>(AssetDatabase.GUIDToAssetPath(findAsset));
+                tmpObjs.Add(obj);
+            }
+
+            Add2AddressablesGroupsByName(tmpObjs, _addressablesGropsName);
+        }
+        
+        [Button("添加所有UI资源", ButtonSizes.Large)]
         [MenuItem("Assets/FrameWork View/Add All View To Addressables Groups", false, -2)]
         public static void Add2AddressablesGroups()
         {
@@ -110,6 +144,13 @@ namespace Editor.Tools
         }
 
         #endregion
+
+        // todo 设置打包
+        [Button("打包", ButtonSizes.Large)]
+        public void BuildAssets()
+        {
+            
+        }
     }
 #endif
 }
