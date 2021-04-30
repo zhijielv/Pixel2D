@@ -15,8 +15,16 @@ MonoBehaviour:
   m_GroupName: Camera
   m_Data:
     m_SerializedData: []
-  m_GUID: 4187b559af316794e8b22762ce523da4
-  m_SerializeEntries: []
+  m_GUID: d84b3df8b21d2a443aa1ab3f88e67beb
+  m_SerializeEntries:
+  - m_GUID: 40c27f2113ccee5449d214bdb6e736d3
+    m_Address: FollowPlayerVCam
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 9174946639735207444, guid: 40c27f2113ccee5449d214bdb6e736d3,
+      type: 3}
+    m_TargetAsset: {fileID: 9174946639735207444, guid: 40c27f2113ccee5449d214bdb6e736d3,
+      type: 3}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cc1ef71ad71ad124cac3229a7e1dd5ba, type: 2}
   m_SchemaSet:

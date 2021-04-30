@@ -1038,7 +1038,6 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   HeroName: c01
   speed: 5
-  Player: {fileID: 0}
   SetSpeed_Button: {fileID: 569722208016017590}
   LoadLevel_Button: {fileID: 1697352259706913842}
   LoadAvatar_Button: {fileID: 5169993407072476060}
@@ -1241,7 +1240,7 @@ MonoBehaviour:
     _customControllerSourceId: 0
     _assignToPlayerId: 0
     _destroyCustomController: 1
-  _disableMouseInputWhenEnabled: 1
+  _disableMouseInputWhenEnabled: 0
   _useCustomController: 1
 --- !u!1 &2554361868834999889
 GameObject:

@@ -13,6 +13,7 @@ using Framework.Scripts.Manager;
 using Sirenix.OdinInspector;
 using UnityEngine.UI;
 using System;
+using Cinemachine;
 using DG.Tweening;
 using Framework.Scripts.Constants;
 using HutongGames.PlayMaker;
@@ -42,9 +43,11 @@ namespace Framework.Scripts.UI.View
             // AddInputEventDelegate(TestX, UpdateLoopType.Update, InputActionEventType.AxisInactive, "MoveX");
             // AddInputEventDelegate(TestY, UpdateLoopType.Update, InputActionEventType.AxisActive, "MoveY");
             // AddInputEventDelegate(TestY, UpdateLoopType.Update, InputActionEventType.AxisInactive, "MoveY");
+            
             // Rewired按钮，获取Action为Fire，按下和释放的回调；
             AddInputEventDelegate(TestButton, UpdateLoopType.Update, InputActionEventType.ButtonJustPressed, "Fire");
-            AddInputEventDelegate(TestButton, UpdateLoopType.Update, InputActionEventType.ButtonJustReleased, "Fire");
+            // AddInputEventDelegate(TestButton, UpdateLoopType.Update, InputActionEventType.ButtonJustReleased, "Fire");
+            AddInputEventDelegate(TestWheel, UpdateLoopType.Update, InputActionEventType.AxisActive, "Wheel");
 
             // TestListenerFunc方法监听EventConstants.StartGame事件
             AddEventListener(EventConstants.StartGame, TestListenerFunc);
@@ -80,8 +83,21 @@ namespace Framework.Scripts.UI.View
 
         public void TestButton(InputActionEventData data)
         {
-            
+            Debug.Log($"Button Fire!  {data.GetButton()}");
             // EventManager.Instance.DispatchEvent(EventConstants.StartGame);
+        }
+        
+        // 鼠标滑轮缩放视野
+        public void TestWheel(InputActionEventData data)
+        {
+            if(CameraManager.Instance.playerVCamera == null) return;
+            CinemachineFramingTransposer vcam =
+                CameraManager.Instance.playerVCamera
+                    .GetComponent<CinemachineVirtualCamera>()
+                    .GetCinemachineComponent<CinemachineFramingTransposer>();
+            float cameraDistance = vcam.m_CameraDistance;
+            cameraDistance = Mathf.Clamp(cameraDistance - data.GetAxisDelta() / 2.0f, 4.8f, 8.5f);
+            vcam.m_CameraDistance = cameraDistance;
         }
 
         public async void LoadLevel()
