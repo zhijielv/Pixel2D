@@ -4,12 +4,10 @@
 ** Description: TODO 管理相机
 */
 
-using System;
 using System.Threading.Tasks;
 using Cinemachine;
 using Framework.Scripts.Level;
 using Framework.Scripts.Singleton;
-using Rewired;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -46,9 +44,18 @@ namespace Framework.Scripts.Manager
             GameObject vCameraCollider =
                 await ObjectManager.Instance.LoadUnit(null, LevelManager.Instance.transform, true);
             vCameraCollider.name = "VCamera Collider";
-            BoxCollider2D boxCollider2D = vCameraCollider.GetComponent<BoxCollider2D>();
-            boxCollider2D.size = new Vector2(width * 0.16f, height * 0.16f);
-            boxCollider2D.isTrigger = true;
+            // 设置Collider2D
+            Destroy(vCameraCollider.GetComponent<BoxCollider2D>());
+            PolygonCollider2D polygonCollider2D = vCameraCollider.AddComponent<PolygonCollider2D>();
+            Vector2[] points = new Vector2[4];
+            points[0] = new Vector2(0 - width * Constants.Common.TileSize, 0 + height * Constants.Common.TileSize) / 2.0f;
+            points[1] = new Vector2(0 - width * Constants.Common.TileSize, 0 - height * Constants.Common.TileSize) / 2.0f;
+            points[2] = new Vector2(0 + width * Constants.Common.TileSize, 0 - height * Constants.Common.TileSize) / 2.0f;
+            points[3] = new Vector2(0 + width * Constants.Common.TileSize, 0 + height * Constants.Common.TileSize) / 2.0f;
+            polygonCollider2D.pathCount = 1;
+            polygonCollider2D.SetPath(0, points);
+            polygonCollider2D.isTrigger = true;
+            // Collider2D设置透明
             vCameraCollider.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
 
             // 设置相机跟随
@@ -57,10 +64,13 @@ namespace Framework.Scripts.Manager
             CinemachineVirtualCamera cinemachineVirtualCamera = playerVCamera.GetComponent<CinemachineVirtualCamera>();
             cinemachineVirtualCamera.Follow = ObjectManager.Instance.MainPlayer.transform;
             cinemachineVirtualCamera.LookAt = ObjectManager.Instance.MainPlayer.transform;
-            playerVCamera.GetComponent<CinemachineConfiner2D>().m_BoundingShape2D = boxCollider2D;
+            // playerVCamera.GetComponent<CinemachineConfiner2D>().m_BoundingShape2D = boxCollider2D;
+            playerVCamera.GetComponent<CinemachineConfiner2D>().m_BoundingShape2D = polygonCollider2D;
 
             // 虚拟相机添加到主相机
             Constants.Constants.AddOrGetComponent(mainCamera, typeof(CinemachineBrain));
+            // 设置透视
+            mainCamera.GetComponent<Camera>().orthographic = false;
         }
     }
 }

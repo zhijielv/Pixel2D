@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Framework.Scripts.Constants;
 using Framework.Scripts.Level;
 using Framework.Scripts.Singleton;
 using Framework.Scripts.Utils;
@@ -18,7 +19,7 @@ namespace Framework.Scripts.Manager
         public override async Task Init()
         {
             leveljsonClasses = await JsonHelper.JsonReader<List<LeveljsonClass>>(Constants.Constants.MapJson);
-            transform.localScale = new Vector3(3, 3, 3);
+            transform.localScale = new Vector3(Common.LevelManagerScale, Common.LevelManagerScale, Common.LevelManagerScale);
             init = true;
         }
 
