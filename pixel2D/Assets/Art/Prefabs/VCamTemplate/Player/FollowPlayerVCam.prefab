@@ -66,7 +66,7 @@ MonoBehaviour:
   m_TargetMovementOnly: 1
   m_ScreenX: 0.5
   m_ScreenY: 0.5
-  m_CameraDistance: 5.233789
+  m_CameraDistance: 5
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0
@@ -76,7 +76,7 @@ MonoBehaviour:
   m_BiasX: 0
   m_BiasY: 0
   m_CenterOnActivate: 1
-  m_GroupFramingMode: 2
+  m_GroupFramingMode: 3
   m_AdjustmentMode: 0
   m_GroupFramingSize: 0.8
   m_MaxDollyIn: 5000
@@ -112,14 +112,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9174946639735207444}
-  m_LocalRotation: {x: -0, y: -0.00096994714, z: -0, w: 0.9999995}
+  m_LocalRotation: {x: 0, y: -0.0009686622, z: 0, w: 0.9999995}
   m_LocalPosition: {x: -0.03161578, y: -1.0566692, z: -1.7445931}
   m_LocalScale: {x: 0.3333333, y: 0.33333337, z: 0.33333337}
   m_Children:
   - {fileID: 2118855797798589910}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.088, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -0.111, z: 0}
 --- !u!114 &7207178737460851810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,14 +142,14 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 5
+    OrthographicSize: 4.9
     NearClipPlane: 0.3
     FarClipPlane: 10
     Dutch: 0
-    ModeOverride: 0
+    ModeOverride: 1
     LensShift: {x: 0, y: 0}
     GateFit: 0
-    m_SensorSize: {x: 1, y: 1}
+    m_SensorSize: {x: 1.8046875, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0

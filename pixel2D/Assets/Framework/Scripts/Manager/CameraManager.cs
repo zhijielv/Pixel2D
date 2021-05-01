@@ -4,6 +4,7 @@
 ** Description: TODO 管理相机
 */
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cinemachine;
 using Framework.Scripts.Level;
@@ -15,9 +16,14 @@ namespace Framework.Scripts.Manager
 {
     public class CameraManager : ManagerSingleton<CameraManager>
     {
+        public const float MINOrthographicSize = 3.0f;
+        public const float MAXOrthographicSize = 4.9f;
         public GameObject mainCamera;
         public GameObject playerVCamera;
+        public GameObject vCameraCollider;
+        public GameObject targetGroup;
 
+        private List<GameObject> _targetList;
         private const string _followPlayerVCam = "FollowPlayerVCam";
 
         public override Task Init()
@@ -31,19 +37,30 @@ namespace Framework.Scripts.Manager
                 mainCamera.AddComponent<AudioListener>();
                 mainCamera.AddComponent<UniversalAdditionalCameraData>();
             }
-
+            mainCamera.transform.SetParent(transform);
+            
+            _targetList = new List<GameObject>();
+            targetGroup = new GameObject()
+            {
+                name = "TargetGroup"
+            };
+            targetGroup.transform.SetParent(transform);
+            targetGroup.AddComponent<CinemachineTargetGroup>();
             return base.Init();
         }
 
         public async void CreatePlayerCamera()
         {
+            if(vCameraCollider != null) AddressableManager.Instance.ReleaseInstance(vCameraCollider);
+            if(playerVCamera != null) AddressableManager.Instance.ReleaseInstance(playerVCamera);
             // 设置相机边界
             // 获取Level长宽
             int width = LevelManager.Instance.levelLoaderObj.GetComponent<LevelLoader>().level.Width;
             int height = LevelManager.Instance.levelLoaderObj.GetComponent<LevelLoader>().level.Height;
-            GameObject vCameraCollider =
+            vCameraCollider =
                 await ObjectManager.Instance.LoadUnit(null, LevelManager.Instance.transform, true);
             vCameraCollider.name = "VCamera Collider";
+            vCameraCollider.transform.SetParent(transform);
             // 设置Collider2D
             Destroy(vCameraCollider.GetComponent<BoxCollider2D>());
             PolygonCollider2D polygonCollider2D = vCameraCollider.AddComponent<PolygonCollider2D>();
@@ -58,19 +75,50 @@ namespace Framework.Scripts.Manager
             // Collider2D设置透明
             vCameraCollider.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
 
-            // 设置相机跟随
+            // 设置相机限制范围
             playerVCamera =
                 await AddressableManager.Instance.Instantiate(_followPlayerVCam, LevelManager.Instance.transform);
-            CinemachineVirtualCamera cinemachineVirtualCamera = playerVCamera.GetComponent<CinemachineVirtualCamera>();
-            cinemachineVirtualCamera.Follow = ObjectManager.Instance.MainPlayer.transform;
-            cinemachineVirtualCamera.LookAt = ObjectManager.Instance.MainPlayer.transform;
-            // playerVCamera.GetComponent<CinemachineConfiner2D>().m_BoundingShape2D = boxCollider2D;
+            playerVCamera.transform.SetParent(transform);
             playerVCamera.GetComponent<CinemachineConfiner2D>().m_BoundingShape2D = polygonCollider2D;
+            
+            // 设置相机跟随
+            CinemachineVirtualCamera cinemachineVirtualCamera = playerVCamera.GetComponent<CinemachineVirtualCamera>();
+            cinemachineVirtualCamera.Follow = targetGroup.transform;
 
             // 虚拟相机添加到主相机
             Constants.Constants.AddOrGetComponent(mainCamera, typeof(CinemachineBrain));
             // 设置透视
-            mainCamera.GetComponent<Camera>().orthographic = false;
+            mainCamera.GetComponent<Camera>().orthographic = true;
+        }
+
+        public async Task<GameObject> CreateMouseTarget()
+        {
+            GameObject mouseTarget = await ObjectManager.Instance.LoadUnit(null, null, true);
+            Destroy(mouseTarget.GetComponent<BoxCollider2D>());
+            _targetList.Add(mouseTarget);
+            ResetTargetList();
+            return mouseTarget;
+        }
+
+        public void AddTarget(GameObject target)
+        {
+            _targetList.Add(target);
+            ResetTargetList();
+        }
+
+        private void ResetTargetList()
+        {
+            CinemachineTargetGroup cinemachineTargetGroup = targetGroup.GetComponent<CinemachineTargetGroup>();
+            cinemachineTargetGroup.m_Targets =
+                new CinemachineTargetGroup.Target[_targetList.Count];
+            for (var i = 0; i < _targetList.Count; i++)
+            {
+                cinemachineTargetGroup.m_Targets[i] = new CinemachineTargetGroup.Target()
+                {
+                    target = _targetList[i].transform,
+                    weight = 1,
+                };
+            }
         }
     }
 }

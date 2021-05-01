@@ -13,6 +13,7 @@ using Framework.Scripts.Manager;
 using Sirenix.OdinInspector;
 using UnityEngine.UI;
 using System;
+using System.Threading.Tasks;
 using Cinemachine;
 using DG.Tweening;
 using Framework.Scripts.Constants;
@@ -34,12 +35,17 @@ namespace Framework.Scripts.UI.View
     {
         public string HeroName = "";
         public float speed = 4f;
-        private void OnEnable()
+        public Player player;
+
+        private GameObject mouseTarget;
+        private async void OnEnable()
         {
             if (!ReInput.isReady) return;
-            Player player = ReInput.players.GetPlayer(0);
+            player = ReInput.players.GetPlayer(0);
+            mouseTarget = await CameraManager.Instance.CreateMouseTarget();
+            mouseTarget.GetComponent<SpriteRenderer>().color = Color.clear;
             // Subscribe to input events
-            // AddInputEventDelegate(TestX, UpdateLoopType.Update, InputActionEventType.AxisActive, "MoveX");
+            AddInputEventDelegate(TestX, UpdateLoopType.Update, InputActionEventType.AxisActive, "MoveX");
             // AddInputEventDelegate(TestX, UpdateLoopType.Update, InputActionEventType.AxisInactive, "MoveX");
             // AddInputEventDelegate(TestY, UpdateLoopType.Update, InputActionEventType.AxisActive, "MoveY");
             // AddInputEventDelegate(TestY, UpdateLoopType.Update, InputActionEventType.AxisInactive, "MoveY");
@@ -48,6 +54,8 @@ namespace Framework.Scripts.UI.View
             AddInputEventDelegate(TestButton, UpdateLoopType.Update, InputActionEventType.ButtonJustPressed, "Fire");
             // AddInputEventDelegate(TestButton, UpdateLoopType.Update, InputActionEventType.ButtonJustReleased, "Fire");
             AddInputEventDelegate(TestWheel, UpdateLoopType.Update, InputActionEventType.AxisActive, "Wheel");
+            AddInputEventDelegate(TestTarget, UpdateLoopType.Update, InputActionEventType.AxisActive, "MouseHorizontal");
+            AddInputEventDelegate(TestTarget, UpdateLoopType.Update, InputActionEventType.AxisActive, "MouseVertical");
 
             // TestListenerFunc方法监听EventConstants.StartGame事件
             AddEventListener(EventConstants.StartGame, TestListenerFunc);
@@ -71,14 +79,16 @@ namespace Framework.Scripts.UI.View
 
         public void TestX(InputActionEventData data)
         {
-            if(ObjectManager.Instance.MainPlayer == null) return;
-            ObjectManager.Instance.MainPlayer.transform.GetComponent<Transform>().DOBlendableMoveBy(Vector3.right * data.GetAxis() / 100 * speed, 0.1f);
+            // if(ObjectManager.Instance.mainPlayer == null) return;
+            // ObjectManager.Instance.mainPlayer.transform.GetComponent<Transform>().DOBlendableMoveBy(Vector3.right * data.GetAxis() / 100 * speed, 0.1f);
+            float direction = data.GetAxis() > 0 ? 1 : -1;
+            ObjectManager.Instance.mainPlayer.transform.localScale = new Vector3(direction, 1, 1);
         }
 
         public void TestY(InputActionEventData data)
         {
-            if(ObjectManager.Instance.MainPlayer == null) return;
-            ObjectManager.Instance.MainPlayer.transform.GetComponent<Transform>().DOBlendableMoveBy(Vector3.up * data.GetAxis() / 100 * speed, 0.1f);
+            if(ObjectManager.Instance.mainPlayer == null) return;
+            ObjectManager.Instance.mainPlayer.transform.GetComponent<Transform>().DOBlendableMoveBy(Vector3.up * data.GetAxis() / 100 * speed, 0.1f);
         }
 
         public void TestButton(InputActionEventData data)
@@ -86,18 +96,31 @@ namespace Framework.Scripts.UI.View
             Debug.Log($"Button Fire!  {data.GetButton()}");
             // EventManager.Instance.DispatchEvent(EventConstants.StartGame);
         }
-        
-        // 鼠标滑轮缩放视野
-        public void TestWheel(InputActionEventData data)
+
+        public void TestTarget(InputActionEventData inputActionEventData)
         {
+            if (player == null) return;
+            if (mouseTarget == null) return;
             if(CameraManager.Instance.playerVCamera == null) return;
             CinemachineFramingTransposer vcam =
                 CameraManager.Instance.playerVCamera
                     .GetComponent<CinemachineVirtualCamera>()
                     .GetCinemachineComponent<CinemachineFramingTransposer>();
             float cameraDistance = vcam.m_CameraDistance;
-            cameraDistance = Mathf.Clamp(cameraDistance - data.GetAxisDelta() / 2.0f, 4.8f, 8.5f);
-            vcam.m_CameraDistance = cameraDistance;
+            Vector2 mouseScreenPosition = player.controllers.Mouse.screenPosition;
+            Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, cameraDistance));
+            point.z = 0;
+            mouseTarget.transform.position = point;
+            mouseTarget.GetComponent<SpriteRenderer>().sortingOrder = 2;
+        }
+        
+        // 鼠标滑轮缩放视野
+        public void TestWheel(InputActionEventData data)
+        {
+            if(CameraManager.Instance.playerVCamera == null) return;
+            float orthographicSize = CameraManager.Instance.playerVCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.OrthographicSize;
+            CameraManager.Instance.playerVCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.OrthographicSize = 
+                Mathf.Clamp(orthographicSize - data.GetAxisDelta() / 2.0f, CameraManager.MINOrthographicSize, CameraManager.MAXOrthographicSize);;
         }
 
         public async void LoadLevel()
@@ -108,19 +131,20 @@ namespace Framework.Scripts.UI.View
 
         public async void LoadAvatar()
         {
-            if (ObjectManager.Instance.MainPlayer != null) AddressableManager.Instance.ReleaseInstance(ObjectManager.Instance.MainPlayer);
+            if (ObjectManager.Instance.mainPlayer != null) AddressableManager.Instance.ReleaseInstance(ObjectManager.Instance.mainPlayer);
             await ObjectManager.Instance.LoadPlayerAvatar(HeroName, LevelManager.Instance.transform);
-            FsmFloat fsmSpeed = ObjectManager.Instance.MainPlayer.GetComponent<PlayMakerFSM>().FsmVariables.FindFsmFloat("Speed");
+            FsmFloat fsmSpeed = ObjectManager.Instance.mainPlayer.GetComponent<PlayMakerFSM>().FsmVariables.FindFsmFloat("Speed");
             fsmSpeed = speed;
             Speed_InputField.text = speed.ToString();
             
             CameraManager.Instance.CreatePlayerCamera();
+            CameraManager.Instance.AddTarget(ObjectManager.Instance.mainPlayer);
         }
 
         public void SetSpeed()
         {
-            if(!ObjectManager.Instance.MainPlayer) return;
-            FsmFloat fsmSpeed = ObjectManager.Instance.MainPlayer.GetComponent<PlayMakerFSM>().FsmVariables.FindFsmFloat("Speed");
+            if(!ObjectManager.Instance.mainPlayer) return;
+            FsmFloat fsmSpeed = ObjectManager.Instance.mainPlayer.GetComponent<PlayMakerFSM>().FsmVariables.FindFsmFloat("Speed");
             float inputSpeed = Convert.ToSingle(Speed_InputField.text);
             if (inputSpeed > 0)
             {

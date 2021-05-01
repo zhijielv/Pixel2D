@@ -37,7 +37,7 @@ public class Main : MonoBehaviour
         await AddManager<TimerManager>();
         await AddManager<UiManager>();
         await AddManager<Launcher>();
-        await AddManager<CameraManager>();
+        await CreateManager<CameraManager>();
         await CreateManager<LevelManager>();
     }
 
@@ -49,7 +49,7 @@ public class Main : MonoBehaviour
 
     private async Task CreateManager<T>(Transform parent = null) where T : ManagerSingleton<T>
     {
-        GameObject managerObj = new GameObject(typeof(T).Name);
+        GameObject managerObj = new GameObject("[" + typeof(T).Name + "]");
         Constants.AddOrGetComponent(managerObj, typeof(T));
         await ManagerSingleton<T>.Instance.Init();
         managerObj.transform.SetParent(parent);

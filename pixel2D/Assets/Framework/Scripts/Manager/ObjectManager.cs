@@ -7,12 +7,13 @@
 using System.Threading.Tasks;
 using Framework.Scripts.Singleton;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Framework.Scripts.Manager
 {
     public class ObjectManager : ManagerSingleton<ObjectManager>
     {
-        public GameObject MainPlayer;
+        public GameObject mainPlayer;
 
         // 加载通过2DUnit，自带Collider2D和SpritRender
         public async Task<GameObject> LoadUnit(object key = null, Transform parent = null, bool instantiate = false)
@@ -58,8 +59,8 @@ namespace Framework.Scripts.Manager
             // 设置层级
             SpriteRenderer spriteRenderer = unit.GetComponent<SpriteRenderer>();
             spriteRenderer.sortingOrder = 1;
-            MainPlayer = unit;
-            MainPlayer.name = "MainPlayer";
+            mainPlayer = unit;
+            mainPlayer.name = "MainPlayer";
             return unit;
         }
     }
