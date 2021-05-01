@@ -2045,7 +2045,7 @@ MonoBehaviour:
   _allowTap: 0
   _tapTimeout: 0.25
   _tapDistanceLimit: 10
-  _touchRegion: {fileID: 7587407938298039782}
+  _touchRegion: {fileID: 0}
   _useTouchRegionOnly: 1
   _moveToTouchPosition: 1
   _returnOnRelease: 1

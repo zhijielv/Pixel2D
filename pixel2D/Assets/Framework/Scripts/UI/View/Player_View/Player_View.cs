@@ -79,8 +79,7 @@ namespace Framework.Scripts.UI.View
 
         public void TestX(InputActionEventData data)
         {
-            // if(ObjectManager.Instance.mainPlayer == null) return;
-            // ObjectManager.Instance.mainPlayer.transform.GetComponent<Transform>().DOBlendableMoveBy(Vector3.right * data.GetAxis() / 100 * speed, 0.1f);
+            if(ObjectManager.Instance.mainPlayer == null) return;
             float direction = data.GetAxis() > 0 ? 1 : -1;
             ObjectManager.Instance.mainPlayer.transform.localScale = new Vector3(direction, 1, 1);
         }

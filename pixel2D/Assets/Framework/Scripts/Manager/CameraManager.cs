@@ -120,8 +120,6 @@ namespace Framework.Scripts.Manager
             {
                 cinemachineTargetGroup.AddMember(t.transform, 1, 0);
             }
-
-            Debug.Log(cinemachineTargetGroup.m_Targets.Length);
         }
     }
 }
