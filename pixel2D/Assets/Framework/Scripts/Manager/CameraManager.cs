@@ -106,19 +106,22 @@ namespace Framework.Scripts.Manager
             ResetTargetList();
         }
 
+        public void RemoveTarget(GameObject target)
+        {
+            _targetList.Remove(target);
+        }
+
         private void ResetTargetList()
         {
             CinemachineTargetGroup cinemachineTargetGroup = targetGroup.GetComponent<CinemachineTargetGroup>();
-            cinemachineTargetGroup.m_Targets =
-                new CinemachineTargetGroup.Target[_targetList.Count];
-            for (var i = 0; i < _targetList.Count; i++)
+            cinemachineTargetGroup.m_Targets = new CinemachineTargetGroup.Target[0];
+            Debug.Log(_targetList.Count);
+            foreach (var t in _targetList)
             {
-                cinemachineTargetGroup.m_Targets[i] = new CinemachineTargetGroup.Target()
-                {
-                    target = _targetList[i].transform,
-                    weight = 1,
-                };
+                cinemachineTargetGroup.AddMember(t.transform, 1, 0);
             }
+
+            Debug.Log(cinemachineTargetGroup.m_Targets.Length);
         }
     }
 }

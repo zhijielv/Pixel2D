@@ -131,7 +131,11 @@ namespace Framework.Scripts.UI.View
 
         public async void LoadAvatar()
         {
-            if (ObjectManager.Instance.mainPlayer != null) AddressableManager.Instance.ReleaseInstance(ObjectManager.Instance.mainPlayer);
+            if (ObjectManager.Instance.mainPlayer != null)
+            {
+                CameraManager.Instance.RemoveTarget(ObjectManager.Instance.mainPlayer);
+                AddressableManager.Instance.ReleaseInstance(ObjectManager.Instance.mainPlayer);
+            }
             await ObjectManager.Instance.LoadPlayerAvatar(HeroName, LevelManager.Instance.transform);
             FsmFloat fsmSpeed = ObjectManager.Instance.mainPlayer.GetComponent<PlayMakerFSM>().FsmVariables.FindFsmFloat("Speed");
             fsmSpeed = speed;

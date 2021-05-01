@@ -29,31 +29,24 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - preload
-    m_MainAsset: {fileID: 2456020677703500327, guid: 5528fd196611f43469e391829f09f037,
-      type: 3}
-    m_TargetAsset: {fileID: 2456020677703500327, guid: 5528fd196611f43469e391829f09f037,
-      type: 3}
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   - m_GUID: cce5822c7ec7cda479903c37b763d27c
     m_Address: ObjectUnit
     m_ReadOnly: 0
     m_SerializedLabels:
     - preload
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
+    m_MainAsset: {fileID: 4389249200882527681, guid: cce5822c7ec7cda479903c37b763d27c,
+      type: 3}
+    m_TargetAsset: {fileID: 4389249200882527681, guid: cce5822c7ec7cda479903c37b763d27c,
+      type: 3}
   - m_GUID: 39157d8e426b8f64f907d6cd8d80900d
     m_Address: Default2DMaterial
     m_ReadOnly: 0
     m_SerializedLabels:
     - preload
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
-  - m_GUID: af9b8636f9c101b41992daa92e379d4b
-    m_Address: Default2DShader
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - preload
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
+    m_MainAsset: {fileID: 2100000, guid: 39157d8e426b8f64f907d6cd8d80900d, type: 2}
+    m_TargetAsset: {fileID: 2100000, guid: 39157d8e426b8f64f907d6cd8d80900d, type: 2}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cc1ef71ad71ad124cac3229a7e1dd5ba, type: 2}
   m_SchemaSet:
