@@ -47,6 +47,13 @@ MonoBehaviour:
     - preload
     m_MainAsset: {fileID: 2100000, guid: 39157d8e426b8f64f907d6cd8d80900d, type: 2}
     m_TargetAsset: {fileID: 2100000, guid: 39157d8e426b8f64f907d6cd8d80900d, type: 2}
+  - m_GUID: c87133c30d3e2a341aaf4b0e36e7c51b
+    m_Address: AStar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cc1ef71ad71ad124cac3229a7e1dd5ba, type: 2}
   m_SchemaSet:

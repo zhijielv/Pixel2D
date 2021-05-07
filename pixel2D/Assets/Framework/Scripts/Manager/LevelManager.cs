@@ -4,6 +4,7 @@ using Framework.Scripts.Constants;
 using Framework.Scripts.Level;
 using Framework.Scripts.Singleton;
 using Framework.Scripts.Utils;
+using Pathfinding;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,6 +16,7 @@ namespace Framework.Scripts.Manager
         public List<LeveljsonClass> leveljsonClasses;
         public GameObject levelLoaderObj;
         public bool isLevelLoaded = false;
+        public Level.Level curLevel = null;
         bool init = false;
         public override async Task Init()
         {
@@ -31,11 +33,13 @@ namespace Framework.Scripts.Manager
         public async Task LoadLevel(Transform mapRoot = null)
         {
             if(levelLoaderObj != null) Destroy(levelLoaderObj);
-            levelLoaderObj = new GameObject("LevelLoader"); 
+            // levelLoaderObj = new GameObject("LevelLoader");
+            levelLoaderObj = await AddressableManager.Instance.Instantiate("AStar", transform);
             levelLoaderObj.transform.parent = mapRoot == null ? transform : mapRoot;
             LevelLoader loader = (LevelLoader) Constants.Constants.AddOrGetComponent(levelLoaderObj, typeof(LevelLoader));
             await loader.Init();
-            await loader.LoadLevel(levelType);
+            curLevel = await loader.LoadLevel(levelType);
+            ResetPathfindingSize();
             loader.CreateLevel();
         }
 
@@ -57,6 +61,14 @@ namespace Framework.Scripts.Manager
             }
 
             return tmpLeveljsonClass;
+        }
+
+        public void ResetPathfindingSize()
+        {
+            GridGraph gridGraph = AstarPath.active.data.gridGraph;
+            gridGraph.SetDimensions(curLevel.Width, curLevel.Height, Common.TileSize * Common.LevelManagerScale);
+            // todo 调用Editor里的按钮Scan
+            gridGraph.Scan();
         }
     }
     

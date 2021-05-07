@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Framework.Scripts.Manager;
 using Framework.Scripts.Utils;
+using Pathfinding;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -34,7 +35,7 @@ namespace Framework.Scripts.Level
         [OnValueChanged("LoadLevel")] public LevelType levelType;
 
         // 加载Level数据
-        public async Task LoadLevel(LevelType levelType)
+        public async Task<Level> LoadLevel(LevelType levelType)
         {
             level = new Level();
             LeveljsonClass tmpLeveljsonClass = new LeveljsonClass();
@@ -46,8 +47,9 @@ namespace Framework.Scripts.Level
             }
 
             await level.GenerateLevelValueFromJson(tmpLeveljsonClass);
-
+            
             level.SetLevelMap();
+            return level;
         }
 
         // 仅Inspector显示用
@@ -73,6 +75,7 @@ namespace Framework.Scripts.Level
                     Sprite sprite = Constants.RandomHelper.GetRandomValueFromList(sprites, 1)[0];
                     GameObject o = Instantiate(imagePrefab, mapRoot);
                     o.name = tmpObjName.ToString();
+                    o.layer = LayerMask.NameToLayer("Ground");
                     tmpObjName++;
                     o.GetComponent<SpriteRenderer>().sprite = sprite;
                     // o.GetComponent<Image>().SetNativeSize();

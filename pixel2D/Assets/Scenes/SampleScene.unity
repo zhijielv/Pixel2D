@@ -610,9 +610,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1142297998}
-        m_TargetAssemblyTypeName: Framework.Scripts.UI.CustomUI.QuitGame, Assembly-CSharp
-        m_MethodName: QuitThisGame
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Test.testAStar, Assembly-CSharp
+        m_MethodName: SetTarget
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

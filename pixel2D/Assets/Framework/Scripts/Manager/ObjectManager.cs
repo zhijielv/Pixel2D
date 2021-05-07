@@ -6,6 +6,7 @@
 
 using System.Threading.Tasks;
 using Framework.Scripts.Singleton;
+using Pathfinding;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -61,6 +62,10 @@ namespace Framework.Scripts.Manager
             spriteRenderer.sortingOrder = 1;
             mainPlayer = unit;
             mainPlayer.name = "MainPlayer";
+            // 添加AI寻路组件
+            Constants.Constants.AddOrGetComponent(unit, typeof(Seeker));
+            AILerp aiLerp = (AILerp) Constants.Constants.AddOrGetComponent(unit, typeof(AILerp));
+            aiLerp.orientation = OrientationMode.YAxisForward;
             return unit;
         }
     }

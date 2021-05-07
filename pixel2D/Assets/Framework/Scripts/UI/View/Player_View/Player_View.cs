@@ -56,6 +56,7 @@ namespace Framework.Scripts.UI.View
             AddInputEventDelegate(TestWheel, UpdateLoopType.Update, InputActionEventType.AxisActive, "Wheel");
             AddInputEventDelegate(TestTarget, UpdateLoopType.Update, InputActionEventType.AxisActive, "MouseHorizontal");
             AddInputEventDelegate(TestTarget, UpdateLoopType.Update, InputActionEventType.AxisActive, "MouseVertical");
+            AddInputEventDelegate(TestAStar, UpdateLoopType.Update, InputActionEventType.ButtonJustPressed, "MoveToClick");
 
             // TestListenerFunc方法监听EventConstants.StartGame事件
             AddEventListener(EventConstants.StartGame, TestListenerFunc);
@@ -64,6 +65,12 @@ namespace Framework.Scripts.UI.View
             AddButtonClickEvent(LoadLevel_Button, LoadLevel);
             AddButtonClickEvent(LoadAvatar_Button, LoadAvatar);
             AddButtonClickEvent(SetSpeed_Button, SetSpeed);
+        }
+
+        public void TestAStar(InputActionEventData data)
+        {
+            if(!LevelManager.Instance.isLevelLoaded) return;
+            
         }
         
         private void TestListenerFunc(EventData data)
