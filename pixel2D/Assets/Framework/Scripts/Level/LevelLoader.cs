@@ -89,8 +89,8 @@ namespace Framework.Scripts.Level
                     }
                 }
             }
-
-            LevelManager.Instance.isLevelLoaded = true;
+            if(Application.isPlaying)
+                LevelManager.Instance.isLevelLoaded = true;
         }
 
         [HorizontalGroup("Button")]
