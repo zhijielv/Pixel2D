@@ -115,7 +115,6 @@ namespace Framework.Scripts.Manager
         {
             CinemachineTargetGroup cinemachineTargetGroup = targetGroup.GetComponent<CinemachineTargetGroup>();
             cinemachineTargetGroup.m_Targets = new CinemachineTargetGroup.Target[0];
-            Debug.Log(_targetList.Count);
             foreach (var t in _targetList)
             {
                 cinemachineTargetGroup.AddMember(t.transform, 1, 0);
