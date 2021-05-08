@@ -14,14 +14,11 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
-  - 
-  - 
-  - Obstacles
-  - Ground
   - Player
+  - Obstacles
   - ObstaclesDoors
   - NoPathfinding
   - Enemies
@@ -34,6 +31,9 @@ TagManager:
   - Camera2
   - Camera3
   - Camera4
+  - 
+  - 
+  - 
   - 
   - 
   - 

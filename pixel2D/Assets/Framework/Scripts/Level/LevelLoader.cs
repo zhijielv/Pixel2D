@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Framework.Scripts.Manager;
 using Framework.Scripts.Utils;
-using Pathfinding;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

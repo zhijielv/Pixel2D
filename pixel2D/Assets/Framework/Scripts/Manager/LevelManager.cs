@@ -18,10 +18,13 @@ namespace Framework.Scripts.Manager
         public bool isLevelLoaded = false;
         public Level.Level curLevel = null;
         bool init = false;
+
         public override async Task Init()
         {
             leveljsonClasses = await JsonHelper.JsonReader<List<LeveljsonClass>>(Constants.Constants.MapJson);
-            transform.localScale = new Vector3(Common.LevelManagerScale, Common.LevelManagerScale, Common.LevelManagerScale);
+            transform.localScale =
+                new Vector3(Common.LevelManagerScale, Common.LevelManagerScale, Common.LevelManagerScale);
+            CreateAStarPath();
             init = true;
         }
 
@@ -32,15 +35,15 @@ namespace Framework.Scripts.Manager
 
         public async Task LoadLevel(Transform mapRoot = null)
         {
-            if(levelLoaderObj != null) Destroy(levelLoaderObj);
-            // levelLoaderObj = new GameObject("LevelLoader");
-            levelLoaderObj = await AddressableManager.Instance.Instantiate("AStar", transform);
+            if (levelLoaderObj != null) Destroy(levelLoaderObj);
+            levelLoaderObj = new GameObject("LevelLoader") {name = "LevelLoader"};
             levelLoaderObj.transform.parent = mapRoot == null ? transform : mapRoot;
-            LevelLoader loader = (LevelLoader) Constants.Constants.AddOrGetComponent(levelLoaderObj, typeof(LevelLoader));
+            LevelLoader loader =
+                (LevelLoader) Constants.Constants.AddOrGetComponent(levelLoaderObj, typeof(LevelLoader));
             await loader.Init();
             curLevel = await loader.LoadLevel(levelType);
-            ResetPathfindingSize();
             loader.CreateLevel();
+            ResetPathfindingSize();
         }
 
         public async Task<Level.Level> GetLevel(LevelType levelType = LevelType.ludi)
@@ -48,7 +51,7 @@ namespace Framework.Scripts.Manager
             Level.Level level = new Level.Level();
             await level.GenerateLevelValueFromJson(await GetLeveljsonClass(levelType));
             return level;
-        } 
+        }
 
         public async Task<LeveljsonClass> GetLeveljsonClass(LevelType levelType = LevelType.ludi)
         {
@@ -63,15 +66,30 @@ namespace Framework.Scripts.Manager
             return tmpLeveljsonClass;
         }
 
+        // 创建 A* 寻路组件
+        public void CreateAStarPath()
+        {
+            GameObject AStarPath = new GameObject("AStarPath");
+            AStarPath.transform.SetParent(transform);
+            AstarPath astarPath = Constants.Constants.AddOrGetComponent(AStarPath, typeof(AstarPath)) as AstarPath;
+            GridGraph gridGraph = astarPath.data.AddGraph(typeof(GridGraph)) as GridGraph;
+            // gridGraph 旋转 为2D
+            gridGraph.rotation = new Vector3(-90, 270, 90);
+            // collision
+            gridGraph.collision.use2D = true;
+            gridGraph.collision.type = ColliderType.Ray;
+            gridGraph.collision.mask = 1 << LayerMask.NameToLayer("Ground");
+        }
+
+        // 刷新寻路
         public void ResetPathfindingSize()
         {
-            GridGraph gridGraph = AstarPath.active.data.gridGraph;
-            gridGraph.SetDimensions(curLevel.Width, curLevel.Height, Common.TileSize * Common.LevelManagerScale);
-            // todo 调用Editor里的按钮Scan
-            gridGraph.Scan();
+            AstarPath.active.data.gridGraph.SetDimensions(curLevel.Width, curLevel.Height,
+                Common.TileSize * Common.LevelManagerScale);
+            AstarPath.active.Scan();
         }
     }
-    
+
     public enum LevelType
     {
         ludi,
