@@ -79,8 +79,8 @@ namespace Framework.Scripts.Level
                     o.GetComponent<SpriteRenderer>().sprite = sprite;
                     // o.GetComponent<Image>().SetNativeSize();
                     o.GetComponent<Transform>().localPosition = new Vector2(
-                        (i - level.Width / 2) * sprite.rect.width / 100,
-                        -1 * (j - level.Height / 2) * sprite.rect.height / 100);
+                        (i - level.Width / 2.0f) * sprite.rect.width / 100,
+                        -1 * (j - level.Height / 2.0f) * sprite.rect.height / 100);
                     level.LevelObj.Add(o);
 
                     switch (level.LevelMap[i, j])

@@ -86,6 +86,8 @@ namespace Framework.Scripts.Manager
         {
             AstarPath.active.data.gridGraph.SetDimensions(curLevel.Width, curLevel.Height,
                 Common.TileSize * Common.LevelManagerScale);
+            float tmpSize = AstarPath.active.data.gridGraph.nodeSize;
+            AstarPath.active.data.gridGraph.center = new Vector3(-1 * tmpSize / 2, tmpSize / 2, 0);
             AstarPath.active.Scan();
         }
     }

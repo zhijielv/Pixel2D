@@ -66,6 +66,7 @@ namespace Framework.Scripts.Manager
             Constants.Constants.AddOrGetComponent(unit, typeof(Seeker));
             AILerp aiLerp = (AILerp) Constants.Constants.AddOrGetComponent(unit, typeof(AILerp));
             aiLerp.orientation = OrientationMode.YAxisForward;
+            aiLerp.enableRotation = false;
             return unit;
         }
     }

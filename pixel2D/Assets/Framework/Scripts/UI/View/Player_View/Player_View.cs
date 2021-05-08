@@ -18,6 +18,7 @@ using Cinemachine;
 using DG.Tweening;
 using Framework.Scripts.Constants;
 using HutongGames.PlayMaker;
+using Pathfinding;
 using Rewired;
 using Sirenix.Utilities;
 using UnityEngine;
@@ -56,7 +57,8 @@ namespace Framework.Scripts.UI.View
             AddInputEventDelegate(TestWheel, UpdateLoopType.Update, InputActionEventType.AxisActive, "Wheel");
             AddInputEventDelegate(TestTarget, UpdateLoopType.Update, InputActionEventType.AxisActive, "MouseHorizontal");
             AddInputEventDelegate(TestTarget, UpdateLoopType.Update, InputActionEventType.AxisActive, "MouseVertical");
-            AddInputEventDelegate(TestAStar, UpdateLoopType.Update, InputActionEventType.ButtonJustPressed, "MoveToClick");
+            // 右键地面寻路功能
+            // AddInputEventDelegate(TestAStar, UpdateLoopType.Update, InputActionEventType.ButtonJustPressed, "MoveToClick");
 
             // TestListenerFunc方法监听EventConstants.StartGame事件
             AddEventListener(EventConstants.StartGame, TestListenerFunc);
@@ -67,10 +69,18 @@ namespace Framework.Scripts.UI.View
             AddButtonClickEvent(SetSpeed_Button, SetSpeed);
         }
 
+        // 右键点击地面寻路
         public void TestAStar(InputActionEventData data)
         {
             if(!LevelManager.Instance.isLevelLoaded) return;
-            
+            if(!player.controllers.hasMouse) return;
+            Seeker seeker = ObjectManager.Instance.mainPlayer.GetComponent<Seeker>();
+            AILerp aiLerp = ObjectManager.Instance.mainPlayer.GetComponent<AILerp>();
+            aiLerp.enabled = true;
+            Vector2 mouseScreenPosition = player.controllers.Mouse.screenPosition;
+            Vector3 worldPoint = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, 0));
+            Vector3 targetPosition = new Vector3(worldPoint.x, worldPoint.y, seeker.transform.position.z);
+            seeker.StartPath(seeker.transform.position, targetPosition);
         }
         
         private void TestListenerFunc(EventData data)
@@ -120,6 +130,7 @@ namespace Framework.Scripts.UI.View
             mouseTarget.GetComponent<SpriteRenderer>().sortingOrder = 2;
         }
         
+        // todo 移动端 双指缩放视野
         // 鼠标滑轮缩放视野
         public void TestWheel(InputActionEventData data)
         {
