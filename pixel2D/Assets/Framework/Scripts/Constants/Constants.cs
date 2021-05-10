@@ -25,6 +25,7 @@ namespace Framework.Scripts.Constants
         public const string UiScriptableObjectsManager = "Ui Scriptable Objects Manager.asset";
         public const string UiNameSpace = "Framework.Scripts.UI.View.";
         public const string CustomUiNameSpace = "Framework.Scripts.UI.CustomUI.";
+        public const string LevelJson = "Level";
         public const string MapJson = "Map";
 
         public const string ArtDirPath = "Assets/Art/";

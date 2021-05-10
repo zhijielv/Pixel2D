@@ -13,14 +13,18 @@ using Framework.Scripts.Manager;
 using Sirenix.OdinInspector;
 using UnityEngine.UI;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cinemachine;
 using DG.Tweening;
 using Framework.Scripts.Constants;
+using Framework.Scripts.Level;
+using Framework.Scripts.Level.LevelItem;
 using HutongGames.PlayMaker;
 using Pathfinding;
 using Rewired;
 using Sirenix.Utilities;
+using SRF;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.ResourceProviders;
@@ -142,8 +146,8 @@ namespace Framework.Scripts.UI.View
 
         public async void LoadLevel()
         {
-            LevelManager.Instance.levelType = LevelType.yanjiang;
-            await LevelManager.Instance.LoadLevel();
+            // LevelManager.Instance.levelType = LevelType.yanjiang;
+            await LevelManager.Instance.InitLevelLoader();
         }
 
         public async void LoadAvatar()

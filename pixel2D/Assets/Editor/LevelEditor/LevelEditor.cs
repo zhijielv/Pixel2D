@@ -12,12 +12,14 @@ namespace Editor.LevelEditor
     public class LevelEditor : OdinMenuEditorWindow
     {
         private LevelTool _levelTool;
+        private MapTool _mapTool;
         private AddressableAssetsTool _addressableAssetsTool;
 
         protected override void OnEnable()
         {
             base.OnEnable();
             _levelTool = new LevelTool();
+            _mapTool = new MapTool();
             _addressableAssetsTool = new AddressableAssetsTool();
         }
 
@@ -34,6 +36,7 @@ namespace Editor.LevelEditor
             OdinMenuTree tree = new OdinMenuTree(true)
             {
                 {"Level Tool", _levelTool},
+                {"Map Tool", _mapTool},
                 {"Addressable Tool", _addressableAssetsTool},
             };
             return tree;

@@ -8,7 +8,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Framework.Scripts.Constants;
 using Framework.Scripts.Level;
+using Framework.Scripts.Level.LevelItem;
 using Framework.Scripts.Manager;
 using Newtonsoft.Json;
 using Sirenix.OdinInspector;
@@ -19,7 +21,7 @@ namespace Editor.Tools
 {
     public class LevelTool
     {
-        [ReadOnly] private string jsonPath = "Assets/Framework/Json/Map.json";
+        [ReadOnly] private string jsonPath = "Assets/Framework/Json/" + Constants.LevelJson + ".json";
         [OnValueChanged("LoadLevel")] public LevelType levelType = LevelType.ludi;
         [ShowInInspector] public Level Level;
 
@@ -28,15 +30,15 @@ namespace Editor.Tools
 
         public LevelTool()
         {
-            Level = ReadMapJson(levelType).Result;
+            Level = ReadLevelJson(levelType).Result;
         }
 
         public async void LoadLevel(LevelType levelType)
         {
-            Level = await ReadMapJson(levelType);
+            Level = await ReadLevelJson(levelType);
         }
 
-        public async Task<Level> ReadMapJson(LevelType levelType)
+        public async Task<Level> ReadLevelJson(LevelType levelType)
         {
             Level tmpLevel = new Level {LevelType = levelType};
             if (!File.Exists(jsonPath))
@@ -47,7 +49,7 @@ namespace Editor.Tools
                 streamWriter.Write("[]");
                 streamWriter.Close();
                 fileStream.Close();
-                AddAllJson2AddressGroup();
+                AddressableAssetsTool.AddAllJson2AddressGroup();
             }
 
             // _levelJsonList = await JsonHelper.JsonReader<List<LeveljsonClass>>("Map.json");
@@ -58,22 +60,13 @@ namespace Editor.Tools
             _leveljsonClass = null;
             foreach (LeveljsonClass data in _levelJsonList)
             {
-                if (!data.LevelType.Equals(levelType.ToString())) continue;
+                if (data.LevelType != levelType) continue;
                 _leveljsonClass = data;
                 await tmpLevel.GenerateLevelValueFromJson(_leveljsonClass);
                 break;
             }
 
             return tmpLevel;
-        }
-
-        public void AddAllJson2AddressGroup()
-        {
-            AssetDatabase.Refresh();
-            List<TextAsset> textAssets = AssetDatabase.FindAssets("t:TextAsset", new[] {"Assets/Framework/Json"})
-                .Select(guid =>
-                    AssetDatabase.LoadAssetAtPath<TextAsset>(AssetDatabase.GUIDToAssetPath(guid))).ToList();
-            AddressableAssetsTool.Add2AddressablesGroupsByName(textAssets, "Json");
         }
 
         [Button]
@@ -85,14 +78,15 @@ namespace Editor.Tools
                 _levelJsonList.Add(_leveljsonClass);
             }
 
-            _leveljsonClass.LevelType = levelType.ToString();
-            _leveljsonClass.Height = Level.Height;
-            _leveljsonClass.Width = Level.Width;
-            _leveljsonClass.WidgetDictionary = new Dictionary<string, int>();
-            foreach (KeyValuePair<LevelItemType, int> valuePair in Level.ItemWidget)
-            {
-                _leveljsonClass.WidgetDictionary.Add(valuePair.Key.ToString(), valuePair.Value);
-            }
+            // _leveljsonClass.LevelType = levelType.ToString();
+            _leveljsonClass.LevelType = levelType;
+            // _leveljsonClass.Height = Level.Height;
+            // _leveljsonClass.Width = Level.Width;
+            // _leveljsonClass.WidgetDictionary = new Dictionary<string, int>();
+            // foreach (KeyValuePair<LevelItemType, int> valuePair in Level.ItemWidget)
+            // {
+                // _leveljsonClass.WidgetDictionary.Add(valuePair.Key.ToString(), valuePair.Value);
+            // }
 
             foreach (KeyValuePair<LevelItemType, List<Sprite>> keyValuePair in Level.LevelItem)
             {
@@ -127,7 +121,7 @@ namespace Editor.Tools
             streamWriter.Close();
             _leveljsonClass = null;
             AssetDatabase.Refresh();
-            AddAllJson2AddressGroup();
+            AddressableAssetsTool.AddAllJson2AddressGroup();
         }
     }
 }

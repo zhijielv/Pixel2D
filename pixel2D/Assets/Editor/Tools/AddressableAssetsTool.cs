@@ -142,6 +142,16 @@ namespace Editor.Tools
 
             return true;
         }
+        
+        [Button("添加所有Json资源", ButtonSizes.Large)]
+        public static void AddAllJson2AddressGroup()
+        {
+            AssetDatabase.Refresh();
+            List<TextAsset> textAssets = AssetDatabase.FindAssets("t:TextAsset", new[] {"Assets/Framework/Json"})
+                .Select(guid =>
+                    AssetDatabase.LoadAssetAtPath<TextAsset>(AssetDatabase.GUIDToAssetPath(guid))).ToList();
+            AddressableAssetsTool.Add2AddressablesGroupsByName(textAssets, "Json");
+        }
 
         #endregion
 

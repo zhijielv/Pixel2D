@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Framework.Scripts.Constants;
 using Framework.Scripts.Level;
+using Framework.Scripts.Level.LevelItem;
 using Framework.Scripts.Singleton;
 using Framework.Scripts.Utils;
 using Pathfinding;
@@ -12,20 +13,29 @@ namespace Framework.Scripts.Manager
 {
     public class LevelManager : ManagerSingleton<LevelManager>
     {
-        public LevelType levelType = LevelType.ludi;
         public List<LeveljsonClass> leveljsonClasses;
         public GameObject levelLoaderObj;
         public bool isLevelLoaded = false;
         public Level.Level curLevel = null;
-        bool init = false;
+        public bool init = false;
+        public List<LevelMap> levelMaps;
+        public int curMapIndex = 0;
+        public int curLevelIndex = 0;
 
         public override async Task Init()
         {
-            leveljsonClasses = await JsonHelper.JsonReader<List<LeveljsonClass>>(Constants.Constants.MapJson);
+            levelMaps = JsonHelper.ReadOrCreateJson<LevelMap>(Constants.Constants.MapJson);
+            leveljsonClasses = await JsonHelper.JsonReader<List<LeveljsonClass>>(Constants.Constants.LevelJson);
             transform.localScale =
                 new Vector3(Common.LevelManagerScale, Common.LevelManagerScale, Common.LevelManagerScale);
             CreateAStarPath();
             init = true;
+        }
+
+        public async Task<Level.Level> GetLevelByIndex(int mapIndex, int levelIndex)
+        {
+            Level.Level level = await levelMaps[mapIndex].Generate2Level(levelIndex);
+            return level;
         }
 
         public async Task ChangeLevel(object key, LoadSceneMode loadSceneMode)
@@ -33,37 +43,25 @@ namespace Framework.Scripts.Manager
             await AddressableManager.Instance.LoadScene(key, loadSceneMode);
         }
 
-        public async Task LoadLevel(Transform mapRoot = null)
+        // 加载Level数据
+        public async Task InitLevelLoader(Transform mapRoot = null)
         {
+            // reset LevelLoader
             if (levelLoaderObj != null) Destroy(levelLoaderObj);
             levelLoaderObj = new GameObject("LevelLoader") {name = "LevelLoader"};
             levelLoaderObj.transform.parent = mapRoot == null ? transform : mapRoot;
             LevelLoader loader =
                 (LevelLoader) Constants.Constants.AddOrGetComponent(levelLoaderObj, typeof(LevelLoader));
             await loader.Init();
-            curLevel = await loader.LoadLevel(levelType);
+            
+            // Create Level
+            // curLevel = await _levelMaps[curMapIndex].Generate2Level(curLevelIndex);
+            curLevel = await GetLevelByIndex(curMapIndex, curLevelIndex);
+            loader.level = curLevel;
             loader.CreateLevel();
+            
+            // reset Pathfinding
             ResetPathfindingSize();
-        }
-
-        public async Task<Level.Level> GetLevel(LevelType levelType = LevelType.ludi)
-        {
-            Level.Level level = new Level.Level();
-            await level.GenerateLevelValueFromJson(await GetLeveljsonClass(levelType));
-            return level;
-        }
-
-        public async Task<LeveljsonClass> GetLeveljsonClass(LevelType levelType = LevelType.ludi)
-        {
-            LeveljsonClass tmpLeveljsonClass = new LeveljsonClass();
-            leveljsonClasses ??= await JsonHelper.JsonReader<List<LeveljsonClass>>(Constants.Constants.MapJson);
-            foreach (LeveljsonClass leveljsonClass in leveljsonClasses)
-            {
-                if (!leveljsonClass.LevelType.Equals(levelType.ToString())) continue;
-                tmpLeveljsonClass = leveljsonClass;
-            }
-
-            return tmpLeveljsonClass;
         }
 
         // 创建 A* 寻路组件
@@ -90,33 +88,5 @@ namespace Framework.Scripts.Manager
             AstarPath.active.data.gridGraph.center = new Vector3(-1 * tmpSize / 2, tmpSize / 2, 0);
             AstarPath.active.Scan();
         }
-    }
-
-    public enum LevelType
-    {
-        ludi,
-        yanjiang,
-        xueshan,
-    }
-
-    public enum LevelItemType
-    {
-        Wall = 0,
-        Road,
-        Box,
-        Obstruction,
-        Maxvalue,
-    }
-
-    public class LeveljsonClass
-    {
-        public string LevelType;
-        public int Width;
-        public int Height;
-        public List<string> RoadList = new List<string>();
-        public List<string> WallList = new List<string>();
-        public List<string> BoxList = new List<string>();
-        public List<string> ObstructionList = new List<string>();
-        public Dictionary<string, int> WidgetDictionary = new Dictionary<string, int>();
     }
 }

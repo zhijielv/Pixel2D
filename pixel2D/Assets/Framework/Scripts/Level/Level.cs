@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Framework.Scripts.Constants;
-using Framework.Scripts.Manager;
+using Framework.Scripts.Level.LevelItem;
+using Framework.Scripts.Utils;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEditor;
@@ -13,6 +13,7 @@ namespace Framework.Scripts.Level
 {
     public class Level
     {
+        [ReadOnly] public string LevelName;
         [ReadOnly] public LevelType LevelType = LevelType.ludi;
         [OnValueChanged("ChangeSize")] public int Width = 4;
         [OnValueChanged("ChangeSize")] public int Height = 4;
@@ -21,7 +22,7 @@ namespace Framework.Scripts.Level
         // public float yOffset = .0f;
         // public float scale = 0.2f;
         
-        public Dictionary<LevelItemType, int> ItemWidget = new Dictionary<LevelItemType, int>();
+        // public Dictionary<LevelItemType, int> ItemWidget = new Dictionary<LevelItemType, int>();
 
 
         public bool showTable = false;
@@ -48,13 +49,13 @@ namespace Framework.Scripts.Level
         public Level()
         {
             SetSize();
-            SetLevelMap();
+            SetLevelWall();
         }
 
         public void ChangeSize(int tmp)
         {
             LevelMap = new LevelItemType[Width, Height];
-            SetLevelMap();
+            SetLevelWall();
         }
 
         public void SetSize(int width = 4, int height = 4)
@@ -66,7 +67,7 @@ namespace Framework.Scripts.Level
             // xOffset = Random.Range(0, 5f);
             // yOffset = Random.Range(0, 5f);
             LevelMap = new LevelItemType[Width, Height];
-            SetLevelMap();
+            SetLevelWall();
             LevelItem = new Dictionary<LevelItemType, List<Sprite>>();
             foreach (LevelItemType value in Enum.GetValues(typeof(LevelItemType)))
             {
@@ -75,7 +76,7 @@ namespace Framework.Scripts.Level
             }
         }
 
-        public void SetLevelMap()
+        public void SetLevelWall()
         {
             // 设置墙体
             for (int i = 0; i < LevelMap.GetLength(0); i++)
@@ -92,20 +93,20 @@ namespace Framework.Scripts.Level
 
             // 柏林噪声 随机生成关卡内容
             // CreatePerlinNoiseMap(0f);
-            SetLevelRoad();
+            // SetLevelRoad();
         }
 
-        public void SetLevelRoad()
-        {
-            if(ItemWidget.Count == 0) return;
-            for (int i = 1; i < Width - 1; i++)
-            {
-                for (int j = 1; j < Height - 1; j++)
-                {
-                    LevelMap[i, j] = RandomHelper.GetWidgetRandom(ItemWidget);
-                }
-            }
-        }
+        // public void SetLevelRoad()
+        // {
+        //     if(ItemWidget.Count == 0) return;
+        //     for (int i = 1; i < Width - 1; i++)
+        //     {
+        //         for (int j = 1; j < Height - 1; j++)
+        //         {
+        //             LevelMap[i, j] = RandomHelper.GetWidgetRandom(ItemWidget);
+        //         }
+        //     }
+        // }
 
         // 柏林噪声，效果不合适
         // public void CreatePerlinNoiseMap(float tmp)
@@ -123,15 +124,16 @@ namespace Framework.Scripts.Level
 
         public async Task GenerateLevelValueFromJson(LeveljsonClass data)
         {
-            SetSize(data.Width, data.Height);
-            Enum.TryParse(data.LevelType, out LevelType);
-            ItemWidget.Clear();
-            foreach (KeyValuePair<string,int> valuePair in data.WidgetDictionary)
-            {
-                LevelItemType tmpType;
-                Enum.TryParse(valuePair.Key, out tmpType);
-                ItemWidget.Add(tmpType, valuePair.Value);
-            }
+            // SetSize(data.Width, data.Height);
+            LevelType = data.LevelType;
+            // Enum.TryParse(data.LevelType, out LevelType);
+            // ItemWidget.Clear();
+            // foreach (KeyValuePair<string,int> valuePair in data.WidgetDictionary)
+            // {
+                // LevelItemType tmpType;
+                // Enum.TryParse(valuePair.Key, out tmpType);
+                // ItemWidget.Add(tmpType, valuePair.Value);
+            // }
             
             foreach (string data1 in data.RoadList)
             {
@@ -204,5 +206,29 @@ namespace Framework.Scripts.Level
             return value;
         }
 #endif
+        public LevelType GetLevelType()
+        {
+            return LevelType;
+        }
+        
+        public async Task<Level> GetLevel(LevelType levelType = LevelType.ludi)
+        {
+            Level level = new Level();
+            await level.GenerateLevelValueFromJson(await GetLeveljsonClass(levelType));
+            return level;
+        }
+
+        public async Task<LeveljsonClass> GetLeveljsonClass(LevelType levelType = LevelType.ludi)
+        {
+            LeveljsonClass tmpLeveljsonClass = new LeveljsonClass();
+            List<LeveljsonClass> leveljsonClasses = await JsonHelper.JsonReader<List<LeveljsonClass>>(Constants.Constants.LevelJson);
+            foreach (LeveljsonClass leveljsonClass in leveljsonClasses)
+            {
+                if (leveljsonClass.LevelType != levelType) continue;
+                tmpLeveljsonClass = leveljsonClass;
+            }
+
+            return tmpLeveljsonClass;
+        }
     }
 }
