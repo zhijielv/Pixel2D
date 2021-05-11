@@ -61,7 +61,7 @@ namespace Editor.Tools
         [MenuItem("Assets/FrameWork View/Add All View To Addressables Groups", false, -2)]
         public static void Add2AddressablesGroups()
         {
-            GlobalConfig<UiScriptableObjectsManager>.Instance.GetAllViewPrefab();
+            GlobalConfig<UiScriptableObjectsManager>.Instance.ResetAllViewPrefab();
             List<Object> list =
                 GlobalConfig<UiScriptableObjectsManager>.Instance.UIPrefabs.ToList();
             Add2AddressablesGroupsByName(list, "UIAssets");

@@ -67,6 +67,7 @@ namespace Editor.Tools
             GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode = true;
             GlobalConfig<UiScriptableObjectsManager>.Instance.UIPrefabs = views;
             GenerateObjList(views);
+            AutoGenerateEnd();
             AddressableAssetsTool.Add2AddressablesGroups();
         }
 
@@ -116,9 +117,13 @@ namespace Editor.Tools
 
         private static List<string> GetScriptableObjectWidgetList(string name, GameObject obj)
         {
+            string path = Constants.ScriptableObjectDir + name + ".asset";
             PanelScriptableObjectBase asset =
                 ScriptableObject.CreateInstance(name + "_ScriptableObject") as PanelScriptableObjectBase;
-            AssetDatabase.CreateAsset(asset, Constants.ScriptableObjectDir + name + ".asset");
+            if (File.Exists(path))
+                AssetDatabase.DeleteAsset(path);
+
+            AssetDatabase.CreateAsset(asset, path);
             AssetDatabase.SaveAssets();
             asset.panelObj = obj;
             asset.ResetWidgets();
@@ -196,7 +201,7 @@ namespace Editor.Tools
             unit.Namespaces.Add(enumNamespace);
             ExportCSharpFile(unit, className, ViewScriptType.Module);
         }
-        
+
         private static void GenerateViewMember(string className, List<string> tmpMember)
         {
             CodeCompileUnit unit = new CodeCompileUnit();
@@ -342,8 +347,8 @@ namespace Editor.Tools
         private static void AutoGenerateEnd()
         {
             if (!GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode) return;
-            // Object[] viewPrefabs = GetAllViewPrefab().ToArray();
-            GlobalConfig<UiScriptableObjectsManager>.Instance.ResetAllViewObjOverview();
+            GlobalConfig<UiScriptableObjectsManager>.Instance.ResetAllViewPrefab();
+            GlobalConfig<UiScriptableObjectsManager>.Instance.ResetAllViewSO();
             Object[] viewPrefabs = GlobalConfig<UiScriptableObjectsManager>.Instance.UIPrefabs;
             foreach (Object t in viewPrefabs)
             {
@@ -395,6 +400,7 @@ namespace Editor.Tools
             }
 
             GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode = false;
+            EditorUtility.SetDirty(GlobalConfig<UiScriptableObjectsManager>.Instance);
         }
 
         #endregion

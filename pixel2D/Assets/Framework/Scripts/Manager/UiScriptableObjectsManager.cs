@@ -11,7 +11,6 @@ namespace Framework.Scripts.Manager
 {
     [HideMonoScript]
     [SirenixGlobalConfig]
-    [GlobalConfig("Art/ScriptableObject/UIScriptableObjectManager")]
     public class UiScriptableObjectsManager : GlobalConfig<UiScriptableObjectsManager>
     {
         [ShowInInspector] [ReadOnly] [ListDrawerSettings(Expanded = true)]
@@ -23,8 +22,8 @@ namespace Framework.Scripts.Manager
 
         // 刷新列表
 #if UNITY_EDITOR
-        [Button(ButtonSizes.Medium), PropertyOrder(-1)]
-        public void ResetAllViewObjOverview()
+        [Button("获取所有SO", ButtonSizes.Medium), PropertyOrder(-1)]
+        public void ResetAllViewSO()
         {
             UiScriptableObjectsList = AssetDatabase.FindAssets("t:PanelScriptableObjectBase")
                 .Select(guid =>
@@ -32,7 +31,7 @@ namespace Framework.Scripts.Manager
                 .ToArray();
         }
         [Button("获取所有UI", ButtonSizes.Medium), PropertyOrder(-2)]
-        public void GetAllViewPrefab()
+        public void ResetAllViewPrefab()
         {
             string srcPath = Constants.Constants.ViewPrefabDir;
             List<Object> tmpObjList = new List<Object>();

@@ -22,7 +22,7 @@ namespace Framework.Scripts.UI.ScriptableObjects
         public void ResetWidgets()
         {
 #if UNITY_EDITOR
-            GlobalConfig<UiScriptableObjectsManager>.Instance.ResetAllViewObjOverview();
+            GlobalConfig<UiScriptableObjectsManager>.Instance.ResetAllViewSO();
 #endif
             RegistWidgets(panelObj.transform);
         }
