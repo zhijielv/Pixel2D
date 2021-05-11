@@ -1042,6 +1042,8 @@ MonoBehaviour:
   LoadLevel_Button: {fileID: 1697352259706913842}
   LoadAvatar_Button: {fileID: 5169993407072476060}
   Speed_InputField: {fileID: 7197555156887068070}
+  Player_View_ScriptableObject: {fileID: 11400000, guid: eca8510546a7ca5418ccd979d6f6180d,
+    type: 2}
 --- !u!1 &2248904265564644153
 GameObject:
   m_ObjectHideFlags: 0

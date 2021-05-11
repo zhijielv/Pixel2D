@@ -543,5 +543,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 0}
+  RedDot: {fileID: 0}
+  RedDot2: {fileID: 0}
   Test_Button: {fileID: 2463760295995541253}
   Test3_Button: {fileID: 3727046483422178613}
+  Test_View_ScriptableObject: {fileID: 11400000, guid: 1c07b07004a666e439813c2fbcd844e4,
+    type: 2}
