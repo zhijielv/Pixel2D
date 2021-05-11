@@ -15,28 +15,28 @@ MonoBehaviour:
   m_GroupName: UIAssets
   m_Data:
     m_SerializedData: []
-  m_GUID: 9240a1d59a4ec1a4dbdc269a2b8012ce
+  m_GUID: 93882baf475d4274ca13531fe2f190d1
   m_SerializeEntries:
-  - m_GUID: 34ea16582ab73854bb70116ccebfaadc
-    m_Address: BiaoTi_View
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
-  - m_GUID: c429e501c6c20534a85c191ac733190b
+  - m_GUID: 41bae8e906e667a4b8f0abc983a2552c
     m_Address: Main_View
     m_ReadOnly: 0
     m_SerializedLabels: []
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
-  - m_GUID: eca8510546a7ca5418ccd979d6f6180d
-    m_Address: Player_View
+  - m_GUID: 0834b0a8b2a86cc4da9ac7720a5b177a
+    m_Address: Test_View
     m_ReadOnly: 0
     m_SerializedLabels: []
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
-  - m_GUID: 1c07b07004a666e439813c2fbcd844e4
-    m_Address: Test_View
+  - m_GUID: 83663e4edac1de74a83fcbb7dbc066b1
+    m_Address: BiaoTi_View
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: e4cfd5b8e90507846b853767bff1897f
+    m_Address: Player_View
     m_ReadOnly: 0
     m_SerializedLabels: []
     m_MainAsset: {fileID: 0}
