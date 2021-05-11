@@ -1,20 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Framework.Scripts.UI.ScriptableObjects;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace Framework.Scripts.Manager
 {
-    /// <summary>
-    /// todo 测试打包
-    /// 1. 设置view到address
-    /// 2. 仅设置此资源打包，加载view
-    /// </summary>
     [HideMonoScript]
     [SirenixGlobalConfig]
     [GlobalConfig("Art/ScriptableObject/UIScriptableObjectManager")]
@@ -25,7 +19,7 @@ namespace Framework.Scripts.Manager
 
         public bool isGenerateCode = false;
 
-        [ReadOnly] public Object[] selectViews;
+        [ReadOnly] public Object[] UIPrefabs;
 
         // 刷新列表
 #if UNITY_EDITOR
@@ -37,20 +31,50 @@ namespace Framework.Scripts.Manager
                     AssetDatabase.LoadAssetAtPath<PanelScriptableObjectBase>(AssetDatabase.GUIDToAssetPath(guid)))
                 .ToArray();
         }
-#endif
-
-
-        public GameObject GetUiViewObj(string viewName)
+        [Button("获取所有UI", ButtonSizes.Medium), PropertyOrder(-2)]
+        public void GetAllViewPrefab()
         {
-            foreach (PanelScriptableObjectBase objectBase in UiScriptableObjectsList)
+            string srcPath = Constants.Constants.ViewPrefabDir;
+            List<Object> tmpObjList = new List<Object>();
+            string tmpName = "";
+            foreach (string path in Directory.GetFiles(srcPath, "*.prefab", SearchOption.AllDirectories))
             {
-                if (objectBase.panelObj.name.Equals(viewName))
+                tmpName = path;
+                tmpName = Directory.Exists(path) ? Path.GetDirectoryName(path) : Path.GetFileNameWithoutExtension(path);
+                if (tmpName.EndsWith("_View"))
                 {
-                    return objectBase.panelObj;
+                    GameObject prefab = AssetDatabase.LoadAssetAtPath(path, typeof(System.Object)) as GameObject;
+                    tmpObjList.Add(prefab);
                 }
             }
 
+            UIPrefabs = tmpObjList.ToArray();
+        }
+#endif
+        public PanelScriptableObjectBase GetUiViewSo(string viewName)
+        {
+            foreach (PanelScriptableObjectBase objectBase in UiScriptableObjectsList)
+            {
+                if (objectBase.name.Equals(viewName))
+                {
+                    return objectBase;
+                }
+            }
+            
             Debug.LogError("has not ViewSO");
+            return null;
+        }
+        public GameObject GetUiViewObj(string viewName)
+        {
+            foreach (var uiPrefab in UIPrefabs)
+            {
+                if (uiPrefab.name.Equals(viewName))
+                {
+                    return (GameObject) uiPrefab;
+                }
+            }
+
+            Debug.LogError("has not ViewObj");
             return null;
         }
     }

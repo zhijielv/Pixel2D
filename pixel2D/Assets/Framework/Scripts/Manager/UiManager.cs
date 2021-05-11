@@ -4,11 +4,8 @@ using System.Threading.Tasks;
 using Framework.Scripts.Constants;
 using Framework.Scripts.Singleton;
 using Framework.Scripts.UI.Base;
-using Framework.Scripts.UI.ScriptableObjects;
 using Sirenix.OdinInspector;
-using Sirenix.Utilities;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace Framework.Scripts.Manager
 {

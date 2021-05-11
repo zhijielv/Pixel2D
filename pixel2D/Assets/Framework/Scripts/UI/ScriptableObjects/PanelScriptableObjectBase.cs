@@ -9,7 +9,7 @@ using Sirenix.Utilities;
 using UnityEditor;    
 #endif
 using UnityEngine;
-
+// 用来保存数据
 namespace Framework.Scripts.UI.ScriptableObjects
 {
     public class PanelScriptableObjectBase : SerializedScriptableObject

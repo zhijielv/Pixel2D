@@ -24,7 +24,7 @@ namespace Framework.Scripts.Manager
 
         public override async Task Init()
         {
-            levelMaps = JsonHelper.ReadOrCreateJson<LevelMap>(Constants.Constants.MapJson);
+            levelMaps = await JsonHelper.ReadOrCreateJson<LevelMap>(Constants.Constants.MapJson);
             leveljsonClasses = await JsonHelper.JsonReader<List<LeveljsonClass>>(Constants.Constants.LevelJson);
             transform.localScale =
                 new Vector3(Common.LevelManagerScale, Common.LevelManagerScale, Common.LevelManagerScale);

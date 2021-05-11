@@ -4,7 +4,6 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Text;
 using DG.DemiEditor;
 using Framework.Scripts.Constants;
 using Framework.Scripts.Manager;
@@ -18,6 +17,12 @@ using Object = UnityEngine.Object;
 namespace Editor.Tools
 {
 #if UNITY_EDITOR
+    /// <summary>
+    /// MVC模式
+    /// View -> C
+    /// ViewMember -> V
+    /// ScriptableObject -> M
+    /// </summary>
     public enum ViewScriptType
     {
         View,
@@ -28,12 +33,14 @@ namespace Editor.Tools
 
     public static class BuildCSharpClass
     {
+        #region MenuItem
+
         [MenuItem("Assets/FrameWork View/Set View Value", false, -1)]
         public static void SetViewObj()
         {
             Object[] views = Selection.GetFiltered(typeof(Object), SelectionMode.Assets);
             GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode = true;
-            GlobalConfig<UiScriptableObjectsManager>.Instance.selectViews = views;
+            GlobalConfig<UiScriptableObjectsManager>.Instance.UIPrefabs = views;
             AutoGenerateEnd();
         }
 
@@ -43,9 +50,7 @@ namespace Editor.Tools
         [MenuItem("Assets/FrameWork View/Generate All View %G", false, -2)]
         public static void GenerateAllUiScriptObject()
         {
-            GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode = true;
-            GenerateObjList(GetAllViewPrefab().ToArray());
-            AddressableAssetsTool.Add2AddressablesGroups();
+            GenerateAndSave(GetAllViewPrefab().ToArray());
         }
 
         /// <summary>
@@ -54,11 +59,18 @@ namespace Editor.Tools
         [MenuItem("Assets/FrameWork View/Generate Select View", false)]
         public static void GenerateUiScriptObject()
         {
-            Object[] views = Selection.GetFiltered(typeof(Object), SelectionMode.Assets);
-            GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode = true;
-            GlobalConfig<UiScriptableObjectsManager>.Instance.selectViews = views;
-            GenerateObjList(views);
+            GenerateAndSave(Selection.GetFiltered(typeof(Object), SelectionMode.Assets));
         }
+
+        private static void GenerateAndSave(Object[] views)
+        {
+            GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode = true;
+            GlobalConfig<UiScriptableObjectsManager>.Instance.UIPrefabs = views;
+            GenerateObjList(views);
+            AddressableAssetsTool.Add2AddressablesGroups();
+        }
+
+        #endregion
 
         private static void GenerateObjList(Object[] views)
         {
@@ -104,7 +116,8 @@ namespace Editor.Tools
 
         private static List<string> GetScriptableObjectWidgetList(string name, GameObject obj)
         {
-            PanelScriptableObjectBase asset = ScriptableObject.CreateInstance<PanelScriptableObjectBase>();
+            PanelScriptableObjectBase asset =
+                ScriptableObject.CreateInstance(name + "_ScriptableObject") as PanelScriptableObjectBase;
             AssetDatabase.CreateAsset(asset, Constants.ScriptableObjectDir + name + ".asset");
             AssetDatabase.SaveAssets();
             asset.panelObj = obj;
@@ -183,7 +196,7 @@ namespace Editor.Tools
             unit.Namespaces.Add(enumNamespace);
             ExportCSharpFile(unit, className, ViewScriptType.Module);
         }
-
+        
         private static void GenerateViewMember(string className, List<string> tmpMember)
         {
             CodeCompileUnit unit = new CodeCompileUnit();
@@ -197,6 +210,7 @@ namespace Editor.Tools
             };
             myClass.BaseTypes.Add("ViewBase");
 
+            // 添加member
             for (int i = 0; i < tmpMember.Count; i++)
             {
                 Type type = Constants.GetWidgetTypeByName(tmpMember[i]);
@@ -216,6 +230,13 @@ namespace Editor.Tools
                 member.Attributes = MemberAttributes.Public;
                 myClass.Members.Add(member);
             }
+
+            // so
+            Type soType = AssemblyUtilities.GetTypeByCachedFullName(
+                "Framework.Scripts.UI.View." + className + "_ScriptableObject");
+            CodeTypeMember so = new CodeMemberField(soType, className + "_ScriptableObject");
+            so.Attributes = MemberAttributes.Public;
+            myClass.Members.Add(so);
 
 ///////////////////////////////////////////////////////////////////////////////////////////
             // 添加override方法
@@ -250,13 +271,13 @@ namespace Editor.Tools
             unit.Namespaces.Add(myNamespace);
             ExportCSharpFile(unit, className, ViewScriptType.ViewMember);
         }
-        
+
         private static void GenerateViewClass(string className)
         {
             // 判断代码是否存在，存在则只修改成员变量
             string outputFile = Application.dataPath + Constants.ViewScriptDir + className + "/" + className + ".cs";
             if (File.Exists(outputFile)) return;
-            
+
             CodeCompileUnit unit = new CodeCompileUnit();
             CodeNamespace myNamespace = new CodeNamespace("Framework.Scripts.UI.View");
             myNamespace.Imports.Add(new CodeNamespaceImport("Base"));
@@ -299,9 +320,9 @@ namespace Editor.Tools
                 case ViewScriptType.ViewMember:
                     fileName = className + "_Member.cs";
                     break;
-                case ViewScriptType.ScriptableObject:
-                    fileName = className + "_ScriptableObject.cs";
-                    break;
+                // case ViewScriptType.ScriptableObject:
+                // fileName = className + "_ScriptableObject.cs";
+                // break;
             }
 
             //保存
@@ -322,7 +343,8 @@ namespace Editor.Tools
         {
             if (!GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode) return;
             // Object[] viewPrefabs = GetAllViewPrefab().ToArray();
-            Object[] viewPrefabs = GlobalConfig<UiScriptableObjectsManager>.Instance.selectViews;
+            GlobalConfig<UiScriptableObjectsManager>.Instance.ResetAllViewObjOverview();
+            Object[] viewPrefabs = GlobalConfig<UiScriptableObjectsManager>.Instance.UIPrefabs;
             foreach (Object t in viewPrefabs)
             {
                 // 添加脚本
@@ -339,8 +361,18 @@ namespace Editor.Tools
                 // 反射赋值
                 FieldInfo[] fieldInfos = viewType
                     .GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
-                foreach (FieldInfo fieldInfo in fieldInfos)
+
+                // 赋值 view 组件
+                foreach (var fieldInfo in fieldInfos)
                 {
+                    if (fieldInfo.Name.Contains("_ScriptableObject"))
+                    {
+                        // 赋值 view 的 so
+                        fieldInfo.SetValue(tmpView.GetComponent<ViewBase>(),
+                            GlobalConfig<UiScriptableObjectsManager>.Instance.GetUiViewSo(tmpView.name));
+                        continue;
+                    }
+
                     Type widgetType = Constants.GetWidgetTypeByName(fieldInfo.Name);
                     UiWidgetBase[] children = tmpView.transform.GetComponentsInChildren<UiWidgetBase>();
 

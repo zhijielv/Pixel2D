@@ -42,7 +42,7 @@ namespace Framework.Scripts.Level
         {
             imagePrefab = await Addressables.LoadAssetAsync<GameObject>(Constants.Constants.ObjectUnit).Task;
             mapRoot = transform;
-            _levelMaps = JsonHelper.ReadOrCreateJson<LevelMap>(Constants.Constants.MapJson);
+            _levelMaps = await JsonHelper.ReadOrCreateJson<LevelMap>(Constants.Constants.MapJson);
         }
         
         [Button("加载关卡", ButtonSizes.Large)]

@@ -18,7 +18,6 @@ using UnityEditor.AddressableAssets.Settings;
 using UnityEditor.AddressableAssets.Settings.GroupSchemas;
 using UnityEditor.Build.Utilities;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using Object = UnityEngine.Object;
 
 namespace Editor.Tools
@@ -62,12 +61,14 @@ namespace Editor.Tools
         [MenuItem("Assets/FrameWork View/Add All View To Addressables Groups", false, -2)]
         public static void Add2AddressablesGroups()
         {
-            GlobalConfig<UiScriptableObjectsManager>.Instance.ResetAllViewObjOverview();
-            List<PanelScriptableObjectBase> list =
-                GlobalConfig<UiScriptableObjectsManager>.Instance.UiScriptableObjectsList.ToList();
+            GlobalConfig<UiScriptableObjectsManager>.Instance.GetAllViewPrefab();
+            List<Object> list =
+                GlobalConfig<UiScriptableObjectsManager>.Instance.UIPrefabs.ToList();
             Add2AddressablesGroupsByName(list, "UIAssets");
 
-            List<GameObject> viewObjects = list.Select(objectBase => objectBase.panelObj).ToList();
+            List<PanelScriptableObjectBase> viewObjects = AssetDatabase.FindAssets("t:PanelScriptableObjectBase")
+                .Select(guid =>
+                    AssetDatabase.LoadAssetAtPath<PanelScriptableObjectBase>(AssetDatabase.GUIDToAssetPath(guid))).ToList();
             Add2AddressablesGroupsByName(viewObjects, "UIView");
         }
 

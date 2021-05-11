@@ -21,6 +21,7 @@ namespace Framework.Scripts.UI.View
         public UnityEngine.UI.Button LoadLevel_Button;
         public UnityEngine.UI.Button LoadAvatar_Button;
         public UnityEngine.UI.InputField Speed_InputField;
+        public Framework.Scripts.UI.View.Player_View_ScriptableObject Player_View_ScriptableObject;
         // member end
         internal override object GetWidget(string widgetName)
         {

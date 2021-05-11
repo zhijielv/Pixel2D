@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Framework.Scripts.Level.LevelItem;
+using Framework.Scripts.Manager;
 using Framework.Scripts.Utils;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;

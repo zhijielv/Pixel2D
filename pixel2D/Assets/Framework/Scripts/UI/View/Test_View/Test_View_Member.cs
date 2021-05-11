@@ -19,6 +19,7 @@ namespace Framework.Scripts.UI.View
         // member
         public UnityEngine.UI.Button Test_Button;
         public UnityEngine.UI.Button Test3_Button;
+        public Framework.Scripts.UI.View.Test_View_ScriptableObject Test_View_ScriptableObject;
         // member end
         internal override object GetWidget(string widgetName)
         {
