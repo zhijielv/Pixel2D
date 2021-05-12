@@ -117,7 +117,7 @@ namespace Editor.Tools
 
         private static List<string> GetScriptableObjectWidgetList(string name, GameObject obj)
         {
-            string path = Constants.ScriptableObjectDir + name + ".asset";
+            string path = Constants.ScriptableObjectDir + name + "_Asset.asset";
             PanelScriptableObjectBase asset =
                 ScriptableObject.CreateInstance(name + "_ScriptableObject") as PanelScriptableObjectBase;
             if (File.Exists(path))
@@ -374,7 +374,7 @@ namespace Editor.Tools
                     {
                         // 赋值 view 的 so
                         fieldInfo.SetValue(tmpView.GetComponent<ViewBase>(),
-                            GlobalConfig<UiScriptableObjectsManager>.Instance.GetUiViewSo(tmpView.name));
+                            GlobalConfig<UiScriptableObjectsManager>.Instance.GetUiViewSo(tmpView.name + "_Asset"));
                         continue;
                     }
 

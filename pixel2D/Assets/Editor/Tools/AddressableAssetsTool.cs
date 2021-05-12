@@ -64,12 +64,12 @@ namespace Editor.Tools
             GlobalConfig<UiScriptableObjectsManager>.Instance.ResetAllViewPrefab();
             List<Object> list =
                 GlobalConfig<UiScriptableObjectsManager>.Instance.UIPrefabs.ToList();
-            Add2AddressablesGroupsByName(list, "UIAssets");
+            Add2AddressablesGroupsByName(list, "UIView");
 
             List<PanelScriptableObjectBase> viewObjects = AssetDatabase.FindAssets("t:PanelScriptableObjectBase")
                 .Select(guid =>
                     AssetDatabase.LoadAssetAtPath<PanelScriptableObjectBase>(AssetDatabase.GUIDToAssetPath(guid))).ToList();
-            Add2AddressablesGroupsByName(viewObjects, "UIView");
+            Add2AddressablesGroupsByName(viewObjects, "UIAssets");
         }
 
         public static void Add2AddressablesGroupsByName<T>(List<T> srcList, string addressablesGropsName)
