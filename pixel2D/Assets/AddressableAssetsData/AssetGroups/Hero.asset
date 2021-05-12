@@ -16,13 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: a2adee3b67c65644298914673281adb4
-  m_SerializeEntries:
-  - m_GUID: 97a30a064187c6b4b9a4e8776addcf1f
-    m_Address: Avatar
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    m_MainAsset: {fileID: 102900000, guid: 97a30a064187c6b4b9a4e8776addcf1f, type: 3}
-    m_TargetAsset: {fileID: 102900000, guid: 97a30a064187c6b4b9a4e8776addcf1f, type: 3}
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cc1ef71ad71ad124cac3229a7e1dd5ba, type: 2}
   m_SchemaSet:
