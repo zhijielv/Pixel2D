@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Cinemachine;
 using Framework.Scripts.Level;
 using Framework.Scripts.Singleton;
+using Rewired;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -22,6 +23,8 @@ namespace Framework.Scripts.Manager
         public GameObject playerVCamera;
         public GameObject vCameraCollider;
         public GameObject targetGroup;
+        
+        private GameObject mouseTarget;
 
         private List<GameObject> _targetList;
         private const string _followPlayerVCam = "FollowPlayerVCam";
@@ -37,8 +40,9 @@ namespace Framework.Scripts.Manager
                 mainCamera.AddComponent<AudioListener>();
                 mainCamera.AddComponent<UniversalAdditionalCameraData>();
             }
+
             mainCamera.transform.SetParent(transform);
-            
+
             _targetList = new List<GameObject>();
             targetGroup = new GameObject()
             {
@@ -51,8 +55,8 @@ namespace Framework.Scripts.Manager
 
         public async void CreatePlayerCamera()
         {
-            if(vCameraCollider != null) AddressableManager.Instance.ReleaseInstance(vCameraCollider);
-            if(playerVCamera != null) AddressableManager.Instance.ReleaseInstance(playerVCamera);
+            if (vCameraCollider != null) AddressableManager.Instance.ReleaseInstance(vCameraCollider);
+            if (playerVCamera != null) AddressableManager.Instance.ReleaseInstance(playerVCamera);
             // 设置相机边界
             // 获取Level长宽
             int width = LevelManager.Instance.levelLoaderObj.GetComponent<LevelLoader>().level.Width;
@@ -65,10 +69,14 @@ namespace Framework.Scripts.Manager
             Destroy(vCameraCollider.GetComponent<BoxCollider2D>());
             PolygonCollider2D polygonCollider2D = vCameraCollider.AddComponent<PolygonCollider2D>();
             Vector2[] points = new Vector2[4];
-            points[0] = new Vector2(0 - width * Constants.Common.TileSize, 0 + height * Constants.Common.TileSize) / 2.0f;
-            points[1] = new Vector2(0 - width * Constants.Common.TileSize, 0 - height * Constants.Common.TileSize) / 2.0f;
-            points[2] = new Vector2(0 + width * Constants.Common.TileSize, 0 - height * Constants.Common.TileSize) / 2.0f;
-            points[3] = new Vector2(0 + width * Constants.Common.TileSize, 0 + height * Constants.Common.TileSize) / 2.0f;
+            points[0] = new Vector2(0 - width * Constants.Common.TileSize, 0 + height * Constants.Common.TileSize) /
+                        2.0f;
+            points[1] = new Vector2(0 - width * Constants.Common.TileSize, 0 - height * Constants.Common.TileSize) /
+                        2.0f;
+            points[2] = new Vector2(0 + width * Constants.Common.TileSize, 0 - height * Constants.Common.TileSize) /
+                        2.0f;
+            points[3] = new Vector2(0 + width * Constants.Common.TileSize, 0 + height * Constants.Common.TileSize) /
+                        2.0f;
             polygonCollider2D.pathCount = 1;
             polygonCollider2D.SetPath(0, points);
             polygonCollider2D.isTrigger = true;
@@ -80,7 +88,7 @@ namespace Framework.Scripts.Manager
                 await AddressableManager.Instance.Instantiate(_followPlayerVCam, LevelManager.Instance.transform);
             playerVCamera.transform.SetParent(transform);
             playerVCamera.GetComponent<CinemachineConfiner2D>().m_BoundingShape2D = polygonCollider2D;
-            
+
             // 设置相机跟随
             CinemachineVirtualCamera cinemachineVirtualCamera = playerVCamera.GetComponent<CinemachineVirtualCamera>();
             cinemachineVirtualCamera.Follow = targetGroup.transform;
@@ -109,6 +117,36 @@ namespace Framework.Scripts.Manager
         public void RemoveTarget(GameObject target)
         {
             _targetList.Remove(target);
+        }
+
+        public async void CameraFollowMouse()
+        {
+            mouseTarget = await CreateMouseTarget();
+            mouseTarget.GetComponent<SpriteRenderer>().enabled = false;
+            RewiredInputEventManager.Instance.AddEvent(SetMouseTarget, UpdateLoopType.Update,
+                InputActionEventType.AxisActive, "MouseHorizontal");
+            RewiredInputEventManager.Instance.AddEvent(SetMouseTarget, UpdateLoopType.Update,
+                InputActionEventType.AxisActive, "MouseVertical");
+        }
+
+        private async void SetMouseTarget(InputActionEventData inputActionEventData)
+        {
+            // 镜头移动
+            
+            if (mouseTarget == null) return;
+            if (playerVCamera == null) return;
+            CinemachineFramingTransposer vcam =
+                playerVCamera
+                    .GetComponent<CinemachineVirtualCamera>()
+                    .GetCinemachineComponent<CinemachineFramingTransposer>();
+            float cameraDistance = vcam.m_CameraDistance;
+            Vector2 mouseScreenPosition = RewiredInputEventManager.Instance.player0.controllers.Mouse.screenPosition;
+            Vector3 point =
+                Camera.main.ScreenToWorldPoint(
+                    new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, cameraDistance));
+            point.z = 0;
+            mouseTarget.transform.position = point;
+            mouseTarget.GetComponent<SpriteRenderer>().sortingOrder = -1;
         }
 
         private void ResetTargetList()

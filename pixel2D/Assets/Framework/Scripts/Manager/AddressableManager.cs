@@ -1,7 +1,7 @@
 ﻿/*
 ** Created by fengling
 ** DateTime:    2021-04-25 11:36:57
-** Description:
+** Description: TODO 编写打包脚本
 */
 
 using Framework.Scripts.Singleton;
@@ -27,6 +27,7 @@ namespace Framework.Scripts.Manager
             await Addressables.InitializeAsync().Task;
             await Addressables.DownloadDependenciesAsync("preload").Task;
             _initialized = true;
+            await base.Init();
         }
 
         public async Task<T> LoadAsset<T>(object key) where T : Object

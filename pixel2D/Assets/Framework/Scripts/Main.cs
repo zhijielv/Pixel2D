@@ -4,8 +4,6 @@
 ** Description: 
 */
 
-using System;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Framework.Scripts.Constants;
 using Framework.Scripts.Manager;
@@ -32,11 +30,12 @@ public class Main : MonoBehaviour
         }
 
         await AddManager<AddressableManager>();
-        await AddManager<ObjectManager>();
-        await AddManager<EventManager>();
-        await AddManager<TimerManager>();
         await AddManager<UiManager>();
         await AddManager<Launcher>();
+        await AddManager<ObjectManager>();
+        await AddManager<RewiredInputEventManager>();
+        await AddManager<EventManager>();
+        await AddManager<TimerManager>();
         await CreateManager<CameraManager>();
         await CreateManager<LevelManager>();
     }

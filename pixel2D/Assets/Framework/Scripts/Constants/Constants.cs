@@ -73,8 +73,7 @@ namespace Framework.Scripts.Constants
             strBuffer.Append(oldStr.Substring(tail));
             return strBuffer.ToString();
         }
-        
-        
+
         // 单帧处理协程
         public static IEnumerator ToFixedCoroutine(IEnumerator enumerator)
         {

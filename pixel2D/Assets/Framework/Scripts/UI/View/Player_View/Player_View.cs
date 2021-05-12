@@ -49,42 +49,20 @@ namespace Framework.Scripts.UI.View
             player = ReInput.players.GetPlayer(0);
             mouseTarget = await CameraManager.Instance.CreateMouseTarget();
             mouseTarget.GetComponent<SpriteRenderer>().color = Color.clear;
-            // Subscribe to input events
-            AddInputEventDelegate(TestX, UpdateLoopType.Update, InputActionEventType.AxisActive, "MoveX");
-            // AddInputEventDelegate(TestX, UpdateLoopType.Update, InputActionEventType.AxisInactive, "MoveX");
-            // AddInputEventDelegate(TestY, UpdateLoopType.Update, InputActionEventType.AxisActive, "MoveY");
-            // AddInputEventDelegate(TestY, UpdateLoopType.Update, InputActionEventType.AxisInactive, "MoveY");
-            
-            // Rewired按钮，获取Action为Fire，按下和释放的回调；
-            AddInputEventDelegate(TestButton, UpdateLoopType.Update, InputActionEventType.ButtonJustPressed, "Fire");
-            // AddInputEventDelegate(TestButton, UpdateLoopType.Update, InputActionEventType.ButtonJustReleased, "Fire");
-            AddInputEventDelegate(TestWheel, UpdateLoopType.Update, InputActionEventType.AxisActive, "Wheel");
-            AddInputEventDelegate(TestTarget, UpdateLoopType.Update, InputActionEventType.AxisActive, "MouseHorizontal");
-            AddInputEventDelegate(TestTarget, UpdateLoopType.Update, InputActionEventType.AxisActive, "MouseVertical");
-            // 右键地面寻路功能
-            // AddInputEventDelegate(TestAStar, UpdateLoopType.Update, InputActionEventType.ButtonJustPressed, "MoveToClick");
 
+            // Rewired
+            // 按钮，获取Action为Fire，按下和释放的回调；
+            AddInputEventDelegate(TestWheel, UpdateLoopType.Update, InputActionEventType.AxisActive, "Wheel");
+
+            // EventManager
             // TestListenerFunc方法监听EventConstants.StartGame事件
             AddEventListener(EventConstants.StartGame, TestListenerFunc);
             
+            // UIEvent
             // 自己拼的ui，监听事件
             AddButtonClickEvent(LoadLevel_Button, LoadLevel);
             AddButtonClickEvent(LoadAvatar_Button, LoadAvatar);
             AddButtonClickEvent(SetSpeed_Button, SetSpeed);
-        }
-
-        // 右键点击地面寻路
-        public void TestAStar(InputActionEventData data)
-        {
-            if(!LevelManager.Instance.isLevelLoaded) return;
-            if(!player.controllers.hasMouse) return;
-            Seeker seeker = ObjectManager.Instance.mainPlayer.GetComponent<Seeker>();
-            AILerp aiLerp = ObjectManager.Instance.mainPlayer.GetComponent<AILerp>();
-            aiLerp.enabled = true;
-            Vector2 mouseScreenPosition = player.controllers.Mouse.screenPosition;
-            Vector3 worldPoint = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, 0));
-            Vector3 targetPosition = new Vector3(worldPoint.x, worldPoint.y, seeker.transform.position.z);
-            seeker.StartPath(seeker.transform.position, targetPosition);
         }
         
         private void TestListenerFunc(EventData data)
@@ -97,42 +75,12 @@ namespace Framework.Scripts.UI.View
             Disable();
         }
 
-        public void TestX(InputActionEventData data)
-        {
-            if(ObjectManager.Instance.mainPlayer == null) return;
-            float direction = data.GetAxis() > 0 ? 1 : -1;
-            ObjectManager.Instance.mainPlayer.transform.localScale = new Vector3(direction, 1, 1);
-        }
-
         public void TestY(InputActionEventData data)
         {
             if(ObjectManager.Instance.mainPlayer == null) return;
             ObjectManager.Instance.mainPlayer.transform.GetComponent<Transform>().DOBlendableMoveBy(Vector3.up * data.GetAxis() / 100 * speed, 0.1f);
         }
 
-        public void TestButton(InputActionEventData data)
-        {
-            Debug.Log($"Button Fire!  {data.GetButton()}");
-            // EventManager.Instance.DispatchEvent(EventConstants.StartGame);
-        }
-
-        public void TestTarget(InputActionEventData inputActionEventData)
-        {
-            if (player == null) return;
-            if (mouseTarget == null) return;
-            if(CameraManager.Instance.playerVCamera == null) return;
-            CinemachineFramingTransposer vcam =
-                CameraManager.Instance.playerVCamera
-                    .GetComponent<CinemachineVirtualCamera>()
-                    .GetCinemachineComponent<CinemachineFramingTransposer>();
-            float cameraDistance = vcam.m_CameraDistance;
-            Vector2 mouseScreenPosition = player.controllers.Mouse.screenPosition;
-            Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, cameraDistance));
-            point.z = 0;
-            mouseTarget.transform.position = point;
-            mouseTarget.GetComponent<SpriteRenderer>().sortingOrder = 2;
-        }
-        
         // todo 移动端 双指缩放视野
         // 鼠标滑轮缩放视野
         public void TestWheel(InputActionEventData data)

@@ -22,6 +22,7 @@ namespace Framework.Scripts.Singleton
 
         public virtual async Task Init()
         {
+            Debug.Log("*********** Start " + GetType().Name);
         }
     }
 }

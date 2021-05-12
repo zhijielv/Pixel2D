@@ -1,20 +1,22 @@
 ﻿/*
 ** Created by fengling
 ** DateTime:    2021-04-28 17:10:19
-** Description: TODO 
+** Description: TODO 对象池
 */
 
+using System;
 using System.Threading.Tasks;
+using Framework.Scripts.PlayerControl;
 using Framework.Scripts.Singleton;
 using Pathfinding;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Framework.Scripts.Manager
 {
     public class ObjectManager : ManagerSingleton<ObjectManager>
     {
         public GameObject mainPlayer;
+        public static readonly string AnimatorPath = "Sprite/Hero/{0}/{0}_anim/{0}.controller";
 
         // 加载通过2DUnit，自带Collider2D和SpritRender
         public async Task<GameObject> LoadUnit(object key = null, Transform parent = null, bool instantiate = false)
@@ -47,16 +49,19 @@ namespace Framework.Scripts.Manager
         }
 
         // 创建玩家控制角色
-        public async Task<GameObject> LoadPlayerAvatar(string key = null, Transform parent = null)
+        public async Task LoadPlayerAvatar(string key = null, Transform parent = null)
         {
             if (!LevelManager.Instance.isLevelLoaded)
             {
                 Debug.LogError("Level is not load!");
-                return null;
+                return;
             }
 
-            key = "Avatar/" + key + "/" + key + ".prefab";
-            GameObject unit = await AddressableManager.Instance.Instantiate(key, parent);
+            string path = String.Format(AnimatorPath, key);
+            GameObject unit = await AddressableManager.Instance.Instantiate("AvatarUnit", parent);
+            unit.GetComponent<Animator>().runtimeAnimatorController =
+                await AddressableManager.Instance.LoadAsset<RuntimeAnimatorController>(path);
+            unit.name = key ?? "Avatar";
             // 设置层级
             SpriteRenderer spriteRenderer = unit.GetComponent<SpriteRenderer>();
             spriteRenderer.sortingOrder = 1;
@@ -68,7 +73,9 @@ namespace Framework.Scripts.Manager
             aiLerp.orientation = OrientationMode.YAxisForward;
             aiLerp.enableRotation = false;
             aiLerp.enabled = false;
-            return unit;
+            
+            // 添加控制器
+            Constants.Constants.AddOrGetComponent(unit, typeof(GamePlayerController));
         }
     }
 }

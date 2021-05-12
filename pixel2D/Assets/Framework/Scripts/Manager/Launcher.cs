@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Framework.Scripts.Constants;
 using Framework.Scripts.Singleton;
 using Framework.Scripts.UI.View;
@@ -12,16 +13,16 @@ namespace Framework.Scripts.Manager
     {
         private async void Start()
         {
-            if (!Common.Initialized)
-            {
-                await StartLauncher();
-                Common.Initialized = true;
-            }
+            if (Common.Initialized) return;
+            await FrameWorkInit();
+            StartLauncher();
+            Common.Initialized = true;
         }
 
-        private async Task StartLauncher()
+        // 项目初始化进入场景
+        private void StartLauncher()
         {
-            await FrameWorkInit();
+            Debug.Log("******************** start launcher ********************");
             UiManager.Instance.GetWidget<Player_View>();
         }
 

@@ -39,8 +39,7 @@ namespace Framework.Scripts.UI.Base
         #region EventHandler
 
         private readonly List<EventItem> _eventItems = new List<EventItem>();
-
-        private readonly List<Action<InputActionEventData>> _inputEventDelegateActions =
+        private readonly List<Action<InputActionEventData>> _viewEvents =
             new List<Action<InputActionEventData>>();
 
         protected void AddEventListener(EventConstants type, DelegateEvent.EventHandler listenerFunc)
@@ -54,11 +53,8 @@ namespace Framework.Scripts.UI.Base
             InputActionEventType eventType,
             string actionName)
         {
-            if (!ReInput.isReady) return;
-            Player player = ReInput.players.GetPlayer(0);
-            if (player == null) return;
-            _inputEventDelegateActions.Add(callback);
-            player.AddInputEventDelegate(callback, updateLoop, eventType, actionName);
+            _viewEvents.Add(callback);
+            RewiredInputEventManager.Instance.AddEvent(callback, updateLoop, eventType, actionName);
         }
 
         protected void Disable()
@@ -66,10 +62,11 @@ namespace Framework.Scripts.UI.Base
             foreach (EventItem eventItem in _eventItems)
                 EventManager.Instance.RemoveEventListener(eventItem.EventType, eventItem.ListenerFunc);
 
-            if (!ReInput.isReady) return;
-            Player player = ReInput.players.GetPlayer(0);
-            foreach (Action<InputActionEventData> action in _inputEventDelegateActions)
-                player.RemoveInputEventDelegate(action);
+            foreach (Action<InputActionEventData> action in _viewEvents)
+            {
+                RewiredInputEventManager.Instance.RemoveEvent(action);
+            }
+            _viewEvents.Clear();
         }
 
         #endregion
