@@ -39,6 +39,8 @@ namespace Editor.LevelEditor
                 {"Map Tool", _mapTool},
                 {"Addressable Tool", _addressableAssetsTool},
             };
+            tree.AddAssetAtPath("UiScriptableObjectsManager",
+                "Assets/Plugins/Sirenix/Odin Inspector/Config/Resources/Sirenix/UiScriptableObjectsManager.asset");
             return tree;
         }
     }

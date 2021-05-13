@@ -380,7 +380,7 @@ namespace Editor.Tools
 
                     Type widgetType = Constants.GetWidgetTypeByName(fieldInfo.Name);
                     UiWidgetBase[] children = tmpView.transform.GetComponentsInChildren<UiWidgetBase>();
-
+                    
                     foreach (UiWidgetBase uiWidgetBase in children)
                     {
                         if (!uiWidgetBase.name.EndsWith(fieldInfo.Name)) continue;
