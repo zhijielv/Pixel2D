@@ -18,14 +18,14 @@ namespace Framework.Scripts.UI.View
     {
         // member
         public UnityEngine.UI.Image BG_Image;
-        public UnityEngine.GameObject Top_Panel;
+        public Framework.Scripts.UI.CustomUI.CustomPanel Top_CustomPanel;
         public UnityEngine.UI.Text LeftTop_Text;
         public UnityEngine.UI.Text CenterTop_Text;
         public UnityEngine.UI.Text RightTop_Text;
-        public UnityEngine.GameObject Center_Panel;
+        public Framework.Scripts.UI.CustomUI.CustomPanel Center_CustomPanel;
         public UnityEngine.UI.Text Center_Text;
         public UnityEngine.UI.Text CenterRight_Text;
-        public UnityEngine.GameObject Bottom_Panel;
+        public Framework.Scripts.UI.CustomUI.CustomPanel Bottom_CustomPanel;
         public Framework.Scripts.UI.View.Main_View_ScriptableObject Main_View_ScriptableObject;
         // member end
         internal override object GetWidget(string widgetName)

@@ -16,6 +16,7 @@ namespace Framework.Scripts.UI.View
     }
     public enum Player_View_Widget
     {
+        Rewired_TouchController,
         SetSpeed_Button,
         LoadLevel_Button,
         LoadAvatar_Button,

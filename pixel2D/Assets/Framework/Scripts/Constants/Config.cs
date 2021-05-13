@@ -7,11 +7,13 @@
         Button,
         Image,
         InputField,
-        ___UnityEngine_UI,
+        __UnityEngine_UI,
         TMPCustomScroll,
-        ___CustomView,
-        Panel,
-        ___GameObject,
+        CustomPanel,
+        __Framework_Scripts_UI_CustomUI,
+        TouchController,
+        __Rewired_ComponentControls,
+        __MaxValue,
     }
 
     // 不需要自动生成的类型

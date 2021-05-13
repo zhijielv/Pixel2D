@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Framework.Scripts.Constants;
 using Framework.Scripts.Manager;
 using Framework.Scripts.UI.Base;
+using Framework.Scripts.UI.CustomUI;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 #if UNITY_EDITOR
@@ -39,9 +40,12 @@ namespace Framework.Scripts.UI.ScriptableObjects
                     case UIConfig.Text:
                     case UIConfig.Button:
                     case UIConfig.Image:
-                    case UIConfig.Panel:
                     case UIConfig.InputField:
+                    case UIConfig.TouchController:
                         Constants.Constants.AddOrGetComponent(child.gameObject, typeof(UiWidgetBase));
+                        break;
+                    case UIConfig.CustomPanel:
+                        Constants.Constants.AddOrGetComponent(child.gameObject, typeof(CustomPanel));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

@@ -4,6 +4,7 @@ using Framework.Scripts.Constants;
 using Framework.Scripts.Singleton;
 using Framework.Scripts.UI.View;
 using Rewired;
+using Rewired.ComponentControls;
 using Rewired.Integration.UnityUI;
 using UnityEngine;
 
@@ -38,14 +39,14 @@ namespace Framework.Scripts.Manager
             }
 
             // 实例化Rewired Input Manager
-            GameObject rewiredInputManagerObj = GameObject.Find("Rewired Input Manager");
-            if (rewiredInputManagerObj == null)
+            // GameObject rewiredInputManagerObj = GameObject.Find("Rewired Input Manager");
+            if (Common.RewiredInputManager == null)
             {
-                rewiredInputManagerObj =
+                Common.RewiredInputManager =
                     await AddressableManager.Instance.Instantiate(Constants.Constants.RewiredInputManagerObj,
                         Common.FrameWorkObj.transform);
-                rewiredInputManagerObj.name =
-                    Constants.Constants.ReplaceString(rewiredInputManagerObj.name, "(Clone)", "");
+                Common.RewiredInputManager.name =
+                    Constants.Constants.ReplaceString(Common.RewiredInputManager.name, "(Clone)", "");
                 GameObject rewiredEventSystemGameObject = GameObject.Find("Rewired Event System");
                 // 创建Rewired Event System
                 if (rewiredEventSystemGameObject == null)
@@ -64,7 +65,7 @@ namespace Framework.Scripts.Manager
                 rewiredStandaloneInputModule.UseAllRewiredGamePlayers = true;
                 rewiredStandaloneInputModule.UseRewiredSystemPlayer = true;
                 rewiredStandaloneInputModule.RewiredInputManager =
-                    rewiredInputManagerObj.GetComponent<InputManager_Base>();
+                    Common.RewiredInputManager.GetComponent<InputManager_Base>();
             }
         }
     }

@@ -15,6 +15,7 @@ namespace Framework.Scripts.Constants
         
         ////////////////////////////////////////////  GameObject  ///////////////////////////////////////////////////////
         public static GameObject MainCanvas;
+        public static GameObject RewiredInputManager;
         public static GameObject FrameWorkObj;
     }
 }

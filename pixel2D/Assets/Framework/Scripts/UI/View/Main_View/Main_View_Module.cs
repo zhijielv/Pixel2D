@@ -13,17 +13,17 @@ namespace Framework.Scripts.UI.View
     
     public enum Main_View_Panel
     {
-        Top_Panel,
-        Center_Panel,
-        Bottom_Panel,
     }
     public enum Main_View_Widget
     {
         BG_Image,
+        Top_CustomPanel,
         LeftTop_Text,
         CenterTop_Text,
         RightTop_Text,
+        Center_CustomPanel,
         Center_Text,
         CenterRight_Text,
+        Bottom_CustomPanel,
     }
 }

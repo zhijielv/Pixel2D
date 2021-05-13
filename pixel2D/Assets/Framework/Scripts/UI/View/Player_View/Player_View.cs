@@ -38,7 +38,7 @@ namespace Framework.Scripts.UI.View
     
     public partial class Player_View : ViewBase
     {
-        public string HeroName = "";
+        public string HeroName = "c01";
         public float speed = 4f;
         public Player player;
 

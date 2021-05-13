@@ -17,6 +17,7 @@ namespace Framework.Scripts.UI.View
     public partial class Player_View : ViewBase
     {
         // member
+        public Rewired.ComponentControls.TouchController Rewired_TouchController;
         public UnityEngine.UI.Button SetSpeed_Button;
         public UnityEngine.UI.Button LoadLevel_Button;
         public UnityEngine.UI.Button LoadAvatar_Button;

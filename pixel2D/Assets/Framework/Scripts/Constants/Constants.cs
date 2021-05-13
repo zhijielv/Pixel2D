@@ -108,19 +108,25 @@ namespace Framework.Scripts.Constants
         {
             string[] tmpStrs = widgetName.Split(new[] {"_"}, StringSplitOptions.RemoveEmptyEntries);
             string typeName = tmpStrs[tmpStrs.Length - 1];
-
-            if (Enum.TryParse(typeName, true, out UIConfig tmpUiType) &&
-                !Enum.TryParse(typeName, true, out IgnoreUI ignoreUI))
+            Type byName = null;
+            if (!Enum.TryParse(typeName, true, out UIConfig tmpUiType) ||
+                Enum.TryParse(typeName, true, out IgnoreUI ignoreUI)) return null;
+            for (UIConfig i = tmpUiType; i < UIConfig.__MaxValue; i++)
             {
-                if (tmpUiType < UIConfig.___UnityEngine_UI)
-                    return AssemblyUtilities.GetTypeByCachedFullName("UnityEngine.UI." + typeName);
-                if (tmpUiType < UIConfig.___CustomView)
-                    return AssemblyUtilities.GetTypeByCachedFullName(CustomUiNameSpace + widgetName);
-                if (tmpUiType < UIConfig.___GameObject)
-                    return AssemblyUtilities.GetTypeByCachedFullName("UnityEngine.GameObject");
+                if (!i.ToString().StartsWith("__")) continue;
+                string[] tmpNameSpace = i.ToString().Split(new[] {"_"}, StringSplitOptions.RemoveEmptyEntries);
+                StringBuilder nameSpace = new StringBuilder();
+                foreach (var t in tmpNameSpace)
+                {
+                    nameSpace.Append(t);
+                    nameSpace.Append(".");
+                }
+
+                byName = AssemblyUtilities.GetTypeByCachedFullName(nameSpace + typeName);
+                break;
             }
 
-            return null;
+            return byName;
         }
 #endif
     }

@@ -30,6 +30,8 @@ namespace Framework.Scripts.Manager
             await base.Init();
         }
 
+        // todo 改为同步
+        // T o = Addressables.LoadAssetAsync<T>(key).WaitForCompletion();
         public async Task<T> LoadAsset<T>(object key) where T : Object
         {
             if (!_initialized)
@@ -39,7 +41,7 @@ namespace Framework.Scripts.Manager
 // #else
             T op = await Addressables.LoadAssetAsync<T>(key).Task;
 // #endif
-            
+
             if (op == null)
             {
                 var message = "Sync LoadAsset has null result " + key;
@@ -49,7 +51,8 @@ namespace Framework.Scripts.Manager
             return op;
         }
 
-        public async Task<GameObject> Instantiate(object key, Transform parent = null, bool instantiateInWorldSpace = false)
+        public async Task<GameObject> Instantiate(object key, Transform parent = null,
+            bool instantiateInWorldSpace = false)
         {
             if (!_initialized)
                 throw new Exception("AddressableManager has not initialized!");

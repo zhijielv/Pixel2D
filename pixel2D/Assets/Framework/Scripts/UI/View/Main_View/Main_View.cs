@@ -26,12 +26,12 @@ namespace Framework.Scripts.UI.View
     {
         private void Start()
         {
-            LeftTop_Text.text = "";
-            RightTop_Text.text = "";
-            BG_Image.SetNativeSize();
-            float scale = BG_Image.rectTransform.sizeDelta.x /
-                          Common.MainCanvas.GetComponent<CanvasScaler>().referenceResolution.x;
-            BG_Image.rectTransform.sizeDelta /= scale;
+            // LeftTop_Text.text = "";
+            // RightTop_Text.text = "";
+            // BG_Image.SetNativeSize();
+            // float scale = BG_Image.rectTransform.sizeDelta.x /
+                          // Common.MainCanvas.GetComponent<CanvasScaler>().referenceResolution.x;
+            // BG_Image.rectTransform.sizeDelta /= scale;
         }
 
         private void Update()
