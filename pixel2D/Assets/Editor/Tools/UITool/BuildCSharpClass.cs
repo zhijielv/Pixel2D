@@ -40,8 +40,8 @@ namespace Editor.Tools
         {
             Object[] views = Selection.GetFiltered(typeof(Object), SelectionMode.Assets);
             GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode = true;
-            GlobalConfig<UiScriptableObjectsManager>.Instance.UIPrefabs = views;
-            AutoGenerateEnd();
+            // AutoGenerateEnd();
+            ReflectSetValue(views);
         }
 
         /// <summary>
@@ -65,9 +65,8 @@ namespace Editor.Tools
         private static void GenerateAndSave(Object[] views)
         {
             GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode = true;
-            GlobalConfig<UiScriptableObjectsManager>.Instance.UIPrefabs = views;
             GenerateObjList(views);
-            AutoGenerateEnd();
+            ReflectSetValue(views);
             AddressableAssetsTool.Add2AddressablesGroups();
         }
 
@@ -75,7 +74,7 @@ namespace Editor.Tools
 
         private static void GenerateObjList(Object[] views)
         {
-            GenerateAllView();
+            GenerateAllView2ViewEnum();
             foreach (var t in views)
             {
                 if (!t.name.EndsWith("_View")) continue;
@@ -85,7 +84,10 @@ namespace Editor.Tools
                     GameObject tmpView = t as GameObject;
                     List<string> tmpMember = GetScriptableObjectWidgetList(t.name, tmpView);
                     AutoGeneratView(t.name, tmpMember);
+                    Debug.Log("*******************AutoGeneratView end");
                     // SetViewObj();
+                    ReflectSetValue(views);
+                    Debug.Log("@@@@@@@@@@@@@@@@@@@AutoGeneratView end");
                 }
                 catch (Exception e)
                 {
@@ -94,7 +96,7 @@ namespace Editor.Tools
                 }
             }
 
-            Debug.Log("Generate all View Prefab End");
+            Debug.Log("!!!!!!!!Generate all View Prefab Successful!!!!!!!");
         }
 
         private static List<Object> GetAllViewPrefab(string srcPath = null)
@@ -141,7 +143,8 @@ namespace Editor.Tools
             AssetDatabase.Refresh();
         }
 
-        private static void GenerateAllView()
+        // 保存所有的UI脚本到AllViewEnum的枚举里
+        private static void GenerateAllView2ViewEnum()
         {
             string allViewEnumName = "AllViewEnum";
             Object[] views = GetAllViewPrefab().ToArray();
@@ -313,31 +316,20 @@ namespace Editor.Tools
             else outputFile += "/";
             if (!Directory.Exists(outputFile))
                 Directory.CreateDirectory(outputFile);
-            string fileName = "tmpCSharpFile.cs";
-            switch (viewScriptType)
+            string fileName = viewScriptType switch
             {
-                case ViewScriptType.Module:
-                    fileName = className + "_Module.cs";
-                    break;
-                case ViewScriptType.View:
-                    fileName = className + ".cs";
-                    break;
-                case ViewScriptType.ViewMember:
-                    fileName = className + "_Member.cs";
-                    break;
-                // case ViewScriptType.ScriptableObject:
-                // fileName = className + "_ScriptableObject.cs";
-                // break;
-            }
+                ViewScriptType.Module => className + "_Module.cs",
+                ViewScriptType.View => className + ".cs",
+                ViewScriptType.ViewMember => className + "_Member.cs",
+                _ => "tmpCSharpFile.cs"
+            };
 
             //保存
-            using (StreamWriter sw = new StreamWriter(outputFile + fileName))
-            {
-                //为指定的代码文档对象模型(CodeDOM) 编译单元生成代码并将其发送到指定的文本编写器，使用指定的选项。(官方解释)
-                //将自定义代码编译器(代码内容)、和代码格式写入到sw中
-                provider.GenerateCodeFromCompileUnit(unit, sw, options);
-                provider.Dispose();
-            }
+            using StreamWriter sw = new StreamWriter(outputFile + fileName);
+            //为指定的代码文档对象模型(CodeDOM) 编译单元生成代码并将其发送到指定的文本编写器，使用指定的选项。(官方解释)
+            //将自定义代码编译器(代码内容)、和代码格式写入到sw中
+            provider.GenerateCodeFromCompileUnit(unit, sw, options);
+            provider.Dispose();
         }
 
         #region EndCompile
@@ -350,6 +342,11 @@ namespace Editor.Tools
             GlobalConfig<UiScriptableObjectsManager>.Instance.ResetAllViewPrefab();
             GlobalConfig<UiScriptableObjectsManager>.Instance.ResetAllViewSO();
             Object[] viewPrefabs = GlobalConfig<UiScriptableObjectsManager>.Instance.UIPrefabs;
+            ReflectSetValue(viewPrefabs);
+        }
+
+        private static void ReflectSetValue(Object[] viewPrefabs)
+        {
             foreach (Object t in viewPrefabs)
             {
                 // 添加脚本
