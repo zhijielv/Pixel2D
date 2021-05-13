@@ -1,4 +1,10 @@
-﻿using Editor.Tools;
+﻿/*
+** Created by fengling
+** DateTime:    2021-04-21 13:50:16
+** Description: 地图编辑器
+*/
+
+using Editor.Tools;
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities;
 using Sirenix.Utilities.Editor;
@@ -39,6 +45,8 @@ namespace Editor.LevelEditor
                 {"Map Tool", _mapTool},
                 {"Addressable Tool", _addressableAssetsTool},
             };
+            tree.AddAssetAtPath("UiBuilderSetting",
+                "Assets/Editor/Tools/UITool/UiBuilderSetting.asset");
             tree.AddAssetAtPath("UiScriptableObjectsManager",
                 "Assets/Plugins/Sirenix/Odin Inspector/Config/Resources/Sirenix/UiScriptableObjectsManager.asset");
             return tree;

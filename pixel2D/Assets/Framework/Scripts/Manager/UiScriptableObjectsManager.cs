@@ -13,12 +13,9 @@ namespace Framework.Scripts.Manager
     [SirenixGlobalConfig]
     public class UiScriptableObjectsManager : GlobalConfig<UiScriptableObjectsManager>
     {
-        [ShowInInspector] [ReadOnly] [ListDrawerSettings(Expanded = true)]
-        public PanelScriptableObjectBase[] UiScriptableObjectsList;
+        [ShowInInspector] [ReadOnly] public PanelScriptableObjectBase[] UiScriptableObjectsList;
 
-        public bool isGenerateCode = false;
-
-        [ReadOnly] public Object[] UIPrefabs;
+        [ShowInInspector] [ReadOnly] public Object[] UIPrefabs;
 
         // 刷新列表
 #if UNITY_EDITOR
@@ -30,6 +27,7 @@ namespace Framework.Scripts.Manager
                     AssetDatabase.LoadAssetAtPath<PanelScriptableObjectBase>(AssetDatabase.GUIDToAssetPath(guid)))
                 .ToArray();
         }
+
         [Button("获取所有UI", ButtonSizes.Medium), PropertyOrder(-2)]
         public void ResetAllViewPrefab()
         {
@@ -59,10 +57,11 @@ namespace Framework.Scripts.Manager
                     return objectBase;
                 }
             }
-            
+
             Debug.LogError("has not ViewSO");
             return null;
         }
+
         public GameObject GetUiViewObj(string viewName)
         {
             foreach (var uiPrefab in UIPrefabs)

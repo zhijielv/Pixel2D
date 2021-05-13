@@ -451,7 +451,7 @@ GameObject:
   - component: {fileID: 5112038183850463442}
   - component: {fileID: 8781402222104178897}
   - component: {fileID: -1623593028124384981}
-  - component: {fileID: -3289095042674651956}
+  - component: {fileID: 1710362486288228499}
   m_Layer: 5
   m_Name: Test_View
   m_TagString: Untagged
@@ -530,7 +530,7 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &-3289095042674651956
+--- !u!114 &1710362486288228499
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

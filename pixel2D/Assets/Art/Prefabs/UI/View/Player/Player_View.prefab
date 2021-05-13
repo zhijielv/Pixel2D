@@ -986,7 +986,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6002423789834117729}
   - component: {fileID: 1138012576128646553}
-  - component: {fileID: -8213605897164245410}
+  - component: {fileID: -5015767520827606321}
   m_Layer: 5
   m_Name: Player_View
   m_TagString: Untagged
@@ -1023,7 +1023,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1841351538076458365}
   m_CullTransparentMesh: 1
---- !u!114 &-8213605897164245410
+--- !u!114 &-5015767520827606321
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1037,7 +1037,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 0}
   HeroName: c01
-  speed: 5
+  speed: 4
+  Rewired_TouchController: {fileID: 52964616981315612}
   SetSpeed_Button: {fileID: 569722208016017590}
   LoadLevel_Button: {fileID: 1697352259706913842}
   LoadAvatar_Button: {fileID: 5169993407072476060}
@@ -1185,8 +1186,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6360670696526685480}
   - component: {fileID: 52964616981315612}
+  - component: {fileID: 7291723517975439759}
   m_Layer: 5
-  m_Name: Touch Controller
+  m_Name: Rewired_TouchController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1244,6 +1246,18 @@ MonoBehaviour:
     _destroyCustomController: 1
   _disableMouseInputWhenEnabled: 0
   _useCustomController: 1
+--- !u!114 &7291723517975439759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2508137811658040735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22c572def3774c32baf520451753fc0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2554361868834999889
 GameObject:
   m_ObjectHideFlags: 0
@@ -3068,7 +3082,7 @@ GameObject:
   - component: {fileID: 5169993407072476060}
   - component: {fileID: 4332355025436094144}
   - component: {fileID: 2339619193931101867}
-  - component: {fileID: 3518164025470900060}
+  - component: {fileID: 1339446756478250325}
   m_Layer: 5
   m_Name: LoadAvatar_Button
   m_TagString: Untagged
@@ -3179,7 +3193,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3518164025470900060
+--- !u!114 &1339446756478250325
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

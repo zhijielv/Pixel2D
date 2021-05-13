@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+** Created by fengling
+** DateTime:    2021-03-31 13:50:16
+** Description: TODO 还有bug，Ctrl+G生成代码之后，未编译完就会赋值，导致新增的参数未赋值成功，需要再次Ctrl+G
+*/
+
+using System;
 using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -14,7 +20,7 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Editor.Tools
+namespace Editor.Tools.UITool
 {
 #if UNITY_EDITOR
     /// <summary>
@@ -39,8 +45,7 @@ namespace Editor.Tools
         public static void SetViewObj()
         {
             Object[] views = Selection.GetFiltered(typeof(Object), SelectionMode.Assets);
-            GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode = true;
-            // AutoGenerateEnd();
+            GlobalConfig<UiBuilderSetting>.Instance.isGenerateCode = true;
             ReflectSetValue(views);
         }
 
@@ -64,14 +69,14 @@ namespace Editor.Tools
 
         private static void GenerateAndSave(Object[] views)
         {
-            GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode = true;
+            GlobalConfig<UiBuilderSetting>.Instance.isGenerateCode = true;
             GenerateObjList(views);
             ReflectSetValue(views);
-            AddressableAssetsTool.Add2AddressablesGroups();
         }
 
         #endregion
 
+        #region Generate
         private static void GenerateObjList(Object[] views)
         {
             GenerateAllView2ViewEnum();
@@ -84,10 +89,6 @@ namespace Editor.Tools
                     GameObject tmpView = t as GameObject;
                     List<string> tmpMember = GetScriptableObjectWidgetList(t.name, tmpView);
                     AutoGeneratView(t.name, tmpMember);
-                    Debug.Log("*******************AutoGeneratView end");
-                    // SetViewObj();
-                    ReflectSetValue(views);
-                    Debug.Log("@@@@@@@@@@@@@@@@@@@AutoGeneratView end");
                 }
                 catch (Exception e)
                 {
@@ -331,6 +332,7 @@ namespace Editor.Tools
             provider.GenerateCodeFromCompileUnit(unit, sw, options);
             provider.Dispose();
         }
+        #endregion
 
         #region EndCompile
 
@@ -338,7 +340,7 @@ namespace Editor.Tools
         [UnityEditor.Callbacks.DidReloadScripts]
         private static void AutoGenerateEnd()
         {
-            if (!GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode) return;
+            if (!GlobalConfig<UiBuilderSetting>.Instance.isGenerateCode) return;
             GlobalConfig<UiScriptableObjectsManager>.Instance.ResetAllViewPrefab();
             GlobalConfig<UiScriptableObjectsManager>.Instance.ResetAllViewSO();
             Object[] viewPrefabs = GlobalConfig<UiScriptableObjectsManager>.Instance.UIPrefabs;
@@ -396,8 +398,9 @@ namespace Editor.Tools
                 EditorUtility.SetDirty(t);
             }
 
-            GlobalConfig<UiScriptableObjectsManager>.Instance.isGenerateCode = false;
+            GlobalConfig<UiBuilderSetting>.Instance.isGenerateCode = false;
             EditorUtility.SetDirty(GlobalConfig<UiScriptableObjectsManager>.Instance);
+            AddressableAssetsTool.Add2AddressablesGroups();
         }
 
         #endregion

@@ -107,14 +107,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 0}
   BG_Image: {fileID: 1933713779232407370}
-  Top_Panel: {fileID: 5936446314309461740}
+  Top_CustomPanel: {fileID: 5999411426167366379}
   LeftTop_Text: {fileID: 8136886872774803834}
   CenterTop_Text: {fileID: 6181460894369508600}
   RightTop_Text: {fileID: 6192615198126854663}
-  Center_Panel: {fileID: 8365714496850419042}
+  Center_CustomPanel: {fileID: 3994623169632661781}
   Center_Text: {fileID: 5042833249728479917}
   CenterRight_Text: {fileID: 7972336026278910457}
-  Bottom_Panel: {fileID: 5120339881567954584}
+  Bottom_CustomPanel: {fileID: -8473964471543141792}
   Main_View_ScriptableObject: {fileID: 11400000, guid: e413eaff92792b046b23f74e3ea6b684,
     type: 2}
 --- !u!1 &2435453935268825859
@@ -435,8 +435,9 @@ GameObject:
   - component: {fileID: 4274575189047385576}
   - component: {fileID: 1595918795926438276}
   - component: {fileID: -918261805285342403}
+  - component: {fileID: -8473964471543141792}
   m_Layer: 5
-  m_Name: Bottom_Panel
+  m_Name: Bottom_CustomPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -511,6 +512,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c572def3774c32baf520451753fc0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-8473964471543141792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5120339881567954584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2b8216f2e514469af9d182267d9b970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 0}
 --- !u!1 &5463385308776954687
 GameObject:
   m_ObjectHideFlags: 0
@@ -611,8 +625,9 @@ GameObject:
   - component: {fileID: 3844840951166463736}
   - component: {fileID: 9023009303503767921}
   - component: {fileID: 4704783486602606624}
+  - component: {fileID: 5999411426167366379}
   m_Layer: 5
-  m_Name: Top_Panel
+  m_Name: Top_CustomPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -690,6 +705,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c572def3774c32baf520451753fc0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5999411426167366379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5936446314309461740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2b8216f2e514469af9d182267d9b970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 0}
 --- !u!1 &6046674710282161039
 GameObject:
   m_ObjectHideFlags: 0
@@ -886,8 +914,9 @@ GameObject:
   - component: {fileID: 4496083256456732805}
   - component: {fileID: 5508552477556241110}
   - component: {fileID: 3160883207015984454}
+  - component: {fileID: 3994623169632661781}
   m_Layer: 5
-  m_Name: Center_Panel
+  m_Name: Center_CustomPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -964,3 +993,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c572def3774c32baf520451753fc0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3994623169632661781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8365714496850419042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2b8216f2e514469af9d182267d9b970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 0}
