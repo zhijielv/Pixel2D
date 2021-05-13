@@ -19,7 +19,7 @@ https://guavaman.com/projects/rewired/docs/QuickStart.html
    * 用于检测并切换不同输入设备
 
 5. DOTween
- * 动   画插件
+ * 动画插件
 
 
 6. ECS
