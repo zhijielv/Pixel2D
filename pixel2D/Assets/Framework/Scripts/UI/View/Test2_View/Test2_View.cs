@@ -10,14 +10,11 @@
 
 namespace Framework.Scripts.UI.View
 {
+    using Base;
+    using System;
+    using UnityEngine;
     
-    public enum AllViewEnum
+    public partial class Test2_View : ViewBase
     {
-        Main_View,
-        Test2_View,
-        Test_View,
-        BiaoTi_View,
-        Player_View,
-        MaxValue,
     }
 }

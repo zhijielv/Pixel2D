@@ -90,7 +90,7 @@ namespace Framework.Scripts.Manager
             }
 
             Debug.Log("Create View : " + viewName);
-            GameObject tmpView = await AddressableManager.Instance.Instantiate(viewName, Common.MainCanvas.transform);
+            GameObject tmpView = await AddressableManager.Instance.InstantiateAsync(viewName, Common.MainCanvas.transform);
             RegistView(tmpView);
             if (widgetName == null)
             {

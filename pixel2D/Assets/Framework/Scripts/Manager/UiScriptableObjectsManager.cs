@@ -58,7 +58,7 @@ namespace Framework.Scripts.Manager
                 }
             }
 
-            Debug.LogError("has not ViewSO");
+            Debug.LogError("has not ViewSO " + viewName);
             return null;
         }
 

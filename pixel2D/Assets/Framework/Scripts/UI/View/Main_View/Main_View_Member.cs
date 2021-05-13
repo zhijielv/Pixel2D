@@ -26,7 +26,7 @@ namespace Framework.Scripts.UI.View
         public UnityEngine.UI.Text Center_Text;
         public UnityEngine.UI.Text CenterRight_Text;
         public Framework.Scripts.UI.CustomUI.CustomPanel Bottom_CustomPanel;
-        public Framework.Scripts.UI.View.Main_View_ScriptableObject Main_View_ScriptableObject;
+        public Framework.Scripts.UI.ScriptableObjects.PanelScriptableObjectBase Main_View_ScriptableObject;
         // member end
         internal override object GetWidget(string widgetName)
         {

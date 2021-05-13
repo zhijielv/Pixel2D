@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2504403fa8684c18bfd7534f0b292fee, type: 3}
   m_Name: UiBuilderSetting
   m_EditorClassIdentifier: 
+  isGenerateCode: 0

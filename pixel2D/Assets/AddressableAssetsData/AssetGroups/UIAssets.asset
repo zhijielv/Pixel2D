@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: UIAssets
   m_Data:
     m_SerializedData: []
-  m_GUID: ae742f3c89f42e74fa2fef9680c13296
+  m_GUID: ce02649ac09588a4198480a25d1c2bce
   m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cc1ef71ad71ad124cac3229a7e1dd5ba, type: 2}

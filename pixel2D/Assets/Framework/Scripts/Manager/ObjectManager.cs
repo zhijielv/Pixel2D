@@ -23,11 +23,12 @@ namespace Framework.Scripts.Manager
         {
             GameObject asset;
             if (instantiate)
-                asset = await AddressableManager.Instance.Instantiate(Constants.Constants.ObjectUnit, parent);
+                asset = await AddressableManager.Instance.InstantiateAsync(Constants.Constants.ObjectUnit, parent);
             else
-                asset = await AddressableManager.Instance.LoadAsset<GameObject>(Constants.Constants.ObjectUnit);
+                asset = await AddressableManager.Instance.LoadAssetAsync<GameObject>(Constants.Constants.ObjectUnit);
             if (key != null)
-                asset.GetComponent<SpriteRenderer>().sprite = await AddressableManager.Instance.LoadAsset<Sprite>(key);
+                asset.GetComponent<SpriteRenderer>().sprite = await AddressableManager.Instance.LoadAssetAsync<Sprite>(key);
+            Debug.Log(asset.name);
             return asset;
         }
 
@@ -58,9 +59,9 @@ namespace Framework.Scripts.Manager
             }
 
             string path = String.Format(AnimatorPath, key);
-            GameObject unit = await AddressableManager.Instance.Instantiate("AvatarUnit", parent);
+            GameObject unit = await AddressableManager.Instance.InstantiateAsync("AvatarUnit", parent);
             unit.GetComponent<Animator>().runtimeAnimatorController =
-                await AddressableManager.Instance.LoadAsset<RuntimeAnimatorController>(path);
+                await AddressableManager.Instance.LoadAssetAsync<RuntimeAnimatorController>(path);
             unit.name = key ?? "Avatar";
             // 设置层级
             SpriteRenderer spriteRenderer = unit.GetComponent<SpriteRenderer>();

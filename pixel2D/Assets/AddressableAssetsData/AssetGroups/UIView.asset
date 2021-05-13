@@ -15,10 +15,14 @@ MonoBehaviour:
   m_GroupName: UIView
   m_Data:
     m_SerializedData: []
-  m_GUID: aae70a6643c4beb4caa673dc0b26d6cf
+  m_GUID: 5a16a9d80a1aa31418ce2b706f8c379a
   m_SerializeEntries:
   - m_GUID: 41bae8e906e667a4b8f0abc983a2552c
     m_Address: Main_View
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c64ff41192c12be488b56adb16385e2c
+    m_Address: Test2_View
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 0834b0a8b2a86cc4da9ac7720a5b177a

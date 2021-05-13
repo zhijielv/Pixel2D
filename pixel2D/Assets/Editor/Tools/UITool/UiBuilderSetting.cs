@@ -15,6 +15,7 @@ namespace Editor.Tools.UITool
     public class UiBuilderSetting : GlobalConfig<UiBuilderSetting>
     {
         public bool isGenerateCode = false;
+        public bool hasNewUICode = false;
         [ShowInInspector]
         [ReadOnly] public Object[] selectViews;
     }

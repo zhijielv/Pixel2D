@@ -14,6 +14,7 @@ using DG.DemiEditor;
 using Framework.Scripts.Constants;
 using Framework.Scripts.Manager;
 using Framework.Scripts.UI.Base;
+using Framework.Scripts.UI.CustomUI;
 using Framework.Scripts.UI.ScriptableObjects;
 using Sirenix.Utilities;
 using UnityEditor;
@@ -87,7 +88,8 @@ namespace Editor.Tools.UITool
                 try
                 {
                     GameObject tmpView = t as GameObject;
-                    List<string> tmpMember = GetScriptableObjectWidgetList(t.name, tmpView);
+                    // List<string> tmpMember = GetScriptableObjectWidgetList(t.name, tmpView);
+                    List<string> tmpMember = RegistWidgets(tmpView.transform);
                     AutoGeneratView(t.name, tmpMember);
                 }
                 catch (Exception e)
@@ -116,21 +118,6 @@ namespace Editor.Tools.UITool
             }
 
             return tmpObjList;
-        }
-
-        private static List<string> GetScriptableObjectWidgetList(string name, GameObject obj)
-        {
-            string path = Constants.ScriptableObjectDir + name + "_Asset.asset";
-            PanelScriptableObjectBase asset =
-                ScriptableObject.CreateInstance(name + "_ScriptableObject") as PanelScriptableObjectBase;
-            if (File.Exists(path))
-                AssetDatabase.DeleteAsset(path);
-
-            AssetDatabase.CreateAsset(asset, path);
-            AssetDatabase.SaveAssets();
-            asset.panelObj = obj;
-            asset.ResetWidgets();
-            return asset.widgetList;
         }
 
         //实例
@@ -242,7 +229,7 @@ namespace Editor.Tools.UITool
 
             // so
             Type soType = AssemblyUtilities.GetTypeByCachedFullName(
-                "Framework.Scripts.UI.View." + className + "_ScriptableObject");
+                "Framework.Scripts.UI.ScriptableObjects.PanelScriptableObjectBase");
             CodeTypeMember so = new CodeMemberField(soType, className + "_ScriptableObject");
             so.Attributes = MemberAttributes.Public;
             myClass.Members.Add(so);
@@ -322,6 +309,7 @@ namespace Editor.Tools.UITool
                 ViewScriptType.Module => className + "_Module.cs",
                 ViewScriptType.View => className + ".cs",
                 ViewScriptType.ViewMember => className + "_Member.cs",
+                ViewScriptType.ScriptableObject => className + "_ScriptableObject.cs",
                 _ => "tmpCSharpFile.cs"
             };
 
@@ -332,6 +320,61 @@ namespace Editor.Tools.UITool
             provider.GenerateCodeFromCompileUnit(unit, sw, options);
             provider.Dispose();
         }
+        
+        private static List<string> RegistWidgets(Transform obj)
+        {
+            Transform[] children = obj.GetComponentsInChildren<Transform>();
+            List<string> widgetList = new List<string>();
+            foreach (Transform child in children)
+            {
+                if (!CheckName(widgetList, child.name, out UIConfig? uiType)) continue;
+                switch (uiType)
+                {
+                    case UIConfig.Text:
+                    case UIConfig.Button:
+                    case UIConfig.Image:
+                    case UIConfig.InputField:
+                    case UIConfig.TouchController:
+                        Constants.AddOrGetComponent(child.gameObject, typeof(UiWidgetBase));
+                        break;
+                    case UIConfig.CustomPanel:
+                        Constants.AddOrGetComponent(child.gameObject, typeof(CustomPanel));
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                widgetList.Add(child.name);
+            }
+            AssetDatabase.Refresh();
+            return widgetList;
+        }
+
+        private static bool CheckName(List<string> widgetList, string objName, out UIConfig? uiType)
+        {
+            string[] nameStrings = objName.Split(new[] {"_"}, StringSplitOptions.RemoveEmptyEntries);
+            if (nameStrings.Length <= 1)
+            {
+                uiType = null;
+                return false;
+            }
+
+            string lastName = nameStrings[nameStrings.Length - 1];
+            if (widgetList.Contains(lastName))
+            {
+                Debug.LogError("has same widget Name : " + objName);
+                uiType = null;
+                return false;
+            }
+
+            if (Enum.TryParse(lastName, out UIConfig uiEnum) && !Enum.TryParse(lastName, true, out IgnoreUI ignoreUi))
+            {
+                uiType = uiEnum;
+                return true;
+            }
+
+            uiType = null;
+            return false;
+        }
         #endregion
 
         #region EndCompile
@@ -341,14 +384,22 @@ namespace Editor.Tools.UITool
         private static void AutoGenerateEnd()
         {
             if (!GlobalConfig<UiBuilderSetting>.Instance.isGenerateCode) return;
+            GlobalConfig<UiBuilderSetting>.Instance.hasNewUICode = true;
             GlobalConfig<UiScriptableObjectsManager>.Instance.ResetAllViewPrefab();
             GlobalConfig<UiScriptableObjectsManager>.Instance.ResetAllViewSO();
             Object[] viewPrefabs = GlobalConfig<UiScriptableObjectsManager>.Instance.UIPrefabs;
             ReflectSetValue(viewPrefabs);
+            
+            // 创建SO
+            foreach (var prefab in viewPrefabs)
+            {
+                GetScriptableObjectWidgetList(prefab as GameObject);
+            }
         }
 
         private static void ReflectSetValue(Object[] viewPrefabs)
         {
+            if(!GlobalConfig<UiBuilderSetting>.Instance.hasNewUICode) return;
             foreach (Object t in viewPrefabs)
             {
                 // 添加脚本
@@ -370,12 +421,7 @@ namespace Editor.Tools.UITool
                 foreach (var fieldInfo in fieldInfos)
                 {
                     if (fieldInfo.Name.Contains("_ScriptableObject"))
-                    {
-                        // 赋值 view 的 so
-                        fieldInfo.SetValue(tmpView.GetComponent<ViewBase>(),
-                            GlobalConfig<UiScriptableObjectsManager>.Instance.GetUiViewSo(tmpView.name + "_Asset"));
                         continue;
-                    }
 
                     Type widgetType = Constants.GetWidgetTypeByName(fieldInfo.Name);
                     UiWidgetBase[] children = tmpView.transform.GetComponentsInChildren<UiWidgetBase>();
@@ -397,10 +443,45 @@ namespace Editor.Tools.UITool
 
                 EditorUtility.SetDirty(t);
             }
-
+            
             GlobalConfig<UiBuilderSetting>.Instance.isGenerateCode = false;
             EditorUtility.SetDirty(GlobalConfig<UiScriptableObjectsManager>.Instance);
             AddressableAssetsTool.Add2AddressablesGroups();
+            Debug.Log("add2####################");
+            GlobalConfig<UiBuilderSetting>.Instance.hasNewUICode = false;
+        }
+        
+        // 创建SO 赋值SO
+        private static void GetScriptableObjectWidgetList(GameObject viewObj)
+        {
+            string name = viewObj.name;
+            string path = Constants.ScriptableObjectDir + name + "_Asset.asset";
+            // if (File.Exists(path))
+                // AssetDatabase.DeleteAsset(path);
+            
+            var asset =
+                ScriptableObject.CreateInstance(name + "_ScriptableObject");
+            
+            AssetDatabase.CreateAsset(asset, path);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            
+            Type viewType = AssemblyUtilities.GetTypeByCachedFullName(Constants.UiNameSpace + viewObj.name);
+            if (viewType == null)
+            {
+                Debug.LogError($"{viewObj.name} is not Generate");
+                return;
+            }
+            FieldInfo[] fieldInfos = viewType
+                .GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+            
+            foreach (var fieldInfo in fieldInfos)
+            {
+                if (!fieldInfo.Name.Contains("_ScriptableObject")) continue;
+                // 赋值 view 的 so
+                fieldInfo.SetValue(viewObj.GetComponent<ViewBase>(), asset);
+                break;
+            }
         }
 
         #endregion

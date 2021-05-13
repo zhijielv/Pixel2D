@@ -34,7 +34,7 @@ namespace Framework.Scripts.Utils
             string json;
             if (Application.isPlaying)
             {
-                TextAsset textAsset = await AddressableManager.Instance.LoadAsset<TextAsset>(jsonName);
+                TextAsset textAsset = AddressableManager.Instance.LoadAsset<TextAsset>(jsonName);
                 json = textAsset.text;
                 return JsonConvert.DeserializeObject<List<T>>(json);    
             }

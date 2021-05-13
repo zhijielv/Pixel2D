@@ -14,16 +14,14 @@ namespace Framework.Scripts.UI.View
     using System;
     using UnityEngine;
     
-    public partial class Test_View : ViewBase
+    public partial class Test2_View : ViewBase
     {
+        public Framework.Scripts.UI.ScriptableObjects.PanelScriptableObjectBase Test2_View_ScriptableObject;
         // member
-        public UnityEngine.UI.Button Test_Button;
-        public UnityEngine.UI.Button Test3_Button;
-        public Framework.Scripts.UI.ScriptableObjects.PanelScriptableObjectBase Test_View_ScriptableObject;
         // member end
         internal override object GetWidget(string widgetName)
         {
-            if (!Enum.TryParse(widgetName, true, out Test_View_Widget _))
+            if (!Enum.TryParse(widgetName, true, out Test2_View_Widget _))
             {
                 // Debug.LogError(gameObject.name + " has not widget : " + widgetName);
                 return null;

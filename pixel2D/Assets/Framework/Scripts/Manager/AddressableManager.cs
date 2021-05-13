@@ -32,15 +32,26 @@ namespace Framework.Scripts.Manager
 
         // todo 改为同步
         // T o = Addressables.LoadAssetAsync<T>(key).WaitForCompletion();
-        public async Task<T> LoadAsset<T>(object key) where T : Object
+        public async Task<T> LoadAssetAsync<T>(object key) where T : Object
         {
             if (!_initialized)
                 throw new Exception("AddressableManager has not initialized!");
-// #if UNITY_EDITOR
-            // T op = AssetDatabase.LoadAssetAtPath<T>((string) key);
-// #else
             T op = await Addressables.LoadAssetAsync<T>(key).Task;
-// #endif
+
+            if (op == null)
+            {
+                var message = "Sync LoadAsset has null result " + key;
+                throw new Exception(message);
+            }
+
+            return op;
+        }
+        
+        public T LoadAsset<T>(object key) where T : Object
+        {
+            if (!_initialized)
+                throw new Exception("AddressableManager has not initialized!");
+            T op = Addressables.LoadAssetAsync<T>(key).WaitForCompletion();
 
             if (op == null)
             {
@@ -51,13 +62,29 @@ namespace Framework.Scripts.Manager
             return op;
         }
 
-        public async Task<GameObject> Instantiate(object key, Transform parent = null,
+        public async Task<GameObject> InstantiateAsync(object key, Transform parent = null,
             bool instantiateInWorldSpace = false)
         {
             if (!_initialized)
                 throw new Exception("AddressableManager has not initialized!");
 
             GameObject op = await Addressables.InstantiateAsync(key, parent, instantiateInWorldSpace).Task;
+            if (op == null)
+            {
+                var message = "Sync Instantiate has null result " + key;
+                throw new Exception(message);
+            }
+
+            return op;
+        }
+        
+        public GameObject Instantiate(object key, Transform parent = null,
+            bool instantiateInWorldSpace = false)
+        {
+            if (!_initialized)
+                throw new Exception("AddressableManager has not initialized!");
+
+            GameObject op = Addressables.InstantiateAsync(key, parent, instantiateInWorldSpace).WaitForCompletion();
             if (op == null)
             {
                 var message = "Sync Instantiate has null result " + key;

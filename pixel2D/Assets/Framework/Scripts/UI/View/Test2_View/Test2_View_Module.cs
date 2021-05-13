@@ -11,13 +11,10 @@
 namespace Framework.Scripts.UI.View
 {
     
-    public enum AllViewEnum
+    public enum Test2_View_Panel
     {
-        Main_View,
-        Test2_View,
-        Test_View,
-        BiaoTi_View,
-        Player_View,
-        MaxValue,
+    }
+    public enum Test2_View_Widget
+    {
     }
 }

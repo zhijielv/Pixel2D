@@ -85,7 +85,7 @@ namespace Framework.Scripts.Manager
 
             // 设置相机限制范围
             playerVCamera =
-                await AddressableManager.Instance.Instantiate(_followPlayerVCam, LevelManager.Instance.transform);
+                await AddressableManager.Instance.InstantiateAsync(_followPlayerVCam, LevelManager.Instance.transform);
             playerVCamera.transform.SetParent(transform);
             playerVCamera.GetComponent<CinemachineConfiner2D>().m_BoundingShape2D = polygonCollider2D;
 
@@ -101,7 +101,7 @@ namespace Framework.Scripts.Manager
 
         public async Task<GameObject> CreateMouseTarget()
         {
-            GameObject mouseTarget = await ObjectManager.Instance.LoadUnit(null, null, true);
+            GameObject mouseTarget = await ObjectManager.Instance.LoadUnit(null, transform, true);
             Destroy(mouseTarget.GetComponent<BoxCollider2D>());
             _targetList.Add(mouseTarget);
             ResetTargetList();

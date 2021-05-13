@@ -16,7 +16,7 @@ namespace Framework.Scripts.UI.View
     
     public partial class BiaoTi_View : ViewBase
     {
-        public Framework.Scripts.UI.View.BiaoTi_View_ScriptableObject BiaoTi_View_ScriptableObject;
+        public Framework.Scripts.UI.ScriptableObjects.PanelScriptableObjectBase BiaoTi_View_ScriptableObject;
         // member
         // member end
         internal override object GetWidget(string widgetName)

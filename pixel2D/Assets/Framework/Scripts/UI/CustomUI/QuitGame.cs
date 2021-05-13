@@ -1,7 +1,7 @@
 ﻿/*
 ** Created by fengling
 ** DateTime:    2021年5月1日 20:19:31
-** Description: UI界面基类
+** Description: 退出游戏
 */
 
 using UnityEngine;

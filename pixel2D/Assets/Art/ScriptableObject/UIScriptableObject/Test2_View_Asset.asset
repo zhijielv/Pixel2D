@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39436ea65305e814fb26009e9a54987c, type: 3}
-  m_Name: Test_View_Asset
+  m_Script: {fileID: 11500000, guid: e855d4c5e514ea54389fd18964d6bc88, type: 3}
+  m_Name: Test2_View_Asset
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
