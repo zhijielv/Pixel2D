@@ -18,7 +18,7 @@ namespace Framework.Scripts.Utils
             jsonName = "Assets/Framework/Json/" + jsonName + ".json";
             TextAsset jsonFile = AssetDatabase.LoadAssetAtPath<TextAsset>(jsonName);
 #else
-            TextAsset jsonFile = await AddressableManager.Instance.LoadAsset<TextAsset>(jsonName);
+            TextAsset jsonFile = await AddressableManager.Instance.LoadAssetAsync<TextAsset>(jsonName);
 #endif
             T t = JsonConvert.DeserializeObject<T>(jsonFile.text);
             return t;

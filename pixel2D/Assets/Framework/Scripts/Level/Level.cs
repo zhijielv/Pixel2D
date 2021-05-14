@@ -143,7 +143,7 @@ namespace Framework.Scripts.Level
                     .Add((Sprite) AssetDatabase.LoadAssetAtPath(data1, typeof(Sprite)));
 #else
                 string path = Constants.Constants.ReplaceString(data1.ToString(), "Assets/Art/", "");
-                Sprite sprite = await AddressableManager.Instance.LoadAsset<Sprite>(path);
+                Sprite sprite = await AddressableManager.Instance.LoadAssetAsync<Sprite>(path);
                 LevelItem[LevelItemType.Road]
                     .Add(sprite);
 #endif
@@ -156,7 +156,7 @@ namespace Framework.Scripts.Level
                     .Add((Sprite) AssetDatabase.LoadAssetAtPath(data1, typeof(Sprite)));
 #else
                 string path = Constants.Constants.ReplaceString(data1.ToString(), "Assets/Art/", "");
-                Sprite sprite = await AddressableManager.Instance.LoadAsset<Sprite>(path);
+                Sprite sprite = await AddressableManager.Instance.LoadAssetAsync<Sprite>(path);
                 LevelItem[LevelItemType.Wall]
                     .Add(sprite);
 #endif
@@ -169,7 +169,7 @@ namespace Framework.Scripts.Level
                     .Add((Sprite) AssetDatabase.LoadAssetAtPath(data1, typeof(Sprite)));
 #else
                 string path = Constants.Constants.ReplaceString(data1.ToString(), "Assets/Art/", "");
-                Sprite sprite = await AddressableManager.Instance.LoadAsset<Sprite>(path);
+                Sprite sprite = await AddressableManager.Instance.LoadAssetAsync<Sprite>(path);
                 LevelItem[LevelItemType.Box]
                     .Add(sprite);
 #endif
@@ -182,7 +182,7 @@ namespace Framework.Scripts.Level
                     .Add((Sprite) AssetDatabase.LoadAssetAtPath(data1, typeof(Sprite)));
 #else
                 string path = Constants.Constants.ReplaceString(data1.ToString(), "Assets/Art/", "");
-                Sprite sprite = await AddressableManager.Instance.LoadAsset<Sprite>(path);
+                Sprite sprite = await AddressableManager.Instance.LoadAssetAsync<Sprite>(path);
                 LevelItem[LevelItemType.Obstruction]
                     .Add(sprite);
 #endif
