@@ -14,7 +14,6 @@ namespace Framework.Scripts.Constants
         public static readonly string ScriptableObjectScriptDir = "Assets/Framework/Scripts/UI/ScriptableObjects/";
         public static readonly string ViewScriptDir = "/Framework/Scripts/UI/View/";
         public static readonly string ViewPrefabDir = "Assets/Art/Prefabs/UI/View/";
-        // public static readonly string JsonPath = "Assets/Framework/Json/" + "Map.json";
         public static readonly string LevelPrefabDir = "Assets/Art/Prefabs/Level/";
 
         ////////////////////////////////////////////  GameObject  ///////////////////////////////////////////////////////

@@ -29,6 +29,7 @@ public class Main : MonoBehaviour
             Common.FrameWorkObj = gameObject;
         }
 
+        await AddManager<FrameWorkDebugMode>();
         await AddManager<AddressableManager>();
         await AddManager<UiManager>();
         await AddManager<Launcher>();

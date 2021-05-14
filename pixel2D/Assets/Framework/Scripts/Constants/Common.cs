@@ -4,6 +4,7 @@ namespace Framework.Scripts.Constants
 {
     public class Common
     {
+        public static bool isDebugMode = false;
         // 帧率
         public static int FrameRate;
         // Launch初始化
