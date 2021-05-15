@@ -10,6 +10,7 @@ using Cinemachine;
 using Framework.Scripts.Level;
 using Framework.Scripts.Singleton;
 using Rewired;
+using SRF;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -23,8 +24,7 @@ namespace Framework.Scripts.Manager
         public GameObject playerVCamera;
         public GameObject vCameraCollider;
         public GameObject targetGroup;
-        
-        private GameObject mouseTarget;
+        public GameObject mouseTarget;
 
         private List<GameObject> _targetList;
         private const string _followPlayerVCam = "FollowPlayerVCam";
@@ -94,7 +94,7 @@ namespace Framework.Scripts.Manager
             cinemachineVirtualCamera.Follow = targetGroup.transform;
 
             // 虚拟相机添加到主相机
-            Constants.Constants.AddOrGetComponent(mainCamera, typeof(CinemachineBrain));
+            mainCamera.GetComponentOrAdd<CinemachineBrain>();
             // 设置透视
             mainCamera.GetComponent<Camera>().orthographic = true;
         }
@@ -129,7 +129,7 @@ namespace Framework.Scripts.Manager
                 InputActionEventType.AxisActive, "MouseVertical");
         }
 
-        private async void SetMouseTarget(InputActionEventData inputActionEventData)
+        private void SetMouseTarget(InputActionEventData inputActionEventData)
         {
             // 镜头移动
             

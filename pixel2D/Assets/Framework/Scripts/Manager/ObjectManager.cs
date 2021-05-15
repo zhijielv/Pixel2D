@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Framework.Scripts.PlayerControl;
 using Framework.Scripts.Singleton;
 using Pathfinding;
+using SRF;
 using UnityEngine;
 
 namespace Framework.Scripts.Manager
@@ -16,7 +17,6 @@ namespace Framework.Scripts.Manager
     public class ObjectManager : ManagerSingleton<ObjectManager>
     {
         public GameObject mainPlayer;
-        public static readonly string AnimatorPath = "Sprite/Hero/{0}/{0}_anim/{0}.controller";
 
         // 加载通过2DUnit，自带Collider2D和SpritRender
         public async Task<GameObject> LoadUnit(object key = null, Transform parent = null, bool instantiate = false)
@@ -28,7 +28,6 @@ namespace Framework.Scripts.Manager
                 asset = await AddressableManager.Instance.LoadAssetAsync<GameObject>(Constants.Constants.ObjectUnit);
             if (key != null)
                 asset.GetComponent<SpriteRenderer>().sprite = await AddressableManager.Instance.LoadAssetAsync<Sprite>(key);
-            Debug.Log(asset.name);
             return asset;
         }
 
@@ -39,7 +38,7 @@ namespace Framework.Scripts.Manager
             // 设置层级
             SpriteRenderer spriteRenderer = unit.GetComponent<SpriteRenderer>();
             spriteRenderer.sortingOrder = 1;
-            Rigidbody2D component = (Rigidbody2D) Constants.Constants.AddOrGetComponent(unit, typeof(Rigidbody2D));
+            Rigidbody2D component = unit.GetComponentOrAdd<Rigidbody2D>();
             component.angularDrag = 0;
             component.gravityScale = 0;
             // 锁定旋转
@@ -58,7 +57,7 @@ namespace Framework.Scripts.Manager
                 return;
             }
 
-            string path = String.Format(AnimatorPath, key);
+            string path = String.Format(Constants.Constants.AnimatorPath, key);
             GameObject unit = await AddressableManager.Instance.InstantiateAsync("AvatarUnit", parent);
             unit.GetComponent<Animator>().runtimeAnimatorController =
                 await AddressableManager.Instance.LoadAssetAsync<RuntimeAnimatorController>(path);
@@ -69,14 +68,14 @@ namespace Framework.Scripts.Manager
             mainPlayer = unit;
             mainPlayer.name = "MainPlayer";
             // 添加AI寻路组件
-            Constants.Constants.AddOrGetComponent(unit, typeof(Seeker));
-            AILerp aiLerp = (AILerp) Constants.Constants.AddOrGetComponent(unit, typeof(AILerp));
+            unit.GetComponentOrAdd<Seeker>();
+            AILerp aiLerp = unit.GetComponentOrAdd<AILerp>();
             aiLerp.orientation = OrientationMode.YAxisForward;
             aiLerp.enableRotation = false;
             aiLerp.enabled = false;
             
             // 添加控制器
-            Constants.Constants.AddOrGetComponent(unit, typeof(GamePlayerController));
+            unit.GetComponentOrAdd<GamePlayerController>();
         }
     }
 }

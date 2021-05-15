@@ -5,6 +5,7 @@ using Framework.Scripts.Constants;
 using Framework.Scripts.Singleton;
 using Framework.Scripts.UI.Base;
 using Sirenix.OdinInspector;
+using SRF;
 using UnityEngine;
 
 namespace Framework.Scripts.Manager
@@ -115,7 +116,7 @@ namespace Framework.Scripts.Manager
                     return;
                 }
 
-                ViewBase viewBase = (ViewBase) Constants.Constants.AddOrGetComponent(widgetObj, type);
+                ViewBase viewBase = widgetObj.GetComponentOrAdd(type) as ViewBase;
                 uiList.Add(viewName, viewBase);
             }
             else

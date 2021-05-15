@@ -6,6 +6,7 @@ using Framework.Scripts.UI.View;
 using Rewired;
 using Rewired.ComponentControls;
 using Rewired.Integration.UnityUI;
+using SRF;
 using UnityEngine;
 
 namespace Framework.Scripts.Manager
@@ -54,14 +55,11 @@ namespace Framework.Scripts.Manager
                 rewiredEventSystemGameObject.transform.SetParent(Common.FrameWorkObj.transform);
 
                 RewiredEventSystem rewiredEventSystem =
-                    (RewiredEventSystem) Constants.Constants.AddOrGetComponent(rewiredEventSystemGameObject,
-                        typeof(RewiredEventSystem));
+                    rewiredEventSystemGameObject.GetComponentOrAdd<RewiredEventSystem>();
                 rewiredEventSystem.pixelDragThreshold = 5;
 
                 RewiredStandaloneInputModule rewiredStandaloneInputModule =
-                    (RewiredStandaloneInputModule) Constants.Constants.AddOrGetComponent(
-                        rewiredEventSystemGameObject,
-                        typeof(RewiredStandaloneInputModule));
+                    rewiredEventSystemGameObject.GetComponentOrAdd<RewiredStandaloneInputModule>();
                 rewiredStandaloneInputModule.UseAllRewiredGamePlayers = true;
                 rewiredStandaloneInputModule.UseRewiredSystemPlayer = true;
                 rewiredStandaloneInputModule.RewiredInputManager =

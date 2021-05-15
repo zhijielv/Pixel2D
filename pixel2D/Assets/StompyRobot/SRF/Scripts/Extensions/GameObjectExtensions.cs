@@ -1,4 +1,6 @@
-﻿namespace SRF
+﻿using System;
+
+namespace SRF
 {
     using UnityEngine;
 
@@ -21,6 +23,18 @@
             if (t == null)
             {
                 t = obj.AddComponent<T>();
+            }
+
+            return t;
+        }
+        
+        public static Component GetComponentOrAdd(this GameObject obj, Type type)
+        {
+            var t = obj.GetComponent(type);
+
+            if (t == null)
+            {
+                t = obj.AddComponent(type);
             }
 
             return t;

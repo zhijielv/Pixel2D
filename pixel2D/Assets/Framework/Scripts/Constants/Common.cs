@@ -1,22 +1,29 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+using Sirenix.Utilities;
+using UnityEngine;
 
 namespace Framework.Scripts.Constants
 {
-    public class Common
+    public class Common : GlobalConfig<Common>
     {
-        public static bool isDebugMode = false;
+        // Debug模式
+        [ShowInInspector] public static bool IsDebugMode = true;
+
         // 帧率
-        public static int FrameRate;
+        [ShowInInspector] public static int FrameRate;
+
         // Launch初始化
-        public static bool Initialized = false;
+        [ShowInInspector] public static bool Initialized = false;
+
         // 单格子尺寸
-        public static float TileSize = 0.16f;
+        [ShowInInspector] public static float TileSize = 0.16f;
+
         // 地图缩放
-        public static int LevelManagerScale = 3;
-        
+        [ShowInInspector] public static int LevelManagerScale = 3;
+
         ////////////////////////////////////////////  GameObject  ///////////////////////////////////////////////////////
-        public static GameObject MainCanvas;
-        public static GameObject RewiredInputManager;
-        public static GameObject FrameWorkObj;
+        [ShowInInspector] public static GameObject MainCanvas;
+        [ShowInInspector] public static GameObject RewiredInputManager;
+        [ShowInInspector] public static GameObject FrameWorkObj;
     }
 }

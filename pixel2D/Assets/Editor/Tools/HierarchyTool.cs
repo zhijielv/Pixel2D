@@ -1,6 +1,7 @@
 ﻿using Framework.Scripts.Constants;
 using Rewired;
 using Rewired.Integration.UnityUI;
+using SRF;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -15,7 +16,7 @@ namespace Editor.Tools
         {
             GameObject frameWorkObj = GameObject.Find("[FrameWork]");
             if (frameWorkObj == null) frameWorkObj = new GameObject("[FrameWork]");
-            Constants.AddOrGetComponent(frameWorkObj, typeof(Main));
+            frameWorkObj.GetComponentOrAdd<Main>();
 
             GameObject rewiredEventSystemGameObject = GameObject.Find("Rewired Event System");
             if (rewiredEventSystemGameObject == null)
@@ -23,13 +24,11 @@ namespace Editor.Tools
             rewiredEventSystemGameObject.transform.SetParent(frameWorkObj.transform);
 
             RewiredEventSystem rewiredEventSystem =
-                (RewiredEventSystem) Constants.AddOrGetComponent(rewiredEventSystemGameObject,
-                    typeof(RewiredEventSystem));
+                rewiredEventSystemGameObject.GetComponentOrAdd<RewiredEventSystem>();
             rewiredEventSystem.pixelDragThreshold = 5;
 
             RewiredStandaloneInputModule rewiredStandaloneInputModule =
-                (RewiredStandaloneInputModule) Constants.AddOrGetComponent(rewiredEventSystemGameObject,
-                    typeof(RewiredStandaloneInputModule));
+                rewiredEventSystemGameObject.GetComponentOrAdd<RewiredStandaloneInputModule>();
             rewiredStandaloneInputModule.UseAllRewiredGamePlayers = true;
             rewiredStandaloneInputModule.UseRewiredSystemPlayer = true;
 

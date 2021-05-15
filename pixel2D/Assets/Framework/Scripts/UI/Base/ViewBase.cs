@@ -12,6 +12,7 @@ using Framework.Scripts.Constants;
 using Framework.Scripts.Manager;
 using Rewired;
 using Sirenix.OdinInspector;
+using SRF;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -21,9 +22,6 @@ namespace Framework.Scripts.UI.Base
 {
     public class ViewBase : UiWidgetBase
     {
-        [ShowInInspector] [ReadOnly]
-        public CanvasGroup canvasGroup;
-
         readonly struct EventItem
         {
             public readonly EventConstants EventType;
@@ -202,14 +200,6 @@ namespace Framework.Scripts.UI.Base
         public void AddPointerExitEvent(string subParentName, string subName, UnityAction<BaseEventData> callBack)
         {
             AddInterFaceEvent(EventTriggerType.PointerExit, callBack);
-        }
-
-        public void ShowWithHiddenTurn()
-        {
-            canvasGroup = (CanvasGroup) Constants.Constants.AddOrGetComponent(gameObject, typeof(CanvasGroup));
-            canvasGroup.alpha = Mathf.Abs(canvasGroup.alpha - 1);
-            canvasGroup.interactable = !canvasGroup.interactable;
-            canvasGroup.blocksRaycasts = !canvasGroup.blocksRaycasts;
         }
 
         #endregion

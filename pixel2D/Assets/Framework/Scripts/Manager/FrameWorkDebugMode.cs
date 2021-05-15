@@ -18,8 +18,8 @@ namespace Framework.Scripts.Manager
     {
         public override Task Init()
         {
-            if (!Common.isDebugMode) return null;
-            Debug.Log("#####################  Is Debug Mode  #####################");
+            if (Common.IsDebugMode)
+                Debug.Log("#####################  Is Debug Mode  #####################");
             return base.Init();
         }
     }

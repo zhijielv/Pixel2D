@@ -12,14 +12,5 @@ namespace Framework.Scripts.UI.CustomUI
 {
     public class CustomPanel : UiWidgetBase
     {
-        [ShowInInspector] [ReadOnly]
-        public CanvasGroup canvasGroup;
-        public void ShowWithHiddenTurn()
-        {
-            canvasGroup = (CanvasGroup) Constants.Constants.AddOrGetComponent(gameObject, typeof(CanvasGroup));
-            canvasGroup.alpha = Mathf.Abs(canvasGroup.alpha - 1);
-            canvasGroup.interactable = !canvasGroup.interactable;
-            canvasGroup.blocksRaycasts = !canvasGroup.blocksRaycasts;
-        }
     }
 }

@@ -7,37 +7,37 @@
 using Framework.Scripts.Manager;
 using Pathfinding;
 using Rewired;
+using SRF;
 using UnityEngine;
 
 namespace Framework.Scripts.PlayerControl
 {
     public class GamePlayerController : MonoBehaviour
     {
+        public GameWeaponController gameWeaponController;
         private void Awake()
         {
             CameraManager.Instance.CameraFollowMouse();
             RewiredInputEventManager.Instance.AddEvent(MoveX, UpdateLoopType.Update, InputActionEventType.AxisActive, "MoveX");
-            RewiredInputEventManager.Instance.AddEvent(OnFireButtonClick, UpdateLoopType.Update, InputActionEventType.ButtonJustPressed, "Fire");
-            // RewiredInputEventManager.Instance.AddEvent(TestButton, UpdateLoopType.Update, InputActionEventType.ButtonJustReleased, "Fire");
-            
             // 右键地面寻路功能
             // RewiredInputEventManager.Instance.AddEvent(TestAStar, UpdateLoopType.Update, InputActionEventType.ButtonJustPressed, "MoveToClick");
 
+            foreach (Transform child in transform.GetComponentsInChildren<Transform>())
+            {
+                if (!child.name.EndsWith(Constants.Constants.WeaponSuffix)) continue;
+                gameWeaponController = child.gameObject.GetComponentOrAdd<GameWeaponController>();
+                break;
+            }
         }
         
         public void MoveX(InputActionEventData data)
         {
             if(ObjectManager.Instance.mainPlayer == null) return;
-            float direction = data.GetAxis() > 0 ? 1 : -1;
-            ObjectManager.Instance.mainPlayer.transform.localScale = new Vector3(direction, 1, 1);
+            bool flip = data.GetAxis() < 0;
+            ObjectManager.Instance.mainPlayer.GetComponent<SpriteRenderer>().flipX = flip;
+            // ObjectManager.Instance.mainPlayer.transform.localScale = new Vector3(direction, 1, 1);
         }
-        
-        public void OnFireButtonClick(InputActionEventData data)
-        {
-            Debug.Log($"Button Fire!  {data.GetButton()}");
-            // EventManager.Instance.DispatchEvent(EventConstants.StartGame);
-        }
-        
+
         // 右键点击地面寻路
         public void TestAStar(InputActionEventData data)
         {

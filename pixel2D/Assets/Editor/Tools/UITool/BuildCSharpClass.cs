@@ -17,6 +17,7 @@ using Framework.Scripts.UI.Base;
 using Framework.Scripts.UI.CustomUI;
 using Framework.Scripts.UI.ScriptableObjects;
 using Sirenix.Utilities;
+using SRF;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -335,10 +336,10 @@ namespace Editor.Tools.UITool
                     case UIConfig.Image:
                     case UIConfig.InputField:
                     case UIConfig.TouchController:
-                        Constants.AddOrGetComponent(child.gameObject, typeof(UiWidgetBase));
+                        child.gameObject.GetComponentOrAdd<UiWidgetBase>();
                         break;
                     case UIConfig.CustomPanel:
-                        Constants.AddOrGetComponent(child.gameObject, typeof(CustomPanel));
+                        child.gameObject.GetComponentOrAdd<CustomPanel>();
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -412,7 +413,7 @@ namespace Editor.Tools.UITool
                 }
 
                 Debug.LogWarning($"{tmpView.name} is generate, and add component {viewType.FullName}");
-                Constants.AddOrGetComponent(tmpView, viewType);
+                tmpView.GetComponentOrAdd(viewType);
                 // 反射赋值
                 FieldInfo[] fieldInfos = viewType
                     .GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);

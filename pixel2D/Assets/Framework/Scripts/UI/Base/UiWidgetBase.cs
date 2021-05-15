@@ -4,6 +4,8 @@
 ** Description: 所有UI操作的基类
 */
 
+using Sirenix.OdinInspector;
+using SRF;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
@@ -13,6 +15,8 @@ namespace Framework.Scripts.UI.Base
 {
     public class UiWidgetBase : MonoBehaviour
     {
+        [ShowInInspector] [ReadOnly]
+        public CanvasGroup canvasGroup;
         public void AddButtonClickEvent(UnityAction callback)
         {
             GetComponent<Button>().onClick.AddListener(callback);
@@ -71,6 +75,15 @@ namespace Framework.Scripts.UI.Base
             tmpEntry.callback = new EventTrigger.TriggerEvent();
             tmpEntry.callback.AddListener(callback);
             tmpTrigger.triggers.Add(tmpEntry);
+        }
+        
+        
+        public void ShowWithHiddenTurn()
+        {
+            canvasGroup = gameObject.GetComponentOrAdd<CanvasGroup>();
+            canvasGroup.alpha = Mathf.Abs(canvasGroup.alpha - 1);
+            canvasGroup.interactable = !canvasGroup.interactable;
+            canvasGroup.blocksRaycasts = !canvasGroup.blocksRaycasts;
         }
     }
 }

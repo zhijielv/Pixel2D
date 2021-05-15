@@ -9,6 +9,7 @@ using Framework.Scripts.Constants;
 using Framework.Scripts.Manager;
 using Framework.Scripts.Singleton;
 using Framework.Scripts.UI.Base;
+using SRF;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -43,14 +44,14 @@ public class Main : MonoBehaviour
 
     private async Task AddManager<T>() where T : ManagerSingleton<T>
     {
-        Constants.AddOrGetComponent(gameObject, typeof(T));
+        gameObject.GetComponentOrAdd<T>();
         await ManagerSingleton<T>.Instance.Init();
     }
 
     private async Task CreateManager<T>(Transform parent = null) where T : ManagerSingleton<T>
     {
         GameObject managerObj = new GameObject("[" + typeof(T).Name + "]");
-        Constants.AddOrGetComponent(managerObj, typeof(T));
+        managerObj.GetComponentOrAdd<T>();
         await ManagerSingleton<T>.Instance.Init();
         managerObj.transform.SetParent(parent);
     }

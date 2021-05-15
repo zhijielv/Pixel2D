@@ -15,7 +15,12 @@ namespace Framework.Scripts.Constants
         public static readonly string ViewScriptDir = "/Framework/Scripts/UI/View/";
         public static readonly string ViewPrefabDir = "Assets/Art/Prefabs/UI/View/";
         public static readonly string LevelPrefabDir = "Assets/Art/Prefabs/Level/";
-
+        // Hero的动画
+        public static readonly string AnimatorPath = "Sprite/Hero/{0}/{0}_anim/{0}.controller";
+        
+        public static readonly string WeaponPath = "Sprite/Weapon/weapons/weapons_{0}.png";
+        
+        
         ////////////////////////////////////////////  GameObject  ///////////////////////////////////////////////////////
         public const string MainCanvasObj = "_MainCanvas";
         public const string RewiredInputManagerObj = "Rewired Input Manager";
@@ -32,15 +37,9 @@ namespace Framework.Scripts.Constants
         public const string UIView = "UIView/";
         public const string ObjectUnit = "ObjectUnit";
 
+        public const string WeaponSuffix = "_Weapon";
+
         ////////////////////////////////////////////  Function  ///////////////////////////////////////////////////////
-        // 添加或获取组件
-        public static Component AddOrGetComponent(GameObject go, Type componentType)
-        {
-            Component c = go.GetComponent(componentType);
-            if (c == null)
-                c = go.AddComponent(componentType);
-            return c;
-        }
 
         // 字符串替换
         public static string ReplaceString(string oldStr, string oldValue, string newValue)

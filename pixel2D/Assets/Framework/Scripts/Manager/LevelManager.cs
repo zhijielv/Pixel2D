@@ -6,6 +6,7 @@ using Framework.Scripts.Level.LevelItem;
 using Framework.Scripts.Singleton;
 using Framework.Scripts.Utils;
 using Pathfinding;
+using SRF;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -51,7 +52,7 @@ namespace Framework.Scripts.Manager
             levelLoaderObj = new GameObject("LevelLoader") {name = "LevelLoader"};
             levelLoaderObj.transform.parent = mapRoot == null ? transform : mapRoot;
             LevelLoader loader =
-                (LevelLoader) Constants.Constants.AddOrGetComponent(levelLoaderObj, typeof(LevelLoader));
+                levelLoaderObj.GetComponentOrAdd<LevelLoader>();
             await loader.Init();
             
             // Create Level
@@ -69,7 +70,7 @@ namespace Framework.Scripts.Manager
         {
             GameObject AStarPath = new GameObject("AStarPath");
             AStarPath.transform.SetParent(transform);
-            AstarPath astarPath = Constants.Constants.AddOrGetComponent(AStarPath, typeof(AstarPath)) as AstarPath;
+            AstarPath astarPath = AStarPath.GetComponentOrAdd<AstarPath>();
             GridGraph gridGraph = astarPath.data.AddGraph(typeof(GridGraph)) as GridGraph;
             // gridGraph 旋转 为2D
             gridGraph.rotation = new Vector3(-90, 270, 90);
