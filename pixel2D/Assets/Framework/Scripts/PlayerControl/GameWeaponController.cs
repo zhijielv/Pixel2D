@@ -31,6 +31,7 @@ namespace Framework.Scripts.PlayerControl
                     (spriteRenderer.sprite.bounds.size.x + ObjectManager.Instance.mainPlayer
                         .GetComponent<SpriteRenderer>().sprite.bounds.size.x) / 2.0f, 0, 0);
             currentWeapon.transform.localPosition = offset;
+            currentWeapon.GetComponent<BoxCollider2D>().isTrigger = true;
             weaponList.Add(currentWeapon);
 
             // 设置事件
@@ -50,15 +51,14 @@ namespace Framework.Scripts.PlayerControl
         {
             if (null == currentWeapon || weaponList.Count == 0) return;
             var playerPosition = ObjectManager.Instance.mainPlayer.transform.position;
-            
+
             Vector3 targetVector3 = (CameraManager.Instance.mouseTarget.transform.position
                                      - playerPosition).normalized;
 
             Quaternion quaternion = Quaternion.FromToRotation(Vector3.right, targetVector3);
             transform.localRotation = quaternion;
 
-            int i = Vector3.Cross(targetVector3, Vector3.up).z > 0 ? 0 : 180;
-            currentWeapon.transform.localEulerAngles = new Vector3(i, 0, 0);
+            currentWeapon.GetComponent<SpriteRenderer>().flipY = Vector3.Cross(targetVector3, Vector3.up).z < 0;
         }
 
         // 攻击
