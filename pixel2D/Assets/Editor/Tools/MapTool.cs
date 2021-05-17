@@ -23,7 +23,7 @@ namespace Editor.Tools
 
         public MapTool()
         {
-            Maps = JsonHelper.ReadOrCreateJson<LevelMap>(Constants.MapJson).Result;
+            Maps = JsonHelper.ReadOrCreateJson<LevelMap>(Constants.MapJson);
         }
 
         [Button("保存地图数据", ButtonSizes.Large)]

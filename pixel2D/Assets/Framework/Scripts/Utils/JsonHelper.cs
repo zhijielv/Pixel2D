@@ -12,13 +12,13 @@ namespace Framework.Scripts.Utils
 {
     public class JsonHelper
     {
-        public static async Task<T> JsonReader<T>(string jsonName)
+        public static T JsonReader<T>(string jsonName)
         {
 #if UNITY_EDITOR
             jsonName = "Assets/Framework/Json/" + jsonName + ".json";
             TextAsset jsonFile = AssetDatabase.LoadAssetAtPath<TextAsset>(jsonName);
 #else
-            TextAsset jsonFile = await AddressableManager.Instance.LoadAssetAsync<TextAsset>(jsonName);
+            TextAsset jsonFile = AddressableManager.Instance.LoadAsset<TextAsset>(jsonName);
 #endif
             T t = JsonConvert.DeserializeObject<T>(jsonFile.text);
             return t;
@@ -29,7 +29,7 @@ namespace Framework.Scripts.Utils
         /// </summary>
         /// <param name="jsonName">json文件名（不带后缀）</param>
         /// <typeparam name="T">要获取的类</typeparam>
-        public static async Task<List<T>> ReadOrCreateJson<T>(string jsonName) where T : class, new()
+        public static List<T> ReadOrCreateJson<T>(string jsonName) where T : class, new()
         {
             string json;
             if (Application.isPlaying)

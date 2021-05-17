@@ -25,17 +25,17 @@ namespace Framework.Scripts.Manager
 
         public override async Task Init()
         {
-            levelMaps = await JsonHelper.ReadOrCreateJson<LevelMap>(Constants.Constants.MapJson);
-            leveljsonClasses = await JsonHelper.JsonReader<List<LeveljsonClass>>(Constants.Constants.LevelJson);
+            levelMaps = JsonHelper.ReadOrCreateJson<LevelMap>(Constants.Constants.MapJson);
+            leveljsonClasses = JsonHelper.JsonReader<List<LeveljsonClass>>(Constants.Constants.LevelJson);
             transform.localScale =
                 new Vector3(Common.LevelManagerScale, Common.LevelManagerScale, Common.LevelManagerScale);
             CreateAStarPath();
             init = true;
         }
 
-        public async Task<Level.Level> GetLevelByIndex(int mapIndex, int levelIndex)
+        public Level.Level GetLevelByIndex(int mapIndex, int levelIndex)
         {
-            Level.Level level = await levelMaps[mapIndex].Generate2Level(levelIndex);
+            Level.Level level = levelMaps[mapIndex].Generate2Level(levelIndex);
             return level;
         }
 
@@ -57,7 +57,7 @@ namespace Framework.Scripts.Manager
             
             // Create Level
             // curLevel = await _levelMaps[curMapIndex].Generate2Level(curLevelIndex);
-            curLevel = await GetLevelByIndex(curMapIndex, curLevelIndex);
+            curLevel = GetLevelByIndex(curMapIndex, curLevelIndex);
             loader.level = curLevel;
             loader.CreateLevel();
             

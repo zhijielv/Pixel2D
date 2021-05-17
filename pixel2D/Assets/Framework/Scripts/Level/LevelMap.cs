@@ -29,11 +29,11 @@ namespace Framework.Scripts.Level
             Levels.Add(levelItem);
         }
 
-        public async Task<Level> Generate2Level(int index)
+        public Level Generate2Level(int index)
         {
             LevelMapJsonClass levelMapJsonClass = this[index];
             Level level = new Level();
-            level = await level.GetLevel(levelMapJsonClass.LevelType);
+            level = level.GetLevel(levelMapJsonClass.LevelType);
             // Level level = await LevelManager.Instance.GetLevel(levelMapJsonClass.LevelType);
             level.LevelName = levelMapJsonClass.LevelName;
             level.LevelType = levelMapJsonClass.LevelType;
@@ -59,13 +59,13 @@ namespace Framework.Scripts.Level
         public int Height;
         public Dictionary<LevelItemType, int> WidgetDictionary;
         
-        public Task<Level> this[int index] => Get(index);
+        public Level this[int index] => Get(index);
 
-        private async Task<Level> Get(int index)
+        private Level Get(int index)
         {
             // Level level = await LevelManager.Instance.GetLevel(LevelType);
             Level level = new Level();
-            level = await level.GetLevel(LevelType);
+            level = level.GetLevel(LevelType);
             level.LevelName = LevelName;
             level.LevelType = LevelType;
             level.Width = Width;

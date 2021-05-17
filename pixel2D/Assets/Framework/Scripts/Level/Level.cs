@@ -123,7 +123,7 @@ namespace Framework.Scripts.Level
         //     }
         // }
 
-        public async Task GenerateLevelValueFromJson(LeveljsonClass data)
+        public void GenerateLevelValueFromJson(LeveljsonClass data)
         {
             // SetSize(data.Width, data.Height);
             LevelType = data.LevelType;
@@ -212,17 +212,17 @@ namespace Framework.Scripts.Level
             return LevelType;
         }
         
-        public async Task<Level> GetLevel(LevelType levelType = LevelType.ludi)
+        public Level GetLevel(LevelType levelType = LevelType.ludi)
         {
             Level level = new Level();
-            await level.GenerateLevelValueFromJson(await GetLeveljsonClass(levelType));
+            level.GenerateLevelValueFromJson(GetLeveljsonClass(levelType));
             return level;
         }
 
-        public async Task<LeveljsonClass> GetLeveljsonClass(LevelType levelType = LevelType.ludi)
+        public LeveljsonClass GetLeveljsonClass(LevelType levelType = LevelType.ludi)
         {
             LeveljsonClass tmpLeveljsonClass = new LeveljsonClass();
-            List<LeveljsonClass> leveljsonClasses = await JsonHelper.JsonReader<List<LeveljsonClass>>(Constants.Constants.LevelJson);
+            List<LeveljsonClass> leveljsonClasses = JsonHelper.JsonReader<List<LeveljsonClass>>(Constants.Constants.LevelJson);
             foreach (LeveljsonClass leveljsonClass in leveljsonClasses)
             {
                 if (leveljsonClass.LevelType != levelType) continue;

@@ -62,7 +62,7 @@ namespace Editor.Tools
             {
                 if (data.LevelType != levelType) continue;
                 _leveljsonClass = data;
-                await tmpLevel.GenerateLevelValueFromJson(_leveljsonClass);
+                tmpLevel.GenerateLevelValueFromJson(_leveljsonClass);
                 break;
             }
 
