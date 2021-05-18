@@ -45,7 +45,7 @@ namespace Framework.Scripts.Manager
         }
 
         // 加载Level数据
-        public async Task InitLevelLoader(Transform mapRoot = null)
+        public void InitLevelLoader(Transform mapRoot = null)
         {
             // reset LevelLoader
             if (levelLoaderObj != null) Destroy(levelLoaderObj);
@@ -53,7 +53,7 @@ namespace Framework.Scripts.Manager
             levelLoaderObj.transform.parent = mapRoot == null ? transform : mapRoot;
             LevelLoader loader =
                 levelLoaderObj.GetComponentOrAdd<LevelLoader>();
-            await loader.Init();
+            loader.Init();
             
             // Create Level
             // curLevel = await _levelMaps[curMapIndex].Generate2Level(curLevelIndex);

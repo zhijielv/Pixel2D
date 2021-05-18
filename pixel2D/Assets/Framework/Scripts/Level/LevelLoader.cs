@@ -21,9 +21,9 @@ namespace Framework.Scripts.Level
         [ReadOnly] public LevelType levelType;
         [ShowInInspector] public Level level;
 
-        public async Task Init()
+        public void Init()
         {
-            imagePrefab = await ObjectManager.Instance.LoadUnit();
+            imagePrefab = ObjectManager.Instance.LoadUnit();
             mapRoot = transform;
             ResetTransform();
         }

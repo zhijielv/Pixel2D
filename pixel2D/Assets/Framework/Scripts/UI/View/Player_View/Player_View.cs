@@ -10,6 +10,7 @@ using DG.Tweening;
 using Framework.Scripts.Constants;
 using HutongGames.PlayMaker;
 using Rewired;
+using Keyboard = UnityEngine.InputSystem.Keyboard;
 
 namespace Framework.Scripts.UI.View
 {
@@ -37,8 +38,18 @@ namespace Framework.Scripts.UI.View
             AddButtonClickEvent(LoadLevel_Button, LoadLevel);
             AddButtonClickEvent(LoadAvatar_Button, LoadAvatar);
             AddButtonClickEvent(SetSpeed_Button, SetSpeed);
+            
+            // todo 注册对象池
         }
-        
+
+        private void Update()
+        {
+            if (Keyboard.current.tKey.wasPressedThisFrame)
+            {
+                ObjectManager.Instance.unitPool.DespawnAll();
+            }
+        }
+
         private void TestListenerFunc(EventData data)
         {
             Debug.Log($"{data.Type}    {data.Data}");
@@ -65,10 +76,10 @@ namespace Framework.Scripts.UI.View
                 Mathf.Clamp(orthographicSize - data.GetAxisDelta() / 2.0f, CameraManager.MINOrthographicSize, CameraManager.MAXOrthographicSize);;
         }
 
-        public async void LoadLevel()
+        public void LoadLevel()
         {
             // LevelManager.Instance.levelType = LevelType.yanjiang;
-            await LevelManager.Instance.InitLevelLoader();
+            LevelManager.Instance.InitLevelLoader();
         }
 
         public async void LoadAvatar()
@@ -80,7 +91,7 @@ namespace Framework.Scripts.UI.View
             }
             await ObjectManager.Instance.LoadPlayerAvatar(HeroName, LevelManager.Instance.transform);
             FsmFloat fsmSpeed = ObjectManager.Instance.mainPlayer.GetComponent<PlayMakerFSM>().FsmVariables.FindFsmFloat("Speed");
-            fsmSpeed = speed;
+            fsmSpeed.Value = speed;
             Speed_InputField.text = speed.ToString();
             
             CameraManager.Instance.CreatePlayerCamera();

@@ -23,7 +23,7 @@ namespace Framework.Scripts.PlayerControl
             weaponList = new List<GameObject>();
             // 加载武器
             string path = String.Format(Constants.Constants.WeaponPath, weaponName);
-            currentWeapon = await ObjectManager.Instance.LoadUnit(path, transform, true);
+            currentWeapon = ObjectManager.Instance.LoadUnit(path, transform, true);
             SpriteRenderer spriteRenderer = currentWeapon.GetComponent<SpriteRenderer>();
             spriteRenderer.sortingOrder = 1;
             Vector3 offset =
@@ -66,6 +66,10 @@ namespace Framework.Scripts.PlayerControl
         {
             if (null == currentWeapon || weaponList.Count == 0) return;
             Debug.Log($"Button Fire!  {data.GetButton()}");
+            Transform bullet = ObjectManager.Instance.SpawnUnit(3);
+            bullet.localPosition = transform.position;
+            bullet.GetComponent<BoxCollider2D>().isTrigger = true;
+            bullet.GetComponent<SpriteRenderer>().sortingOrder = 2;
             // EventManager.Instance.DispatchEvent(EventConstants.StartGame);
         }
     }

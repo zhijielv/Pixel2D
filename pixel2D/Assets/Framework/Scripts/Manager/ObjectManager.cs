@@ -5,10 +5,12 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Framework.Scripts.PlayerControl;
 using Framework.Scripts.Singleton;
 using Pathfinding;
+using PathologicalGames;
 using SRF;
 using UnityEngine;
 
@@ -17,24 +19,36 @@ namespace Framework.Scripts.Manager
     public class ObjectManager : ManagerSingleton<ObjectManager>
     {
         public GameObject mainPlayer;
+        public SpawnPool unitPool;
+        public Transform objectUnit;
+        public Dictionary<string, SpawnPool> poolDic;
+
+        public override Task Init()
+        {
+            poolDic = new Dictionary<string, SpawnPool>();
+            objectUnit = LoadUnit().transform;
+            unitPool = RegisterPool(objectUnit);
+            return base.Init();
+        }
+
+        #region Load
 
         // 加载通过2DUnit，自带Collider2D和SpritRender
-        public async Task<GameObject> LoadUnit(object key = null, Transform parent = null, bool instantiate = false)
+        public GameObject LoadUnit(object key = null, Transform parent = null, bool instantiate = false)
         {
             GameObject asset;
-            if (instantiate)
-                asset = await AddressableManager.Instance.InstantiateAsync(Constants.Constants.ObjectUnit, parent);
-            else
-                asset = await AddressableManager.Instance.LoadAssetAsync<GameObject>(Constants.Constants.ObjectUnit);
+            asset = instantiate
+                ? AddressableManager.Instance.Instantiate(Constants.Constants.ObjectUnit, parent)
+                : AddressableManager.Instance.LoadAsset<GameObject>(Constants.Constants.ObjectUnit);
             if (key != null)
-                asset.GetComponent<SpriteRenderer>().sprite = await AddressableManager.Instance.LoadAssetAsync<Sprite>(key);
+                asset.GetComponent<SpriteRenderer>().sprite = AddressableManager.Instance.LoadAsset<Sprite>(key);
             return asset;
         }
 
         // 创建人物
-        public async Task<GameObject> LoadAvatar(object key = null, Transform parent = null)
+        public GameObject LoadAvatar(object key = null, Transform parent = null)
         {
-            GameObject unit = await LoadUnit(key, parent, true);
+            GameObject unit = LoadUnit(key, parent, true);
             // 设置层级
             SpriteRenderer spriteRenderer = unit.GetComponent<SpriteRenderer>();
             spriteRenderer.sortingOrder = 1;
@@ -73,9 +87,43 @@ namespace Framework.Scripts.Manager
             aiLerp.orientation = OrientationMode.YAxisForward;
             aiLerp.enableRotation = false;
             aiLerp.enabled = false;
-            
+
             // 添加控制器
             unit.GetComponentOrAdd<GamePlayerController>();
         }
+
+        #endregion
+
+        #region ObjectPool
+
+        public SpawnPool RegisterPool(Transform prefabTransform)
+        {
+            GameObject o = new GameObject(prefabTransform.name + "_Pool");
+            o.transform.SetParent(transform);
+            SpawnPool spawnPool = PoolManager.Pools.Create(o.name, o);
+            PrefabPool prefabPool = new PrefabPool(prefabTransform);
+            spawnPool._perPrefabPoolOptions.Add(prefabPool);
+            spawnPool.CreatePrefabPool(prefabPool);
+            poolDic.Add(spawnPool.poolName, spawnPool);
+            return spawnPool;
+        }
+
+        public Transform SpawnUnit(float seconds = 0f)
+        {
+            Transform spawn = unitPool.Spawn(objectUnit);
+            if (seconds > 0)
+                unitPool.Despawn(spawn, seconds);
+            return spawn;
+        }
+        
+        public Transform Spawn(SpawnPool spawnPool, Transform prefabTransform, float seconds = 0f)
+        {
+            Transform spawn = spawnPool.Spawn(prefabTransform);
+            if (seconds > 0)
+                spawnPool.Despawn(spawn, seconds);
+            return spawn;
+        }
+
+        #endregion
     }
 }

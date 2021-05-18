@@ -61,8 +61,7 @@ namespace Framework.Scripts.Manager
             // 获取Level长宽
             int width = LevelManager.Instance.levelLoaderObj.GetComponent<LevelLoader>().level.Width;
             int height = LevelManager.Instance.levelLoaderObj.GetComponent<LevelLoader>().level.Height;
-            vCameraCollider =
-                await ObjectManager.Instance.LoadUnit(null, LevelManager.Instance.transform, true);
+            vCameraCollider = ObjectManager.Instance.LoadUnit(null, LevelManager.Instance.transform, true);
             vCameraCollider.name = "VCamera Collider";
             vCameraCollider.transform.SetParent(transform);
             // 设置Collider2D
@@ -99,9 +98,9 @@ namespace Framework.Scripts.Manager
             mainCamera.GetComponent<Camera>().orthographic = true;
         }
 
-        public async Task<GameObject> CreateMouseTarget()
+        public GameObject CreateMouseTarget()
         {
-            GameObject mouseTarget = await ObjectManager.Instance.LoadUnit(null, transform, true);
+            GameObject mouseTarget = ObjectManager.Instance.LoadUnit(null, transform, true);
             Destroy(mouseTarget.GetComponent<BoxCollider2D>());
             _targetList.Add(mouseTarget);
             ResetTargetList();
@@ -119,9 +118,9 @@ namespace Framework.Scripts.Manager
             _targetList.Remove(target);
         }
 
-        public async void CameraFollowMouse()
+        public void CameraFollowMouse()
         {
-            mouseTarget = await CreateMouseTarget();
+            mouseTarget = CreateMouseTarget();
             mouseTarget.GetComponent<SpriteRenderer>().enabled = false;
             RewiredInputEventManager.Instance.AddEvent(SetMouseTarget, UpdateLoopType.Update,
                 InputActionEventType.AxisActive, "MouseHorizontal");

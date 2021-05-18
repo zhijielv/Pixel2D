@@ -34,10 +34,10 @@ public class Main : MonoBehaviour
         await AddManager<AddressableManager>();
         await AddManager<UiManager>();
         await AddManager<Launcher>();
-        await AddManager<ObjectManager>();
         await AddManager<RewiredInputEventManager>();
         await AddManager<EventManager>();
         await AddManager<TimerManager>();
+        await CreateManager<ObjectManager>();
         await CreateManager<CameraManager>();
         await CreateManager<LevelManager>();
     }
