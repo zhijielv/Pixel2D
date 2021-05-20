@@ -16,12 +16,12 @@ namespace Framework.Scripts.UI.View
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
-                EventManager.Instance.DispatchEvent(EventConstants.RedDot);
+                EventManager.Instance.DispatchEvent(Scripts.Constants.EventType.RedDot);
             }
 
             if (Input.GetKeyDown(KeyCode.B))
             {
-                EventManager.Instance.DispatchEvent(EventConstants.StartGame);
+                EventManager.Instance.DispatchEvent(Scripts.Constants.EventType.StartGame);
             }
         }
 
@@ -29,8 +29,8 @@ namespace Framework.Scripts.UI.View
         {
             // LevelManager.Instance.levelType = LevelType.yanjiang;
             // await LevelManager.Instance.LoadLevel(transform);
-            RedDot.AddRedDotEventListener(EventConstants.RedDot);
-            RedDot2.AddRedDotEventListener(EventConstants.StartGame);
+            RedDot.AddRedDotEventListener(Scripts.Constants.EventType.RedDot);
+            RedDot2.AddRedDotEventListener(Scripts.Constants.EventType.StartGame);
         }
     }
 }

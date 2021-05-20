@@ -4,6 +4,7 @@
 ** Description: TODO 红点组件逻辑
 */
 
+using System;
 using DG.Tweening;
 using Framework.Scripts.Constants;
 using Framework.Scripts.Manager;
@@ -11,6 +12,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using EventType = Framework.Scripts.Constants.EventType;
 
 namespace Framework.Scripts.UI.Base.RedDot
 {
@@ -19,13 +21,13 @@ namespace Framework.Scripts.UI.Base.RedDot
         public Image redImage;
 
         // 添加红点监听
-        public void AddRedDotEventListener(EventConstants type)
+        public void AddRedDotEventListener(EventType type)
         {
             EventManager.Instance.AddEventListener(type, OnShow);
         }
         
         // 红点
-        public void OnShow(EventData data)
+        public void OnShow(object sender, EventArgs eventArgs)
         {
             ShowRedDot();
         }

@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Framework.Scripts.Constants;
 using Framework.Scripts.Singleton;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UIElements;
+using EventType = Framework.Scripts.Constants.EventType;
 
 namespace Framework.Scripts.Manager
 {
@@ -12,96 +16,238 @@ namespace Framework.Scripts.Manager
     public class EventManager : ManagerSingleton<EventManager>
     {
         /// <summary>
-        /// 事件监听池
+        /// 全局事件监听
         /// </summary>
-        private static readonly Dictionary<EventConstants, DelegateEvent> EventConstantsListeners =
-            new Dictionary<EventConstants, DelegateEvent>();
+        private static readonly Dictionary<EventType, DelegateEvent> GlobalEventTable =
+            new Dictionary<EventType, DelegateEvent>();
+
+        /// <summary>
+        /// 局部事件监听
+        /// </summary>
+        private static readonly Dictionary<object, Dictionary<EventType, DelegateEvent>> EventTable =
+            new Dictionary<object, Dictionary<EventType, DelegateEvent>>();
+
+        #region 全局事件方法
+
+        private DelegateEvent GetDelegateEvent(EventType eventType)
+        {
+            return GlobalEventTable.TryGetValue(eventType, out var getDelegateEvent) ? getDelegateEvent : null;
+        }
+
+        // 检查事件删除
+        private void CheckForEventRemoval(EventType eventType, DelegateEvent delegateEvent)
+        {
+            if (delegateEvent.GetEventHandler().GetInvocationList().Length == 0)
+            {
+                GlobalEventTable.Remove(eventType);
+            }
+        }
 
         /// <summary>
         /// 添加事件
         /// </summary>
         /// <param name="type">事件类型</param>
-        /// <param name="listenerFunc">监听函数</param>
-        public void AddEventListener(EventConstants type, DelegateEvent.EventHandler listenerFunc)
+        /// <param name="eventHandler">监听函数</param>
+        public void AddEventListener(EventType type, EventHandler eventHandler)
         {
             DelegateEvent delegateEvent;
-            if (EventConstantsListeners.ContainsKey(type))
+            if (GlobalEventTable.TryGetValue(type, out delegateEvent))
             {
-                delegateEvent = EventConstantsListeners[type];
+#if UNITY_EDITOR
+                EventHandler[] delegates = (EventHandler[]) delegateEvent.GetEventHandler().GetInvocationList();
+                for (int i = 0; i < delegates.Length; ++i)
+                {
+                    if (delegates[i] == eventHandler)
+                    {
+                        Debug.LogWarning("Warning: the function \"" + eventHandler.Method.ToString() +
+                                         "\" is trying to subscribe to the " + type + " more than once." +
+                                         eventHandler.Target);
+                        break;
+                    }
+                }
+#endif
+                delegateEvent.AddListener(eventHandler);
             }
             else
             {
-                delegateEvent = new DelegateEvent();
-                EventConstantsListeners[type] = delegateEvent;
+                delegateEvent = ObjectManager.Get<DelegateEvent>();
+                GlobalEventTable.Add(type, delegateEvent);
             }
-
-            delegateEvent.AddListener(listenerFunc);
         }
-
+        
         /// <summary>
         /// 删除事件
         /// </summary>
-        /// <param name="type">事件类型</param>
-        /// <param name="listenerFunc">监听函数</param>
-        public void RemoveEventListener(EventConstants type, DelegateEvent.EventHandler listenerFunc)
+        /// <param name="eventType"></param>
+        /// <param name="eventHandler"></param>
+        public void RemoveEventListener(EventType eventType, EventHandler eventHandler)
         {
-            if (listenerFunc == null)
+            DelegateEvent delegateEventBase = GetDelegateEvent(eventType);
+            if (delegateEventBase != null)
             {
-                return;
+                EventHandler[] eventHandlers =
+                    delegateEventBase.GetEventHandler().GetInvocationList() as EventHandler[];
+                System.Diagnostics.Debug.Assert(eventHandlers != null, nameof(eventHandlers) + " != null");
+                if (eventHandlers.Contains(eventHandler))
+                {
+                    delegateEventBase.RemoveListener(eventHandler);
+                }
+
+                CheckForEventRemoval(eventType, delegateEventBase);
             }
 
-            if (!EventConstantsListeners.ContainsKey(type))
-            {
-                return;
-            }
-
-            DelegateEvent delegateEvent = EventConstantsListeners[type];
-            delegateEvent.RemoveListener(listenerFunc);
+            Debug.LogError($"{eventType} is not Add");
         }
 
         /// <summary>
         /// 触发某一类型的事件  并传递数据
         /// </summary>
-        /// <param name="type">事件类型</param>
-        /// <param name="data">事件的数据(可为null)</param>
-        public void DispatchEvent(EventConstants type, object data = null)
+        /// <param name="eventType">事件类型</param>
+        /// <param name="eventData">事件的数据(可为null)</param>
+        public void DispatchEvent(EventType eventType, EventData eventData = null)
         {
-            if (!EventConstantsListeners.ContainsKey(type))
-            {
-                return;
-            }
-
+            DelegateEvent delegateEvent = GetDelegateEvent(eventType);
             //创建事件数据
-            EventData eventData = new EventData {Type = type, Data = data};
-
-            DelegateEvent delegateEvent = EventConstantsListeners[type];
             delegateEvent.Handle(eventData);
         }
+        
+        public void DispatchEvent<T>(EventType eventType, EventData<T> eventData = null)
+        {
+            DelegateEvent delegateEvent = GetDelegateEvent(eventType);
+            //创建事件数据
+            delegateEvent.Handle(eventData);
+        }
+
+        #endregion
+
+        #region 局部事件方法
+
+        private DelegateEvent GetDelegateEvent(object obj, EventType eventType)
+        {
+            Dictionary<EventType, DelegateEvent> delegateEvents =
+                EventTable.TryGetValue(obj, out var events) ? events : null;
+            return delegateEvents != null && delegateEvents.TryGetValue(eventType, out var delegateEvent) ? delegateEvent : null;
+        }
+        
+        // 检查事件删除
+        private void CheckForEventRemoval(object obj, EventType eventType, DelegateEvent delegateEvent)
+        {
+            if (delegateEvent.GetEventHandler().GetInvocationList().Length == 0)
+            {
+                Dictionary<EventType, DelegateEvent> delegateEvents;
+                if (EventTable.TryGetValue(obj, out delegateEvents))
+                {
+                    delegateEvents.Remove(eventType);
+                    if(delegateEvents.Count == 0)
+                        EventTable.Remove(obj);
+                }
+                GlobalEventTable.Remove(eventType);
+            }
+        }
+
+        public void AddEventListener(object obj, EventType eventType, EventHandler eventHandler)
+        {
+            Dictionary<EventType, DelegateEvent> delegateEvents;
+            if (EventTable.TryGetValue(obj, out delegateEvents))
+            {
+                DelegateEvent delegateEvent;
+                delegateEvents.TryGetValue(eventType, out delegateEvent);
+#if UNITY_EDITOR
+                EventHandler[] delegates = (EventHandler[]) delegateEvent.GetEventHandler().GetInvocationList();
+                for (int i = 0; i < delegates.Length; ++i)
+                {
+                    if (delegates[i] == eventHandler)
+                    {
+                        Debug.LogWarning("Warning: the function \"" + eventHandler.Method.ToString() +
+                                         "\" is trying to subscribe to the " + eventType + " more than once." +
+                                         eventHandler.Target);
+                        break;
+                    }
+                }
+#endif
+                delegateEvent.AddListener(eventHandler);
+            }
+            else
+            {
+                delegateEvents = new Dictionary<EventType, DelegateEvent>();
+                DelegateEvent delegateEvent = ObjectManager.Get<DelegateEvent>();
+                delegateEvent.AddListener(eventHandler);
+                delegateEvents.Add(eventType, delegateEvent);
+
+                EventTable.Add(obj, delegateEvents);
+            }
+        }
+        
+        public void RemoveEventListener(object obj, EventType eventType, EventHandler eventHandler)
+        {
+            var delegateEvent = GetDelegateEvent(obj, eventType);
+            if (delegateEvent == null) return;
+            var eventHandlers = delegateEvent.GetEventHandler().GetInvocationList() as EventHandler[];
+            System.Diagnostics.Debug.Assert(eventHandlers != null, nameof(eventHandlers) + " != null");
+            foreach (var handler in eventHandlers)
+            {
+                if (!eventHandler.Equals(handler)) continue;
+                ObjectManager.Return(handler);
+                delegateEvent.RemoveListener(eventHandler);
+                break;
+            }
+            CheckForEventRemoval(obj, eventType, delegateEvent);
+        }
+
+        public void RemoveEventListener(object obj, EventType eventType)
+        {
+            var delegateEvent = GetDelegateEvent(obj, eventType);
+            if (delegateEvent == null) return;
+            Dictionary<EventType, DelegateEvent> delegateEvents =
+                EventTable.TryGetValue(obj, out var events) ? events : null;
+            System.Diagnostics.Debug.Assert(delegateEvents != null, nameof(delegateEvents) + " != null");
+            delegateEvents.Remove(eventType);
+        }
+
+        /// <summary>
+        /// 触发某一类型的事件  并传递数据
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="eventType">事件类型</param>
+        /// <param name="data">事件的数据(可为null)</param>
+        public void DispatchEvent(object obj, EventType eventType, EventData eventData)
+        {
+            DelegateEvent list = GetDelegateEvent(obj, eventType);
+            //创建事件数据
+            list?.Handle(eventData);
+        }
+
+        #endregion
     }
 
+    #region DelegateEvent
+
     /// <summary>
-    /// 事件类
+    /// 事件抽象类
     /// </summary>
     public class DelegateEvent
     {
         /// <summary>
-        /// 定义委托函数
-        /// </summary>
-        /// <param name="data"></param>
-        public delegate void EventHandler(EventData data);
-
-        /// <summary>
         /// 定义基于委托函数的事件
         /// </summary>
-        public event EventHandler EventHandle;
+        private event EventHandler EventHandle;
 
         /// <summary>
         /// 触发监听事件
         /// </summary>
-        /// <param name="data"></param>
-        public void Handle(EventData data)
+        /// <param name="data">事件传过来的参数</param>
+        public void Handle(EventDataBase data)
         {
-            EventHandle?.Invoke(data);
+            EventHandle?.Invoke(this, data);
+        }
+
+        /// <summary>
+        /// 获取委托
+        /// </summary>
+        /// <returns></returns>
+        public EventHandler GetEventHandler()
+        {
+            return EventHandle;
         }
 
         /// <summary>
@@ -127,16 +273,27 @@ namespace Framework.Scripts.Manager
     /// <summary>
     /// 事件数据
     /// </summary>
-    public class EventData : EventArgs
+    public abstract class EventDataBase : EventArgs
     {
-        /// <summary>
-        /// 事件类型
-        /// </summary>
-        public EventConstants Type;
-
         /// <summary>
         /// 事件传递的数据
         /// </summary>
         public object Data;
     }
+
+    public class EventData : EventDataBase
+    {
+    }
+
+    public class EventData<T> : EventDataBase
+    {
+        public T Value;
+
+        public EventData(T value)
+        {
+            this.Value = value;
+        }
+    }
+
+    #endregion
 }

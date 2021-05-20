@@ -22,6 +22,8 @@ namespace Framework.Scripts.Manager
         public SpawnPool unitPool;
         public Transform objectUnit;
         public Dictionary<string, SpawnPool> poolDic;
+        
+        private Dictionary<Type, object> m_GenericPool = new Dictionary<Type, object>();
 
         public override Task Init()
         {
@@ -122,6 +124,74 @@ namespace Framework.Scripts.Manager
             if (seconds > 0)
                 spawnPool.Despawn(spawn, seconds);
             return spawn;
+        }
+
+        #endregion
+
+        #region internalPool // 类的实例池子
+        
+        /// <summary>
+        /// Get a pooled object of the specified type using a generic ObjectPool.
+        /// </summary>
+        /// <typeparam name="T">The type of object to get.</typeparam>
+        /// <returns>A pooled object of type T.</returns>
+        public static T Get<T>()
+        {
+            return Instance.GetInternal<T>();
+        }
+        
+        /// <summary>
+        /// Internal method to get a pooled object of the specified type using a generic ObjectPool.
+        /// </summary>
+        /// <typeparam name="T">The type of object to get.</typeparam>
+        /// <returns>A pooled object of type T.</returns>
+        private T GetInternal<T>()
+        {
+            object value;
+            if (m_GenericPool.TryGetValue(typeof(T), out value)) {
+                var pooledObjects = value as Stack<T>;
+                if (pooledObjects.Count > 0) {
+                    return pooledObjects.Pop();
+                }
+            }
+            return Activator.CreateInstance<T>();
+        }
+        
+        /// <summary>
+        /// Return the object back to the generic object pool.
+        /// </summary>
+        /// <typeparam name="T">The type of object to return.</typeparam>
+        /// <param name="obj">The object to return.</param>
+        public static void Return<T>(T obj)
+        {
+            // Objects may be wanting to be returned as the game is stopping but the ObjectPool has already been destroyed. Ensure the ObjectPool is still valid.
+            if (Instance == null) {
+                return;
+            }
+
+            Instance.ReturnInternal<T>(obj);
+        }
+        
+        /// <summary>
+        /// Internal method to return the object back to the generic object pool.
+        /// </summary>
+        /// <typeparam name="T">The type of object to return.</typeparam>
+        /// <param name="obj">The object to return.</param>
+        private void ReturnInternal<T>(T obj)
+        {
+            if (obj == null) {
+                return;
+            }
+
+            object value;
+            if (m_GenericPool.TryGetValue(typeof(T), out value)) {
+                var pooledObjects = value as Stack<T>;
+                pooledObjects.Push(obj);
+            } else {
+                var pooledObjects = new Stack<T>();
+                pooledObjects.Push(obj);
+                m_GenericPool.Add(typeof(T), pooledObjects);
+            }
         }
 
         #endregion

@@ -4,10 +4,13 @@
 ** Description: TODO 
 */
 
+using System;
 using System.Collections.Generic;
 using Framework.Scripts.Constants;
 using Framework.Scripts.Manager;
 using UnityEngine;
+using Debug = System.Diagnostics.Debug;
+using EventType = Framework.Scripts.Constants.EventType;
 
 namespace Framework.Scripts.UI.Base.Bagpack
 {
@@ -18,15 +21,17 @@ namespace Framework.Scripts.UI.Base.Bagpack
 
         private void Start()
         {
-            EventManager.Instance.AddEventListener(EventConstants.ItemChangeNum, OnValueChanged);
+            EventManager.Instance.AddEventListener(EventType.ItemChangeNum, OnValueChanged);
         }
 
-        private void OnValueChanged(EventData data)
+        private void OnValueChanged(object sender, EventArgs e)
         {
-            num = uint.Parse( Mathf.Clamp((int)data.Data, 0, 99).ToString());
+            EventData<int> data = e as EventData<int>;
+            Debug.Assert(data != null, nameof(data) + " != null");
+            num = uint.Parse(Mathf.Clamp(data.Value, 0, 99).ToString());
             List<ItemBase> list = new List<ItemBase>();
             list.Add(this);
-            EventManager.Instance.DispatchEvent(EventConstants.BagpackChange, list);
+            EventManager.Instance.DispatchEvent(EventType.BagpackChange, new EventData(){Data = list});
         }
     }
 }

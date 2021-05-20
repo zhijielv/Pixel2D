@@ -17,33 +17,31 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Debug = System.Diagnostics.Debug;
+using EventType = Framework.Scripts.Constants.EventType;
 
 namespace Framework.Scripts.UI.Base
 {
     public class ViewBase : UiWidgetBase
     {
-        readonly struct EventItem
-        {
-            public readonly EventConstants EventType;
-            public readonly DelegateEvent.EventHandler ListenerFunc;
-
-            public EventItem(EventConstants type, DelegateEvent.EventHandler listenerFunc)
-            {
-                EventType = type;
-                ListenerFunc = listenerFunc;
-            }
-        }
-
+        private readonly Dictionary<EventType, DelegateEvent> _viewEvents = new Dictionary<EventType, DelegateEvent>();
         #region EventHandler
-
-        private readonly List<EventItem> _eventItems = new List<EventItem>();
-        private readonly List<Action<InputActionEventData>> _viewEvents =
+        
+        private readonly List<Action<InputActionEventData>> _viewInputEvents =
             new List<Action<InputActionEventData>>();
 
-        protected void AddEventListener(EventConstants type, DelegateEvent.EventHandler listenerFunc)
+        protected void AddEventListener(EventType eventType, EventHandler listenerFunc)
         {
-            EventManager.Instance.AddEventListener(type, listenerFunc);
-            _eventItems.Add(new EventItem(type, listenerFunc));
+            EventManager.Instance.AddEventListener(this, eventType, listenerFunc);
+            if (_viewEvents.TryGetValue(eventType, out var delegateEvent))
+            {
+                delegateEvent.AddListener(listenerFunc);
+                return;
+            }
+
+            delegateEvent = ObjectManager.Get<DelegateEvent>();
+            delegateEvent.AddListener(listenerFunc);
+            _viewEvents.Add(eventType, delegateEvent);
         }
 
         protected void AddInputEventDelegate(Action<InputActionEventData> callback,
@@ -51,20 +49,42 @@ namespace Framework.Scripts.UI.Base
             InputActionEventType eventType,
             string actionName)
         {
-            _viewEvents.Add(callback);
+            _viewInputEvents.Add(callback);
             RewiredInputEventManager.Instance.AddEvent(callback, updateLoop, eventType, actionName);
         }
 
         protected void Disable()
         {
-            foreach (EventItem eventItem in _eventItems)
-                EventManager.Instance.RemoveEventListener(eventItem.EventType, eventItem.ListenerFunc);
+            foreach (var eventItem in _viewEvents)
+            {
+                UnityEngine.Debug.Log(eventItem.Key);
+                EventHandler handler = eventItem.Value.GetEventHandler();
+                UnityEngine.Debug.Log(handler.Method);
+                UnityEngine.Debug.Log(handler.Target);
+                UnityEngine.Debug.Log(handler.GetInvocationList().Length);
+                EventHandler[] list = eventItem.Value.GetEventHandler().GetInvocationList() as EventHandler[];
+                if(list == null) UnityEngine.Debug.Log("null");
+                else
+                {
+                    UnityEngine.Debug.Log("not null");
+                }
+                Debug.Assert(list == null, nameof(list) + " != null");
+                UnityEngine.Debug.Log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+                for (var i = 0; i < list.Length; i++)
+                {
+                    UnityEngine.Debug.Log(list[i]);
+                    EventHandler eventHandler = list[i];
+                    EventManager.Instance.RemoveEventListener(this, eventItem.Key, eventHandler);
+                }
 
-            foreach (Action<InputActionEventData> action in _viewEvents)
+                ObjectManager.Return(eventItem.Value);
+            }
+
+            foreach (Action<InputActionEventData> action in _viewInputEvents)
             {
                 RewiredInputEventManager.Instance.RemoveEvent(action);
             }
-            _viewEvents.Clear();
+            _viewInputEvents.Clear();
         }
 
         #endregion

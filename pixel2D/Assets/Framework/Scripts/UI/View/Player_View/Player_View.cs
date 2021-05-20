@@ -17,7 +17,7 @@ namespace Framework.Scripts.UI.View
     using Base;
     using System;
     using UnityEngine;
-    
+
     public partial class Player_View : ViewBase
     {
         public string HeroName = "c01";
@@ -31,14 +31,14 @@ namespace Framework.Scripts.UI.View
 
             // EventManager
             // TestListenerFunc方法监听EventConstants.StartGame事件
-            AddEventListener(EventConstants.StartGame, TestListenerFunc);
-            
+            AddEventListener(Constants.EventType.StartGame, TestListenerFunc);
+
             // UIEvent
             // 自己拼的ui，监听事件
             AddButtonClickEvent(LoadLevel_Button, LoadLevel);
             AddButtonClickEvent(LoadAvatar_Button, LoadAvatar);
             AddButtonClickEvent(SetSpeed_Button, SetSpeed);
-            
+
             // todo 注册对象池
         }
 
@@ -48,11 +48,18 @@ namespace Framework.Scripts.UI.View
             {
                 ObjectManager.Instance.unitPool.DespawnAll();
             }
+
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                EventManager.Instance.DispatchEvent(Constants.EventType.StartGame);
+                // test222();
+            }
         }
 
-        private void TestListenerFunc(EventData data)
+        private void TestListenerFunc(object sender, EventArgs eventArgs)
         {
-            Debug.Log($"{data.Type}    {data.Data}");
+            EventData eventData = eventArgs as EventData;
+            Debug.Log($"{sender}    {eventData.Data}");
         }
 
         private void OnDisable()
@@ -62,18 +69,22 @@ namespace Framework.Scripts.UI.View
 
         public void TestY(InputActionEventData data)
         {
-            if(ObjectManager.Instance.mainPlayer == null) return;
-            ObjectManager.Instance.mainPlayer.transform.GetComponent<Transform>().DOBlendableMoveBy(Vector3.up * data.GetAxis() / 100 * speed, 0.1f);
+            if (ObjectManager.Instance.mainPlayer == null) return;
+            ObjectManager.Instance.mainPlayer.transform.GetComponent<Transform>()
+                .DOBlendableMoveBy(Vector3.up * data.GetAxis() / 100 * speed, 0.1f);
         }
-        
+
         // todo 移动端 双指缩放视野
         // 鼠标滑轮缩放视野
         public void TestWheel(InputActionEventData data)
         {
-            if(CameraManager.Instance.playerVCamera == null) return;
-            float orthographicSize = CameraManager.Instance.playerVCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.OrthographicSize;
-            CameraManager.Instance.playerVCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.OrthographicSize = 
-                Mathf.Clamp(orthographicSize - data.GetAxisDelta() / 2.0f, CameraManager.MINOrthographicSize, CameraManager.MAXOrthographicSize);;
+            if (CameraManager.Instance.playerVCamera == null) return;
+            float orthographicSize = CameraManager.Instance.playerVCamera.GetComponent<CinemachineVirtualCamera>()
+                .m_Lens.OrthographicSize;
+            CameraManager.Instance.playerVCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.OrthographicSize =
+                Mathf.Clamp(orthographicSize - data.GetAxisDelta() / 2.0f, CameraManager.MINOrthographicSize,
+                    CameraManager.MAXOrthographicSize);
+            ;
         }
 
         public void LoadLevel()
@@ -89,19 +100,22 @@ namespace Framework.Scripts.UI.View
                 CameraManager.Instance.RemoveTarget(ObjectManager.Instance.mainPlayer);
                 AddressableManager.Instance.ReleaseInstance(ObjectManager.Instance.mainPlayer);
             }
+
             await ObjectManager.Instance.LoadPlayerAvatar(HeroName, LevelManager.Instance.transform);
-            FsmFloat fsmSpeed = ObjectManager.Instance.mainPlayer.GetComponent<PlayMakerFSM>().FsmVariables.FindFsmFloat("Speed");
+            FsmFloat fsmSpeed = ObjectManager.Instance.mainPlayer.GetComponent<PlayMakerFSM>().FsmVariables
+                .FindFsmFloat("Speed");
             fsmSpeed.Value = speed;
             Speed_InputField.text = speed.ToString();
-            
+
             CameraManager.Instance.CreatePlayerCamera();
             CameraManager.Instance.AddTarget(ObjectManager.Instance.mainPlayer);
         }
 
         public void SetSpeed()
         {
-            if(!ObjectManager.Instance.mainPlayer) return;
-            FsmFloat fsmSpeed = ObjectManager.Instance.mainPlayer.GetComponent<PlayMakerFSM>().FsmVariables.FindFsmFloat("Speed");
+            if (!ObjectManager.Instance.mainPlayer) return;
+            FsmFloat fsmSpeed = ObjectManager.Instance.mainPlayer.GetComponent<PlayMakerFSM>().FsmVariables
+                .FindFsmFloat("Speed");
             float inputSpeed = Convert.ToSingle(Speed_InputField.text);
             if (inputSpeed > 0)
             {
