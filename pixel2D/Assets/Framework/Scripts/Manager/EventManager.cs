@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Framework.Scripts.Constants;
 using Framework.Scripts.Singleton;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UIElements;
 using EventType = Framework.Scripts.Constants.EventType;
 
 namespace Framework.Scripts.Manager
@@ -71,6 +68,7 @@ namespace Framework.Scripts.Manager
             else
             {
                 delegateEvent = ObjectManager.Get<DelegateEvent>();
+                delegateEvent.AddListener(eventHandler);
                 GlobalEventTable.Add(type, delegateEvent);
             }
         }
@@ -132,7 +130,7 @@ namespace Framework.Scripts.Manager
         // 检查事件删除
         private void CheckForEventRemoval(object obj, EventType eventType, DelegateEvent delegateEvent)
         {
-            if (delegateEvent.GetEventHandler().GetInvocationList().Length == 0)
+            if (delegateEvent.GetEventHandlers() == null)
             {
                 Dictionary<EventType, DelegateEvent> delegateEvents;
                 if (EventTable.TryGetValue(obj, out delegateEvents))
@@ -141,40 +139,52 @@ namespace Framework.Scripts.Manager
                     if(delegateEvents.Count == 0)
                         EventTable.Remove(obj);
                 }
-                GlobalEventTable.Remove(eventType);
+                ObjectManager.Return(delegateEvent);
             }
         }
 
         public void AddEventListener(object obj, EventType eventType, EventHandler eventHandler)
         {
             Dictionary<EventType, DelegateEvent> delegateEvents;
-            if (EventTable.TryGetValue(obj, out delegateEvents))
+            DelegateEvent delegateEvent;
+            // 无obj，新加
+            if (!EventTable.TryGetValue(obj, out delegateEvents))
             {
-                DelegateEvent delegateEvent;
-                delegateEvents.TryGetValue(eventType, out delegateEvent);
-#if UNITY_EDITOR
-                EventHandler[] delegates = (EventHandler[]) delegateEvent.GetEventHandler().GetInvocationList();
-                for (int i = 0; i < delegates.Length; ++i)
-                {
-                    if (delegates[i] == eventHandler)
-                    {
-                        Debug.LogWarning("Warning: the function \"" + eventHandler.Method.ToString() +
-                                         "\" is trying to subscribe to the " + eventType + " more than once." +
-                                         eventHandler.Target);
-                        break;
-                    }
-                }
-#endif
+                delegateEvent = ObjectManager.Get<DelegateEvent>();
                 delegateEvent.AddListener(eventHandler);
+                delegateEvents = new Dictionary<EventType, DelegateEvent> {{eventType, delegateEvent}};
+                EventTable.Add(obj, delegateEvents);
             }
+            // 有obj
             else
             {
-                delegateEvents = new Dictionary<EventType, DelegateEvent>();
-                DelegateEvent delegateEvent = ObjectManager.Get<DelegateEvent>();
-                delegateEvent.AddListener(eventHandler);
-                delegateEvents.Add(eventType, delegateEvent);
-
-                EventTable.Add(obj, delegateEvents);
+                // 无eventType
+                if (!delegateEvents.TryGetValue(eventType, out delegateEvent))
+                {
+                    delegateEvent = ObjectManager.Get<DelegateEvent>();
+                    delegateEvent.AddListener(eventHandler);
+                    EventTable[obj].Add(eventType, delegateEvent);
+                }
+                // 有eventType
+                else
+                {
+#if UNITY_EDITOR
+                    Delegate[] delegates = delegateEvent.GetEventHandlers();
+                    for (int i = 0; i < delegates.Length; ++i)
+                    {
+                        if (delegates[i].Method == eventHandler.Method)
+                        {
+                            Debug.LogWarning("Warning: the function \"" + eventHandler.Method.ToString() +
+                                             "\" is trying to subscribe to the " + eventType + " more than once." +
+                                             eventHandler.Target);
+                            break;
+                        }
+                    }
+#endif
+                    // 无eventHandler
+                    delegateEvent.AddListener(eventHandler);
+                }
+                    
             }
         }
         
@@ -182,17 +192,33 @@ namespace Framework.Scripts.Manager
         {
             var delegateEvent = GetDelegateEvent(obj, eventType);
             if (delegateEvent == null) return;
-            var eventHandlers = delegateEvent.GetEventHandler().GetInvocationList() as EventHandler[];
-            System.Diagnostics.Debug.Assert(eventHandlers != null, nameof(eventHandlers) + " != null");
+            Delegate[] eventHandlers = delegateEvent.GetEventHandlers();
             foreach (var handler in eventHandlers)
             {
-                if (!eventHandler.Equals(handler)) continue;
-                ObjectManager.Return(handler);
-                delegateEvent.RemoveListener(eventHandler);
+                EventHandler tmpEventHandler = (EventHandler) handler;
+                if (!eventHandler.Equals(tmpEventHandler)) continue;
+                delegateEvent.RemoveListener(tmpEventHandler);
                 break;
             }
             CheckForEventRemoval(obj, eventType, delegateEvent);
         }
+        
+        // public void RemoveEventListener(object obj, EventType eventType, EventHandler eventHandler)
+        // {
+        //     
+        //     DelegateEvent delegateEvent = GetDelegateEvent(obj, eventType);
+        //     if (delegateEvent == null) return;
+        //     Delegate[] eventHandlers = delegateEvent.GetEventHandlers();
+        //     System.Diagnostics.Debug.Assert(eventHandlers != null, nameof(eventHandlers) + " != null");
+        //     foreach (Delegate handler in eventHandlers)
+        //     {
+        //         if (!eventHandler.Equals(handler.Method)) continue;
+        //         
+        //         handler -= eventHandlerMethod;
+        //         break;
+        //     }
+        //     CheckForEventRemoval(obj, eventType, delegateEvent);
+        // }
 
         public void RemoveEventListener(object obj, EventType eventType)
         {
@@ -210,7 +236,7 @@ namespace Framework.Scripts.Manager
         /// <param name="obj"></param>
         /// <param name="eventType">事件类型</param>
         /// <param name="data">事件的数据(可为null)</param>
-        public void DispatchEvent(object obj, EventType eventType, EventData eventData)
+        public void DispatchEvent(object obj, EventType eventType, EventData eventData = null)
         {
             DelegateEvent list = GetDelegateEvent(obj, eventType);
             //创建事件数据
@@ -248,6 +274,12 @@ namespace Framework.Scripts.Manager
         public EventHandler GetEventHandler()
         {
             return EventHandle;
+        }
+
+        public Delegate[] GetEventHandlers()
+        {
+            Delegate[] invocationList = EventHandle?.GetInvocationList();
+            return invocationList;
         }
 
         /// <summary>

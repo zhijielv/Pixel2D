@@ -8,16 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Framework.Scripts.Constants;
 using Framework.Scripts.Manager;
 using Rewired;
-using Sirenix.OdinInspector;
-using SRF;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Debug = System.Diagnostics.Debug;
 using EventType = Framework.Scripts.Constants.EventType;
 
 namespace Framework.Scripts.UI.Base
@@ -25,8 +21,9 @@ namespace Framework.Scripts.UI.Base
     public class ViewBase : UiWidgetBase
     {
         private readonly Dictionary<EventType, DelegateEvent> _viewEvents = new Dictionary<EventType, DelegateEvent>();
+
         #region EventHandler
-        
+
         private readonly List<Action<InputActionEventData>> _viewInputEvents =
             new List<Action<InputActionEventData>>();
 
@@ -57,23 +54,9 @@ namespace Framework.Scripts.UI.Base
         {
             foreach (var eventItem in _viewEvents)
             {
-                UnityEngine.Debug.Log(eventItem.Key);
-                EventHandler handler = eventItem.Value.GetEventHandler();
-                UnityEngine.Debug.Log(handler.Method);
-                UnityEngine.Debug.Log(handler.Target);
-                UnityEngine.Debug.Log(handler.GetInvocationList().Length);
-                EventHandler[] list = eventItem.Value.GetEventHandler().GetInvocationList() as EventHandler[];
-                if(list == null) UnityEngine.Debug.Log("null");
-                else
+                foreach (Delegate handler in eventItem.Value.GetEventHandlers())
                 {
-                    UnityEngine.Debug.Log("not null");
-                }
-                Debug.Assert(list == null, nameof(list) + " != null");
-                UnityEngine.Debug.Log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-                for (var i = 0; i < list.Length; i++)
-                {
-                    UnityEngine.Debug.Log(list[i]);
-                    EventHandler eventHandler = list[i];
+                    EventHandler eventHandler = (EventHandler) handler;
                     EventManager.Instance.RemoveEventListener(this, eventItem.Key, eventHandler);
                 }
 
@@ -84,6 +67,7 @@ namespace Framework.Scripts.UI.Base
             {
                 RewiredInputEventManager.Instance.RemoveEvent(action);
             }
+
             _viewInputEvents.Clear();
         }
 
