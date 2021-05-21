@@ -209,6 +209,31 @@ namespace Framework.Scripts.Manager
         }
 
         #endregion
+        
+        private void OnDisable()
+        {
+            if (gameObject != null && !gameObject.activeSelf) {
+                return;
+            }
+
+            ClearTable();
+        }
+
+        /// <summary>
+        /// Clear the event table when the GameObject is destroyed.
+        /// </summary>
+        private void OnDestroy()
+        {
+            ClearTable();
+        }
+
+        /// <summary>
+        /// Clears the actual events.
+        /// </summary>
+        private void ClearTable()
+        { 
+            EventTable.Clear();
+        }
     }
 
     #region DelegateEvent
