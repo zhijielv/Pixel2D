@@ -10,6 +10,7 @@ namespace Framework.Scripts.Manager
     /// <summary>
     /// 事件管理器
     /// </summary>
+    [Searchable]
     public class EventManager : ManagerSingleton<EventManager>
     {
         /// <summary>
