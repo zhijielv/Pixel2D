@@ -54,12 +54,7 @@ namespace Framework.Scripts.UI.Base
         {
             foreach (var eventItem in _viewEvents)
             {
-                foreach (Delegate handler in eventItem.Value.GetEventHandlers())
-                {
-                    EventHandler eventHandler = (EventHandler) handler;
-                    EventManager.Instance.RemoveEventListener(this, eventItem.Key, eventHandler);
-                }
-
+                EventManager.Instance.RemoveEventListener(this, eventItem.Key);
                 ObjectManager.Return(eventItem.Value);
             }
 

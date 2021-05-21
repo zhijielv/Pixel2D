@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Framework.Scripts.Singleton;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using EventType = Framework.Scripts.Constants.EventType;
 
@@ -15,12 +15,14 @@ namespace Framework.Scripts.Manager
         /// <summary>
         /// 全局事件监听
         /// </summary>
+        [LabelText("全局事件")] [ShowInInspector]
         private static readonly Dictionary<EventType, DelegateEvent> GlobalEventTable =
             new Dictionary<EventType, DelegateEvent>();
 
         /// <summary>
         /// 局部事件监听
         /// </summary>
+        [LabelText("局部事件"), DictionaryDrawerSettings(KeyLabel = "事件对象")] [ShowInInspector]
         private static readonly Dictionary<object, Dictionary<EventType, DelegateEvent>> EventTable =
             new Dictionary<object, Dictionary<EventType, DelegateEvent>>();
 
@@ -34,7 +36,7 @@ namespace Framework.Scripts.Manager
         // 检查事件删除
         private void CheckForEventRemoval(EventType eventType, DelegateEvent delegateEvent)
         {
-            if (delegateEvent.GetEventHandler().GetInvocationList().Length == 0)
+            if (delegateEvent.GetEventHandlers() == null)
             {
                 GlobalEventTable.Remove(eventType);
             }
@@ -47,20 +49,14 @@ namespace Framework.Scripts.Manager
         /// <param name="eventHandler">监听函数</param>
         public void AddEventListener(EventType type, EventHandler eventHandler)
         {
-            DelegateEvent delegateEvent;
-            if (GlobalEventTable.TryGetValue(type, out delegateEvent))
+            if (GlobalEventTable.TryGetValue(type, out var delegateEvent) && delegateEvent != null)
             {
 #if UNITY_EDITOR
-                EventHandler[] delegates = (EventHandler[]) delegateEvent.GetEventHandler().GetInvocationList();
-                for (int i = 0; i < delegates.Length; ++i)
+                if (delegateEvent.CheckInEventHandler(eventHandler))
                 {
-                    if (delegates[i] == eventHandler)
-                    {
-                        Debug.LogWarning("Warning: the function \"" + eventHandler.Method.ToString() +
-                                         "\" is trying to subscribe to the " + type + " more than once." +
-                                         eventHandler.Target);
-                        break;
-                    }
+                    Debug.LogWarning("Warning: the function \"" + eventHandler.Method +
+                                     "\" is trying to subscribe to the " + type + " more than once." +
+                                     eventHandler.Target);
                 }
 #endif
                 delegateEvent.AddListener(eventHandler);
@@ -72,7 +68,7 @@ namespace Framework.Scripts.Manager
                 GlobalEventTable.Add(type, delegateEvent);
             }
         }
-        
+
         /// <summary>
         /// 删除事件
         /// </summary>
@@ -80,21 +76,18 @@ namespace Framework.Scripts.Manager
         /// <param name="eventHandler"></param>
         public void RemoveEventListener(EventType eventType, EventHandler eventHandler)
         {
-            DelegateEvent delegateEventBase = GetDelegateEvent(eventType);
-            if (delegateEventBase != null)
+            DelegateEvent delegateEvent = GetDelegateEvent(eventType);
+            if (delegateEvent == null) return;
+            if (delegateEvent.CheckInEventHandler(eventHandler))
             {
-                EventHandler[] eventHandlers =
-                    delegateEventBase.GetEventHandler().GetInvocationList() as EventHandler[];
-                System.Diagnostics.Debug.Assert(eventHandlers != null, nameof(eventHandlers) + " != null");
-                if (eventHandlers.Contains(eventHandler))
-                {
-                    delegateEventBase.RemoveListener(eventHandler);
-                }
-
-                CheckForEventRemoval(eventType, delegateEventBase);
+                delegateEvent.RemoveListener(eventHandler);
+            }
+            else
+            {
+                Debug.LogError($"{eventType} : {eventHandler}  is not add");
             }
 
-            Debug.LogError($"{eventType} is not Add");
+            CheckForEventRemoval(eventType, delegateEvent);
         }
 
         /// <summary>
@@ -108,7 +101,7 @@ namespace Framework.Scripts.Manager
             //创建事件数据
             delegateEvent.Handle(eventData);
         }
-        
+
         public void DispatchEvent<T>(EventType eventType, EventData<T> eventData = null)
         {
             DelegateEvent delegateEvent = GetDelegateEvent(eventType);
@@ -124,23 +117,23 @@ namespace Framework.Scripts.Manager
         {
             Dictionary<EventType, DelegateEvent> delegateEvents =
                 EventTable.TryGetValue(obj, out var events) ? events : null;
-            return delegateEvents != null && delegateEvents.TryGetValue(eventType, out var delegateEvent) ? delegateEvent : null;
+            return delegateEvents != null && delegateEvents.TryGetValue(eventType, out var delegateEvent)
+                ? delegateEvent
+                : null;
         }
-        
+
         // 检查事件删除
         private void CheckForEventRemoval(object obj, EventType eventType, DelegateEvent delegateEvent)
         {
-            if (delegateEvent.GetEventHandlers() == null)
+            if (delegateEvent.GetEventHandlers() != null) return;
+            if (EventTable.TryGetValue(obj, out var delegateEvents))
             {
-                Dictionary<EventType, DelegateEvent> delegateEvents;
-                if (EventTable.TryGetValue(obj, out delegateEvents))
-                {
-                    delegateEvents.Remove(eventType);
-                    if(delegateEvents.Count == 0)
-                        EventTable.Remove(obj);
-                }
-                ObjectManager.Return(delegateEvent);
+                delegateEvents.Remove(eventType);
+                if (delegateEvents.Count == 0)
+                    EventTable.Remove(obj);
             }
+
+            ObjectManager.Return(delegateEvent);
         }
 
         public void AddEventListener(object obj, EventType eventType, EventHandler eventHandler)
@@ -169,56 +162,28 @@ namespace Framework.Scripts.Manager
                 else
                 {
 #if UNITY_EDITOR
-                    Delegate[] delegates = delegateEvent.GetEventHandlers();
-                    for (int i = 0; i < delegates.Length; ++i)
-                    {
-                        if (delegates[i].Method == eventHandler.Method)
-                        {
-                            Debug.LogWarning("Warning: the function \"" + eventHandler.Method.ToString() +
-                                             "\" is trying to subscribe to the " + eventType + " more than once." +
-                                             eventHandler.Target);
-                            break;
-                        }
-                    }
+                    if (delegateEvent.CheckInEventHandler(eventHandler))
+                        Debug.LogWarning("Warning: the function \"" + eventHandler.Method.ToString() +
+                                         "\" is trying to subscribe to the " + eventType + " more than once." +
+                                         eventHandler.Target);
 #endif
                     // 无eventHandler
                     delegateEvent.AddListener(eventHandler);
                 }
-                    
             }
         }
-        
+
         public void RemoveEventListener(object obj, EventType eventType, EventHandler eventHandler)
         {
             var delegateEvent = GetDelegateEvent(obj, eventType);
             if (delegateEvent == null) return;
-            Delegate[] eventHandlers = delegateEvent.GetEventHandlers();
-            foreach (var handler in eventHandlers)
+            if (delegateEvent.CheckInEventHandler(eventHandler))
             {
-                EventHandler tmpEventHandler = (EventHandler) handler;
-                if (!eventHandler.Equals(tmpEventHandler)) continue;
-                delegateEvent.RemoveListener(tmpEventHandler);
-                break;
+                delegateEvent.RemoveListener(eventHandler);
             }
+
             CheckForEventRemoval(obj, eventType, delegateEvent);
         }
-        
-        // public void RemoveEventListener(object obj, EventType eventType, EventHandler eventHandler)
-        // {
-        //     
-        //     DelegateEvent delegateEvent = GetDelegateEvent(obj, eventType);
-        //     if (delegateEvent == null) return;
-        //     Delegate[] eventHandlers = delegateEvent.GetEventHandlers();
-        //     System.Diagnostics.Debug.Assert(eventHandlers != null, nameof(eventHandlers) + " != null");
-        //     foreach (Delegate handler in eventHandlers)
-        //     {
-        //         if (!eventHandler.Equals(handler.Method)) continue;
-        //         
-        //         handler -= eventHandlerMethod;
-        //         break;
-        //     }
-        //     CheckForEventRemoval(obj, eventType, delegateEvent);
-        // }
 
         public void RemoveEventListener(object obj, EventType eventType)
         {
@@ -226,8 +191,7 @@ namespace Framework.Scripts.Manager
             if (delegateEvent == null) return;
             Dictionary<EventType, DelegateEvent> delegateEvents =
                 EventTable.TryGetValue(obj, out var events) ? events : null;
-            System.Diagnostics.Debug.Assert(delegateEvents != null, nameof(delegateEvents) + " != null");
-            delegateEvents.Remove(eventType);
+            if (delegateEvents != null) EventTable[obj].Remove(eventType);
         }
 
         /// <summary>
@@ -251,12 +215,13 @@ namespace Framework.Scripts.Manager
     /// <summary>
     /// 事件抽象类
     /// </summary>
+    [Serializable]
     public class DelegateEvent
     {
         /// <summary>
         /// 定义基于委托函数的事件
         /// </summary>
-        private event EventHandler EventHandle;
+        [ShowInInspector, ReadOnly] private EventHandler EventHandle;
 
         /// <summary>
         /// 触发监听事件
@@ -278,8 +243,20 @@ namespace Framework.Scripts.Manager
 
         public Delegate[] GetEventHandlers()
         {
-            Delegate[] invocationList = EventHandle?.GetInvocationList();
-            return invocationList;
+            return EventHandle?.GetInvocationList();
+        }
+
+        public bool CheckInEventHandler(EventHandler eventHandler)
+        {
+            if (EventHandle == null) return false;
+            var delegates = EventHandle.GetInvocationList();
+            foreach (var t in delegates)
+            {
+                if (t is EventHandler tmpEventHandler && !tmpEventHandler.Equals(eventHandler)) continue;
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>

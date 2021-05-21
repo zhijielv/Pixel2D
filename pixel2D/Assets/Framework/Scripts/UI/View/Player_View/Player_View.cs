@@ -28,10 +28,11 @@ namespace Framework.Scripts.UI.View
             // 按钮，获取Action为Fire，按下和释放的回调；
             AddInputEventDelegate(TestWheel, UpdateLoopType.Update, InputActionEventType.AxisActive, "Wheel");
 
-            // EventManager
-            // TestListenerFunc方法监听EventConstants.StartGame事件
+            // EventManager 
+            
+            // 局部事件 TestListenerFunc方法监听EventConstants.StartGame事件
             AddEventListener(Constants.EventType.StartGame, TestListenerFunc);
-            // AddEventListener(Constants.EventType.BagpackChange, TestListenerFunc2);
+            // 全局事件
             EventManager.Instance.AddEventListener(Constants.EventType.BagpackChange, TestListenerFunc2);
 
             // UIEvent
@@ -39,8 +40,6 @@ namespace Framework.Scripts.UI.View
             AddButtonClickEvent(LoadLevel_Button, LoadLevel);
             AddButtonClickEvent(LoadAvatar_Button, LoadAvatar);
             AddButtonClickEvent(SetSpeed_Button, SetSpeed);
-
-            // todo 注册对象池
         }
 
         private void Update()
@@ -77,6 +76,7 @@ namespace Framework.Scripts.UI.View
 
         private void OnDisable()
         {
+            EventManager.Instance.RemoveEventListener(Constants.EventType.BagpackChange, TestListenerFunc2);
             Disable();
         }
 
