@@ -1,7 +1,7 @@
 ﻿/*
 ** Created by fengling
 ** DateTime:    2021-04-28 17:10:19
-** Description: TODO 对象池
+** Description: 
 */
 
 using System;
@@ -184,10 +184,10 @@ namespace Framework.Scripts.Manager
                 return;
             }
 
-            object value;
-            if (_genericPool.TryGetValue(typeof(T), out value)) {
+            if (_genericPool.TryGetValue(typeof(T), out var value))
+            {
                 var pooledObjects = value as Stack<T>;
-                pooledObjects.Push(obj);
+                pooledObjects?.Push(obj);
             } else {
                 var pooledObjects = new Stack<T>();
                 pooledObjects.Push(obj);
