@@ -11,6 +11,7 @@ using Framework.Scripts.PlayerControl;
 using Framework.Scripts.Singleton;
 using Pathfinding;
 using PathologicalGames;
+using Sirenix.OdinInspector;
 using SRF;
 using UnityEngine;
 
@@ -21,13 +22,16 @@ namespace Framework.Scripts.Manager
         public GameObject mainPlayer;
         public SpawnPool unitPool;
         public Transform objectUnit;
+        [ShowInInspector]
         public Dictionary<string, SpawnPool> poolDic;
         
-        private Dictionary<Type, object> m_GenericPool = new Dictionary<Type, object>();
+        [ShowInInspector]
+        private Dictionary<Type, object> _genericPool;
 
         public override Task Init()
         {
             poolDic = new Dictionary<string, SpawnPool>();
+            _genericPool = new Dictionary<Type, object>();
             objectUnit = LoadUnit().transform;
             unitPool = RegisterPool(objectUnit);
             return base.Init();
@@ -147,12 +151,9 @@ namespace Framework.Scripts.Manager
         /// <returns>A pooled object of type T.</returns>
         private T GetInternal<T>()
         {
-            object value;
-            if (m_GenericPool.TryGetValue(typeof(T), out value)) {
-                var pooledObjects = value as Stack<T>;
-                if (pooledObjects.Count > 0) {
-                    return pooledObjects.Pop();
-                }
+            if (!_genericPool.TryGetValue(typeof(T), out var value)) return Activator.CreateInstance<T>();
+            if (value is Stack<T> pooledObjects && pooledObjects.Count > 0) {
+                return pooledObjects.Pop();
             }
             return Activator.CreateInstance<T>();
         }
@@ -184,13 +185,13 @@ namespace Framework.Scripts.Manager
             }
 
             object value;
-            if (m_GenericPool.TryGetValue(typeof(T), out value)) {
+            if (_genericPool.TryGetValue(typeof(T), out value)) {
                 var pooledObjects = value as Stack<T>;
                 pooledObjects.Push(obj);
             } else {
                 var pooledObjects = new Stack<T>();
                 pooledObjects.Push(obj);
-                m_GenericPool.Add(typeof(T), pooledObjects);
+                _genericPool.Add(typeof(T), pooledObjects);
             }
         }
 

@@ -39,6 +39,7 @@ namespace Framework.Scripts.Manager
         {
             if (delegateEvent.GetEventHandlers() == null)
             {
+                ObjectManager.Return(delegateEvent);
                 GlobalEventTable.Remove(eventType);
             }
         }

@@ -6,6 +6,7 @@ namespace Framework.Scripts.Constants
 {
     public class Common : GlobalConfig<Common>
     {
+        [ShowInInspector] public static float Tolerance = 0.01f;
         // Debug模式
         [ShowInInspector] public static bool IsDebugMode = true;
 
