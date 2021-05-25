@@ -63,6 +63,7 @@ namespace Framework.Scripts.Manager
             int height = LevelManager.Instance.levelLoaderObj.GetComponent<LevelLoader>().level.Height;
             vCameraCollider = ObjectManager.Instance.LoadUnit(null, LevelManager.Instance.transform, true);
             vCameraCollider.name = "VCamera Collider";
+            vCameraCollider.layer = LayerMask.NameToLayer("Ignore Raycast");
             vCameraCollider.transform.SetParent(transform);
             // 设置Collider2D
             Destroy(vCameraCollider.GetComponent<BoxCollider2D>());

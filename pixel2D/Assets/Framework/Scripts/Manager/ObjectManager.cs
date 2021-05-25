@@ -9,9 +9,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Framework.Scripts.PlayerControl;
 using Framework.Scripts.Singleton;
+using Framework.Scripts.Utils;
 using Pathfinding;
 using PathologicalGames;
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 using SRF;
 using UnityEngine;
 
@@ -82,6 +84,7 @@ namespace Framework.Scripts.Manager
             unit.GetComponent<Animator>().runtimeAnimatorController =
                 await AddressableManager.Instance.LoadAssetAsync<RuntimeAnimatorController>(path);
             unit.name = key ?? "Avatar";
+            unit.layer = LayerMask.NameToLayer("Player");
             // 设置层级
             SpriteRenderer spriteRenderer = unit.GetComponent<SpriteRenderer>();
             spriteRenderer.sortingOrder = 1;
@@ -120,6 +123,11 @@ namespace Framework.Scripts.Manager
             if (seconds > 0)
                 unitPool.Despawn(spawn, seconds);
             return spawn;
+        }
+
+        public void Despawn(Transform spawn, float seconds)
+        {
+            unitPool.Despawn(spawn, seconds);
         }
         
         public Transform Spawn(SpawnPool spawnPool, Transform prefabTransform, float seconds = 0f)

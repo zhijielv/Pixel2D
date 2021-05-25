@@ -104,7 +104,6 @@ namespace Framework.Scripts.Level
                     Sprite sprite = Constants.RandomHelper.GetRandomValueFromList(sprites, 1)[0];
                     GameObject o = Instantiate(imagePrefab, mapRoot);
                     o.name = tmpObjName.ToString();
-                    o.layer = LayerMask.NameToLayer("Ground");
                     tmpObjName++;
                     o.GetComponent<SpriteRenderer>().sprite = sprite;
                     // o.GetComponent<Image>().SetNativeSize();
@@ -116,8 +115,17 @@ namespace Framework.Scripts.Level
                     switch (level.LevelMap[i, j])
                     {
                         case LevelItemType.Road:
-                            DestroyImmediate(o.GetComponent<Collider2D>());
+                            DestroyImmediate(o.GetComponent<Collider2D>()); break;
+                        case LevelItemType.Box :
+                            o.layer = LayerMask.NameToLayer("Box"); break;
+                        case LevelItemType.Wall :
+                            o.layer = LayerMask.NameToLayer("Wall"); break;
+                        case LevelItemType.Obstruction:
                             break;
+                        case LevelItemType.Maxvalue:
+                            break;
+                        default:
+                            o.layer = LayerMask.NameToLayer("Ground"); break;
                     }
                 }
             }

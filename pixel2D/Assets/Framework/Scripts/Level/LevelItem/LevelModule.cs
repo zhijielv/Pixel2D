@@ -17,9 +17,13 @@ namespace Framework.Scripts.Level.LevelItem
 
     public enum LevelItemType
     {
+        // 墙体
         Wall = 0,
+        // 陆地
         Road,
+        // 盒子
         Box,
+        // 障碍物
         Obstruction,
         Maxvalue,
     }

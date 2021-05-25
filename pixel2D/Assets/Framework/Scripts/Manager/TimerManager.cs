@@ -109,7 +109,7 @@ namespace Framework.Scripts.Manager
         /// <param name="action">The event to occur.</param>
         /// <param name="eventData"></param>
         /// <returns>The ScheduledEventBase instance, useful if the event should be cancelled.</returns>
-        public ScheduledEventBase Schedule(float delay, EventHandler action, EventDataBase eventData)
+        public ScheduledEventBase Schedule(float delay, EventHandler action, EventDataBase eventData = null)
         {
             return AddEventInternal(delay, action, eventData, ScheduledEventBase.InvokeLocation.Update);
         }

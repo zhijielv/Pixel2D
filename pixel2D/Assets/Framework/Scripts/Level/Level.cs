@@ -36,7 +36,7 @@ namespace Framework.Scripts.Level
         [ListDrawerSettings(Expanded = true)]
         public Dictionary<LevelItemType, List<Sprite>> LevelItem;
 
-        [HideInInspector] public List<GameObject> LevelObj;
+        public List<GameObject> LevelObj;
         
         [Button]
         public void ClearLevelObj()

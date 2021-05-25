@@ -34,7 +34,8 @@ namespace Framework.Scripts.UI.View
             AddEventListener(Constants.EventType.StartGame, TestListenerFunc);
             // 全局事件
             EventManager.Instance.AddEventListener(Constants.EventType.BagpackChange, TestListenerFunc2);
-
+            EventManager.Instance.RemoveEventListener(Constants.EventType.BagpackChange, TestListenerFunc2);
+            EventManager.Instance.AddEventListener(Constants.EventType.BagpackChange, TestListenerFunc2);
             // UIEvent
             // 自己拼的ui，监听事件
             AddButtonClickEvent(LoadLevel_Button, LoadLevel);
@@ -59,6 +60,24 @@ namespace Framework.Scripts.UI.View
             {
                 EventManager.Instance.DispatchEvent(Constants.EventType.BagpackChange, new EventData<int>(1));
                 // test222();
+            }
+
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                TimerManager.Instance.Schedule(2.0f, (sender, args) =>
+                {
+                    Debug.Log(args);
+                }, new EventData(){Data = 22});
+            }
+            
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                TimerManager.Instance.ScheduleFixed(2.0f, (sender, args) =>
+                {
+                    EventData<int> eventData = args as EventData<int>;
+                    Debug.Log("timer E");
+                    if (eventData != null) Debug.Log(eventData.Value);
+                }, new EventData<int>(33));
             }
         }
 

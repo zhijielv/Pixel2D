@@ -190,7 +190,6 @@ namespace Framework.Scripts.Objects
         protected Transform m_OriginatorTransform;
         private LineRenderer m_LineRenderer;
 
-        [ShowInInspector, SerializeField]
         private RaycastHit2D m_RaycastHit;
         private Collider2D[] m_Collider2DHit;
         private List<Vector3> m_Positions;
@@ -246,11 +245,7 @@ namespace Framework.Scripts.Objects
         /// </summary>
         protected virtual void Awake()
         {
-            m_ImpactLayers = ~(1 << LayerMask.NameToLayer("Ignore Raycast") |
-                               1 << LayerMask.NameToLayer("Water") |
-                               1 << LayerMask.NameToLayer("SubCharacter") |
-                               1 << LayerMask.NameToLayer("Overlay") |
-                               1 << LayerMask.NameToLayer("VisualEffect"));
+            m_ImpactLayers = 1 << LayerMask.NameToLayer("Wall");
             // The movement will be controlled by the TrajectoryObject.
             var rigidbody = GetComponent<Rigidbody2D>();
             if (rigidbody != null)
@@ -668,7 +663,8 @@ namespace Framework.Scripts.Objects
                 case BoxCollider2D mCollider2D:
                 {
                     var boxCollider2D = mCollider2D;
-                    m_RaycastHit = Physics2D.BoxCast(m_Transform.TransformPoint(boxCollider2D.offset), boxCollider2D.size,
+                    m_RaycastHit = Physics2D.BoxCast(m_Transform.TransformPoint(boxCollider2D.offset),
+                        boxCollider2D.size,
                         0,
                         direction.normalized, 0, m_ImpactLayers);
                     break;
@@ -690,7 +686,6 @@ namespace Framework.Scripts.Objects
 #endif
                     ))
                 {
-                    
                 }
                 else
                 {

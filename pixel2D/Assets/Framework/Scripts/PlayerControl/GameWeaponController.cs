@@ -7,7 +7,11 @@
 using System;
 using System.Collections.Generic;
 using Framework.Scripts.Manager;
+using Framework.Scripts.Objects.ObjectsItem;
+using Framework.Scripts.Utils;
 using Rewired;
+using Sirenix.Utilities;
+using SRF;
 using UnityEngine;
 
 namespace Framework.Scripts.PlayerControl
@@ -16,6 +20,10 @@ namespace Framework.Scripts.PlayerControl
     {
         public string weaponName = "1";
         public GameObject currentWeapon;
+        public float bulletSpeed = 10;
+        public Vector3 velocity;
+        public Vector3 torque;
+        public GameObject originator;
         public List<GameObject> weaponList;
 
         private async void Start()
@@ -66,10 +74,20 @@ namespace Framework.Scripts.PlayerControl
         {
             if (null == currentWeapon || weaponList.Count == 0) return;
             Debug.Log($"Button Fire!  {data.GetButton()}");
-            Transform bullet = ObjectManager.Instance.SpawnUnit(3);
+            Transform bullet = ObjectManager.Instance.SpawnUnit();
             bullet.localPosition = transform.position;
             bullet.GetComponent<BoxCollider2D>().isTrigger = true;
             bullet.GetComponent<SpriteRenderer>().sortingOrder = 2;
+            Rigidbody2D rigidbody2D = bullet.gameObject.GetComponentOrAdd<Rigidbody2D>();
+            rigidbody2D.gravityScale = 0;
+            Bullet bulletComponent = bullet.gameObject.GetComponentOrAdd<Bullet>();
+            bulletComponent.ImpactLayers |=  1 << LayerMask.NameToLayer("Box");
+            bulletComponent.ImpactLayers |=  1 << LayerMask.NameToLayer("Enemies");
+            velocity = transform.right.normalized * bulletSpeed;
+            torque = Vector3.zero;
+            originator = ObjectManager.Instance.LoadUnit();
+            bulletComponent.Initialize(velocity, torque, originator);
+            bulletComponent.Initialize(velocity, torque, originator);
             // EventManager.Instance.DispatchEvent(EventConstants.StartGame);
         }
     }
