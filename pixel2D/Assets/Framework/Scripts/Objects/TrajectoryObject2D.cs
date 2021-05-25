@@ -642,19 +642,12 @@ namespace Framework.Scripts.Objects
         /// <param name="rotation">The rotation of the cast.</param>
         /// <param name="direction">The direction of the cast.</param>
         /// <returns>The number of hit results.</returns>
-        private bool SingleCast(Vector3 position, Quaternion rotation, Vector2 direction, float distance = 0.16f)
+        private bool SingleCast(Vector3 position, Quaternion rotation, Vector2 direction)
         {
-            if (m_Collider2D is CircleCollider2D)
+            switch (m_Collider2D)
             {
-                var sphereCollider2D = m_Collider2D as CircleCollider2D;
-                float colliderRadiusMultiplier =
-                    sphereCollider2D.radius * MathUtility.ColliderRadiusMultiplier(sphereCollider2D);
-                m_RaycastHit = Physics2D.CircleCast(position,
-                    colliderRadiusMultiplier,
-                    direction.normalized, sphereCollider2D.radius, m_ImpactLayers);
-            }
-            // todo CapsuleCollider2D 碰撞检测
-            /*else if (m_Collider2D is CapsuleCollider2D)
+                // todo CapsuleCollider2D 碰撞检测
+                /*else if (m_Collider2D is CapsuleCollider2D)
             {
                 var capsuleCollider2D = m_Collider2D as CapsuleCollider2D;
                 Vector3 startEndCap, endEndCap;
@@ -663,18 +656,28 @@ namespace Framework.Scripts.Objects
                 hit = Physics2D.CapsuleCast(startEndCap, endEndCap, radius, direction.normalized, out m_RaycastHit,
                     direction.magnitude + c_Collider2DSpacing, m_ImpactLayers, QueryTriggerInteraction.Ignore);
             }*/
-            else if (m_Collider2D is BoxCollider2D)
-            {
-                var boxCollider2D = m_Collider2D as BoxCollider2D;
-                m_RaycastHit = Physics2D.BoxCast(m_Transform.TransformPoint(boxCollider2D.offset), boxCollider2D.size,
-                    0,
-                    direction.normalized, distance, m_ImpactLayers);
-            }
-            else
-            {
-                // No collider attached.
-                m_RaycastHit = Physics2D.Raycast(position, direction.normalized, distance,
-                    m_ImpactLayers);
+                case CircleCollider2D sphereCollider2D:
+                {
+                    float colliderRadiusMultiplier =
+                        sphereCollider2D.radius * MathUtility.ColliderRadiusMultiplier(sphereCollider2D);
+                    m_RaycastHit = Physics2D.CircleCast(position,
+                        colliderRadiusMultiplier,
+                        direction.normalized, sphereCollider2D.radius, m_ImpactLayers);
+                    break;
+                }
+                case BoxCollider2D mCollider2D:
+                {
+                    var boxCollider2D = mCollider2D;
+                    m_RaycastHit = Physics2D.BoxCast(m_Transform.TransformPoint(boxCollider2D.offset), boxCollider2D.size,
+                        0,
+                        direction.normalized, 0, m_ImpactLayers);
+                    break;
+                }
+                default:
+                    // No collider attached.
+                    m_RaycastHit = Physics2D.Raycast(position, direction.normalized, 0,
+                        m_ImpactLayers);
+                    break;
             }
 
             // The object should not collide with the originator to prevent the character from hitting themself.
