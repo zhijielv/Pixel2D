@@ -21,6 +21,7 @@ namespace Framework.Scripts.Utils
             AssetDatabase.Refresh();
         }*/
         
+        // todo 编辑器下控制相关物体
         public GameObject mainPlayer;
         public GameWeaponController weaponController;
     }
