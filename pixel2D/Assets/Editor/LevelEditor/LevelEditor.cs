@@ -5,6 +5,7 @@
 */
 
 using Editor.Tools;
+using Framework.Scripts.Constants;
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities;
 using Sirenix.Utilities.Editor;
@@ -50,6 +51,7 @@ namespace Editor.LevelEditor
                 "Assets/Editor/Tools/UITool/UiBuilderSetting.asset");
             tree.AddAssetAtPath("UiScriptableObjectsManager", _configPath + "UiScriptableObjectsManager.asset");
             tree.AddAssetAtPath("ProjectCommon", _configPath + "Common.asset");
+            tree.AddAssetAtPath("LevelHelper", _configPath + "LevelHelper.asset");
             return tree;
         }
     }
