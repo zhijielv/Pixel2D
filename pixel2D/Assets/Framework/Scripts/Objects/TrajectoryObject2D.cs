@@ -6,12 +6,12 @@
 
 using UnityEngine;
 using System.Collections.Generic;
-using Framework.Scripts.Manager;
 using Framework.Scripts.Utils;
-using Sirenix.OdinInspector;
+using SRF;
 
 namespace Framework.Scripts.Objects
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class TrajectoryObject2D : MonoBehaviour
     {
         #region 参数
@@ -247,7 +247,7 @@ namespace Framework.Scripts.Objects
         {
             m_ImpactLayers = 1 << LayerMask.NameToLayer("Wall");
             // The movement will be controlled by the TrajectoryObject.
-            var rigidbody = GetComponent<Rigidbody2D>();
+            var rigidbody = gameObject.GetComponentOrAdd<Rigidbody2D>();
             if (rigidbody != null)
             {
                 rigidbody.gravityScale = 0;
@@ -475,14 +475,14 @@ namespace Framework.Scripts.Objects
             // Set the layer to prevent the current object from getting in the way of the casts.
             var previousLayer = m_GameObject.layer;
             m_GameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-
+            
             if (!Move(ref position, rotation))
             {
                 // If the object collided with another object then Move should be called one more time so the reflected velocity is used.
                 // If the second Move method is not called then the object would wait a tick before it is moved.
                 Move(ref position, rotation);
             }
-
+            
             // The object may have been disabed within OnCollision. Do not do any more updates for a disabled object.
             if (enabled)
             {
@@ -491,7 +491,7 @@ namespace Framework.Scripts.Objects
                     position += (m_Platform.TransformPoint(m_PlatformRelativePosition) - position);
                     m_PlatformRelativePosition = m_Platform.InverseTransformPoint(position);
                 }
-
+                
                 m_Transform.position = position;
 
                 // Update the rotation.
@@ -540,7 +540,7 @@ namespace Framework.Scripts.Objects
             }
 
             var deltaTime = m_TimeScale * Time.fixedDeltaTime * Time.timeScale;
-
+            // todo 速度衰减添加开关
             // The object hasn't settled yet - move based on the velocity.
             m_Velocity += m_Gravity * deltaTime;
             m_Velocity *= Mathf.Clamp01(1 - m_Damping * deltaTime);

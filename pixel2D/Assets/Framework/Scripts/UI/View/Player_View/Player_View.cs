@@ -41,6 +41,9 @@ namespace Framework.Scripts.UI.View
             AddButtonClickEvent(LoadLevel_Button, LoadLevel);
             AddButtonClickEvent(LoadAvatar_Button, LoadAvatar);
             AddButtonClickEvent(SetSpeed_Button, SetSpeed);
+            
+            LoadLevel();
+            LoadAvatar();
         }
 
         private void Update()
@@ -62,7 +65,7 @@ namespace Framework.Scripts.UI.View
                 // test222();
             }
 
-            if (Input.GetKeyDown(KeyCode.D))
+            /*if (Input.GetKeyDown(KeyCode.D))
             {
                 TimerManager.Instance.Schedule(2.0f, (sender, args) =>
                 {
@@ -78,7 +81,7 @@ namespace Framework.Scripts.UI.View
                     Debug.Log("timer E");
                     if (eventData != null) Debug.Log(eventData.Value);
                 }, new EventData<int>(33));
-            }
+            }*/
         }
 
         private void TestListenerFunc(object sender, EventArgs eventArgs)

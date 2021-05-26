@@ -8,11 +8,10 @@ using System;
 using System.Collections.Generic;
 using Framework.Scripts.Manager;
 using Framework.Scripts.Objects.ObjectsItem;
-using Framework.Scripts.Utils;
+using PathologicalGames;
 using Rewired;
-using Sirenix.Utilities;
-using SRF;
 using UnityEngine;
+using EventType = Framework.Scripts.Constants.EventType;
 
 namespace Framework.Scripts.PlayerControl
 {
@@ -22,9 +21,13 @@ namespace Framework.Scripts.PlayerControl
         public GameObject currentWeapon;
         public float bulletSpeed = 10;
         public Vector3 velocity;
-        public Vector3 torque;
-        public GameObject originator;
         public List<GameObject> weaponList;
+
+        public Transform bullet;
+        public SpawnPool bulletPool;
+
+        // todo 当前子弹类型
+        public Sprite currentBullet;
 
         private async void Start()
         {
@@ -52,6 +55,9 @@ namespace Framework.Scripts.PlayerControl
                 InputActionEventType.AxisActive, "MouseHorizontal");
             RewiredInputEventManager.Instance.AddEvent(SetMouseTarget, UpdateLoopType.Update,
                 InputActionEventType.AxisActive, "MouseVertical");
+
+            // 设置子弹池
+            RegistBullet();
         }
 
         // 武器跟随鼠标旋转
@@ -73,22 +79,32 @@ namespace Framework.Scripts.PlayerControl
         public void OnFireButtonClick(InputActionEventData data)
         {
             if (null == currentWeapon || weaponList.Count == 0) return;
-            Debug.Log($"Button Fire!  {data.GetButton()}");
-            Transform bullet = ObjectManager.Instance.SpawnUnit();
-            bullet.localPosition = transform.position;
-            bullet.GetComponent<BoxCollider2D>().isTrigger = true;
-            bullet.GetComponent<SpriteRenderer>().sortingOrder = 2;
-            Rigidbody2D rigidbody2D = bullet.gameObject.GetComponentOrAdd<Rigidbody2D>();
-            rigidbody2D.gravityScale = 0;
-            Bullet bulletComponent = bullet.gameObject.GetComponentOrAdd<Bullet>();
-            bulletComponent.ImpactLayers |=  1 << LayerMask.NameToLayer("Box");
-            bulletComponent.ImpactLayers |=  1 << LayerMask.NameToLayer("Enemies");
+            Transform spawnObj =
+                bulletPool.Spawn(bullet, currentWeapon.transform.position, currentWeapon.transform.rotation);
             velocity = transform.right.normalized * bulletSpeed;
-            torque = Vector3.zero;
-            originator = ObjectManager.Instance.LoadUnit();
-            bulletComponent.Initialize(velocity, torque, originator);
-            bulletComponent.Initialize(velocity, torque, originator);
-            // EventManager.Instance.DispatchEvent(EventConstants.StartGame);
+            spawnObj.GetComponent<Bullet>().Fire(velocity);
+        
+            // todo key为transform有bug
+            // EventManager.Instance.AddEventListener(transform, EventType.PlayerFire, OnBulletCollideHandler);
+            
+        }
+        
+        private void OnBulletCollideHandler(object sender, EventArgs e)
+        {
+            EventData<float> eventData = e as EventData<float>;
+            
+            bulletPool.Despawn(eventData.Data as Transform, eventData.Value);
+            EventManager.Instance.RemoveEventListener(transform,EventType.PlayerFire, OnBulletCollideHandler);
+            // TimerManager.Instance.Schedule(0, DestroyBullet);
+        }
+
+        // todo 子弹类型
+        public void RegistBullet()
+        {
+            bullet = AddressableManager.Instance.LoadAsset<GameObject>("PlayerBullet")
+                .transform;
+            bulletPool = ObjectManager.Instance.RegisterPool(bullet);
+            bullet.GetComponent<Bullet>().Initialize(Vector3.zero, Vector3.zero, bulletPool.Spawn(bullet).gameObject);
         }
     }
 }

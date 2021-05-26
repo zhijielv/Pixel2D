@@ -208,6 +208,13 @@ namespace Framework.Scripts.Manager
             //创建事件数据
             list?.Handle(eventData);
         }
+        
+        public void DispatchEvent<T>(object obj, EventType eventType, EventData<T> eventData = null)
+        {
+            DelegateEvent list = GetDelegateEvent(obj, eventType);
+            //创建事件数据
+            list?.Handle(eventData);
+        }
 
         #endregion
         

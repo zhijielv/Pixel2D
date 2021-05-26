@@ -4,29 +4,49 @@
 ** Description: TODO 
 */
 
-using System;
 using Framework.Scripts.Manager;
+using Framework.Scripts.PlayerControl;
 using UnityEngine;
+using EventType = Framework.Scripts.Constants.EventType;
 
 namespace Framework.Scripts.Objects.ObjectsItem
 {
     public class Bullet : TrajectoryObject2D
     {
-        protected override void OnEnable()
+        public Vector3 velocity;
+
+        // 延迟多少秒后销毁
+        public float destroyDelay = 0.5f;
+        public void Fire(Vector3 velocity)
         {
-            m_InitializeOnEnable = true;
-            base.OnEnable();
+            Initialize(velocity, Vector3.zero, gameObject);
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+            m_ImpactLayers |= 1 << LayerMask.NameToLayer("Box") | 1 << LayerMask.NameToLayer("Enemies");
+        }
+
+        public override void Initialize(Vector3 velocity, Vector3 torque, GameObject originator,
+            bool originatorCollisionCheck)
+        {
+            m_Originator = originator;
+            m_OriginatorTransform = m_Originator.transform;
+            base.Initialize(velocity, torque, originator, originatorCollisionCheck);
         }
 
         protected override void OnCollision(RaycastHit2D? hit)
         {
             base.OnCollision(hit);
-            TimerManager.Instance.Schedule(0, DestroyBullet);
-        }
-
-        private void DestroyBullet(object sender, EventArgs e)
-        {
-            ObjectManager.Instance.Despawn(transform, 1f);
+            // TimerManager.Instance.Schedule(0, DestroyBullet);
+            GameWeaponController gameWeaponController = ObjectManager.Instance.mainPlayer.transform.GetChild(0).GetComponent<GameWeaponController>();
+            
+            // 事件调用
+            // EventManager.Instance.DispatchEvent(gameWeaponController.transform, EventType.PlayerFire, new EventData<float>(destroyDelay){Data = transform});
+            
+            // 直接销毁
+            gameWeaponController.bulletPool.Despawn(transform, destroyDelay);
         }
     }
 }

@@ -102,6 +102,7 @@ namespace Framework.Scripts.Level
                 {
                     List<Sprite> sprites = level.LevelItem[level.LevelMap[i, j]] ?? level.LevelItem[LevelItemType.Road];
                     Sprite sprite = Constants.RandomHelper.GetRandomValueFromList(sprites, 1)[0];
+                    // todo 改为对象池加载
                     GameObject o = Instantiate(imagePrefab, mapRoot);
                     o.name = tmpObjName.ToString();
                     tmpObjName++;

@@ -12,5 +12,8 @@
         RedDot,
         ItemChangeNum,
         BagpackChange,
+        
+        //_______________________ Bullet _______________________
+        PlayerFire,
     }
 }
