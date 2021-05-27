@@ -39,14 +39,10 @@ namespace Framework.Scripts.Objects.ObjectsItem
         protected override void OnCollision(RaycastHit2D? hit)
         {
             base.OnCollision(hit);
-            // TimerManager.Instance.Schedule(0, DestroyBullet);
             GameWeaponController gameWeaponController = ObjectManager.Instance.mainPlayer.transform.GetChild(0).GetComponent<GameWeaponController>();
             
             // 事件调用
-            // EventManager.Instance.DispatchEvent(gameWeaponController.transform, EventType.PlayerFire, new EventData<float>(destroyDelay){Data = transform});
-            
-            // 直接销毁
-            gameWeaponController.bulletPool.Despawn(transform, destroyDelay);
+            EventManager.Instance.DispatchEvent(gameWeaponController.transform, EventType.PlayerBulletCollide, new EventData<float>(destroyDelay){Data = transform});
         }
     }
 }

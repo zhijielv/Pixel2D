@@ -60,6 +60,13 @@ namespace Framework.Scripts.PlayerControl
             RegistBullet();
         }
 
+        private void OnEnable()
+        {
+            // 注册事件
+            
+            EventManager.Instance.AddEventListener(transform, EventType.PlayerBulletCollide, OnBulletCollideHandler);
+        }
+
         // 武器跟随鼠标旋转
         private void SetMouseTarget(InputActionEventData inputActionEventData)
         {
@@ -75,7 +82,7 @@ namespace Framework.Scripts.PlayerControl
             currentWeapon.GetComponent<SpriteRenderer>().flipY = Vector3.Cross(targetVector3, Vector3.up).z < 0;
         }
 
-        // 攻击
+        // 左键攻击，对象池创建子弹
         public void OnFireButtonClick(InputActionEventData data)
         {
             if (null == currentWeapon || weaponList.Count == 0) return;
@@ -83,19 +90,13 @@ namespace Framework.Scripts.PlayerControl
                 bulletPool.Spawn(bullet, currentWeapon.transform.position, currentWeapon.transform.rotation);
             velocity = transform.right.normalized * bulletSpeed;
             spawnObj.GetComponent<Bullet>().Fire(velocity);
-        
-            // todo key为transform有bug
-            // EventManager.Instance.AddEventListener(transform, EventType.PlayerFire, OnBulletCollideHandler);
-            
         }
         
+        // 子弹碰撞后回池
         private void OnBulletCollideHandler(object sender, EventArgs e)
         {
             EventData<float> eventData = e as EventData<float>;
-            
             bulletPool.Despawn(eventData.Data as Transform, eventData.Value);
-            EventManager.Instance.RemoveEventListener(transform,EventType.PlayerFire, OnBulletCollideHandler);
-            // TimerManager.Instance.Schedule(0, DestroyBullet);
         }
 
         // todo 子弹类型
@@ -105,6 +106,11 @@ namespace Framework.Scripts.PlayerControl
                 .transform;
             bulletPool = ObjectManager.Instance.RegisterPool(bullet);
             bullet.GetComponent<Bullet>().Initialize(Vector3.zero, Vector3.zero, bulletPool.Spawn(bullet).gameObject);
+        }
+
+        private void OnDisable()
+        {
+            EventManager.Instance.RemoveEventListener(transform, EventType.PlayerBulletCollide, OnBulletCollideHandler);
         }
     }
 }

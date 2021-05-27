@@ -33,6 +33,7 @@ namespace Framework.Scripts.UI.View
             // 局部事件 TestListenerFunc方法监听EventConstants.StartGame事件
             AddEventListener(Constants.EventType.StartGame, TestListenerFunc);
             // 全局事件
+            // 测试 ObjectManager 的 internalPool
             EventManager.Instance.AddEventListener(Constants.EventType.BagpackChange, TestListenerFunc2);
             EventManager.Instance.RemoveEventListener(Constants.EventType.BagpackChange, TestListenerFunc2);
             EventManager.Instance.AddEventListener(Constants.EventType.BagpackChange, TestListenerFunc2);
