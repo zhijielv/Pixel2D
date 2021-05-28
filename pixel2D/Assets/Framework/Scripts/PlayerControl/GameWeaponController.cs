@@ -129,7 +129,7 @@ namespace Framework.Scripts.PlayerControl
         private void OnDisable()
         {
             EventManager.Instance.RemoveEventListener(transform, EventType.PlayerBulletCollide, OnBulletCollideHandler);
-            EventManager.Instance.RemoveEventListener(transform, EventType.PlayerWeaponFire, WeaponFire);s
+            EventManager.Instance.RemoveEventListener(transform, EventType.PlayerWeaponFire, WeaponFire);
         }
     }
 }
