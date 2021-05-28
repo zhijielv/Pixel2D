@@ -119,10 +119,7 @@ namespace Framework.Scripts.Manager
 
         public Transform SpawnUnit(float seconds = 0f)
         {
-            Transform spawn = unitPool.Spawn(objectUnit);
-            if (seconds > 0)
-                unitPool.Despawn(spawn, seconds);
-            return spawn;
+            return Spawn(unitPool, objectUnit, seconds);
         }
 
         public void Despawn(Transform spawn, float seconds)

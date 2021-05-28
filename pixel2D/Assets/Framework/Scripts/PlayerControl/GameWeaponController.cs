@@ -114,7 +114,7 @@ namespace Framework.Scripts.PlayerControl
         private void OnBulletCollideHandler(object sender, EventArgs e)
         {
             EventData<float> eventData = e as EventData<float>;
-            bulletPool.Despawn(eventData.Data as Transform, eventData.Value);
+            if (eventData != null) bulletPool.Despawn(eventData.Data as Transform, eventData.Value);
         }
 
         // todo 子弹类型
@@ -123,7 +123,6 @@ namespace Framework.Scripts.PlayerControl
             bullet = AddressableManager.Instance.LoadAsset<GameObject>("PlayerBullet")
                 .transform;
             bulletPool = ObjectManager.Instance.RegisterPool(bullet);
-            bullet.GetComponent<Bullet>().Initialize(Vector3.zero, Vector3.zero, bulletPool.Spawn(bullet).gameObject);
         }
 
         private void OnDisable()
