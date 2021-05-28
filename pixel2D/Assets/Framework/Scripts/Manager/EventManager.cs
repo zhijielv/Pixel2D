@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+** Created by fengling
+** DateTime:    2021-04-17 17:09:19
+** Description: 事件中心
+*/
+
+using System;
 using System.Collections.Generic;
 using Framework.Scripts.Singleton;
 using Sirenix.OdinInspector;
@@ -195,21 +201,21 @@ namespace Framework.Scripts.Manager
                 EventTable.TryGetValue(obj, out var events) ? events : null;
             if (delegateEvents != null) EventTable[obj].Remove(eventType);
         }
-
+        
+        // public void DispatchEvent<T>(object obj, EventType eventType, EventDataBase eventData = null)
+        // {
+        //     DelegateEvent list = GetDelegateEvent(obj, eventType);
+        //     //创建事件数据
+        //     list?.Handle(eventData);
+        // }
+        
         /// <summary>
         /// 触发某一类型的事件  并传递数据
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="eventType">事件类型</param>
-        /// <param name="data">事件的数据(可为null)</param>
-        public void DispatchEvent(object obj, EventType eventType, EventData eventData = null)
-        {
-            DelegateEvent list = GetDelegateEvent(obj, eventType);
-            //创建事件数据
-            list?.Handle(eventData);
-        }
-        
-        public void DispatchEvent<T>(object obj, EventType eventType, EventData<T> eventData = null)
+        /// <param name="eventData"></param>
+        public void DispatchEvent(object obj, EventType eventType, EventDataBase eventData = null)
         {
             DelegateEvent list = GetDelegateEvent(obj, eventType);
             //创建事件数据
@@ -263,6 +269,15 @@ namespace Framework.Scripts.Manager
         /// <param name="data">事件传过来的参数</param>
         public void Handle(EventDataBase data)
         {
+            if (data is IntervalEvent tmpData)
+            {
+                if (tmpData.InvokeTime > Time.time)
+                    return;
+                
+                EventHandle?.Invoke(this, data);
+                tmpData.ResetInvokeTime();
+                return;
+            }
             EventHandle?.Invoke(this, data);
         }
 
@@ -312,7 +327,7 @@ namespace Framework.Scripts.Manager
             EventHandle += addHandle;
         }
     }
-
+    
     /// <summary>
     /// 事件数据
     /// </summary>
@@ -334,9 +349,27 @@ namespace Framework.Scripts.Manager
 
         public EventData(T value)
         {
-            this.Value = value;
+            Value = value;
         }
     }
 
+    /// <summary>
+    /// 间隔事件
+    /// 带CD的事件，传入参数是cd时间
+    /// </summary>
+    public class IntervalEvent : EventData<float>
+    {
+        public float InvokeTime;
+        public IntervalEvent(float value) : base(value)
+        {
+            InvokeTime = 0;
+            Value = value;
+        }
+
+        public void ResetInvokeTime()
+        {
+            InvokeTime = Time.time + Value;
+        }
+    }
     #endregion
 }

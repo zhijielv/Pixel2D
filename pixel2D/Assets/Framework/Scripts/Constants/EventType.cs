@@ -14,6 +14,7 @@
         BagpackChange,
         
         //_______________________ Bullet _______________________
+        PlayerWeaponFire,
         PlayerBulletCollide,
     }
 }

@@ -29,6 +29,7 @@ namespace Framework.Scripts.PlayerControl
         // todo 当前子弹类型
         public Sprite currentBullet;
 
+        private IntervalEvent intervalEvent;
         private async void Start()
         {
             weaponList = new List<GameObject>();
@@ -63,8 +64,23 @@ namespace Framework.Scripts.PlayerControl
         private void OnEnable()
         {
             // 注册事件
-            
+
             EventManager.Instance.AddEventListener(transform, EventType.PlayerBulletCollide, OnBulletCollideHandler);
+            
+            // 开火 使用间隔事件（带CD的时间）
+            // todo 武器cd
+            intervalEvent = new IntervalEvent(2);
+            EventManager.Instance.AddEventListener(transform, EventType.PlayerWeaponFire, WeaponFire);
+        }
+
+        private void WeaponFire(object sender, EventArgs e)
+        {
+            if (null == currentWeapon || weaponList.Count == 0) return;
+            Transform spawnObj =
+                bulletPool.Spawn(bullet, currentWeapon.transform.position, currentWeapon.transform.rotation);
+            velocity = transform.right.normalized * bulletSpeed;
+
+            spawnObj.GetComponent<Bullet>().Fire(velocity);
         }
 
         // 武器跟随鼠标旋转
@@ -85,11 +101,13 @@ namespace Framework.Scripts.PlayerControl
         // 左键攻击，对象池创建子弹
         public void OnFireButtonClick(InputActionEventData data)
         {
-            if (null == currentWeapon || weaponList.Count == 0) return;
-            Transform spawnObj =
-                bulletPool.Spawn(bullet, currentWeapon.transform.position, currentWeapon.transform.rotation);
-            velocity = transform.right.normalized * bulletSpeed;
-            spawnObj.GetComponent<Bullet>().Fire(velocity);
+            EventManager.Instance.DispatchEvent(transform, EventType.PlayerWeaponFire, intervalEvent);
+            // if (null == currentWeapon || weaponList.Count == 0) return;
+            // Transform spawnObj =
+            //     bulletPool.Spawn(bullet, currentWeapon.transform.position, currentWeapon.transform.rotation);
+            // velocity = transform.right.normalized * bulletSpeed;
+            //
+            // spawnObj.GetComponent<Bullet>().Fire(velocity);
         }
         
         // 子弹碰撞后回池
@@ -111,6 +129,7 @@ namespace Framework.Scripts.PlayerControl
         private void OnDisable()
         {
             EventManager.Instance.RemoveEventListener(transform, EventType.PlayerBulletCollide, OnBulletCollideHandler);
+            EventManager.Instance.RemoveEventListener(transform, EventType.PlayerWeaponFire, WeaponFire);s
         }
     }
 }
