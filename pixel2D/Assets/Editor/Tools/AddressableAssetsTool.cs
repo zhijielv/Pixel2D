@@ -27,12 +27,13 @@ namespace Editor.Tools
     {
         #region AddressableAssetsTool
 
-        [ShowInInspector]
+        [ShowInInspector, InlineButton("AddSelectFolderAssets2AddressGroup", "添加选中文件夹下所有资源")]
+        [LabelText("资源包名")]
         private string _addressablesGropsName = "";
         
-        [Button("添加选中文件夹下所有资源", ButtonSizes.Large)]
-        public void AddSelectFolderAssets2AddressGroup()
+        public void AddSelectFolderAssets2AddressGroup(string groupName)
         {
+            if(groupName.IsNullOrWhitespace()) return;
             Object[] objects = Selection.GetFiltered(typeof(Object), SelectionMode.DeepAssets);
             if(objects.Length == 0) return;
             List<string> tmpFolder = new List<string>();
@@ -54,7 +55,7 @@ namespace Editor.Tools
                 tmpObjs.Add(obj);
             }
 
-            Add2AddressablesGroupsByName(tmpObjs, _addressablesGropsName);
+            Add2AddressablesGroupsByName(tmpObjs, groupName);
         }
         
         [Button("添加所有UI资源", ButtonSizes.Large)]

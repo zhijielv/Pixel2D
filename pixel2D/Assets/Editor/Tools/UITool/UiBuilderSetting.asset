@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: UiBuilderSetting
   m_EditorClassIdentifier: 
   isGenerateCode: 0
+  hasNewUICode: 0
