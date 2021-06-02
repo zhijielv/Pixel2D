@@ -22,38 +22,30 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - preload
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
   - m_GUID: 5528fd196611f43469e391829f09f037
     m_Address: _MainCanvas
     m_ReadOnly: 0
     m_SerializedLabels:
     - preload
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
   - m_GUID: cce5822c7ec7cda479903c37b763d27c
     m_Address: ObjectUnit
     m_ReadOnly: 0
     m_SerializedLabels:
     - preload
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
   - m_GUID: 39157d8e426b8f64f907d6cd8d80900d
     m_Address: Default2DMaterial
     m_ReadOnly: 0
     m_SerializedLabels:
     - preload
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
   - m_GUID: e37552d9ef0463d44891b5e74a2d8848
     m_Address: AvatarUnit
     m_ReadOnly: 0
     m_SerializedLabels:
     - preload
-    m_MainAsset: {fileID: 6802973357637329414, guid: e37552d9ef0463d44891b5e74a2d8848,
-      type: 3}
-    m_TargetAsset: {fileID: 6802973357637329414, guid: e37552d9ef0463d44891b5e74a2d8848,
-      type: 3}
+  - m_GUID: 4bb812198b44ce14d8c44f1472af7615
+    m_Address: PlayerBullet
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cc1ef71ad71ad124cac3229a7e1dd5ba, type: 2}
   m_SchemaSet:

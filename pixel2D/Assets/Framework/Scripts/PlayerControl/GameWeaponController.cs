@@ -19,8 +19,10 @@ namespace Framework.Scripts.PlayerControl
 {
     public class GameWeaponController : MonoBehaviour
     {
+        // todo 武器编辑器
         public string weaponName = "1";
         public GameObject currentWeapon;
+        public string bulletName = "_5";
         public float bulletSpeed = 10;
         public Vector3 velocity;
         public List<GameObject> weaponList;
@@ -126,6 +128,8 @@ namespace Framework.Scripts.PlayerControl
         {
             bullet = AddressableManager.Instance.LoadAsset<GameObject>("PlayerBullet")
                 .transform;
+            bullet.GetComponent<SpriteRenderer>().sprite =
+                AddressableManager.Instance.LoadAsset<Sprite>("bullet" + bulletName);
             bulletPool = ObjectManager.Instance.RegisterPool(bullet);
         }
 

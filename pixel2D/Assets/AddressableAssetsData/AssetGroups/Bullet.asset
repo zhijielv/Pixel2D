@@ -15,12 +15,8 @@ MonoBehaviour:
   m_GroupName: Bullet
   m_Data:
     m_SerializedData: []
-  m_GUID: 17a2c23b87009f144a210103f3c7bee1
-  m_SerializeEntries:
-  - m_GUID: 4bb812198b44ce14d8c44f1472af7615
-    m_Address: PlayerBullet
-    m_ReadOnly: 0
-    m_SerializedLabels: []
+  m_GUID: 4b69544c4d3eb9b47bb3af4a45c1e7c8
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cc1ef71ad71ad124cac3229a7e1dd5ba, type: 2}
   m_SchemaSet:
