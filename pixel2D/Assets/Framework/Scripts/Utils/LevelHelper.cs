@@ -4,13 +4,14 @@
 ** Description: TODO 编辑器辅助工具
 */
 
-using Framework.Scripts.Manager;
+using System;
 using Framework.Scripts.PlayerControl;
 using Sirenix.Utilities;
 using UnityEngine;
 
 namespace Framework.Scripts.Utils
 {
+    [GlobalConfig("Editor/LevelEditor")]
     public class LevelHelper : GlobalConfig<LevelHelper>
     {
         /*private const string _assetPath = "Assets/Plugins/Sirenix/Odin Inspector/Config/Resources/Sirenix/LevelHelper.asset";
@@ -24,5 +25,11 @@ namespace Framework.Scripts.Utils
         // todo 编辑器下控制相关物体
         public GameObject mainPlayer;
         public GameWeaponController weaponController;
+
+        private void OnDisable()
+        {
+            mainPlayer = null;
+            weaponController = null;
+        }
     }
 }

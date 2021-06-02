@@ -8,8 +8,10 @@ using System;
 using System.Collections.Generic;
 using Framework.Scripts.Manager;
 using Framework.Scripts.Objects.ObjectsItem;
+using Framework.Scripts.Utils;
 using PathologicalGames;
 using Rewired;
+using Sirenix.Utilities;
 using UnityEngine;
 using EventType = Framework.Scripts.Constants.EventType;
 
@@ -71,6 +73,8 @@ namespace Framework.Scripts.PlayerControl
             // todo 武器cd
             intervalEvent = new IntervalEvent(2);
             EventManager.Instance.AddEventListener(transform, EventType.PlayerWeaponFire, WeaponFire);
+            
+            GlobalConfig<LevelHelper>.Instance.weaponController = this;
         }
 
         private void WeaponFire(object sender, EventArgs e)

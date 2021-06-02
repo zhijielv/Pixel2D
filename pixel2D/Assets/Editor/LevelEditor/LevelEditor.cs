@@ -19,6 +19,7 @@ namespace Editor.LevelEditor
     public class LevelEditor : OdinMenuEditorWindow
     {
         private const string _configPath = "Assets/Plugins/Sirenix/Odin Inspector/Config/Resources/Sirenix/";
+        private const string _editorHelperAssetsPath = "Assets/Editor/LevelEditor/";
         private LevelTool _levelTool;
         private MapTool _mapTool;
         private AddressableAssetsTool _addressableAssetsTool;
@@ -51,7 +52,7 @@ namespace Editor.LevelEditor
                 "Assets/Editor/Tools/UITool/UiBuilderSetting.asset");
             tree.AddAssetAtPath("UiScriptableObjectsManager", _configPath + "UiScriptableObjectsManager.asset");
             tree.AddAssetAtPath("ProjectCommon", _configPath + "Common.asset");
-            tree.AddAssetAtPath("LevelHelper", _configPath + "LevelHelper.asset");
+            tree.AddAssetAtPath("LevelHelper", _editorHelperAssetsPath + "LevelHelper.asset");
             return tree;
         }
     }

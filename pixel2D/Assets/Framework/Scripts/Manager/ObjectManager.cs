@@ -90,6 +90,9 @@ namespace Framework.Scripts.Manager
             spriteRenderer.sortingOrder = 1;
             mainPlayer = unit;
             mainPlayer.name = "MainPlayer";
+#if UNITY_EDITOR
+            GlobalConfig<LevelHelper>.Instance.mainPlayer = mainPlayer;
+#endif
             // 添加AI寻路组件
             unit.GetComponentOrAdd<Seeker>();
             AILerp aiLerp = unit.GetComponentOrAdd<AILerp>();
