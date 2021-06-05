@@ -709,6 +709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c572def3774c32baf520451753fc0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 0}
 --- !u!1 &1423710542314974375
 GameObject:
   m_ObjectHideFlags: 0
@@ -1036,14 +1037,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 0}
-  HeroName: c01
-  speed: 4
   Rewired_TouchController: {fileID: 52964616981315612}
   SetSpeed_Button: {fileID: 569722208016017590}
   LoadLevel_Button: {fileID: 1697352259706913842}
   LoadAvatar_Button: {fileID: 5169993407072476060}
   Speed_InputField: {fileID: 7197555156887068070}
   Player_View_ScriptableObject: {fileID: 0}
+  HeroName: c01
+  speed: 4
 --- !u!1 &2248904265564644153
 GameObject:
   m_ObjectHideFlags: 0
@@ -1257,6 +1258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c572def3774c32baf520451753fc0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 0}
 --- !u!1 &2554361868834999889
 GameObject:
   m_ObjectHideFlags: 0
@@ -2738,6 +2740,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c572def3774c32baf520451753fc0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 0}
 --- !u!1 &6909566128887316926
 GameObject:
   m_ObjectHideFlags: 0
@@ -2894,6 +2897,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c572def3774c32baf520451753fc0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 0}
 --- !u!1 &7717913740987844340
 GameObject:
   m_ObjectHideFlags: 0
@@ -3204,6 +3208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c572def3774c32baf520451753fc0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 0}
 --- !u!1 &8416693864844861387
 GameObject:
   m_ObjectHideFlags: 0

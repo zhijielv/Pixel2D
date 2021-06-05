@@ -10,11 +10,16 @@
 
 namespace Framework.Scripts.UI.View
 {
-    using Base;
-    using System;
-    using UnityEngine;
     
-    public sealed partial class BiaoTi_View : ViewBase
+    public enum Player_View_Panel
     {
+    }
+    public enum Player_View_Widget
+    {
+        Rewired_TouchController,
+        SetSpeed_Button,
+        LoadLevel_Button,
+        LoadAvatar_Button,
+        Speed_InputField,
     }
 }

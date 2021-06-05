@@ -17,7 +17,7 @@ namespace Framework.Scripts.UI.View
     using System;
     using UnityEngine;
 
-    public partial class Player_View : ViewBase
+    public sealed partial class Player_View : ViewBase
     {
         public string HeroName = "c01";
         public float speed = 4f;

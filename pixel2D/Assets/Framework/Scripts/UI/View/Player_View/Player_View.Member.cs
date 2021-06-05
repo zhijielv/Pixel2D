@@ -14,23 +14,19 @@ namespace Framework.Scripts.UI.View
     using System;
     using UnityEngine;
     
-    public sealed partial class Main_View : ViewBase
+    public sealed partial class Player_View : ViewBase
     {
         // member
-        public UnityEngine.UI.Image BG_Image;
-        public Framework.Scripts.UI.CustomUI.CustomPanel Top_CustomPanel;
-        public UnityEngine.UI.Text LeftTop_Text;
-        public UnityEngine.UI.Text CenterTop_Text;
-        public UnityEngine.UI.Text RightTop_Text;
-        public Framework.Scripts.UI.CustomUI.CustomPanel Center_CustomPanel;
-        public UnityEngine.UI.Text Center_Text;
-        public UnityEngine.UI.Text CenterRight_Text;
-        public Framework.Scripts.UI.CustomUI.CustomPanel Bottom_CustomPanel;
-        public Framework.Scripts.UI.ScriptableObjects.PanelScriptableObjectBase Main_View_ScriptableObject;
+        public Rewired.ComponentControls.TouchController Rewired_TouchController;
+        public UnityEngine.UI.Button SetSpeed_Button;
+        public UnityEngine.UI.Button LoadLevel_Button;
+        public UnityEngine.UI.Button LoadAvatar_Button;
+        public UnityEngine.UI.InputField Speed_InputField;
+        public Framework.Scripts.UI.ScriptableObjects.PanelScriptableObjectBase Player_View_ScriptableObject;
         // member end
         internal override object GetWidget(string widgetName)
         {
-            if (!Enum.TryParse(widgetName, true, out Main_View_Widget _))
+            if (!Enum.TryParse(widgetName, true, out Player_View_Widget _))
             {
                 // Debug.LogError(gameObject.name + " has not widget : " + widgetName);
                 return null;

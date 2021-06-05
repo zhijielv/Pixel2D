@@ -10,11 +10,11 @@
 
 namespace Framework.Scripts.UI.View
 {
-    using Base;
-    using System;
-    using UnityEngine;
     
-    public sealed partial class BiaoTi_View : ViewBase
+    public enum BiaoTi_View_Panel
+    {
+    }
+    public enum BiaoTi_View_Widget
     {
     }
 }

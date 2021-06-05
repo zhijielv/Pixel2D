@@ -10,11 +10,20 @@
 
 namespace Framework.Scripts.UI.View
 {
-    using Base;
-    using System;
-    using UnityEngine;
     
-    public sealed partial class BiaoTi_View : ViewBase
+    public enum Main_View_Panel
     {
+    }
+    public enum Main_View_Widget
+    {
+        BG_Image,
+        Top_CustomPanel,
+        LeftTop_Text,
+        CenterTop_Text,
+        RightTop_Text,
+        Center_CustomPanel,
+        Center_Text,
+        CenterRight_Text,
+        Bottom_CustomPanel,
     }
 }

@@ -223,6 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c572def3774c32baf520451753fc0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 0}
 --- !u!1 &3493320864783041795
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,6 +331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c572def3774c32baf520451753fc0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 0}
 --- !u!1 &4090505527257456231
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,6 +424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c572def3774c32baf520451753fc0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 0}
 --- !u!1 &5120339881567954584
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,6 +514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c572def3774c32baf520451753fc0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 0}
 --- !u!114 &-8473964471543141792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -612,6 +616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c572def3774c32baf520451753fc0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 0}
 --- !u!1 &5936446314309461740
 GameObject:
   m_ObjectHideFlags: 0
@@ -704,6 +709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c572def3774c32baf520451753fc0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 0}
 --- !u!114 &5999411426167366379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -809,6 +815,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c572def3774c32baf520451753fc0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 0}
 --- !u!1 &6805479797273479663
 GameObject:
   m_ObjectHideFlags: 0
@@ -901,6 +908,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c572def3774c32baf520451753fc0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 0}
 --- !u!1 &8365714496850419042
 GameObject:
   m_ObjectHideFlags: 0
@@ -992,6 +1000,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c572def3774c32baf520451753fc0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 0}
 --- !u!114 &3994623169632661781
 MonoBehaviour:
   m_ObjectHideFlags: 0

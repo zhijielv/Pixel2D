@@ -8,7 +8,7 @@ namespace Framework.Scripts.UI.View
     using Base.RedDot;
     using Constants;
     
-    public partial class Test_View : ViewBase
+    public sealed partial class Test_View : ViewBase
     {
         public RedDotBase RedDot;
         public RedDotBase RedDot2;

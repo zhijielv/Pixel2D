@@ -13,14 +13,16 @@ using SRF;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Main : MonoBehaviour
+public class Main : ManagerSingleton<Main>
 {
-    private Text leftTopText;
-    private Text centerText;
-    private UiWidgetBase centerRightText;
+    public string firstView;
+    // private Text leftTopText;
+    // private Text centerText;
+    // private UiWidgetBase centerRightText;
 
-    private async void Awake()
+    private new async void Awake()
     {
+        base.Awake();
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         DontDestroyOnLoad(transform);
         GameObject frameWorkObj = GameObject.Find("[FrameWork]");

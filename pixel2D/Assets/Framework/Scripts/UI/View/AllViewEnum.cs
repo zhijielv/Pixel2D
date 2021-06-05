@@ -10,11 +10,14 @@
 
 namespace Framework.Scripts.UI.View
 {
-    using Base;
-    using System;
-    using UnityEngine;
     
-    public sealed partial class BiaoTi_View : ViewBase
+    public enum AllViewEnum
     {
+        Main_View,
+        Test2_View,
+        Test_View,
+        BiaoTi_View,
+        Player_View,
+        MaxValue,
     }
 }

@@ -22,23 +22,23 @@ namespace Framework.Scripts.UI.View
     using System;
     using UnityEngine;
 
-    public partial class Main_View : ViewBase
+    public sealed partial class Main_View : ViewBase
     {
         private void Start()
         {
-            // LeftTop_Text.text = "";
-            // RightTop_Text.text = "";
-            // BG_Image.SetNativeSize();
-            // float scale = BG_Image.rectTransform.sizeDelta.x /
-                          // Common.MainCanvas.GetComponent<CanvasScaler>().referenceResolution.x;
-            // BG_Image.rectTransform.sizeDelta /= scale;
+            LeftTop_Text.text = "";
+            RightTop_Text.text = "";
+            BG_Image.SetNativeSize();
+            float scale = BG_Image.rectTransform.sizeDelta.x /
+                          Common.MainCanvas.GetComponent<CanvasScaler>().referenceResolution.x;
+            BG_Image.rectTransform.sizeDelta /= scale;
         }
 
         private void Update()
         {
-            // CenterTop_Text.text = System.DateTime.Now.ToString("yyyy-MM-dd dddd");
-            // Center_Text.text = System.DateTime.Now.ToString("HH:mm");
-            // CenterRight_Text.text = System.DateTime.Now.ToString("ss");
+            CenterTop_Text.text = System.DateTime.Now.ToString("yyyy-MM-dd dddd");
+            Center_Text.text = System.DateTime.Now.ToString("HH:mm");
+            CenterRight_Text.text = System.DateTime.Now.ToString("ss");
         }
     }
 }

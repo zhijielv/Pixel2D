@@ -25,7 +25,14 @@ namespace Framework.Scripts.Manager
         private void StartLauncher()
         {
             Debug.Log("******************** start launcher ********************");
-            UiManager.Instance.GetWidget<Player_View>();
+            if (Main.Instance.firstView != null && Enum.TryParse(Main.Instance.firstView, true, out AllViewEnum viewEnum))
+            {
+                UiManager.Instance.GetWidget(viewEnum, viewEnum);
+            }
+            else
+            {
+                UiManager.Instance.GetWidget<Player_View>();
+            }
         }
 
         private async Task FrameWorkInit()

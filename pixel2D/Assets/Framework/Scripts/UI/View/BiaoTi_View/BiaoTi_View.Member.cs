@@ -16,5 +16,20 @@ namespace Framework.Scripts.UI.View
     
     public sealed partial class BiaoTi_View : ViewBase
     {
+        public Framework.Scripts.UI.ScriptableObjects.PanelScriptableObjectBase BiaoTi_View_ScriptableObject;
+        // member
+        // member end
+        internal override object GetWidget(string widgetName)
+        {
+            if (!Enum.TryParse(widgetName, true, out BiaoTi_View_Widget _))
+            {
+                // Debug.LogError(gameObject.name + " has not widget : " + widgetName);
+                return null;
+            }
+            else
+            {
+                return base.GetWidget(widgetName);
+            }
+        }
     }
 }

@@ -134,6 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c572def3774c32baf520451753fc0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 0}
 --- !u!1 &1545018393044260286
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,6 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c572def3774c32baf520451753fc0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 0}
 --- !u!1 &4953667145251658496
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,6 +362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c572def3774c32baf520451753fc0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 0}
 --- !u!1 &6608170174211225413
 GameObject:
   m_ObjectHideFlags: 0
@@ -543,8 +546,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 0}
-  RedDot: {fileID: 0}
-  RedDot2: {fileID: 0}
   Test_Button: {fileID: 2463760295995541253}
   Test3_Button: {fileID: 3727046483422178613}
   Test_View_ScriptableObject: {fileID: 0}
+  RedDot: {fileID: 0}
+  RedDot2: {fileID: 0}

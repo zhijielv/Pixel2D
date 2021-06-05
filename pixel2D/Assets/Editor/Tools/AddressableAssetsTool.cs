@@ -60,7 +60,7 @@ namespace Editor.Tools
         
         [Button("添加所有UI资源", ButtonSizes.Large)]
         [MenuItem("Assets/FrameWork View/Add All View To Addressables Groups", false, -2)]
-        public static void Add2AddressablesGroups()
+        public static void AddAllView2AddressablesGroups()
         {
             GlobalConfig<UiScriptableObjectsManager>.Instance.ResetAllViewPrefab();
             List<Object> list =

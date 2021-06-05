@@ -10,11 +10,13 @@
 
 namespace Framework.Scripts.UI.View
 {
-    using Base;
-    using System;
-    using UnityEngine;
     
-    public sealed partial class BiaoTi_View : ViewBase
+    public enum Test_View_Panel
     {
+    }
+    public enum Test_View_Widget
+    {
+        Test_Button,
+        Test3_Button,
     }
 }

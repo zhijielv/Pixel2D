@@ -14,7 +14,7 @@ namespace Framework.Scripts.UI.View
     using System;
     using UnityEngine;
     
-    public partial class Test2_View : ViewBase
+    public sealed partial class Test2_View : ViewBase
     {
     }
 }

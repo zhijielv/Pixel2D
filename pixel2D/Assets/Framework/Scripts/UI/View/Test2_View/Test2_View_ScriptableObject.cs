@@ -10,11 +10,9 @@
 
 namespace Framework.Scripts.UI.View
 {
-    using Base;
-    using System;
-    using UnityEngine;
+    using ScriptableObjects;
     
-    public sealed partial class BiaoTi_View : ViewBase
+    public sealed class Test2_View_ScriptableObject : PanelScriptableObjectBase
     {
     }
 }

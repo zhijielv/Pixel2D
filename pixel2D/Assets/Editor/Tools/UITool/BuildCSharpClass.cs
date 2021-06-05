@@ -33,7 +33,7 @@ namespace Editor.Tools.UITool
     /// </summary>
     public enum ViewScriptType
     {
-        View,
+        Default,
         ViewMember,
         Module,
         ScriptableObject,
@@ -154,9 +154,10 @@ namespace Editor.Tools.UITool
 
             enumNamespace.Types.Add(allViewEnum);
             unit.Namespaces.Add(enumNamespace);
-            ExportCSharpFile(unit, allViewEnumName, ViewScriptType.Module, false);
+            ExportCSharpFile(unit, allViewEnumName, ViewScriptType.Default, false);
         }
 
+        // 导出数据
         private static void GenerateScriptableObjectClass(string className)
         {
             // 判断代码是否存在，存在则只修改成员变量
@@ -169,12 +170,13 @@ namespace Editor.Tools.UITool
             myNamespace.Imports.Add(new CodeNamespaceImport("ScriptableObjects"));
             CodeTypeDeclaration myClass = new CodeTypeDeclaration(className + "_ScriptableObject") {IsClass = true};
             myClass.BaseTypes.Add("PanelScriptableObjectBase");
-            myClass.TypeAttributes = TypeAttributes.Public;
+            myClass.TypeAttributes = TypeAttributes.Public | TypeAttributes.Sealed;
             myNamespace.Types.Add(myClass);
             unit.Namespaces.Add(myNamespace);
             ExportCSharpFile(unit, className, ViewScriptType.ScriptableObject);
         }
 
+        // 导出成员名字Enum
         private static void GenerateViewWidget(string className, List<string> tmpMember)
         {
             CodeCompileUnit unit = new CodeCompileUnit();
@@ -194,6 +196,7 @@ namespace Editor.Tools.UITool
             ExportCSharpFile(unit, className, ViewScriptType.Module);
         }
 
+        // 导出成员变量
         private static void GenerateViewMember(string className, List<string> tmpMember)
         {
             CodeCompileUnit unit = new CodeCompileUnit();
@@ -203,7 +206,7 @@ namespace Editor.Tools.UITool
             myNamespace.Imports.Add(new CodeNamespaceImport("UnityEngine"));
             CodeTypeDeclaration myClass = new CodeTypeDeclaration(className)
             {
-                IsClass = true, TypeAttributes = TypeAttributes.Public, IsPartial = true,
+                IsClass = true, TypeAttributes = TypeAttributes.Public | TypeAttributes.Sealed, IsPartial = true,
             };
             myClass.BaseTypes.Add("ViewBase");
 
@@ -269,6 +272,7 @@ namespace Editor.Tools.UITool
             ExportCSharpFile(unit, className, ViewScriptType.ViewMember);
         }
 
+        // 导出View类
         private static void GenerateViewClass(string className)
         {
             // 判断代码是否存在，存在则只修改成员变量
@@ -282,12 +286,12 @@ namespace Editor.Tools.UITool
             myNamespace.Imports.Add(new CodeNamespaceImport("UnityEngine"));
             CodeTypeDeclaration myClass = new CodeTypeDeclaration(className)
             {
-                IsClass = true, TypeAttributes = TypeAttributes.Public, IsPartial = true,
+                IsClass = true, TypeAttributes = TypeAttributes.Public | TypeAttributes.Sealed, IsPartial = true,
             };
             myClass.BaseTypes.Add("ViewBase");
             myNamespace.Types.Add(myClass);
             unit.Namespaces.Add(myNamespace);
-            ExportCSharpFile(unit, className, ViewScriptType.View);
+            ExportCSharpFile(unit, className, ViewScriptType.Default);
         }
 
         private static void ExportCSharpFile(CodeCompileUnit unit, string className, ViewScriptType viewScriptType,
@@ -307,9 +311,9 @@ namespace Editor.Tools.UITool
                 Directory.CreateDirectory(outputFile);
             string fileName = viewScriptType switch
             {
-                ViewScriptType.Module => className + "_Module.cs",
-                ViewScriptType.View => className + ".cs",
-                ViewScriptType.ViewMember => className + "_Member.cs",
+                ViewScriptType.Module => className + ".Module.cs",
+                ViewScriptType.Default => className + ".cs",
+                ViewScriptType.ViewMember => className + ".Member.cs",
                 ViewScriptType.ScriptableObject => className + "_ScriptableObject.cs",
                 _ => "tmpCSharpFile.cs"
             };
@@ -447,8 +451,8 @@ namespace Editor.Tools.UITool
             
             GlobalConfig<UiBuilderSetting>.Instance.isGenerateCode = false;
             EditorUtility.SetDirty(GlobalConfig<UiScriptableObjectsManager>.Instance);
-            AddressableAssetsTool.Add2AddressablesGroups();
-            Debug.Log("add2####################");
+            AddressableAssetsTool.AddAllView2AddressablesGroups();
+            Debug.Log("Add All View To AddressablesGroups");
             GlobalConfig<UiBuilderSetting>.Instance.hasNewUICode = false;
         }
         
