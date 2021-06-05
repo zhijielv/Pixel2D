@@ -352,7 +352,7 @@ namespace Editor.Tools.UITool
                         child.gameObject.GetComponentOrAdd<UiWidgetBase>();
                         break;
                     case UIConfig.CustomPanel:
-                        child.gameObject.GetComponentOrAdd<CustomPanel>();
+                        child.gameObject.GetComponentOrAddInstance<CustomPanel>();
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -466,6 +466,7 @@ namespace Editor.Tools.UITool
             AddressableAssetsTool.AddAllView2AddressablesGroups();
             Debug.Log("Add All View To AddressablesGroups");
             GlobalConfig<UiBuilderSetting>.Instance.hasNewUICode = false;
+            AssetDatabase.Refresh();
         }
 
         // 创建SO 赋值SO

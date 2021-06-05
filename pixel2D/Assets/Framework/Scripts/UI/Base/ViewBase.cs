@@ -140,14 +140,8 @@ namespace Framework.Scripts.UI.Base
         {
             AddScrollValueChangedEvent(callback);
         }
-
-
+        
         public void AddClickEvent(string widgetName, UnityAction<BaseEventData> callback)
-        {
-            AddInterFaceEvent(EventTriggerType.PointerClick, callback);
-        }
-
-        public void AddClickEvent(string subParentName, string subName, UnityAction<BaseEventData> callback)
         {
             AddInterFaceEvent(EventTriggerType.PointerClick, callback);
         }

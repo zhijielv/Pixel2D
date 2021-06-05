@@ -28,6 +28,18 @@ namespace SRF
             return t;
         }
         
+        public static T GetComponentOrAddInstance<T>(this GameObject obj) where T : Component
+        {
+            T[] components = obj.GetComponents<T>();
+            for (var index = 0; index < components.Length; index++)
+            {
+                var t = components[index];
+                Object.DestroyImmediate(t, true);
+            }
+
+            return obj.AddComponent<T>();;
+        }
+        
         public static Component GetComponentOrAdd(this GameObject obj, Type type)
         {
             var t = obj.GetComponent(type);

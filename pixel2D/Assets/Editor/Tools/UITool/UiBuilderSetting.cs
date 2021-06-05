@@ -18,5 +18,11 @@ namespace Editor.Tools.UITool
         public bool hasNewUICode = false;
         [ShowInInspector]
         [ReadOnly] public Object[] selectViews;
+
+        [Button("Generate All UI", ButtonSizes.Large)]
+        public void GenerateAllUiScriptObject()
+        {
+            BuildCSharpClass.GenerateAllUiScriptObject();
+        }
     }
 }
