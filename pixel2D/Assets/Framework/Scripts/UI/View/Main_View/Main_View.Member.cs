@@ -13,19 +13,30 @@ namespace Framework.Scripts.UI.View
     using Base;
     using System;
     using UnityEngine;
+    using Sirenix.OdinInspector;
     
     public sealed partial class Main_View : ViewBase
     {
         // member
+        [FoldoutGroup("Member")]
         public UnityEngine.UI.Image BG_Image;
+        [FoldoutGroup("Member")]
         public Framework.Scripts.UI.CustomUI.CustomPanel Top_CustomPanel;
+        [FoldoutGroup("Member")]
         public UnityEngine.UI.Text LeftTop_Text;
+        [FoldoutGroup("Member")]
         public UnityEngine.UI.Text CenterTop_Text;
+        [FoldoutGroup("Member")]
         public UnityEngine.UI.Text RightTop_Text;
+        [FoldoutGroup("Member")]
         public Framework.Scripts.UI.CustomUI.CustomPanel Center_CustomPanel;
+        [FoldoutGroup("Member")]
         public UnityEngine.UI.Text Center_Text;
+        [FoldoutGroup("Member")]
         public UnityEngine.UI.Text CenterRight_Text;
+        [FoldoutGroup("Member")]
         public Framework.Scripts.UI.CustomUI.CustomPanel Bottom_CustomPanel;
+        [FoldoutGroup("Member")]
         public Framework.Scripts.UI.ScriptableObjects.PanelScriptableObjectBase Main_View_ScriptableObject;
         // member end
         internal override object GetWidget(string widgetName)

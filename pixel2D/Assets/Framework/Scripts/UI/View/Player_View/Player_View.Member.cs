@@ -13,15 +13,22 @@ namespace Framework.Scripts.UI.View
     using Base;
     using System;
     using UnityEngine;
+    using Sirenix.OdinInspector;
     
     public sealed partial class Player_View : ViewBase
     {
         // member
+        [FoldoutGroup("Member")]
         public Rewired.ComponentControls.TouchController Rewired_TouchController;
+        [FoldoutGroup("Member")]
         public UnityEngine.UI.Button SetSpeed_Button;
+        [FoldoutGroup("Member")]
         public UnityEngine.UI.Button LoadLevel_Button;
+        [FoldoutGroup("Member")]
         public UnityEngine.UI.Button LoadAvatar_Button;
+        [FoldoutGroup("Member")]
         public UnityEngine.UI.InputField Speed_InputField;
+        [FoldoutGroup("Member")]
         public Framework.Scripts.UI.ScriptableObjects.PanelScriptableObjectBase Player_View_ScriptableObject;
         // member end
         internal override object GetWidget(string widgetName)

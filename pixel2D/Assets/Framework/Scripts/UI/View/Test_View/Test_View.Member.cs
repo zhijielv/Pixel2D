@@ -13,12 +13,16 @@ namespace Framework.Scripts.UI.View
     using Base;
     using System;
     using UnityEngine;
+    using Sirenix.OdinInspector;
     
     public sealed partial class Test_View : ViewBase
     {
         // member
+        [FoldoutGroup("Member")]
         public UnityEngine.UI.Button Test_Button;
+        [FoldoutGroup("Member")]
         public UnityEngine.UI.Button Test3_Button;
+        [FoldoutGroup("Member")]
         public Framework.Scripts.UI.ScriptableObjects.PanelScriptableObjectBase Test_View_ScriptableObject;
         // member end
         internal override object GetWidget(string widgetName)

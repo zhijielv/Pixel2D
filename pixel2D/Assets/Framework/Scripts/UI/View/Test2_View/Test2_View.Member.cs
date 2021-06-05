@@ -13,9 +13,11 @@ namespace Framework.Scripts.UI.View
     using Base;
     using System;
     using UnityEngine;
+    using Sirenix.OdinInspector;
     
     public sealed partial class Test2_View : ViewBase
     {
+        [FoldoutGroup("Member")]
         public Framework.Scripts.UI.ScriptableObjects.PanelScriptableObjectBase Test2_View_ScriptableObject;
         // member
         // member end

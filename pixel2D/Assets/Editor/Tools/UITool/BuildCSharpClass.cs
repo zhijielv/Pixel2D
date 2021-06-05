@@ -16,6 +16,7 @@ using Framework.Scripts.Manager;
 using Framework.Scripts.UI.Base;
 using Framework.Scripts.UI.CustomUI;
 using Framework.Scripts.UI.ScriptableObjects;
+using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using SRF;
 using UnityEditor;
@@ -79,6 +80,7 @@ namespace Editor.Tools.UITool
         #endregion
 
         #region Generate
+
         private static void GenerateObjList(Object[] views)
         {
             GenerateAllView2ViewEnum();
@@ -204,12 +206,17 @@ namespace Editor.Tools.UITool
             myNamespace.Imports.Add(new CodeNamespaceImport("Base"));
             myNamespace.Imports.Add(new CodeNamespaceImport("System"));
             myNamespace.Imports.Add(new CodeNamespaceImport("UnityEngine"));
+            myNamespace.Imports.Add(new CodeNamespaceImport("Sirenix.OdinInspector"));
             CodeTypeDeclaration myClass = new CodeTypeDeclaration(className)
             {
                 IsClass = true, TypeAttributes = TypeAttributes.Public | TypeAttributes.Sealed, IsPartial = true,
             };
             myClass.BaseTypes.Add("ViewBase");
 
+            // 添加自定义特性
+            CodeAttributeDeclarationCollection collection = new CodeAttributeDeclarationCollection();
+            collection.Add(new CodeAttributeDeclaration("FoldoutGroup",
+                new CodeAttributeArgument(new CodePrimitiveExpression("Member"))));
             // 添加member
             for (int i = 0; i < tmpMember.Count; i++)
             {
@@ -228,6 +235,7 @@ namespace Editor.Tools.UITool
                 }
 
                 member.Attributes = MemberAttributes.Public;
+                member.CustomAttributes = collection;
                 myClass.Members.Add(member);
             }
 
@@ -236,6 +244,7 @@ namespace Editor.Tools.UITool
                 "Framework.Scripts.UI.ScriptableObjects.PanelScriptableObjectBase");
             CodeTypeMember so = new CodeMemberField(soType, className + "_ScriptableObject");
             so.Attributes = MemberAttributes.Public;
+            so.CustomAttributes = collection;
             myClass.Members.Add(so);
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -325,7 +334,7 @@ namespace Editor.Tools.UITool
             provider.GenerateCodeFromCompileUnit(unit, sw, options);
             provider.Dispose();
         }
-        
+
         private static List<string> RegistWidgets(Transform obj)
         {
             Transform[] children = obj.GetComponentsInChildren<Transform>();
@@ -348,8 +357,10 @@ namespace Editor.Tools.UITool
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
+
                 widgetList.Add(child.name);
             }
+
             AssetDatabase.Refresh();
             return widgetList;
         }
@@ -380,6 +391,7 @@ namespace Editor.Tools.UITool
             uiType = null;
             return false;
         }
+
         #endregion
 
         #region EndCompile
@@ -394,7 +406,7 @@ namespace Editor.Tools.UITool
             GlobalConfig<UiScriptableObjectsManager>.Instance.ResetAllViewSO();
             Object[] viewPrefabs = GlobalConfig<UiScriptableObjectsManager>.Instance.UIPrefabs;
             ReflectSetValue(viewPrefabs);
-            
+
             // 创建SO
             foreach (var prefab in viewPrefabs)
             {
@@ -404,7 +416,7 @@ namespace Editor.Tools.UITool
 
         private static void ReflectSetValue(Object[] viewPrefabs)
         {
-            if(!GlobalConfig<UiBuilderSetting>.Instance.hasNewUICode) return;
+            if (!GlobalConfig<UiBuilderSetting>.Instance.hasNewUICode) return;
             foreach (Object t in viewPrefabs)
             {
                 // 添加脚本
@@ -430,7 +442,7 @@ namespace Editor.Tools.UITool
 
                     Type widgetType = Constants.GetWidgetTypeByName(fieldInfo.Name);
                     UiWidgetBase[] children = tmpView.transform.GetComponentsInChildren<UiWidgetBase>();
-                    
+
                     foreach (UiWidgetBase uiWidgetBase in children)
                     {
                         if (!uiWidgetBase.name.EndsWith(fieldInfo.Name)) continue;
@@ -448,38 +460,39 @@ namespace Editor.Tools.UITool
 
                 EditorUtility.SetDirty(t);
             }
-            
+
             GlobalConfig<UiBuilderSetting>.Instance.isGenerateCode = false;
             EditorUtility.SetDirty(GlobalConfig<UiScriptableObjectsManager>.Instance);
             AddressableAssetsTool.AddAllView2AddressablesGroups();
             Debug.Log("Add All View To AddressablesGroups");
             GlobalConfig<UiBuilderSetting>.Instance.hasNewUICode = false;
         }
-        
+
         // 创建SO 赋值SO
         private static void GetScriptableObjectWidgetList(GameObject viewObj)
         {
             string name = viewObj.name;
             string path = Constants.ScriptableObjectDir + name + "_Asset.asset";
             // if (File.Exists(path))
-                // AssetDatabase.DeleteAsset(path);
-            
+            // AssetDatabase.DeleteAsset(path);
+
             var asset =
                 ScriptableObject.CreateInstance(name + "_ScriptableObject");
-            
+
             AssetDatabase.CreateAsset(asset, path);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
-            
+
             Type viewType = AssemblyUtilities.GetTypeByCachedFullName(Constants.UiNameSpace + viewObj.name);
             if (viewType == null)
             {
                 Debug.LogError($"{viewObj.name} is not Generate");
                 return;
             }
+
             FieldInfo[] fieldInfos = viewType
                 .GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
-            
+
             foreach (var fieldInfo in fieldInfos)
             {
                 if (!fieldInfo.Name.Contains("_ScriptableObject")) continue;
