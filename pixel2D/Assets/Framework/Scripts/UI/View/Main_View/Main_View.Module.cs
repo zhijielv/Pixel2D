@@ -21,6 +21,7 @@ namespace Framework.Scripts.UI.View
         LeftTop_Text,
         CenterTop_Text,
         RightTop_Text,
+        Setting_Button,
         Center_CustomPanel,
         Center_Text,
         CenterRight_Text,

@@ -32,6 +32,13 @@ namespace Framework.Scripts.UI.View
             float scale = BG_Image.rectTransform.sizeDelta.x /
                           Common.MainCanvas.GetComponent<CanvasScaler>().referenceResolution.x;
             BG_Image.rectTransform.sizeDelta /= scale;
+            
+            AddButtonClickEvent(Setting_Button, OnSettingBtnClick);
+        }
+
+        private void OnSettingBtnClick()
+        {
+            Debug.Log("OnSettingBtnClick");
         }
 
         private void Update()

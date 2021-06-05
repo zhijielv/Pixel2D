@@ -29,6 +29,8 @@ namespace Framework.Scripts.UI.View
         [FoldoutGroup("Member")]
         public UnityEngine.UI.Text RightTop_Text;
         [FoldoutGroup("Member")]
+        public UnityEngine.UI.Button Setting_Button;
+        [FoldoutGroup("Member")]
         public Framework.Scripts.UI.CustomUI.CustomPanel Center_CustomPanel;
         [FoldoutGroup("Member")]
         public UnityEngine.UI.Text Center_Text;
