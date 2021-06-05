@@ -34,7 +34,7 @@ namespace Framework.Scripts.Manager
             mainCamera = GameObject.FindWithTag("MainCamera");
             if (mainCamera == null)
             {
-                mainCamera = new GameObject();
+                mainCamera = new GameObject("MainCamera");
                 mainCamera.AddComponent<Camera>();
                 mainCamera.tag = "MainCamera";
                 mainCamera.AddComponent<AudioListener>();
