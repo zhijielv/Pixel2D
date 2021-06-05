@@ -29,9 +29,9 @@ namespace Framework.Scripts.Manager
 
         #region Enum类型获取
 
-        public UiWidgetBase GetWidget(Enum viewName, Enum widgetName)
+        public UiWidgetBase GetWidget(Enum viewName, Enum widgetName = null)
         {
-            var obj = GetWidgetObj(viewName, widgetName) as Component;
+            var obj = GetWidgetObj(viewName, widgetName) as GameObject;
             return obj.GetComponent<UiWidgetBase>();
         }
 
@@ -45,11 +45,14 @@ namespace Framework.Scripts.Manager
             return GetWidgetObj(viewName, widgetName);
         }
 
-        public object GetWidgetObj(Enum targetViewName, Enum targetWidgetName)
+        public object GetWidgetObj(Enum targetViewName, Enum targetWidgetName = null)
         {
             string viewName = targetViewName.ToString();
-            string widgetName = targetWidgetName.ToString();
-            // Debug.Log($"{viewName}    {widgetName}");
+            string widgetName = null;
+            if (targetWidgetName != null)
+            {
+                widgetName = targetWidgetName.ToString();
+            }
             return GetOrCreateViewObj(viewName, widgetName);
         }
 
@@ -57,23 +60,18 @@ namespace Framework.Scripts.Manager
 
         #region 泛型类型获取
 
-        public object GetWidget<T>(Enum viewName = null) where T : ViewBase
+        public T GetWidget<T>(Enum viewName = null) where T : ViewBase
         {
             return GetWidgetObj<T>(viewName);
         }
 
         // todo UICanvas Parent
-        public object GetWidgetObj<T>(Enum targetWidgetName = null) where T : ViewBase
+        public T GetWidgetObj<T>(Enum targetWidgetName = null) where T : ViewBase
         {
             string viewName = typeof(T).Name;
-            string widgetName = viewName;
-            if (targetWidgetName != null)
-            {
-                widgetName = targetWidgetName.ToString();
-                return GetOrCreateViewObj(viewName, widgetName);
-            }
-
-            return GetOrCreateViewObj(viewName);
+            if (targetWidgetName == null) return GetOrCreateViewObj(viewName).GetComponent<T>();
+            var widgetName = targetWidgetName.ToString();
+            return GetOrCreateViewObj(viewName, widgetName).GetComponent<T>();
         }
 
         #endregion
@@ -83,15 +81,15 @@ namespace Framework.Scripts.Manager
         #region private
 
         // todo 设置加载View的parent，默认是MainCanvas
-        private async Task<object> GetOrCreateViewObj(string viewName, string widgetName = null)
+        private GameObject GetOrCreateViewObj(string viewName, string widgetName = null)
         {
             if (uiList.ContainsKey(viewName))
             {
-                return uiList[viewName].GetWidget(widgetName);
+                return uiList[viewName].GetWidget(widgetName) as GameObject;
             }
 
             Debug.Log("Create View : " + viewName);
-            GameObject tmpView = await AddressableManager.Instance.InstantiateAsync(viewName, Common.MainCanvas.transform);
+            GameObject tmpView = AddressableManager.Instance.Instantiate(viewName, Common.MainCanvas.transform);
             RegistView(tmpView);
             if (widgetName == null)
             {
@@ -100,7 +98,7 @@ namespace Framework.Scripts.Manager
 
             GameObject widgetObj = (GameObject) tmpView.GetComponent<ViewBase>().GetWidget(widgetName);
             if (widgetObj != null) return widgetObj;
-            Debug.Log(viewName + " has not widget : " + widgetName);
+            Debug.LogError(viewName + " has not widget : " + widgetName);
             return null;
         }
 

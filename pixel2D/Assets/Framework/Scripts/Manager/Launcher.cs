@@ -1,10 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Framework.Scripts.Constants;
 using Framework.Scripts.Singleton;
 using Framework.Scripts.UI.View;
 using Rewired;
-using Rewired.ComponentControls;
 using Rewired.Integration.UnityUI;
 using SRF;
 using UnityEngine;
@@ -25,9 +23,9 @@ namespace Framework.Scripts.Manager
         private void StartLauncher()
         {
             Debug.Log("******************** start launcher ********************");
-            if (Main.Instance.firstView != null && Enum.TryParse(Main.Instance.firstView, true, out AllViewEnum viewEnum))
+            if (Main.Instance.firstView != AllViewEnum.MaxValue)
             {
-                UiManager.Instance.GetWidget(viewEnum, viewEnum);
+                UiManager.Instance.GetWidget(Main.Instance.firstView);
             }
             else
             {

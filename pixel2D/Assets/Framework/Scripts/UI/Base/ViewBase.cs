@@ -92,7 +92,7 @@ namespace Framework.Scripts.UI.Base
         {
             if (typeof(T) == GetType()) return;
             ShowWithHiddenTurn();
-            ViewBase targetView = (ViewBase) UiManager.Instance.GetWidget<T>();
+            T targetView = UiManager.Instance.GetWidget<T>();
             targetView.ShowWithHiddenTurn();
         }
 
