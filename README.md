@@ -27,3 +27,7 @@ https://guavaman.com/projects/rewired/docs/QuickStart.html
    * 导入方式：
      * Packages里的manifest.json添加"com.unity.entities": "0.11.2-preview.1",（包含ECS和burst等组件）；
      * 添加"com.unity.rendering.hybrid": "0.5.2-preview.4",（用于渲染Entity，否则不显示）；
+7. QHierarchy
+   * 版本：v4.4
+   * 用于Hierarchy操作；
+   * 预制体模式下会一直自动保存，仔Tools->QHierarchy->Settings里关闭Lock取消刷新；
