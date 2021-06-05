@@ -115,7 +115,8 @@ MonoBehaviour:
   Center_Text: {fileID: 5042833249728479917}
   CenterRight_Text: {fileID: 7972336026278910457}
   Bottom_CustomPanel: {fileID: -8473964471543141792}
-  Main_View_ScriptableObject: {fileID: 0}
+  Main_View_ScriptableObject: {fileID: 11400000, guid: e413eaff92792b046b23f74e3ea6b684,
+    type: 2}
 --- !u!1 &2435453935268825859
 GameObject:
   m_ObjectHideFlags: 0

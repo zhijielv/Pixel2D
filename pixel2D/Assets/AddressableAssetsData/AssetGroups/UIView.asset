@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: UIView
   m_Data:
     m_SerializedData: []
-  m_GUID: 60ba158176575274eb1f7dfc6530b89d
+  m_GUID: b993ebb03fd9ef14f9f8eebb60b09a66
   m_SerializeEntries:
   - m_GUID: 41bae8e906e667a4b8f0abc983a2552c
     m_Address: Main_View
