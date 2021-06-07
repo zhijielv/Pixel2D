@@ -45,11 +45,8 @@ MonoBehaviour:
   - m_GUID: 4bb812198b44ce14d8c44f1472af7615
     m_Address: PlayerBullet
     m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 92a17144642976845b72a24ff6c22d69
-    m_Address: Assets/Art/Font
-    m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - preload
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cc1ef71ad71ad124cac3229a7e1dd5ba, type: 2}
   m_SchemaSet:
