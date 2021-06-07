@@ -16,7 +16,6 @@ using Framework.Scripts.Manager;
 using Framework.Scripts.UI.Base;
 using Framework.Scripts.UI.CustomUI;
 using Framework.Scripts.UI.ScriptableObjects;
-using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using SRF;
 using UnityEditor;
@@ -348,6 +347,7 @@ namespace Editor.Tools.UITool
                     case UIConfig.Button:
                     case UIConfig.Image:
                     case UIConfig.InputField:
+                    case UIConfig.Dropdown:
                     case UIConfig.TouchController:
                         child.gameObject.GetComponentOrAdd<UiWidgetBase>();
                         break;
@@ -424,11 +424,11 @@ namespace Editor.Tools.UITool
                 Type viewType = AssemblyUtilities.GetTypeByCachedFullName(Constants.UiNameSpace + t.name);
                 if (viewType == null)
                 {
-                    Debug.LogError($"{tmpView.name} is not Generate");
+                    Debug.LogError($"{t.name} is not Generate");
                     return;
                 }
 
-                Debug.LogWarning($"{tmpView.name} is generate, and add component {viewType.FullName}");
+                Debug.LogWarning($"{t.name} is generate, and add component {viewType.FullName}");
                 tmpView.GetComponentOrAdd(viewType);
                 // 反射赋值
                 FieldInfo[] fieldInfos = viewType
@@ -479,11 +479,7 @@ namespace Editor.Tools.UITool
 
             var asset =
                 ScriptableObject.CreateInstance(name + "_ScriptableObject");
-
-            AssetDatabase.CreateAsset(asset, path);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-
+            
             Type viewType = AssemblyUtilities.GetTypeByCachedFullName(Constants.UiNameSpace + viewObj.name);
             if (viewType == null)
             {
@@ -499,8 +495,19 @@ namespace Editor.Tools.UITool
                 if (!fieldInfo.Name.Contains("_ScriptableObject")) continue;
                 // 赋值 view 的 so
                 fieldInfo.SetValue(viewObj.GetComponent<ViewBase>(), asset);
+                PanelScriptableObjectBase objectBase = asset as PanelScriptableObjectBase;
+                if (objectBase != null)
+                {
+                    objectBase.panelObj = viewObj;
+                    objectBase.ResetWidgets();
+                }
+
                 break;
             }
+            
+            AssetDatabase.CreateAsset(asset, path);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
         }
 
         #endregion

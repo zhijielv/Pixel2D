@@ -21,4 +21,8 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  widgetList: []
+  widgetList:
+  - Test_Button
+  - Test3_Button
+  panelObj: {fileID: 8918394878212490565, guid: 0834b0a8b2a86cc4da9ac7720a5b177a,
+    type: 3}

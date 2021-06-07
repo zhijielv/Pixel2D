@@ -22,3 +22,5 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   widgetList: []
+  panelObj: {fileID: 8918394878212490565, guid: c64ff41192c12be488b56adb16385e2c,
+    type: 3}

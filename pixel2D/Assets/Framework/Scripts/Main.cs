@@ -19,7 +19,7 @@ public class Main : ManagerSingleton<Main>
     // private Text centerText;
     // private UiWidgetBase centerRightText;
 
-    private new async void Awake()
+    protected new async void Awake()
     {
         base.Awake();
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
@@ -43,12 +43,14 @@ public class Main : ManagerSingleton<Main>
         await CreateManager<LevelManager>();
     }
 
+    // Main上挂管理器
     private async Task AddManager<T>() where T : ManagerSingleton<T>
     {
         gameObject.GetComponentOrAdd<T>();
         await ManagerSingleton<T>.Instance.Init();
     }
 
+    // 创建空对象挂管理器
     private async Task CreateManager<T>(Transform parent = null) where T : ManagerSingleton<T>
     {
         GameObject managerObj = new GameObject("[" + typeof(T).Name + "]");

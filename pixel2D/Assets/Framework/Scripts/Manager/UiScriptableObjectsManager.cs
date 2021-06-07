@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Framework.Scripts.UI.ScriptableObjects;
@@ -6,6 +7,7 @@ using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Framework.Scripts.Manager
 {
@@ -26,6 +28,16 @@ namespace Framework.Scripts.Manager
                 .Select(guid =>
                     AssetDatabase.LoadAssetAtPath<PanelScriptableObjectBase>(AssetDatabase.GUIDToAssetPath(guid)))
                 .ToArray();
+            foreach (PanelScriptableObjectBase objectBase in UiScriptableObjectsList)
+            {
+                string uiName = objectBase.name.Split(new[] {"_Asset"}, StringSplitOptions.RemoveEmptyEntries)[0];
+                foreach (var o in UIPrefabs)
+                {
+                    if (!o.name.Equals(uiName)) continue;
+                    objectBase.panelObj = o as GameObject;
+                    break;
+                }
+            }
         }
 
         [Button("获取所有UI", ButtonSizes.Medium), PropertyOrder(-2)]

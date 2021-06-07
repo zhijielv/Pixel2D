@@ -14,10 +14,6 @@ namespace Framework.Scripts.Singleton
                 Instance = (T) this;
                 DontDestroyOnLoad(gameObject);
             }
-            else
-            {
-                Destroy(gameObject);
-            }
         }
 
         public virtual async Task Init()

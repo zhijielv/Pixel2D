@@ -12,9 +12,13 @@ using Framework.Scripts.Manager;
 using Sirenix.OdinInspector;
 using UnityEngine.UI;
 using System;
+using System.Collections.Generic;
 using Framework.Scripts.Constants;
 using Rewired;
+using UnityEditor.AddressableAssets;
+using UnityEditor.AddressableAssets.Settings;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Framework.Scripts.UI.View
 {
@@ -24,6 +28,7 @@ namespace Framework.Scripts.UI.View
 
     public sealed partial class Main_View : ViewBase
     {
+        public string FontGroupName = "Font";
         private void Start()
         {
             LeftTop_Text.text = "";
@@ -34,11 +39,36 @@ namespace Framework.Scripts.UI.View
             BG_Image.rectTransform.sizeDelta /= scale;
             
             AddButtonClickEvent(Setting_Button, OnSettingBtnClick);
+            AddButtonClickEvent(ChangeFont_Button, ChangeFont);
+            
+            Font_Dropdown.options.Clear();
+            // 加载所有字体
+            foreach (AddressableAssetEntry entry in AddressableAssetSettingsDefaultObject.Settings.FindGroup(FontGroupName).entries)
+            {
+                Font font = Addressables.LoadAssetAsync<Font>(entry.address).WaitForCompletion();
+                Font_Dropdown.options.Add(new Dropdown.OptionData(font.name));
+            }
+            
+            Text_Dropdown.options.Clear();
+            foreach (string s in Main_View_ScriptableObject.widgetList)
+            {
+                if (s.EndsWith("_Text"))
+                {
+                    Text_Dropdown.options.Add(new Dropdown.OptionData(s));
+                }
+            }
         }
 
         private void OnSettingBtnClick()
         {
-            Debug.Log("OnSettingBtnClick");
+            SelectFont_CustomPanel.gameObject.SetActive(!SelectFont_CustomPanel.gameObject.activeSelf);
+        }
+
+        private void ChangeFont()
+        {
+            string text = Text_Dropdown.captionText.text;
+            Text widget = (Text) GetWidget(text);
+            widget.font = AddressableManager.Instance.LoadAsset<Font>(Font_Dropdown.captionText.text);
         }
 
         private void Update()

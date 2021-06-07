@@ -548,7 +548,6 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   Test_Button: {fileID: 2463760295995541253}
   Test3_Button: {fileID: 3727046483422178613}
-  Test_View_ScriptableObject: {fileID: 11400000, guid: e8ac3a77ea9b8ad4b9da8b0270160c18,
-    type: 2}
+  Test_View_ScriptableObject: {fileID: 0}
   RedDot: {fileID: 0}
   RedDot2: {fileID: 0}

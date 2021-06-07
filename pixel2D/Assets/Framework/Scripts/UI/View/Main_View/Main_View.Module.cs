@@ -26,5 +26,9 @@ namespace Framework.Scripts.UI.View
         Center_Text,
         CenterRight_Text,
         Bottom_CustomPanel,
+        SelectFont_CustomPanel,
+        Text_Dropdown,
+        Font_Dropdown,
+        ChangeFont_Button,
     }
 }

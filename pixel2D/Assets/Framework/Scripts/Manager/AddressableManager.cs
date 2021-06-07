@@ -30,8 +30,7 @@ namespace Framework.Scripts.Manager
             await base.Init();
         }
 
-        // todo 改为同步
-        // T o = Addressables.LoadAssetAsync<T>(key).WaitForCompletion();
+        // 异步加载
         public async Task<T> LoadAssetAsync<T>(object key) where T : Object
         {
             if (!_initialized)
@@ -46,7 +45,8 @@ namespace Framework.Scripts.Manager
 
             return op;
         }
-        
+
+        // 同步加载
         public T LoadAsset<T>(object key) where T : Object
         {
             if (!_initialized)
@@ -77,7 +77,7 @@ namespace Framework.Scripts.Manager
 
             return op;
         }
-        
+
         public GameObject Instantiate(object key, Transform parent = null,
             bool instantiateInWorldSpace = false)
         {

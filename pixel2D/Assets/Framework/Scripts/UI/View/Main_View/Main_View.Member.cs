@@ -39,6 +39,14 @@ namespace Framework.Scripts.UI.View
         [FoldoutGroup("Member")]
         public Framework.Scripts.UI.CustomUI.CustomPanel Bottom_CustomPanel;
         [FoldoutGroup("Member")]
+        public Framework.Scripts.UI.CustomUI.CustomPanel SelectFont_CustomPanel;
+        [FoldoutGroup("Member")]
+        public UnityEngine.UI.Dropdown Text_Dropdown;
+        [FoldoutGroup("Member")]
+        public UnityEngine.UI.Dropdown Font_Dropdown;
+        [FoldoutGroup("Member")]
+        public UnityEngine.UI.Button ChangeFont_Button;
+        [FoldoutGroup("Member")]
         public Framework.Scripts.UI.ScriptableObjects.PanelScriptableObjectBase Main_View_ScriptableObject;
         // member end
         internal override object GetWidget(string widgetName)

@@ -15,14 +15,36 @@ MonoBehaviour:
   m_GroupName: Font
   m_Data:
     m_SerializedData: []
-  m_GUID: 15f0814d037cd5c4085ab4e4b59835fa
+  m_GUID: 9d6731fc74b97aa47bc1bd9fbfd8dc66
   m_SerializeEntries:
-  - m_GUID: 92a17144642976845b72a24ff6c22d69
-    m_Address: Font
+  - m_GUID: bedab53980509be40a963810b49511e1
+    m_Address: Amethyst-2
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 102900000, guid: 92a17144642976845b72a24ff6c22d69, type: 3}
-    m_TargetAsset: {fileID: 102900000, guid: 92a17144642976845b72a24ff6c22d69, type: 3}
+  - m_GUID: 56dc36afd7c8d9146b894cfdba3a080c
+    m_Address: DottedSongtiSquareRegular
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fe1de853ad3a50447b742ee79f2ddb26
+    m_Address: HaiPaiQiangDiaoGunShiXianHeiJian-2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a4470b6a236dc924db68fef94f215441
+    m_Address: YSHaoShenTi-2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 13f10d657faac6f4db9b4394cf98640b
+    m_Address: ZaoZiGongFangQiaoPinTi-2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: acb5e19b0f39e7046ba205ba60471cb0
+    m_Address: ZaoZiGongFangXinRanTi-2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 03c127a2040c2824ea36f37ffa491858
+    m_Address: ZiTiGuanJiaYanYeZhiTing-2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cc1ef71ad71ad124cac3229a7e1dd5ba, type: 2}
   m_SchemaSet:

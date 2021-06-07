@@ -21,4 +21,20 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  widgetList: []
+  widgetList:
+  - BG_Image
+  - Top_CustomPanel
+  - LeftTop_Text
+  - CenterTop_Text
+  - RightTop_Text
+  - Setting_Button
+  - Center_CustomPanel
+  - Center_Text
+  - CenterRight_Text
+  - Bottom_CustomPanel
+  - SelectFont_CustomPanel
+  - Text_Dropdown
+  - Font_Dropdown
+  - ChangeFont_Button
+  panelObj: {fileID: 2237329840493786692, guid: 41bae8e906e667a4b8f0abc983a2552c,
+    type: 3}
