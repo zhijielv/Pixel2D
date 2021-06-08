@@ -7,6 +7,7 @@
 
 using Sirenix.OdinInspector;
 using SRF;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
@@ -18,10 +19,6 @@ namespace Framework.Scripts.UI.Base
     {
         [ShowInInspector] [ReadOnly]
         public CanvasGroup canvasGroup;
-        public void AddButtonClickEvent(UnityAction callback)
-        {
-            GetComponent<Button>().onClick.AddListener(callback);
-        }
 
         public void AddInputFieldValueChangedEvent(UnityAction<string> callback)
         {

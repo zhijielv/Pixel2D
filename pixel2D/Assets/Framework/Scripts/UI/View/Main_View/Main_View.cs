@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using Framework.Scripts.Constants;
 using Rewired;
+using UniRx;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEngine;
@@ -37,9 +38,12 @@ namespace Framework.Scripts.UI.View
             float scale = BG_Image.rectTransform.sizeDelta.x /
                           Common.MainCanvas.GetComponent<CanvasScaler>().referenceResolution.x;
             BG_Image.rectTransform.sizeDelta /= scale;
-            
-            AddButtonClickEvent(Setting_Button, OnSettingBtnClick);
-            AddButtonClickEvent(ChangeFont_Button, ChangeFont);
+
+            Setting_Button.AddButtonClickEvent(OnSettingBtnClick).Subscribe((unit =>
+            {
+                Debug.Log("on Button Click");
+            }));
+            ChangeFont_Button.AddButtonClickEvent(ChangeFont);
             
             Font_Dropdown.options.Clear();
             // 加载所有字体

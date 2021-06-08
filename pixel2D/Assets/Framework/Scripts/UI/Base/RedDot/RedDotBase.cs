@@ -6,10 +6,8 @@
 
 using System;
 using DG.Tweening;
-using Framework.Scripts.Constants;
 using Framework.Scripts.Manager;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using EventType = Framework.Scripts.Constants.EventType;

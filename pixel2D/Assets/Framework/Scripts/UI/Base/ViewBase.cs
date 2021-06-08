@@ -96,11 +96,6 @@ namespace Framework.Scripts.UI.Base
             targetView.ShowWithHiddenTurn();
         }
 
-        public void AddButtonClickEvent(Button button, UnityAction callback)
-        {
-            button.GetComponent<UiWidgetBase>().AddButtonClickEvent(callback);
-        }
-
         public void AddInputFieldValueChangedEvent(string widgetName, UnityAction<string> callback)
         {
             AddInputFieldValueChangedEvent(callback);
@@ -181,7 +176,7 @@ namespace Framework.Scripts.UI.Base
             AddInterFaceEvent(EventTriggerType.PointerEnter, callBack);
         }
 
-        public void AddPointerEnterEvent(string subPaentName, string subName, UnityAction<BaseEventData> callBack)
+        public void AddPointerEnterEvent(string subParentName, string subName, UnityAction<BaseEventData> callBack)
         {
             AddInterFaceEvent(EventTriggerType.PointerEnter, callBack);
         }

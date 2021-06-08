@@ -29,7 +29,7 @@ namespace Framework.Scripts.UI.View
             AddInputEventDelegate(TestWheel, UpdateLoopType.Update, InputActionEventType.AxisActive, "Wheel");
 
             // EventManager 
-            
+
             // 局部事件 TestListenerFunc方法监听EventConstants.StartGame事件
             AddEventListener(Constants.EventType.StartGame, TestListenerFunc);
             // 全局事件
@@ -39,10 +39,10 @@ namespace Framework.Scripts.UI.View
             EventManager.Instance.AddEventListener(Constants.EventType.BagpackChange, TestListenerFunc2);
             // UIEvent
             // 自己拼的ui，监听事件
-            AddButtonClickEvent(LoadLevel_Button, LoadLevel);
-            AddButtonClickEvent(LoadAvatar_Button, LoadAvatar);
-            AddButtonClickEvent(SetSpeed_Button, SetSpeed);
-            
+            LoadLevel_Button.AddButtonClickEvent(LoadLevel);
+            LoadAvatar_Button.AddButtonClickEvent(LoadAvatar);
+            SetSpeed_Button.AddButtonClickEvent(SetSpeed);
+
             LoadLevel();
             LoadAvatar();
         }
@@ -56,10 +56,10 @@ namespace Framework.Scripts.UI.View
 
             if (Input.GetKeyDown(KeyCode.B))
             {
-                EventManager.Instance.DispatchEvent(this, Constants.EventType.StartGame, new EventData(){Data = 1});
+                EventManager.Instance.DispatchEvent(this, Constants.EventType.StartGame, new EventData() {Data = 1});
                 // test222();
             }
-            
+
             if (Input.GetKeyDown(KeyCode.C))
             {
                 EventManager.Instance.DispatchEvent(Constants.EventType.BagpackChange, new EventData<int>(1));
@@ -90,7 +90,7 @@ namespace Framework.Scripts.UI.View
             EventData eventData = eventArgs as EventData;
             Debug.Log($"{sender}    {eventData.Data}");
         }
-        
+
         private void TestListenerFunc2(object sender, EventArgs eventArgs)
         {
             EventData<int> eventData = eventArgs as EventData<int>;
