@@ -96,46 +96,6 @@ namespace Framework.Scripts.UI.Base
             targetView.ShowWithHiddenTurn();
         }
 
-        public void AddInputFieldValueChangedEvent(string widgetName, UnityAction<string> callback)
-        {
-            AddInputFieldValueChangedEvent(callback);
-        }
-
-        public void AddInputFieldEndEditEvent(string widgetName, UnityAction<string> callback)
-        {
-            AddInputFieldEndEditEvent(callback);
-        }
-
-        public void TextWrite(string widgetName, string value)
-        {
-            TextWrite(value);
-        }
-
-        public void TextClear(string widgetName)
-        {
-            TextClear();
-        }
-
-        public void AddToggleValueChangedEvent(string widgetName, UnityAction<bool> callback)
-        {
-            AddToggleValueChangedEvent(callback);
-        }
-
-        public void AddSliderValueChangedEvent(string widgetName, UnityAction<float> callback)
-        {
-            AddSliderValueChangedEvent(callback);
-        }
-
-        public void AddDropdownValueChangedEvent(string widgetName, UnityAction<int> callback)
-        {
-            AddDropdownValueChangedEvent(callback);
-        }
-
-        public void AddScrollValueChangedEvent(string widgetName, UnityAction<Vector2> callback)
-        {
-            AddScrollValueChangedEvent(callback);
-        }
-        
         public void AddClickEvent(string widgetName, UnityAction<BaseEventData> callback)
         {
             AddInterFaceEvent(EventTriggerType.PointerClick, callback);
