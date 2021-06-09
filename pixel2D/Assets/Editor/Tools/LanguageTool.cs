@@ -14,25 +14,6 @@ using UnityEditor;
 
 namespace Editor.Tools
 {
-    public enum LanguageEnum
-    {
-        English,
-        Chinese,
-        ChineseTraditional,
-        Japanese,
-        Russian,
-        German,
-        Spanish,
-        Korean,
-        Portuguese,
-        French,
-        Indonesian,
-        Polish,
-        FarsiIran,
-        ArabicEgypt,
-        MaxValue,
-    }
-
     public class LanguageTool
     {
         public class LanguageItem
