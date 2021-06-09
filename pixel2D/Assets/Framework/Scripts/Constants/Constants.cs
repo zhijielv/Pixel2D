@@ -15,6 +15,7 @@ namespace Framework.Scripts.Constants
         public static readonly string ViewScriptDir = "/Framework/Scripts/UI/View/";
         public static readonly string ViewPrefabDir = "Assets/Art/Prefabs/UI/View/";
         public static readonly string LevelPrefabDir = "Assets/Art/Prefabs/Level/";
+        public static readonly string JsonFoldreDir = "Assets/Framework/Json/";
         // Hero的动画
         public static readonly string AnimatorPath = "Sprite/Hero/{0}/{0}_anim/{0}.controller";
         

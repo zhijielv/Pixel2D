@@ -12,18 +12,32 @@ namespace Framework.Scripts.Utils
 {
     public class JsonHelper
     {
-        public static T JsonReader<T>(string jsonName)
+        public static T JsonReader<T>(string jsonPath)
         {
 #if UNITY_EDITOR
-            jsonName = "Assets/Framework/Json/" + jsonName + ".json";
-            TextAsset jsonFile = AssetDatabase.LoadAssetAtPath<TextAsset>(jsonName);
+            jsonPath = Constants.Constants.JsonFoldreDir + jsonPath + ".json";
+            TextAsset jsonFile;
+            jsonFile = !File.Exists(jsonPath) ? new TextAsset("[]") : AssetDatabase.LoadAssetAtPath<TextAsset>(jsonPath);
 #else
             TextAsset jsonFile = AddressableManager.Instance.LoadAsset<TextAsset>(jsonName);
 #endif
             T t = JsonConvert.DeserializeObject<T>(jsonFile.text);
             return t;
         }
-        
+
+#if UNITY_EDITOR
+        public static string JsonWriter<T>(List<T> list, string jsonPath)
+        {
+            jsonPath = Constants.Constants.JsonFoldreDir + jsonPath + ".json";
+            string json = JsonConvert.SerializeObject(list);
+            StreamWriter streamWriter = new StreamWriter(jsonPath) {AutoFlush = true};
+            streamWriter.Write(json);
+            streamWriter.Close();
+            AssetDatabase.Refresh();
+            return json;
+        }
+#endif
+
         /// <summary>
         /// 格式化读取某种类型的Json列表
         /// </summary>
@@ -36,7 +50,7 @@ namespace Framework.Scripts.Utils
             {
                 TextAsset textAsset = AddressableManager.Instance.LoadAsset<TextAsset>(jsonName);
                 json = textAsset.text;
-                return JsonConvert.DeserializeObject<List<T>>(json);    
+                return JsonConvert.DeserializeObject<List<T>>(json);
             }
 
             string jsonPath = $"Assets/Framework/Json/{jsonName}.json";
@@ -55,6 +69,5 @@ namespace Framework.Scripts.Utils
             streamReader.Close();
             return JsonConvert.DeserializeObject<List<T>>(json);
         }
-
     }
 }

@@ -61,6 +61,18 @@ namespace Framework.Scripts.UI.View
                     Text_Dropdown.options.Add(new Dropdown.OptionData(s));
                 }
             }
+
+            // Text widget = GetWidget("Center_Text") as Text;
+            // widget.GetComponent<UiWidgetBase>().AddOnDragEvent("Center_Text", arg0 =>
+            // {
+            //     Vector2 mouseScreenPosition = RewiredInputEventManager.Instance.player0.controllers.Mouse.screenPosition;
+            //
+            //     Vector2 resultPos;
+            //     RectTransformUtility.ScreenPointToLocalPointInRectangle(widget.transform.parent.GetComponent<RectTransform>(),
+            //         mouseScreenPosition, Camera.main, out resultPos);
+            //     widget.GetComponent<RectTransform>().position = resultPos;
+            //     Debug.Log($"{widget.gameObject.GetComponent<RectTransform>().anchoredPosition} {resultPos}");
+            // });
         }
 
         private void OnSettingBtnClick()

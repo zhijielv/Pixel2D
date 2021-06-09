@@ -23,6 +23,7 @@ namespace Editor.LevelEditor
         private LevelTool _levelTool;
         private MapTool _mapTool;
         private AddressableAssetsTool _addressableAssetsTool;
+        private LanguageTool _languageTool;
 
         protected override void OnEnable()
         {
@@ -30,6 +31,7 @@ namespace Editor.LevelEditor
             _levelTool = new LevelTool();
             _mapTool = new MapTool();
             _addressableAssetsTool = new AddressableAssetsTool();
+            _languageTool = new LanguageTool();
         }
 
         [MenuItem("Tools/Level Editor %Q")]
@@ -47,6 +49,7 @@ namespace Editor.LevelEditor
                 {"Level Tool", _levelTool},
                 {"Map Tool", _mapTool},
                 {"Addressable Tool", _addressableAssetsTool},
+                {"Language Tool", _languageTool},
             };
             tree.AddAssetAtPath("UiBuilderSetting",
                 "Assets/Editor/Tools/UITool/UiBuilderSetting.asset");

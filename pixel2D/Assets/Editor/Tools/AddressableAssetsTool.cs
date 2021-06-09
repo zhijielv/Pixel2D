@@ -155,6 +155,21 @@ namespace Editor.Tools
             AddressableAssetsTool.Add2AddressablesGroupsByName(textAssets, "Json");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filter">筛选类型    t:TextAsset   </param>
+        /// <param name="assetsFolderPath">资源文件夹路径   Assets/Framework/Json   </param>
+        /// <param name="groupName">资源组名</param>
+        public static void AddAssets2AddressGroup(string filter, string assetsFolderPath, string groupName)
+        {
+            AssetDatabase.Refresh();
+            List<TextAsset> textAssets = AssetDatabase.FindAssets(filter, new[] {assetsFolderPath})
+                .Select(guid =>
+                    AssetDatabase.LoadAssetAtPath<TextAsset>(AssetDatabase.GUIDToAssetPath(guid))).ToList();
+            Add2AddressablesGroupsByName(textAssets, groupName);
+        }
+
         #endregion
 
         // todo 设置打包
