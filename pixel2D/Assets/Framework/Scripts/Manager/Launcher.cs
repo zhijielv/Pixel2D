@@ -23,9 +23,12 @@ namespace Framework.Scripts.Manager
         private void StartLauncher()
         {
             Debug.Log("******************** start launcher ********************");
-            if (Main.Instance.firstView != AllViewEnum.MaxValue)
+            if (Common.IsDebugMode)
             {
-                UiManager.Instance.GetWidget(Main.Instance.firstView);
+                if (Main.Instance.firstView != AllViewEnum.MaxValue)
+                {
+                    UiManager.Instance.GetWidget(Main.Instance.firstView);
+                }
             }
             else
             {

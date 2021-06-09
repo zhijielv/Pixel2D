@@ -8,7 +8,6 @@
 using Sirenix.OdinInspector;
 using SRF;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
@@ -17,8 +16,6 @@ namespace Framework.Scripts.UI.Base
     public class UiWidgetBase : MonoBehaviour
     {
         [ShowInInspector] [ReadOnly] public CanvasGroup canvasGroup;
-
-        
 
         public void AddInterFaceEvent(EventTriggerType eventTriggerType, UnityAction<BaseEventData> callback)
         {
@@ -35,8 +32,38 @@ namespace Framework.Scripts.UI.Base
             tmpTrigger.triggers.Add(tmpEntry);
         }
 
+        
+        public void AddClickEvent(string widgetName, UnityAction<BaseEventData> callback)
+        {
+            AddInterFaceEvent(EventTriggerType.PointerClick, callback);
+        }
 
-        public void ShowWithHiddenTurn()
+        public void AddBeginDragEvent(string widgetName, UnityAction<BaseEventData> callBack)
+        {
+            AddInterFaceEvent(EventTriggerType.BeginDrag, callBack);
+        }
+
+        public void AddOnDragEvent(string widgetName, UnityAction<BaseEventData> callBack)
+        {
+            AddInterFaceEvent(EventTriggerType.Drag, callBack);
+        }
+
+        public void AddEndDragEvent(string widgetName, UnityAction<BaseEventData> callBack)
+        {
+            AddInterFaceEvent(EventTriggerType.EndDrag, callBack);
+        }
+
+        public void AddPointerEnterEvent(string widgetName, UnityAction<BaseEventData> callBack)
+        {
+            AddInterFaceEvent(EventTriggerType.PointerEnter, callBack);
+        }
+
+        public void AddPointerExitEvent(string widgetName, UnityAction<BaseEventData> callBack)
+        {
+            AddInterFaceEvent(EventTriggerType.PointerExit, callBack);
+        }
+        
+        public void ShowOrHiddenTurn()
         {
             canvasGroup = gameObject.GetComponentOrAdd<CanvasGroup>();
             canvasGroup.alpha = Mathf.Abs(canvasGroup.alpha - 1);

@@ -11,10 +11,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using Framework.Scripts.Manager;
 using Rewired;
-using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using EventType = Framework.Scripts.Constants.EventType;
 
 namespace Framework.Scripts.UI.Base
@@ -91,69 +87,10 @@ namespace Framework.Scripts.UI.Base
         public void ChangePanel<T>() where T : ViewBase
         {
             if (typeof(T) == GetType()) return;
-            ShowWithHiddenTurn();
+            ShowOrHiddenTurn();
             T targetView = UiManager.Instance.GetWidget<T>();
-            targetView.ShowWithHiddenTurn();
+            targetView.ShowOrHiddenTurn();
         }
-
-        public void AddClickEvent(string widgetName, UnityAction<BaseEventData> callback)
-        {
-            AddInterFaceEvent(EventTriggerType.PointerClick, callback);
-        }
-
-        public void AddBeginDragEvent(string widgetName, UnityAction<BaseEventData> callBack)
-        {
-            AddInterFaceEvent(EventTriggerType.BeginDrag, callBack);
-        }
-
-        public void AddBeginDragEvent(string subParentName, string subName, UnityAction<BaseEventData> callBack)
-        {
-            AddInterFaceEvent(EventTriggerType.BeginDrag, callBack);
-        }
-
-        public void AddOnDragEvent(string widgetName, UnityAction<BaseEventData> callBack)
-        {
-            AddInterFaceEvent(EventTriggerType.Drag, callBack);
-        }
-
-        public void AddOnDragEvent(string subParentName, string subName, UnityAction<BaseEventData> callBack)
-        {
-            AddInterFaceEvent(EventTriggerType.Drag, callBack);
-        }
-
-        public void AddEndDragEvent(string widgetName, UnityAction<BaseEventData> callBack)
-        {
-            AddInterFaceEvent(EventTriggerType.EndDrag, callBack);
-        }
-
-        public void AddEndDragEvent(string subParentName, string subName, UnityAction<BaseEventData> callBack)
-        {
-            AddInterFaceEvent(EventTriggerType.EndDrag, callBack);
-        }
-
-        public void AddPointerEnterEvent(string widgetName, UnityAction<BaseEventData> callBack)
-        {
-            AddInterFaceEvent(EventTriggerType.PointerEnter, callBack);
-        }
-
-        public void AddPointerEnterEvent(string subParentName, string subName, UnityAction<BaseEventData> callBack)
-        {
-            AddInterFaceEvent(EventTriggerType.PointerEnter, callBack);
-        }
-
-        public void AddPointerExitEvent(string widgetName, UnityAction<BaseEventData> callBack)
-        {
-            AddInterFaceEvent(EventTriggerType.PointerExit, callBack);
-        }
-
-        public void AddPointerExitEvent(string subParentName, string subName, UnityAction<BaseEventData> callBack)
-        {
-            AddInterFaceEvent(EventTriggerType.PointerExit, callBack);
-        }
-
-        #endregion
-
-        #region virtual
 
         #endregion
     }
