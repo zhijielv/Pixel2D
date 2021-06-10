@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
-using Framework.Scripts.Level.LevelItem;
 using Framework.Scripts.Manager;
 using Newtonsoft.Json;
 using UnityEditor;
@@ -12,16 +9,28 @@ namespace Framework.Scripts.Utils
 {
     public class JsonHelper
     {
-        public static T JsonReader<T>(string jsonPath)
+        /// <summary>
+        /// 运行时直接读取资源包加载json
+        /// 编辑器下读取项目路径，不存在的json需要导出新json并存入包
+        /// </summary>
+        /// <param name="jsonPath"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static List<T> JsonReader<T>(string jsonPath)
         {
-#if UNITY_EDITOR
-            jsonPath = Constants.Constants.JsonFoldreDir + jsonPath + ".json";
             TextAsset jsonFile;
-            jsonFile = !File.Exists(jsonPath) ? new TextAsset("[]") : AssetDatabase.LoadAssetAtPath<TextAsset>(jsonPath);
-#else
-            TextAsset jsonFile = AddressableManager.Instance.LoadAsset<TextAsset>(jsonName);
-#endif
-            T t = JsonConvert.DeserializeObject<T>(jsonFile.text);
+
+            if (Application.isPlaying)
+            {
+                jsonFile = AddressableManager.Instance.LoadAsset<TextAsset>(jsonPath);
+            }
+            else
+            {
+                jsonPath = Constants.Constants.JsonFoldreDir + jsonPath + ".json";
+                jsonFile = !File.Exists(jsonPath) ? new TextAsset("[]") : AssetDatabase.LoadAssetAtPath<TextAsset>(jsonPath);    
+            }
+
+            List<T> t = JsonConvert.DeserializeObject<List<T>>(jsonFile.text);
             return t;
         }
 
@@ -68,6 +77,26 @@ namespace Framework.Scripts.Utils
             json = streamReader.ReadToEnd();
             streamReader.Close();
             return JsonConvert.DeserializeObject<List<T>>(json);
+        }
+
+        /// <summary>
+        /// 格式化Json类
+        /// </summary>
+        /// <param name="jsonName">Assets/Framework/Json/下的json文件（不带后缀）</param>
+        /// <typeparam name="T">类型</typeparam>
+        /// <returns></returns>
+        public static T GetJsonClass<T>(string jsonName) where T : class
+        {
+            string jsonPath = $"Assets/Framework/Json/{jsonName}.json";
+            if (!File.Exists(jsonPath))
+            {
+                Debug.LogError("没有json文件");
+                return null;
+            }
+            var streamReader = new StreamReader(jsonPath);
+            string json = streamReader.ReadToEnd();
+            streamReader.Close();
+            return JsonConvert.DeserializeObject<T>(json);
         }
     }
 }

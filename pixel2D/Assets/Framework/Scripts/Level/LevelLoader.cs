@@ -72,7 +72,7 @@ namespace Framework.Scripts.Level
             levelName = level.LevelName;
             levelType = level.LevelType;
             LeveljsonClass tmpLeveljsonClass = new LeveljsonClass();
-            var list = JsonHelper.JsonReader<List<LeveljsonClass>>(Constants.Constants.LevelJson);
+            var list = JsonHelper.JsonReader<LeveljsonClass>(Constants.Constants.LevelJson);
             foreach (var leveljsonClass in list)
             {
                 if (leveljsonClass.LevelType != levelType) continue;

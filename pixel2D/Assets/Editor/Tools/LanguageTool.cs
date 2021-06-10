@@ -1,7 +1,7 @@
 ﻿/*
 ** Created by fengling
 ** DateTime:    2021-06-09 13:19:47
-** Description: TODO 
+** Description: 
 */
 
 using System.Collections.Generic;
@@ -120,7 +120,44 @@ namespace Editor.Tools
         [Button(ButtonSizes.Large)]
         public void ReadJson()
         {
-            LanguageItems = JsonHelper.JsonReader<List<LanguageItem>>("Language/" + LanguageEnum + "/" + LanguageKey);
+            LanguageItems = JsonHelper.JsonReader<LanguageItem>("Language/" + LanguageEnum + "/" + LanguageKey);
         }
+
+        [ShowInInspector]
+        public ErrorCodeLocalization jsonClass;
+        [Button]
+        public void GenerateErrorCode()
+        {
+            jsonClass = JsonHelper.GetJsonClass<ErrorCodeLocalization>("ErrorCodeLocalization");
+        }
+    }
+
+    public class ErrorCodeLocalization
+    {
+        public string Tool;
+        public string Version;
+        [ShowInInspector]
+        public List<ErrorCodeLocalizationItem> Sheet1;
+    }
+
+    public class ErrorCodeLocalizationItem
+    {
+        public string key;
+        public string value;
+        public string Description;
+        public string English;
+        public string Chinese;
+        public string ChineseTraditional;
+        public string Japanese;
+        public string Russian;
+        public string German;
+        public string Spanish;
+        public string Korean;
+        public string Portuguese;
+        public string French;
+        public string Indonesian;
+        public string Polish;
+        public string FarsiIran;
+        public string ArabicEgypt;
     }
 }

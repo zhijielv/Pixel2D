@@ -222,7 +222,7 @@ namespace Framework.Scripts.Level
         public LeveljsonClass GetLeveljsonClass(LevelType levelType = LevelType.ludi)
         {
             LeveljsonClass tmpLeveljsonClass = new LeveljsonClass();
-            List<LeveljsonClass> leveljsonClasses = JsonHelper.JsonReader<List<LeveljsonClass>>(Constants.Constants.LevelJson);
+            List<LeveljsonClass> leveljsonClasses = JsonHelper.JsonReader<LeveljsonClass>(Constants.Constants.LevelJson);
             foreach (LeveljsonClass leveljsonClass in leveljsonClasses)
             {
                 if (leveljsonClass.LevelType != levelType) continue;

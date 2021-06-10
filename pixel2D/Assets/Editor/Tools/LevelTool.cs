@@ -52,7 +52,6 @@ namespace Editor.Tools
                 AddressableAssetsTool.AddAllJson2AddressGroup();
             }
 
-            // _levelJsonList = await JsonHelper.JsonReader<List<LeveljsonClass>>("Map.json");
             StreamReader streamReader = new StreamReader(jsonPath);
             string json = streamReader.ReadToEnd();
             streamReader.Close();
@@ -85,7 +84,7 @@ namespace Editor.Tools
             // _leveljsonClass.WidgetDictionary = new Dictionary<string, int>();
             // foreach (KeyValuePair<LevelItemType, int> valuePair in Level.ItemWidget)
             // {
-                // _leveljsonClass.WidgetDictionary.Add(valuePair.Key.ToString(), valuePair.Value);
+            // _leveljsonClass.WidgetDictionary.Add(valuePair.Key.ToString(), valuePair.Value);
             // }
 
             foreach (KeyValuePair<LevelItemType, List<Sprite>> keyValuePair in Level.LevelItem)
