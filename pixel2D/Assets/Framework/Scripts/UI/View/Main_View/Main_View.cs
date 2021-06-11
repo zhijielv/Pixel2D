@@ -16,8 +16,6 @@ using System.Collections.Generic;
 using Framework.Scripts.Constants;
 using Rewired;
 using UniRx;
-using UnityEditor.AddressableAssets;
-using UnityEditor.AddressableAssets.Settings;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -45,23 +43,6 @@ namespace Framework.Scripts.UI.View
             }));
             ChangeFont_Button.AddButtonClickEvent(ChangeFont);
             
-            Font_Dropdown.options.Clear();
-            // 加载所有字体
-            foreach (AddressableAssetEntry entry in AddressableAssetSettingsDefaultObject.Settings.FindGroup(FontGroupName).entries)
-            {
-                Font font = Addressables.LoadAssetAsync<Font>(entry.address).WaitForCompletion();
-                Font_Dropdown.options.Add(new Dropdown.OptionData(font.name));
-            }
-            
-            Text_Dropdown.options.Clear();
-            foreach (string s in Main_View_ScriptableObject.widgetList)
-            {
-                if (s.EndsWith("_Text"))
-                {
-                    Text_Dropdown.options.Add(new Dropdown.OptionData(s));
-                }
-            }
-
             // Text widget = GetWidget("Center_Text") as Text;
             // widget.GetComponent<UiWidgetBase>().AddOnDragEvent("Center_Text", arg0 =>
             // {
