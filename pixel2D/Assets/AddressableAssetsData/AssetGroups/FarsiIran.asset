@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: FarsiIran
+  m_EditorClassIdentifier: 
+  m_GroupName: FarsiIran
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 696a4e17c3e43a04ca16ea879c684a3a
+  m_SerializeEntries:
+  - m_GUID: 7227563e596e64d4e97c22b9a82730c0
+    m_Address: ErrorCodeLocalization
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 169179630888e6844a14a7bb30f6f2d7
+    m_Address: FarsiIran
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: cc1ef71ad71ad124cac3229a7e1dd5ba, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 99d59de9bac1d73409a01343beae4401, type: 2}
+    - {fileID: 11400000, guid: e71e1f88c287c064ea17698a0e3d365b, type: 2}

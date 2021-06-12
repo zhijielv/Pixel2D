@@ -15,10 +15,10 @@ MonoBehaviour:
   m_GroupName: Chinese
   m_Data:
     m_SerializedData: []
-  m_GUID: 7ea7c8e303071fa40a631ea864d42da9
+  m_GUID: 2beff83f2b600cd4792653ba8f8cf7e8
   m_SerializeEntries:
-  - m_GUID: f15af89bb9b9faa4ba85231f832d1dfb
-    m_Address: ErrorCode
+  - m_GUID: 04d20d19babd0354395ea7ec88351f5c
+    m_Address: ErrorCodeLocalization
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 0af54eb429e59a347a789482fd1bc2b6

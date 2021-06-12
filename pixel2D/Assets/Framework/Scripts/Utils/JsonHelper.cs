@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using DG.DemiEditor;
 using Framework.Scripts.Manager;
 using Newtonsoft.Json;
 using UnityEditor;
@@ -38,7 +39,16 @@ namespace Framework.Scripts.Utils
         public static string JsonWriter<T>(List<T> list, string jsonPath)
         {
             jsonPath = Constants.Constants.JsonFoldreDir + jsonPath + ".json";
-            string json = JsonConvert.SerializeObject(list);
+            
+            if (!Directory.Exists(jsonPath.Parent()))
+            {
+                Debug.Log($"创建 {jsonPath.Parent()}");
+                Directory.CreateDirectory(jsonPath.Parent());
+                FileStream fileStream = File.Create(jsonPath);
+                fileStream.Close();
+            }
+            
+            string json = JsonConvert.SerializeObject(list, Formatting.Indented);
             StreamWriter streamWriter = new StreamWriter(jsonPath) {AutoFlush = true};
             streamWriter.Write(json);
             streamWriter.Close();
@@ -63,9 +73,10 @@ namespace Framework.Scripts.Utils
             }
 
             string jsonPath = $"Assets/Framework/Json/{jsonName}.json";
-            if (!File.Exists(jsonPath))
+            if (!Directory.Exists(jsonPath.Parent()))
             {
                 Debug.Log($"创建 {jsonName}.json at " + jsonPath);
+                Directory.CreateDirectory(jsonPath.Parent());
                 FileStream fileStream = File.Create(jsonPath);
                 StreamWriter streamWriter = new StreamWriter(fileStream);
                 streamWriter.Write("[]");

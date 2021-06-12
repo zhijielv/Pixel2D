@@ -56,7 +56,7 @@ MonoBehaviour:
       m_SearchString: 
     projectReferencesTreeHeaderState:
       m_Columns:
-      - width: 659
+      - width: 658
         sortedAscending: 1
       - width: 100
         sortedAscending: 1
@@ -92,7 +92,7 @@ MonoBehaviour:
       m_Columns: []
       m_VisibleColumns: 
       m_SortedColumns: 
-    splitterState: '{"ID":11298,"splitterInitialOffset":0.0,"currentActiveSplitter":-1,"realSizes":[405.0,203.0],"relativeSizes":[0.6666666865348816,0.3333333134651184],"minSizes":[90.0,47.0],"maxSizes":[0.0,0.0],"lastTotalSize":608.0,"splitSize":6.0,"xOffset":0.0,"m_Version":1,"oldRealSizes":[],"oldMinSizes":[],"oldMaxSizes":[],"oldSplitSize":0}'
+    splitterState: '{"ID":1425,"splitterInitialOffset":0.0,"currentActiveSplitter":-1,"realSizes":[342.0,171.0],"relativeSizes":[0.6666666865348816,0.3333333134651184],"minSizes":[90.0,47.0],"maxSizes":[0.0,0.0],"lastTotalSize":513.0,"splitSize":6.0,"xOffset":0.0,"m_Version":1,"oldRealSizes":[],"oldMinSizes":[],"oldMaxSizes":[],"oldSplitSize":0}'
     selectedTab: 0
   projectCleanerSettings:
     filtersTabIndex: 0

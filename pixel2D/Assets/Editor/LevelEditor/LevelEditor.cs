@@ -4,6 +4,7 @@
 ** Description: 地图编辑器
 */
 
+using System.Linq;
 using Editor.Tools;
 using Framework.Scripts.Constants;
 using Sirenix.OdinInspector.Editor;
@@ -44,19 +45,41 @@ namespace Editor.LevelEditor
 
         protected override OdinMenuTree BuildMenuTree()
         {
-            OdinMenuTree tree = new OdinMenuTree(true)
-            {
-                {"Level Tool", _levelTool},
-                {"Map Tool", _mapTool},
-                {"Addressable Tool", _addressableAssetsTool},
-                {"Language Tool", _languageTool},
-            };
-            tree.AddAssetAtPath("UiBuilderSetting",
+            OdinMenuTree tree = new OdinMenuTree(true);
+            tree.AddAssetAtPath("Project Common", _configPath + "Common.asset");
+            tree.Add("Level Tool", _levelTool);
+            tree.Add("Map Tool", _mapTool);
+            tree.Add("Addressable Tool", _addressableAssetsTool);
+            tree.Add("Language Tool", _languageTool);
+            
+            tree.AddAssetAtPath("Ui Builder Setting",
                 "Assets/Editor/Tools/UITool/UiBuilderSetting.asset");
-            tree.AddAssetAtPath("UiScriptableObjectsManager", _configPath + "UiScriptableObjectsManager.asset");
-            tree.AddAssetAtPath("ProjectCommon", _configPath + "Common.asset");
-            tree.AddAssetAtPath("LevelHelper", _editorHelperAssetsPath + "LevelHelper.asset");
+            tree.AddAssetAtPath("Ui ScriptableObjects Manager", _configPath + "UiScriptableObjectsManager.asset");
+            tree.AddAssetAtPath("Level Helper", _editorHelperAssetsPath + "LevelHelper.asset");
+            
             return tree;
+        }
+
+        protected override void OnBeginDrawEditors()
+        {
+            // base.OnBeginDrawEditors();
+            var selected = MenuTree.Selection.FirstOrDefault();
+            var toolbarHeight = MenuTree.Config.SearchToolbarHeight;
+            SirenixEditorGUI.BeginHorizontalToolbar(toolbarHeight);
+            {
+                if (selected != null)
+                {
+                    GUILayout.Label(selected.Name);
+                }
+
+                // todo 重启Editor
+                // if (SirenixEditorGUI.ToolbarButton((new GUIContent("重启Editor"))))
+                // {
+                //     Close();
+                //     Show();
+                // }
+            }
+            SirenixEditorGUI.EndHorizontalToolbar();
         }
     }
 #endif

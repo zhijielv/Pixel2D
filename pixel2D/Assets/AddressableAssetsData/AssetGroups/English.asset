@@ -15,14 +15,18 @@ MonoBehaviour:
   m_GroupName: English
   m_Data:
     m_SerializedData: []
-  m_GUID: a5914e47b6f64c1478be022117e93e59
+  m_GUID: fe7ad391d89dbad4a810f79ebfbf3aab
   m_SerializeEntries:
   - m_GUID: f5634520baa113f4b93dd3828605d7df
     m_Address: en-US
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: c23c3eecf7ca854488b8979f5ee0b270
-    m_Address: ErrorCode
+  - m_GUID: a68a036f09f207a45ba1eb0be1ffd063
+    m_Address: ErrorCodeLocalization
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d0653705574a4c044a1c9c9079c8396e
+    m_Address: zh-CN
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

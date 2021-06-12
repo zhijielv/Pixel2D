@@ -114,7 +114,7 @@ namespace Editor.Tools
                 }
             }
 
-            string json = JsonConvert.SerializeObject(_levelJsonList);
+            string json = JsonConvert.SerializeObject(_levelJsonList, Formatting.Indented);
             StreamWriter streamWriter = new StreamWriter(jsonPath) {AutoFlush = true};
             streamWriter.Write(json);
             streamWriter.Close();
