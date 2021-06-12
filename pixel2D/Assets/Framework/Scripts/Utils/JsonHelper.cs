@@ -28,7 +28,9 @@ namespace Framework.Scripts.Utils
             else
             {
                 jsonPath = Constants.Constants.JsonFoldreDir + jsonPath + ".json";
-                jsonFile = !File.Exists(jsonPath) ? new TextAsset("[]") : AssetDatabase.LoadAssetAtPath<TextAsset>(jsonPath);    
+#if UNITY_EDITOR
+                jsonFile = !File.Exists(jsonPath) ? new TextAsset("[]") : AssetDatabase.LoadAssetAtPath<TextAsset>(jsonPath);
+#endif
             }
 
             List<T> t = JsonConvert.DeserializeObject<List<T>>(jsonFile.text);

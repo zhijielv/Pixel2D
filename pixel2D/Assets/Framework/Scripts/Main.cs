@@ -41,6 +41,7 @@ public class Main : ManagerSingleton<Main>
         await CreateManager<ObjectManager>();
         await CreateManager<CameraManager>();
         await CreateManager<LevelManager>();
+        await CreateManager<Language>(transform);
     }
 
     // Main上挂管理器

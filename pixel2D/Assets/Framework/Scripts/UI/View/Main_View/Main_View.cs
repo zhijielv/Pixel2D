@@ -40,6 +40,7 @@ namespace Framework.Scripts.UI.View
             Setting_Button.AddButtonClickEvent(OnSettingBtnClick).Subscribe((unit =>
             {
                 Debug.Log("on Button Click");
+                Debug.Log(Language.Get(0));
             }));
             ChangeFont_Button.AddButtonClickEvent(ChangeFont);
             

@@ -6,7 +6,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Framework.Scripts.Singleton;
 using Framework.Scripts.Utils;
+using Sirenix.OdinInspector;
 
 namespace Framework.Scripts.Constants
 {
@@ -28,52 +31,73 @@ namespace Framework.Scripts.Constants
         ArabicEgypt,
         MaxValue,
     }
-    
-    public class Language<T> where T : class, new()
+
+    public class LanguageItem
     {
-        public string JsonName;
-        private List<T> _list;
-        private string _languageKey;
+        [ReadOnly] public string Key;
+        [ReadOnly] public int Id;
+        public string Description;
+        public string Value;
 
-        public Language(string jsonName)
+        public LanguageItem(string key, int id, string value)
         {
-            JsonName = jsonName;
-            Init(jsonName);
+            Key = key;
+            Id = id;
+            Value = value;
         }
+    }
 
-        private void Init(string jsonName)
+    public class Language : ManagerSingleton<Language>
+    {
+        [ShowInInspector] private static List<LanguageItem> _list;
+        [ShowInInspector] private string _languageKey;
+
+        public override Task Init()
         {
             switch (Common.Language)
             {
-                case LanguageEnum.English:
-                    _languageKey = "en-US";
-                    break;
                 case LanguageEnum.Chinese:
                     _languageKey = "zh-CN";
                     break;
+                case LanguageEnum.English:
+                    _languageKey = "en-US";
+                    break;
                 case LanguageEnum.ChineseTraditional:
+                    _languageKey = "zh-TW";
                     break;
                 case LanguageEnum.Japanese:
+                    _languageKey = "ja-JP";
                     break;
                 case LanguageEnum.Russian:
+                    _languageKey = "ru-RU";
                     break;
                 case LanguageEnum.German:
+                    _languageKey = "de-DE";
                     break;
                 case LanguageEnum.Spanish:
+                    _languageKey = "es-ES";
                     break;
                 case LanguageEnum.Korean:
+                    _languageKey = "ko-KR";
                     break;
                 case LanguageEnum.Portuguese:
+                    _languageKey = "pt-PT";
                     break;
                 case LanguageEnum.French:
+                    _languageKey = "fr-FR";
                     break;
                 case LanguageEnum.Indonesian:
+                    _languageKey = "en-ID";
                     break;
                 case LanguageEnum.Polish:
+                    _languageKey = "pl-PL";
                     break;
+                // todo 不知道是哪国
                 case LanguageEnum.FarsiIran:
+                    _languageKey = "FarsiIran";
                     break;
                 case LanguageEnum.ArabicEgypt:
+                    _languageKey = "en-XA";
                     break;
                 case LanguageEnum.MaxValue:
                     break;
@@ -81,19 +105,32 @@ namespace Framework.Scripts.Constants
                     throw new ArgumentOutOfRangeException();
             }
 
-            _list = JsonHelper.ReadOrCreateJson<T>(jsonName);
-            
-            // Addressables.LoadAssetAsync<>()
+            _list = JsonHelper.JsonReader<LanguageItem>(_languageKey);
+            return base.Init();
         }
 
-        /*public static string Get(string key)
+        public static string Get(string key)
         {
-            
+            if (_list == null || _list.Count == 0) return null;
+            foreach (LanguageItem item in _list)
+            {
+                if(!item.Key.Equals(key)) continue;
+                return item.Value;
+            }
+
+            return null;
         }
         
         public static string Get(int id)
         {
-            
-        }*/
+            if (_list == null || _list.Count == 0) return null;
+            foreach (LanguageItem item in _list)
+            {
+                if(!item.Id.Equals(id)) continue;
+                return item.Value;
+            }
+
+            return null;
+        }
     }
 }

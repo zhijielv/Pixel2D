@@ -20,21 +20,6 @@ namespace Editor.Tools
 {
     public class LanguageTool
     {
-        public class LanguageItem
-        {
-            [ReadOnly] public string Key;
-            [ReadOnly] public int Id;
-            public string Description;
-            public string Value;
-
-            public LanguageItem(string key, int id, string value)
-            {
-                Key = key;
-                Id = id;
-                Value = value;
-            }
-        }
-
         /*
         public class LanguageToggle
         {
