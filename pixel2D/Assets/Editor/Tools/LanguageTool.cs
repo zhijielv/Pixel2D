@@ -60,7 +60,7 @@ namespace Editor.Tools
         [TableList(ShowPaging = true, ShowIndexLabels = true)]
         [Searchable]
         [LabelText("语言列表(右侧‘≡’展开查找)")]
-        public List<LanguageItem> languageItems = new List<LanguageItem>();
+        public List<LanguageItem> LanguageItems = new List<LanguageItem>();
 
         public LanguageTool()
         {
@@ -77,14 +77,14 @@ namespace Editor.Tools
                 return;
             }
 
-            if (languageItems.Any(languageItem => languageItem.Key == key))
+            if (LanguageItems.Any(languageItem => languageItem.Key == key))
             {
                 EditorUtility.DisplayDialog("添加错误", "key同名", "确定");
                 return;
             }
 
-            LanguageItem item = new LanguageItem(key, languageItems.Count, value) {Description = description};
-            languageItems.Add(item);
+            LanguageItem item = new LanguageItem(key, LanguageItems.Count, value) {Description = description};
+            LanguageItems.Add(item);
         }
 
         [FoldoutGroup("Export Json")] public LanguageEnum LanguageEnum = Common.Language;
@@ -104,7 +104,7 @@ namespace Editor.Tools
             if (!System.IO.Directory.Exists(tmpDirectory)) System.IO.Directory.CreateDirectory(tmpDirectory);
 
             // 导出json
-            JsonHelper.JsonWriter(languageItems, "Language/" + LanguageEnum + "/" + languageKey);
+            JsonHelper.JsonWriter(LanguageItems, "Language/" + LanguageEnum + "/" + languageKey);
             AddressableAssetsTool.AddAssets2AddressGroup("t:TextAsset", tmpDirectory, LanguageEnum.ToString());
         }
 
@@ -113,7 +113,7 @@ namespace Editor.Tools
         [Button("读取json表", ButtonSizes.Large)]
         public void ReadJson()
         {
-            languageItems = JsonHelper.JsonReader<LanguageItem>("Language/" + LanguageEnum + "/" + LanguageKey);
+            LanguageItems = JsonHelper.JsonReader<LanguageItem>("Language/" + LanguageEnum + "/" + LanguageKey);
         }
 
         [FoldoutGroup("Export Json")]
@@ -176,7 +176,7 @@ namespace Editor.Tools
                 }
                 string tmpDirectory = Constants.JsonFoldreDir + "Language/" + language;
                 // 导出json
-                JsonHelper.JsonWriter(languageItems, "Language/" + language + "/" + languageKey);
+                JsonHelper.JsonWriter(LanguageItems, "Language/" + language + "/" + languageKey);
                 AddressableAssetsTool.AddAssets2AddressGroup("t:TextAsset", tmpDirectory, language.ToString());
             }
         }

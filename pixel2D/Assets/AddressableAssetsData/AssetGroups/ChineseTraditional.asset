@@ -15,14 +15,10 @@ MonoBehaviour:
   m_GroupName: ChineseTraditional
   m_Data:
     m_SerializedData: []
-  m_GUID: 888a958d9f0276d4a833633931230f7b
+  m_GUID: 3c568c2b51c599a43b178b349676258a
   m_SerializeEntries:
   - m_GUID: 827de4d11a547174d8fdf1fd692382f2
     m_Address: ErrorCodeLocalization
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 2440afbeaea88e0479da21ee64a96fa2
-    m_Address: zh-CN
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: c87c3029bc0f7084eab85dbad2d2f48a

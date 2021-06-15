@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: Portuguese
   m_Data:
     m_SerializedData: []
-  m_GUID: fc0288d3bdb497a41a1baf3534d08d59
+  m_GUID: 803eac052057fb84ebcba84c6ba87a40
   m_SerializeEntries:
   - m_GUID: 6297c6b0439171344a0a16396e5e424c
     m_Address: ErrorCodeLocalization
