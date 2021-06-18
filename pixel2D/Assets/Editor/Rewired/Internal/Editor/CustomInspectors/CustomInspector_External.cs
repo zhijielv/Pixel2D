@@ -4,7 +4,7 @@
 #pragma warning disable 0649
 
 namespace Rewired.Editor {
-
+#if UNITY_EDITOR
     using UnityEngine;
     using UnityEditor;
     using Rewired;
@@ -23,4 +23,5 @@ namespace Rewired.Editor {
             internalEditor.OnEnable();
         }
     }
+#endif
 }
