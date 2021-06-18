@@ -30,8 +30,7 @@ public class Main : ManagerSingleton<Main>
             transform.name = "[FrameWork]";
             Common.FrameWorkObj = gameObject;
         }
-
-        await AddManager<FrameWorkDebugMode>();
+        
         await AddManager<AddressableManager>();
         await AddManager<UiManager>();
         await AddManager<Launcher>();
@@ -42,7 +41,7 @@ public class Main : ManagerSingleton<Main>
         await CreateManager<CameraManager>();
         await CreateManager<LevelManager>();
         await CreateManager<Language>(transform);
-        await CreateManager<DebugManager>();
+        await AddManager<FrameWorkDebugMode>();
     }
 
     // Main上挂管理器
