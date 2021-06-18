@@ -12,35 +12,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16d00b7005a47ef47802a8421dc6baf6, type: 3}
   m_Name: Settings
   m_EditorClassIdentifier: 
-  _isEnabled: 0
+  _isEnabled: 1
   _uiInputMode: 1
   _defaultTab: 0
   _triggerEnableMode: 0
-  _triggerBehaviour: 0
+  _triggerBehaviour: 2
   _errorNotification: 1
   _enableKeyboardShortcuts: 1
   _keyboardShortcuts: []
   _newKeyboardShortcuts:
   - Action: 1
-    Alt: 1
+    Alt: 0
     Control: 0
-    Key: 9
-    Shift: 1
+    Key: 282
+    Shift: 0
   - Action: 2
     Alt: 0
-    Control: 1
+    Control: 0
     Key: 283
-    Shift: 1
+    Shift: 0
   - Action: 3
     Alt: 0
-    Control: 1
+    Control: 0
     Key: 284
-    Shift: 1
+    Shift: 0
   - Action: 4
     Alt: 0
-    Control: 1
+    Control: 0
     Key: 285
-    Shift: 1
+    Shift: 0
+  - Action: 7
+    Alt: 0
+    Control: 0
+    Key: 286
+    Shift: 0
+  - Action: 8
+    Alt: 0
+    Control: 0
+    Key: 287
+    Shift: 0
+  - Action: 9
+    Alt: 0
+    Control: 0
+    Key: 288
+    Shift: 0
+  - Action: 10
+    Alt: 0
+    Control: 0
+    Key: 289
+    Shift: 0
   _keyboardModifierControl: 1
   _keyboardModifierAlt: 0
   _keyboardModifierShift: 1

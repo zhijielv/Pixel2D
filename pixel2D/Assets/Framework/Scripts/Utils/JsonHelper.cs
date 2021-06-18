@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+#if UNITY_EDITOR
 using DG.DemiEditor;
+using UnityEditor;
+#endif
 using Framework.Scripts.Manager;
 using Newtonsoft.Json;
-using UnityEditor;
 using UnityEngine;
 
 namespace Framework.Scripts.Utils
@@ -19,7 +21,7 @@ namespace Framework.Scripts.Utils
         /// <returns></returns>
         public static List<T> JsonReader<T>(string jsonPath)
         {
-            TextAsset jsonFile;
+            TextAsset jsonFile = null;
 
             if (Application.isPlaying)
             {
@@ -29,7 +31,9 @@ namespace Framework.Scripts.Utils
             {
                 jsonPath = Constants.Constants.JsonFoldreDir + jsonPath + ".json";
 #if UNITY_EDITOR
-                jsonFile = !File.Exists(jsonPath) ? new TextAsset("[]") : AssetDatabase.LoadAssetAtPath<TextAsset>(jsonPath);
+                jsonFile = !File.Exists(jsonPath)
+                    ? new TextAsset("[]")
+                    : AssetDatabase.LoadAssetAtPath<TextAsset>(jsonPath);
 #endif
             }
 
@@ -41,7 +45,7 @@ namespace Framework.Scripts.Utils
         public static string JsonWriter<T>(List<T> list, string jsonPath)
         {
             jsonPath = Constants.Constants.JsonFoldreDir + jsonPath + ".json";
-            
+
             if (!Directory.Exists(jsonPath.Parent()))
             {
                 Debug.Log($"创建 {jsonPath.Parent()}");
@@ -49,7 +53,7 @@ namespace Framework.Scripts.Utils
                 FileStream fileStream = File.Create(jsonPath);
                 fileStream.Close();
             }
-            
+
             string json = JsonConvert.SerializeObject(list, Formatting.Indented);
             StreamWriter streamWriter = new StreamWriter(jsonPath) {AutoFlush = true};
             streamWriter.Write(json);
@@ -57,7 +61,7 @@ namespace Framework.Scripts.Utils
             AssetDatabase.Refresh();
             return json;
         }
-#endif
+
 
         /// <summary>
         /// 格式化读取某种类型的Json列表
@@ -91,7 +95,7 @@ namespace Framework.Scripts.Utils
             streamReader.Close();
             return JsonConvert.DeserializeObject<List<T>>(json);
         }
-
+#endif
         /// <summary>
         /// 格式化Json类
         /// </summary>
@@ -106,6 +110,7 @@ namespace Framework.Scripts.Utils
                 Debug.LogError("没有json文件");
                 return null;
             }
+
             var streamReader = new StreamReader(jsonPath);
             string json = streamReader.ReadToEnd();
             streamReader.Close();
