@@ -1,0 +1,64 @@
+[
+  {
+    "Module": "corner",
+    "PossibleNeighborsArray": [
+      [
+        "t",
+        "cross"
+      ],
+      [
+        "empty"
+      ],
+      [
+        "empty"
+      ],
+      [
+        "cross",
+        "line",
+        "t"
+      ]
+    ]
+  },
+  {
+    "Module": "cross",
+    "PossibleNeighborsArray": [
+      [
+        "cross",
+        "t"
+      ],
+      [
+        "cross",
+        "line",
+        "t",
+        "corner"
+      ],
+      [
+        "cross",
+        "corner"
+      ],
+      [
+        "cross",
+        "t",
+        "line"
+      ]
+    ]
+  },
+  {
+    "Module": "line",
+    "PossibleNeighborsArray": [
+      [
+        "empty"
+      ],
+      [
+        "cross",
+        "line",
+        "t",
+        "corner"
+      ],
+      [
+        "empty"
+      ],
+      []
+    ]
+  }
+]

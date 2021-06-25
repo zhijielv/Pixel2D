@@ -6,6 +6,7 @@
 
 using System.Linq;
 using Editor.Tools;
+using Editor.WaveFunctionCollapseEditor;
 using Framework.Scripts.Constants;
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities;
@@ -25,6 +26,7 @@ namespace Editor.LevelEditor
         private MapTool _mapTool;
         private AddressableAssetsTool _addressableAssetsTool;
         private LanguageTool _languageTool;
+        private WFCEditor _wfcEditor;
 
         protected override void OnEnable()
         {
@@ -33,6 +35,7 @@ namespace Editor.LevelEditor
             _mapTool = new MapTool();
             _addressableAssetsTool = new AddressableAssetsTool();
             _languageTool = new LanguageTool();
+            _wfcEditor = new WFCEditor();
         }
 
         [MenuItem("Tools/Level Editor %Q")]
@@ -46,6 +49,8 @@ namespace Editor.LevelEditor
         protected override OdinMenuTree BuildMenuTree()
         {
             OdinMenuTree tree = new OdinMenuTree(true);
+            tree.Add("WFC Tool", _wfcEditor);
+            tree.Add("WFCModule Tool", new WFCModuleCreator());
             tree.AddAssetAtPath("Project Common", _configPath + "Common.asset");
             tree.Add("Level Tool", _levelTool);
             tree.Add("Map Tool", _mapTool);
