@@ -25,9 +25,12 @@ https://guavaman.com/projects/rewired/docs/QuickStart.html
 6. ECS
    * 目前只有preview版本
    * 导入方式：
-     * Packages里的manifest.json添加"com.unity.entities": "0.11.2-preview.1",（包含ECS和burst等组件）；
-     * 添加"com.unity.rendering.hybrid": "0.5.2-preview.4",（用于渲染Entity，否则不显示）；
-7. QHierarchy
+     * Packages里的manifest.json添加:
+     * "com.unity.burst": "1.4.8",
+     * "com.unity.entities": "0.17.0-preview.42",
+     * "com.unity.rendering.hybrid": "0.11.0-preview.44",
+     * "com.havok.physics": "0.6.0-preview.3",
+1. QHierarchy
    * 版本：v4.4
    * 用于Hierarchy操作；
    * 预制体模式下会一直自动保存，仔Tools->QHierarchy->Settings里关闭Lock取消刷新；
