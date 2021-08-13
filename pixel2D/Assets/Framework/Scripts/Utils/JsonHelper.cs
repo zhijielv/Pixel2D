@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq.Expressions;
 #if UNITY_EDITOR
 using DG.DemiEditor;
 using UnityEditor;
@@ -115,6 +117,30 @@ namespace Framework.Scripts.Utils
             string json = streamReader.ReadToEnd();
             streamReader.Close();
             return JsonConvert.DeserializeObject<T>(json);
+        }
+    }
+
+    /// <summary>
+    /// 解决字典类型有enum字段时的拆箱装箱GC问题
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class EnumComparer<T> : IEqualityComparer<T> where T : Enum
+    {
+        public bool Equals(T first, T second)
+        {
+            var firstParam = Expression.Parameter(typeof(T), "first");
+            var secondParam = Expression.Parameter(typeof(T), "second");
+            var equalExpression = Expression.Equal(firstParam, secondParam);
+            return Expression.Lambda<Func<T, T, bool>>
+                (equalExpression, new[] {firstParam, secondParam}).Compile().Invoke(first, second);
+        }
+
+        public int GetHashCode(T instance)
+        {
+            var parameter = Expression.Parameter(typeof(T), "instance");
+            var convertExpression = Expression.Convert(parameter, typeof(int));
+            return Expression.Lambda<Func<T, int>>
+                (convertExpression, new[] {parameter}).Compile().Invoke(instance);
         }
     }
 }
