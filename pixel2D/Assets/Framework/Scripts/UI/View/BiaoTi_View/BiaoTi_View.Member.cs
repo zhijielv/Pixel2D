@@ -17,16 +17,18 @@ namespace Framework.Scripts.UI.View
     
     public sealed partial class BiaoTi_View : ViewBase
     {
+        // member
+        [FoldoutGroup("Member")]
+        public UnityEngine.UI.Button EnterGame_Button;
         [FoldoutGroup("Member")]
         public Framework.Scripts.UI.ScriptableObjects.PanelScriptableObjectBase BiaoTi_View_ScriptableObject;
-        // member
         // member end
         internal override object GetWidget(string widgetName)
         {
             if (!Enum.TryParse(widgetName, true, out BiaoTi_View_Widget _))
             {
                 // Debug.LogError(gameObject.name + " has not widget : " + widgetName);
-                return null;
+                return gameObject;
             }
             else
             {

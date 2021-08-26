@@ -26,7 +26,7 @@ namespace Framework.Scripts.UI.View
             if (!Enum.TryParse(widgetName, true, out Test2_View_Widget _))
             {
                 // Debug.LogError(gameObject.name + " has not widget : " + widgetName);
-                return null;
+                return gameObject;
             }
             else
             {

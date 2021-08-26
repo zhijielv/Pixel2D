@@ -21,6 +21,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  widgetList: []
+  widgetList:
+  - EnterGame_Button
   panelObj: {fileID: 5283514310514889536, guid: 83663e4edac1de74a83fcbb7dbc066b1,
     type: 3}

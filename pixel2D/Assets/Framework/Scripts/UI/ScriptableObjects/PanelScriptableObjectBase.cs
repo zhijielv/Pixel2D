@@ -36,7 +36,7 @@ namespace Framework.Scripts.UI.ScriptableObjects
 
             foreach (Transform child in children)
             {
-                if (!CheckName(child.name, out UIConfig? uiType)) continue;
+                if (!CheckName(child.name, out UIConfig? uiType) || widgetList.Contains(child.name)) continue;
                 widgetList.Add(child.name);
             }
             AssetDatabase.Refresh();

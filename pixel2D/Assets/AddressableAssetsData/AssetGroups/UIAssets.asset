@@ -15,28 +15,8 @@ MonoBehaviour:
   m_GroupName: UIAssets
   m_Data:
     m_SerializedData: []
-  m_GUID: c3509b109cbc7fd4581926a9c5b778b8
-  m_SerializeEntries:
-  - m_GUID: 7c4ac908446199941baf4366bc03d08d
-    m_Address: BiaoTi_View_Asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: e413eaff92792b046b23f74e3ea6b684
-    m_Address: Main_View_Asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 0b0b7a7e4f0edba4b83b6f6ac082d67c
-    m_Address: Player_View_Asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 120fe17da6258cd4fb3f127423cba983
-    m_Address: Test2_View_Asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: e8ac3a77ea9b8ad4b9da8b0270160c18
-    m_Address: Test_View_Asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
+  m_GUID: f5d7b890390ceb64bbbfe2ec4b98428a
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cc1ef71ad71ad124cac3229a7e1dd5ba, type: 2}
   m_SchemaSet:

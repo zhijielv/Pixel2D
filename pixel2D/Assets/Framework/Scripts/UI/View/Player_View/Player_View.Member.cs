@@ -29,6 +29,8 @@ namespace Framework.Scripts.UI.View
         [FoldoutGroup("Member")]
         public UnityEngine.UI.InputField Speed_InputField;
         [FoldoutGroup("Member")]
+        public UnityEngine.UI.Button TestExit_Button;
+        [FoldoutGroup("Member")]
         public Framework.Scripts.UI.ScriptableObjects.PanelScriptableObjectBase Player_View_ScriptableObject;
         // member end
         internal override object GetWidget(string widgetName)
@@ -36,7 +38,7 @@ namespace Framework.Scripts.UI.View
             if (!Enum.TryParse(widgetName, true, out Player_View_Widget _))
             {
                 // Debug.LogError(gameObject.name + " has not widget : " + widgetName);
-                return null;
+                return gameObject;
             }
             else
             {

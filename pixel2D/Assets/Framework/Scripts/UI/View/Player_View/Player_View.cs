@@ -42,6 +42,11 @@ namespace Framework.Scripts.UI.View
             LoadLevel_Button.AddButtonClickEvent(LoadLevel);
             LoadAvatar_Button.AddButtonClickEvent(LoadAvatar);
             SetSpeed_Button.AddButtonClickEvent(SetSpeed);
+            TestExit_Button.AddButtonClickEvent((() =>
+            {
+                // ChangePanel<BiaoTi_View>();
+                Close();
+            }));
 
             LoadLevel();
             LoadAvatar();

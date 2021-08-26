@@ -5,6 +5,7 @@
 ** TODO : 参数改为EventHandler
 */
 
+using Framework.Scripts.Manager;
 using Sirenix.OdinInspector;
 using SRF;
 using UnityEngine;

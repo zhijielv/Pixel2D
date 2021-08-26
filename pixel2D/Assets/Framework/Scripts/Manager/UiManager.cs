@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Framework.Scripts.Constants;
 using Framework.Scripts.Singleton;
@@ -12,19 +13,41 @@ namespace Framework.Scripts.Manager
 {
     public class UiManager : ManagerSingleton<UiManager>
     {
-        [ShowInInspector, ReadOnly] public Dictionary<string, ViewBase> uiList = new Dictionary<string, ViewBase>();
+        // [ShowInInspector, ReadOnly] public Dictionary<string, ViewBase> uiList = new Dictionary<string, ViewBase>();
+        [ShowInInspector, ReadOnly] public List<ViewBase> uiList = new List<ViewBase>();
 
         #region public
 
-        public void RemoveWidget(string panelName)
+        // 全屏窗口类型关闭
+        public void CloseView(ViewBase viewBase)
         {
-            if (!uiList.ContainsKey(panelName))
+            if (!uiList.Contains(viewBase))
             {
-                Debug.LogError("has not panel : " + panelName);
+                Debug.LogError("has not panel : " + viewBase);
                 return;
             }
 
-            uiList.Remove(panelName);
+            viewBase.ShowOrHiddenTurn();
+            uiList[uiList.Count - 2].ShowOrHiddenTurn();
+            // 显示最后一个View
+            // uiList.Last().Value.ShowOrHiddenTurn();
+        }
+        
+        // public void RemoveView(string viewName)
+        // {
+            // CloseView(viewName);
+            // uiList.Remove(viewName);
+        // }
+
+        public ViewBase GetViewBase(string viewName)
+        {
+            for (int i = 0; i < uiList.Count; i++)
+            {
+                if (uiList[i].transform.name.Equals(viewName))
+                    return uiList[i];
+            }
+
+            return null;
         }
 
         #region Enum类型获取
@@ -32,7 +55,7 @@ namespace Framework.Scripts.Manager
         public UiWidgetBase GetWidget(Enum viewName, Enum widgetName = null)
         {
             var obj = GetWidgetObj(viewName, widgetName) as GameObject;
-            return obj.GetComponent<UiWidgetBase>();
+            return obj != null ? obj.GetComponent<UiWidgetBase>() : null;
         }
 
         public T GetWidgetComponent<T>(Enum viewName, Enum widgetName)
@@ -69,7 +92,8 @@ namespace Framework.Scripts.Manager
         public T GetWidgetObj<T>(Enum targetWidgetName = null) where T : ViewBase
         {
             string viewName = typeof(T).Name;
-            if (targetWidgetName == null) return GetOrCreateViewObj(viewName).GetComponent<T>();
+            if (targetWidgetName == null)
+                return GetOrCreateViewObj(viewName).GetComponent<T>();
             var widgetName = targetWidgetName.ToString();
             return GetOrCreateViewObj(viewName, widgetName).GetComponent<T>();
         }
@@ -83,13 +107,17 @@ namespace Framework.Scripts.Manager
         // todo 设置加载View的parent，默认是MainCanvas
         private GameObject GetOrCreateViewObj(string viewName, string widgetName = null)
         {
-            if (uiList.ContainsKey(viewName))
+            ViewBase tempView = GetViewBase(viewName);
+            // if (uiList.ContainsKey(viewName))
+            if (uiList.Contains(tempView))
             {
-                return uiList[viewName].GetWidget(widgetName) as GameObject;
+                tempView.ShowOrHiddenTurn();
+                return tempView.GetWidget(widgetName) as GameObject;
             }
 
             Debug.Log("Create View : " + viewName);
             GameObject tmpView = AddressableManager.Instance.Instantiate(viewName, Common.MainCanvas.transform);
+            tmpView.RemoveClone();
             RegistView(tmpView);
             if (widgetName == null)
             {
@@ -104,8 +132,9 @@ namespace Framework.Scripts.Manager
 
         private void RegistView(GameObject widgetObj)
         {
-            string viewName = Constants.Constants.ReplaceString(widgetObj.name, "(Clone)", "");
-            if (!uiList.ContainsKey(viewName))
+            string viewName = widgetObj.name;
+            ViewBase tempView = GetViewBase(viewName);
+            if (!uiList.Contains(tempView))
             {
                 Type type = Type.GetType(Constants.Constants.UiNameSpace + viewName);
                 if (type == null)
@@ -115,7 +144,8 @@ namespace Framework.Scripts.Manager
                 }
 
                 ViewBase viewBase = widgetObj.GetComponentOrAdd(type) as ViewBase;
-                uiList.Add(viewName, viewBase);
+                // uiList.Add(viewName, viewBase);
+                uiList.Add(viewBase);
             }
             else
             {

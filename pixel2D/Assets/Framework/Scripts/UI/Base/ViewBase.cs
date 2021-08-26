@@ -88,8 +88,14 @@ namespace Framework.Scripts.UI.Base
         {
             if (typeof(T) == GetType()) return;
             ShowOrHiddenTurn();
-            T targetView = UiManager.Instance.GetWidget<T>();
-            targetView.ShowOrHiddenTurn();
+            UiManager.Instance.GetWidget<T>();
+            // T targetView = UiManager.Instance.GetWidget<T>();
+            // targetView.ShowOrHiddenTurn();
+        }
+        
+        public virtual void Close()
+        {
+            UiManager.Instance.CloseView(this);
         }
 
         #endregion

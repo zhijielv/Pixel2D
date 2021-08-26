@@ -16,5 +16,6 @@ namespace Framework.Scripts.UI.View
     }
     public enum BiaoTi_View_Widget
     {
+        EnterGame_Button,
     }
 }

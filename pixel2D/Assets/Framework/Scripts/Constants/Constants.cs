@@ -73,6 +73,13 @@ namespace Framework.Scripts.Constants
             return strBuffer.ToString();
         }
 
+        // 去掉(Clone)
+        public static void RemoveClone(this GameObject gameObject)
+        {
+            gameObject.name = ReplaceString(gameObject.name, "(Clone)", "");
+        }
+        
+        
         // 单帧处理协程
         public static IEnumerator ToFixedCoroutine(IEnumerator enumerator)
         {

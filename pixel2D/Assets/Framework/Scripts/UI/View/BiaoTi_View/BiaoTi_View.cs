@@ -11,10 +11,26 @@
 namespace Framework.Scripts.UI.View
 {
     using Base;
+    using UniRx;    
     using System;
     using UnityEngine;
+    using Framework.Scripts.Manager;
     
     public sealed partial class BiaoTi_View : ViewBase
     {
+        private void Start()
+        {
+            EnterGame_Button.AddButtonClickEvent(EnterGame).Subscribe((unit =>
+            {
+                
+                
+            }));
+        }
+
+        public void EnterGame()
+        {
+            ChangePanel<Player_View>();
+        }
+        
     }
 }

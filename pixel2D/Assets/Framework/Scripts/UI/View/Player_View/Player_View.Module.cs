@@ -21,5 +21,6 @@ namespace Framework.Scripts.UI.View
         LoadLevel_Button,
         LoadAvatar_Button,
         Speed_InputField,
+        TestExit_Button,
     }
 }

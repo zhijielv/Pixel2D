@@ -59,7 +59,7 @@ namespace Framework.Scripts.UI.View
 
         private void OnSettingBtnClick()
         {
-            SelectFont_CustomPanel.gameObject.SetActive(!SelectFont_CustomPanel.gameObject.activeSelf);
+            // SelectFont_CustomPanel.gameObject.SetActive(!SelectFont_CustomPanel.gameObject.activeSelf);
         }
 
         private void ChangeFont()

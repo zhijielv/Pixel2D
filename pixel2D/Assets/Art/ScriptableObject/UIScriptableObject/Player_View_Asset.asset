@@ -27,5 +27,10 @@ MonoBehaviour:
   - LoadLevel_Button
   - LoadAvatar_Button
   - Speed_InputField
+  - Rewired_TouchController
+  - SetSpeed_Button
+  - LoadLevel_Button
+  - LoadAvatar_Button
+  - Speed_InputField
   panelObj: {fileID: 1841351538076458365, guid: e4cfd5b8e90507846b853767bff1897f,
     type: 3}

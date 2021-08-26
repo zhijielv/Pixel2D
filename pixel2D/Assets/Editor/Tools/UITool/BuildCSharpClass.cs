@@ -265,7 +265,7 @@ namespace Editor.Tools.UITool
                 {
                     new CodeCommentStatement(
                         "Debug.LogError(gameObject.name + \" has not widget : \" + widgetName);"),
-                    new CodeMethodReturnStatement(new CodeSnippetExpression("null"))
+                    new CodeMethodReturnStatement(new CodeSnippetExpression("gameObject"))
                 },
                 new CodeStatement[]
                 {
@@ -292,6 +292,7 @@ namespace Editor.Tools.UITool
             myNamespace.Imports.Add(new CodeNamespaceImport("Base"));
             myNamespace.Imports.Add(new CodeNamespaceImport("System"));
             myNamespace.Imports.Add(new CodeNamespaceImport("UnityEngine"));
+            myNamespace.Imports.Add(new CodeNamespaceImport("Framework.Scripts.Manager"));
             CodeTypeDeclaration myClass = new CodeTypeDeclaration(className)
             {
                 IsClass = true, TypeAttributes = TypeAttributes.Public | TypeAttributes.Sealed, IsPartial = true,
@@ -336,7 +337,7 @@ namespace Editor.Tools.UITool
 
         private static List<string> RegistWidgets(Transform obj)
         {
-            Transform[] children = obj.GetComponentsInChildren<Transform>();
+            Transform[] children = obj.GetComponentsInChildren<Transform>(true);
             List<string> widgetList = new List<string>();
             foreach (Transform child in children)
             {
@@ -441,7 +442,7 @@ namespace Editor.Tools.UITool
                         continue;
 
                     Type widgetType = Constants.GetWidgetTypeByName(fieldInfo.Name);
-                    UiWidgetBase[] children = tmpView.transform.GetComponentsInChildren<UiWidgetBase>();
+                    UiWidgetBase[] children = tmpView.transform.GetComponentsInChildren<UiWidgetBase>(true);
 
                     foreach (UiWidgetBase uiWidgetBase in children)
                     {
@@ -505,6 +506,7 @@ namespace Editor.Tools.UITool
                 break;
             }
             
+            // todo 获取ui上的PanelScriptableObjectBase执行ResetWidgets方法
             AssetDatabase.CreateAsset(asset, path);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();

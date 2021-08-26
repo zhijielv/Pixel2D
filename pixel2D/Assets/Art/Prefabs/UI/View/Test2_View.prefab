@@ -102,4 +102,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 0}
-  Test2_View_ScriptableObject: {fileID: 0}
+  Test2_View_ScriptableObject: {fileID: 11400000, guid: 120fe17da6258cd4fb3f127423cba983,
+    type: 2}
