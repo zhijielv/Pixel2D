@@ -14,7 +14,8 @@ using UnityEngine;
 
 public class Main : ManagerSingleton<Main>
 {
-    public AllViewEnum firstView = AllViewEnum.MaxValue;
+    public AllViewEnum firstView;
+
     // private Text leftTopText;
     // private Text centerText;
     // private UiWidgetBase centerRightText;
@@ -22,6 +23,9 @@ public class Main : ManagerSingleton<Main>
     protected new async void Awake()
     {
         base.Awake();
+        // 初始化进入的界面
+        firstView = Common.IsDebugMode ? AllViewEnum.MaxValue : AllViewEnum.BiaoTi_View;
+        
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         DontDestroyOnLoad(transform);
         GameObject frameWorkObj = GameObject.Find("[FrameWork]");
@@ -48,7 +52,7 @@ public class Main : ManagerSingleton<Main>
     private async Task AddManager<T>() where T : ManagerSingleton<T>
     {
         gameObject.GetComponentOrAdd<T>();
-        await ManagerSingleton<T>.Instance.Init();
+        await ManagerSingleton<T>.Instance.ManagerInit();
     }
 
     // 创建空对象挂管理器
@@ -56,7 +60,7 @@ public class Main : ManagerSingleton<Main>
     {
         GameObject managerObj = new GameObject("[" + typeof(T).Name + "]");
         managerObj.GetComponentOrAdd<T>();
-        await ManagerSingleton<T>.Instance.Init();
+        await ManagerSingleton<T>.Instance.ManagerInit();
         managerObj.transform.SetParent(parent);
     }
 

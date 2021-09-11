@@ -16,7 +16,10 @@ namespace Framework.Scripts.Singleton
             }
         }
 
-        public virtual async Task Init()
+        // 管理类初始化，有些需要异步，这里取消某些地方没有使用异步的warning提示
+#pragma warning disable 1998
+        public virtual async Task ManagerInit()
+#pragma warning restore 1998
         {
             Debug.Log("*********** Start " + GetType().Name);
         }

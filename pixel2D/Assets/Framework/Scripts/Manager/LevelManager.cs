@@ -23,7 +23,7 @@ namespace Framework.Scripts.Manager
         public int curMapIndex = 0;
         public int curLevelIndex = 0;
 
-        public override async Task Init()
+        public override async Task ManagerInit()
         {
             levelMaps = JsonHelper.JsonReader<LevelMap>(Constants.Constants.MapJson);
             leveljsonClasses = JsonHelper.JsonReader<LeveljsonClass>(Constants.Constants.LevelJson);

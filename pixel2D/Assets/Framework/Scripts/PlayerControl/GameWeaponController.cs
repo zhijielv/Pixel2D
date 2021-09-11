@@ -20,11 +20,11 @@ namespace Framework.Scripts.PlayerControl
     public class GameWeaponController : MonoBehaviour
     {
         // todo 武器编辑器
-        public string weaponName = "1";
-        public GameObject currentWeapon;
-        public string bulletName = "_5";
-        public float bulletSpeed = 10;
-        public Vector3 velocity;
+        public string           weaponName = "1";
+        public GameObject       currentWeapon;
+        public string           bulletName  = "_5";
+        public float            bulletSpeed = 10;
+        public Vector3          velocity;
         public List<GameObject> weaponList;
 
         public Transform bullet;
@@ -32,9 +32,11 @@ namespace Framework.Scripts.PlayerControl
 
         // todo 当前子弹类型
         public Sprite currentBullet;
+        public float bulletCoolDownTime = 2.0f;
 
         private IntervalEvent intervalEvent;
-        private async void Start()
+
+        private void Start()
         {
             weaponList = new List<GameObject>();
             // 加载武器
@@ -68,14 +70,13 @@ namespace Framework.Scripts.PlayerControl
         private void OnEnable()
         {
             // 注册事件
-
             EventManager.Instance.AddEventListener(transform, EventType.PlayerBulletCollide, OnBulletCollideHandler);
-            
+
             // 开火 使用间隔事件（带CD的时间）
             // todo 武器cd
-            intervalEvent = new IntervalEvent(2);
+            intervalEvent = new IntervalEvent(bulletCoolDownTime);
             EventManager.Instance.AddEventListener(transform, EventType.PlayerWeaponFire, WeaponFire);
-            
+
             GlobalConfig<LevelHelper>.Instance.weaponController = this;
         }
 
@@ -115,7 +116,7 @@ namespace Framework.Scripts.PlayerControl
             //
             // spawnObj.GetComponent<Bullet>().Fire(velocity);
         }
-        
+
         // 子弹碰撞后回池
         private void OnBulletCollideHandler(object sender, EventArgs e)
         {

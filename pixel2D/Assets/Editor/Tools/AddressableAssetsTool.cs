@@ -27,15 +27,11 @@ namespace Editor.Tools
     {
         #region AddressableAssetsTool
 
-        [ShowInInspector, InlineButton("AddSelectFolderAssets2AddressGroup", "添加选中文件夹下所有资源")]
-        [LabelText("资源包名")]
-        private string _addressablesGropsName = "";
-        
         public void AddSelectFolderAssets2AddressGroup(string groupName)
         {
-            if(groupName.IsNullOrWhitespace()) return;
+            if (groupName.IsNullOrWhitespace()) return;
             Object[] objects = Selection.GetFiltered(typeof(Object), SelectionMode.DeepAssets);
-            if(objects.Length == 0) return;
+            if (objects.Length == 0) return;
             List<string> tmpFolder = new List<string>();
             foreach (Object o in objects)
             {
@@ -50,14 +46,14 @@ namespace Editor.Tools
             List<Object> tmpObjs = new List<Object>();
             foreach (string findAsset in findAssets)
             {
-                if(Directory.Exists(AssetDatabase.GUIDToAssetPath(findAsset))) continue;
+                if (Directory.Exists(AssetDatabase.GUIDToAssetPath(findAsset))) continue;
                 Object obj = AssetDatabase.LoadAssetAtPath<Object>(AssetDatabase.GUIDToAssetPath(findAsset));
                 tmpObjs.Add(obj);
             }
 
             Add2AddressablesGroupsByName(tmpObjs, groupName);
         }
-        
+
         [Button("添加所有UI资源", ButtonSizes.Large)]
         [MenuItem("Assets/FrameWork View/Add All View To Addressables Groups", false, -2)]
         public static void AddAllView2AddressablesGroups()
@@ -69,7 +65,8 @@ namespace Editor.Tools
 
             List<PanelScriptableObjectBase> viewObjects = AssetDatabase.FindAssets("t:PanelScriptableObjectBase")
                 .Select(guid =>
-                    AssetDatabase.LoadAssetAtPath<PanelScriptableObjectBase>(AssetDatabase.GUIDToAssetPath(guid))).ToList();
+                    AssetDatabase.LoadAssetAtPath<PanelScriptableObjectBase>(AssetDatabase.GUIDToAssetPath(guid)))
+                .ToList();
             Add2AddressablesGroupsByName(viewObjects, "UIAssets");
         }
 
@@ -82,8 +79,9 @@ namespace Editor.Tools
             {
                 AddressableAssetSettingsDefaultObject.Settings.RemoveGroup(findGroup);
             }
-            
-            findGroup = AddressableAssetSettingsDefaultObject.Settings.CreateGroup(addressablesGropsName, false, false, false,
+
+            findGroup = AddressableAssetSettingsDefaultObject.Settings.CreateGroup(addressablesGropsName, false, false,
+                false,
                 null);
             findGroup.AddSchema<BundledAssetGroupSchema>();
             findGroup.AddSchema<ContentUpdateGroupSchema>();
@@ -144,7 +142,7 @@ namespace Editor.Tools
 
             return true;
         }
-        
+
         [Button("添加所有Json资源", ButtonSizes.Large)]
         public static void AddAllJson2AddressGroup()
         {
@@ -176,7 +174,6 @@ namespace Editor.Tools
         [Button("打包", ButtonSizes.Large)]
         public void BuildAssets()
         {
-            
         }
     }
 #endif

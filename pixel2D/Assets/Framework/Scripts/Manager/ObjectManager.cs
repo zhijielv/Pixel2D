@@ -30,18 +30,35 @@ namespace Framework.Scripts.Manager
         [ShowInInspector]
         private Dictionary<Type, object> _genericPool;
 
-        public override Task Init()
+        public override async Task ManagerInit()
         {
             poolDic = new Dictionary<string, SpawnPool>();
             _genericPool = new Dictionary<Type, object>();
-            objectUnit = LoadUnit().transform;
+            var tempObj = await LoadUnitAsync();
+            objectUnit = tempObj.transform;
             unitPool = RegisterPool(objectUnit);
-            return base.Init();
         }
 
+        [Button]
+        public GameObject LoadTest()
+        {
+            return LoadUnit(null, null, true);
+        }
+        
         #region Load
 
         // 加载通过2DUnit，自带Collider2D和SpritRender
+        public async Task<GameObject> LoadUnitAsync(object key = null, Transform parent = null, bool instantiate = false)
+        {
+            GameObject asset;
+            asset = instantiate
+                ? await AddressableManager.Instance.InstantiateAsync(Constants.Constants.ObjectUnit, parent)
+                : await AddressableManager.Instance.LoadAssetAsync<GameObject>(Constants.Constants.ObjectUnit);
+            if (key != null)
+                asset.GetComponent<SpriteRenderer>().sprite = AddressableManager.Instance.LoadAsset<Sprite>(key);
+            return asset;
+        }
+        
         public GameObject LoadUnit(object key = null, Transform parent = null, bool instantiate = false)
         {
             GameObject asset;
@@ -110,7 +127,7 @@ namespace Framework.Scripts.Manager
 
         public SpawnPool RegisterPool(Transform prefabTransform)
         {
-            GameObject o = new GameObject(prefabTransform.name + "_Pool");
+            GameObject o = new GameObject(prefabTransform.name + "_OP");
             o.transform.SetParent(transform);
             SpawnPool spawnPool = PoolManager.Pools.Create(o.name, o);
             PrefabPool prefabPool = new PrefabPool(prefabTransform);

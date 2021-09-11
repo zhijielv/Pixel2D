@@ -22,11 +22,11 @@ namespace Framework.Scripts.Manager
         public GameObject runtimeHierarchy;
         public GameObject runtimeInspector;
 
-        public override Task Init()
+        public override Task ManagerInit()
         {
             if (Common.IsDebugMode)
                 Debug.Log("#####################  Is Debug Mode  #####################");
-            else return base.Init();
+            else return base.ManagerInit();
             runtimeHierarchy = AddressableManager.Instance.Instantiate("RuntimeHierarchy");
             runtimeHierarchy.SetActive(false);
             runtimeInspector = AddressableManager.Instance.Instantiate("RuntimeInspector");
@@ -52,7 +52,7 @@ namespace Framework.Scripts.Manager
                     ShowOrHideObj(runtimeInspector);
                 });
 
-            return base.Init();
+            return base.ManagerInit();
         }
 
         public void ShowOrHideObj(GameObject obj)

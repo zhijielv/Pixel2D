@@ -19,7 +19,7 @@ namespace Framework.Scripts.Manager
         private static bool _initialized = false;
         public bool Ready => _initialized;
 
-        public override async Task Init()
+        public override async Task ManagerInit()
         {
 #if !UNITY_EDITOR
             PlayerPrefs.DeleteKey(Addressables.kAddressablesRuntimeDataPath);
@@ -27,7 +27,7 @@ namespace Framework.Scripts.Manager
             await Addressables.InitializeAsync().Task;
             await Addressables.DownloadDependenciesAsync("preload").Task;
             _initialized = true;
-            await base.Init();
+            await base.ManagerInit();
         }
 
         // 异步加载

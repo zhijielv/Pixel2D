@@ -25,13 +25,13 @@ namespace Framework.Scripts.Manager
 
         private List<ScheduledEventBase> m_RemoveFixedUpdateEvents;
 
-        public override Task Init()
+        public override Task ManagerInit()
         {
             m_ActiveUpdateEvents = new Dictionary<ScheduledEventBase, EventDataBase>();
             m_RemoveUpdateEvents = new List<ScheduledEventBase>();
             m_ActiveFixedUpdateEvents = new Dictionary<ScheduledEventBase, EventDataBase>();
             m_RemoveFixedUpdateEvents = new List<ScheduledEventBase>();
-            return base.Init();
+            return base.ManagerInit();
         }
 
         private void Update()

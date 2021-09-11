@@ -52,7 +52,7 @@ namespace Framework.Scripts.Constants
         [ShowInInspector] private static List<LanguageItem> _list;
         [ShowInInspector] private string _languageKey;
 
-        public override Task Init()
+        public override Task ManagerInit()
         {
             switch (Common.Language)
             {
@@ -106,7 +106,7 @@ namespace Framework.Scripts.Constants
             }
 
             _list = JsonHelper.JsonReader<LanguageItem>(_languageKey);
-            return base.Init();
+            return base.ManagerInit();
         }
 
         public static string Get(string key)

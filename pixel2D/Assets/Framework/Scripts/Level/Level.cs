@@ -123,7 +123,7 @@ namespace Framework.Scripts.Level
         //     }
         // }
 
-        public async void GenerateLevelValueFromJson(LeveljsonClass data)
+        public void GenerateLevelValueFromJson(LeveljsonClass data)
         {
             // SetSize(data.Width, data.Height);
             LevelType = data.LevelType;

@@ -29,7 +29,7 @@ namespace Framework.Scripts.Manager
         private List<GameObject> _targetList;
         private const string _followPlayerVCam = "FollowPlayerVCam";
 
-        public override Task Init()
+        public override Task ManagerInit()
         {
             mainCamera = GameObject.FindWithTag("MainCamera");
             if (mainCamera == null)
@@ -50,7 +50,7 @@ namespace Framework.Scripts.Manager
             };
             targetGroup.transform.SetParent(transform);
             targetGroup.AddComponent<CinemachineTargetGroup>();
-            return base.Init();
+            return base.ManagerInit();
         }
 
         public async void CreatePlayerCamera()

@@ -255,7 +255,7 @@ namespace Framework.Scripts.Objects
             }
 
             // The object may want to play audio.
-            var hasActiveAudioClipSet = false;
+            // var hasActiveAudioClipSet = false;
 
             enabled = m_InitializeOnEnable;
         }

@@ -30,15 +30,15 @@ namespace Editor.Tools
 
         public LevelTool()
         {
-            Level = ReadLevelJson(levelType).Result;
+            Level = ReadLevelJson(levelType);
         }
 
-        public async void LoadLevel(LevelType levelType)
+        public void LoadLevel(LevelType levelType)
         {
-            Level = await ReadLevelJson(levelType);
+            Level = ReadLevelJson(levelType);
         }
 
-        public async Task<Level> ReadLevelJson(LevelType levelType)
+        public Level ReadLevelJson(LevelType levelType)
         {
             Level tmpLevel = new Level {LevelType = levelType};
             if (!File.Exists(jsonPath))
