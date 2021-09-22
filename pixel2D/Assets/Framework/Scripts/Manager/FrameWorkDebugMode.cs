@@ -25,7 +25,7 @@ namespace Framework.Scripts.Manager
         public override Task ManagerInit()
         {
             if (Common.IsDebugMode)
-                Debug.Log("#####################  Is Debug Mode  #####################");
+                Logging.Log("#####################  Is Debug Mode  #####################");
             else return base.ManagerInit();
             runtimeHierarchy = AddressableManager.Instance.Instantiate("RuntimeHierarchy");
             runtimeHierarchy.SetActive(false);

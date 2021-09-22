@@ -92,7 +92,7 @@ namespace Framework.Scripts.Manager
         {
             if (!LevelManager.Instance.isLevelLoaded)
             {
-                Debug.LogError("Level is not load!");
+                Logging.LogError("Level is not load!");
                 return;
             }
 

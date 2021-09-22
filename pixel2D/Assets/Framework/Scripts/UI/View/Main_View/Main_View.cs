@@ -39,8 +39,8 @@ namespace Framework.Scripts.UI.View
 
             Setting_Button.AddButtonClickEvent(OnSettingBtnClick).Subscribe((unit =>
             {
-                Debug.Log("on Button Click");
-                Debug.Log(Language.Get(0));
+                Logging.Log("on Button Click");
+                Logging.Log(Language.Get(0));
             }));
             ChangeFont_Button.AddButtonClickEvent(ChangeFont);
             
@@ -53,7 +53,7 @@ namespace Framework.Scripts.UI.View
             //     RectTransformUtility.ScreenPointToLocalPointInRectangle(widget.transform.parent.GetComponent<RectTransform>(),
             //         mouseScreenPosition, Camera.main, out resultPos);
             //     widget.GetComponent<RectTransform>().position = resultPos;
-            //     Debug.Log($"{widget.gameObject.GetComponent<RectTransform>().anchoredPosition} {resultPos}");
+            //     Logging.Logging.Log($"{widget.gameObject.GetComponent<RectTransform>().anchoredPosition} {resultPos}");
             // });
         }
 

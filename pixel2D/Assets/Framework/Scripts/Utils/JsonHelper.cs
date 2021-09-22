@@ -50,7 +50,7 @@ namespace Framework.Scripts.Utils
 
             if (!Directory.Exists(jsonPath.Parent()))
             {
-                Debug.Log($"创建 {jsonPath.Parent()}");
+                Logging.Log($"创建 {jsonPath.Parent()}");
                 Directory.CreateDirectory(jsonPath.Parent());
                 FileStream fileStream = File.Create(jsonPath);
                 fileStream.Close();
@@ -83,7 +83,7 @@ namespace Framework.Scripts.Utils
             string jsonPath = $"Assets/Framework/Json/{jsonName}.json";
             if (!Directory.Exists(jsonPath.Parent()))
             {
-                Debug.Log($"创建 {jsonName}.json at " + jsonPath);
+                Logging.Log($"创建 {jsonName}.json at " + jsonPath);
                 Directory.CreateDirectory(jsonPath.Parent());
                 FileStream fileStream = File.Create(jsonPath);
                 StreamWriter streamWriter = new StreamWriter(fileStream);

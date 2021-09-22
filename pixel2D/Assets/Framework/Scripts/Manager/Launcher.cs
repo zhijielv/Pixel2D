@@ -22,7 +22,7 @@ namespace Framework.Scripts.Manager
         // 项目初始化进入场景
         private void StartLauncher()
         {
-            Debug.Log("******************** start launcher ********************");
+            Logging.Log("******************** start launcher ********************");
             if (Common.IsDebugMode)
             {
                 if (Main.Instance.firstView != AllViewEnum.MaxValue)
@@ -38,7 +38,7 @@ namespace Framework.Scripts.Manager
 
         private async Task FrameWorkInit()
         {
-            Debug.Log("******************** Framework Init **********************");
+            Logging.Log("******************** Framework Init **********************");
             if (Common.MainCanvas == null)
             {
                 Common.MainCanvas = await AddressableManager.Instance.InstantiateAsync(Constants.Constants.MainCanvasObj,

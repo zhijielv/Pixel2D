@@ -51,7 +51,7 @@ namespace Framework.Scripts.Constants
 
             if (oldStr.IndexOf(oldValue, StringComparison.Ordinal) == -1)
             {
-                Debug.Log("没有找到需要替换的字符串!");
+                Logging.Log("没有找到需要替换的字符串!");
                 return oldStr;
             }
 

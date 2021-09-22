@@ -92,7 +92,7 @@ namespace Framework.Scripts.Manager
             }
             else
             {
-                Debug.LogError($"{eventType} : {eventHandler}  is not add");
+                Logging.LogError($"{eventType} : {eventHandler}  is not add");
             }
 
             CheckForEventRemoval(eventType, delegateEvent);

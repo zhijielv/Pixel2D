@@ -21,7 +21,7 @@ namespace Framework.Scripts.Singleton
         public virtual async Task ManagerInit()
 #pragma warning restore 1998
         {
-            Debug.Log("*********** Start " + GetType().Name);
+            Logging.Log("*********** Start " + GetType().Name);
         }
     }
 }
