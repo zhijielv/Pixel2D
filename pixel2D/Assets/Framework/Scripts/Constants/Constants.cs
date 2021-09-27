@@ -35,7 +35,7 @@ namespace Framework.Scripts.Constants
         public const string CustomUiNameSpace          = "Framework.Scripts.UI.CustomUI.";
         public const string LevelJson                  = "Level/Level";
         public const string MapJson                    = "Level/Map";
-        public const string TimeLineJson               = "TimeLine";
+        public const string TimeLineJson               = "TimeLine/{0}";
 
         public const string ArtDirPath = "Assets/Art/";
         public const string UIAssets   = "UIScriptableObject/";

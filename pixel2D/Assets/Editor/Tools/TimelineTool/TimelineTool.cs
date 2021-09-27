@@ -5,6 +5,7 @@
 */
 
 using System.Collections.Generic;
+using Framework.Scripts.Constants;
 using Framework.Scripts.Utils;
 using Sirenix.OdinInspector;
 using UnityEngine.Playables;
@@ -14,7 +15,7 @@ namespace Editor.Tools.TimelineTool
     public class TimelineTool
     {
         public PlayableDirector playableDirector;
-        [ReadOnly] private string jsonPath = "TimeLine/{0}";
+
         [ShowInInspector, LabelText("绑定信息（轨道名，对象名）")]
         public Dictionary<string, string> PlayableBindings;
 
@@ -38,9 +39,10 @@ namespace Editor.Tools.TimelineTool
         [Button("导出绑定信息")]
         public void ExportBinding2Json()
         {
+            InitPlayableDirector();
             if (playableDirector == null)
                 return;
-            JsonHelper.JsonWriter(PlayableBindings, string.Format(jsonPath, playableDirector.name));
+            JsonHelper.JsonWriter(PlayableBindings, string.Format(Constants.TimeLineJson, playableDirector.name));
         }
 
         [Button]
