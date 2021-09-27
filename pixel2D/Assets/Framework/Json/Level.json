@@ -1,40 +1,5 @@
 [
   {
-    "LevelType": 1,
-    "RoadList": [
-      "Assets/Art/Sprite/Level/f701/f703.png",
-      "Assets/Art/Sprite/Level/f701/f704.png",
-      "Assets/Art/Sprite/Level/f701/f705.png"
-    ],
-    "WallList": [
-      "Assets/Art/Sprite/Level/f11/f11_0.png",
-      "Assets/Art/Sprite/Level/f11/f11_1.png",
-      "Assets/Art/Sprite/Level/f11/f11_2.png",
-      "Assets/Art/Sprite/Level/f11/f11_3.png",
-      "Assets/Art/Sprite/Level/f11/f11_4.png",
-      "Assets/Art/Sprite/Level/f11/f11_5.png",
-      "Assets/Art/Sprite/Level/f11/f11_6.png",
-      "Assets/Art/Sprite/Level/f11/f11_7.png"
-    ],
-    "BoxList": [
-      "Assets/Art/Sprite/Common/Box/box02.png"
-    ],
-    "ObstructionList": [
-      "Assets/Art/Sprite/Level/f701/f712.png",
-      "Assets/Art/Sprite/Level/f701/f714.png",
-      "Assets/Art/Sprite/Level/f701/f713.png",
-      "Assets/Art/Sprite/Level/f701/f711.png",
-      "Assets/Art/Sprite/Level/f701/f710.png"
-    ]
-  },
-  {
-    "LevelType": 0,
-    "RoadList": [],
-    "WallList": [],
-    "BoxList": [],
-    "ObstructionList": []
-  },
-  {
     "LevelType": 0,
     "RoadList": [],
     "WallList": [],

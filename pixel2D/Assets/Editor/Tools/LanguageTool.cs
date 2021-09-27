@@ -8,13 +8,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using DG.DemiEditor;
 using Framework.Scripts.Constants;
 using Framework.Scripts.Utils;
 using Sirenix.OdinInspector;
 using UnityEditor;
-using UnityEngine;
 
 namespace Editor.Tools
 {
@@ -62,6 +60,8 @@ namespace Editor.Tools
         [LabelText("语言列表(右侧‘≡’展开查找)")]
         public List<LanguageItem> LanguageItems = new List<LanguageItem>();
 
+        [ShowInInspector, ReadOnly]
+        public const string LanguageDirectory = "Assets/Framework/Language/";
         public LanguageTool()
         {
             ReadJson();
@@ -87,6 +87,7 @@ namespace Editor.Tools
             LanguageItems.Add(item);
         }
 
+        // todo 切换时改变LanguageKey
         [FoldoutGroup("Export Json")] public LanguageEnum LanguageEnum = Common.Language;
 
         [FoldoutGroup("Export Json")] [InlineButton("ExportJson", "导出语言表")]
@@ -100,11 +101,11 @@ namespace Editor.Tools
                 return;
             }
 
-            string tmpDirectory = Constants.JsonFoldreDir + "Language/" + LanguageEnum;
-            if (!System.IO.Directory.Exists(tmpDirectory)) System.IO.Directory.CreateDirectory(tmpDirectory);
+            string tmpDirectory = LanguageDirectory + LanguageEnum;
+            if (!System.IO.Directory.Exists(tmpDirectory)) Directory.CreateDirectory(tmpDirectory);
 
             // 导出json
-            JsonHelper.JsonWriter(LanguageItems, "Language/" + LanguageEnum + "/" + languageKey);
+            JsonHelper.JsonWriter(LanguageItems, tmpDirectory + "/" + languageKey, false);
             AddressableAssetsTool.AddAssets2AddressGroup("t:TextAsset", tmpDirectory, LanguageEnum.ToString());
         }
 
@@ -113,7 +114,7 @@ namespace Editor.Tools
         [Button("读取json表", ButtonSizes.Large)]
         public void ReadJson()
         {
-            LanguageItems = JsonHelper.JsonReader<LanguageItem>("Language/" + LanguageEnum + "/" + LanguageKey);
+            JsonHelper.JsonReader(out LanguageItems, "Language/" + LanguageEnum + "/" + LanguageKey);
         }
 
         [FoldoutGroup("Export Json")]
@@ -174,9 +175,9 @@ namespace Editor.Tools
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
-                string tmpDirectory = Constants.JsonFoldreDir + "Language/" + language;
+                string tmpDirectory = LanguageDirectory + language;
                 // 导出json
-                JsonHelper.JsonWriter(LanguageItems, "Language/" + language + "/" + languageKey);
+                JsonHelper.JsonWriter(LanguageItems, LanguageDirectory + language + "/" + languageKey, false);
                 AddressableAssetsTool.AddAssets2AddressGroup("t:TextAsset", tmpDirectory, language.ToString());
             }
         }
@@ -227,7 +228,7 @@ namespace Editor.Tools
                         value);
 
                     list.Add(codeItem);
-                    JsonHelper.JsonWriter(list, "Language/" + language + "/" + "ErrorCodeLocalization");
+                    JsonHelper.JsonWriter(list, LanguageDirectory + language + "/" + "ErrorCodeLocalization", false);
                 }
             }
         }

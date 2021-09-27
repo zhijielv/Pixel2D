@@ -12,6 +12,7 @@ using Framework.Scripts.Constants;
 using Framework.Scripts.Level;
 using Framework.Scripts.Level.LevelItem;
 using Framework.Scripts.Manager;
+using Framework.Scripts.Utils;
 using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 using UnityEditor;
@@ -21,7 +22,7 @@ namespace Editor.Tools
 {
     public class LevelTool
     {
-        [ReadOnly] private string jsonPath = "Assets/Framework/Json/" + Constants.LevelJson + ".json";
+        [ReadOnly] private string jsonPath = Constants.JsonFoldreDir + Constants.LevelJson + ".json";
         [OnValueChanged("LoadLevel")] public LevelType levelType = LevelType.ludi;
         [ShowInInspector] public Level Level;
 
@@ -49,13 +50,14 @@ namespace Editor.Tools
                 streamWriter.Write("[]");
                 streamWriter.Close();
                 fileStream.Close();
-                AddressableAssetsTool.AddAllJson2AddressGroup();
+                // AddressableAssetsTool.AddAllJson2AddressGroup();
             }
 
-            StreamReader streamReader = new StreamReader(jsonPath);
+            JsonHelper.JsonReader(out _levelJsonList, Constants.LevelJson);
+            /*StreamReader streamReader = new StreamReader(jsonPath);
             string json = streamReader.ReadToEnd();
             streamReader.Close();
-            _levelJsonList = JsonConvert.DeserializeObject<List<LeveljsonClass>>(json);
+            _levelJsonList = JsonConvert.DeserializeObject<List<LeveljsonClass>>(json);*/
             _leveljsonClass = null;
             foreach (LeveljsonClass data in _levelJsonList)
             {
@@ -114,12 +116,13 @@ namespace Editor.Tools
                 }
             }
 
-            string json = JsonConvert.SerializeObject(_levelJsonList, Formatting.Indented);
+            /*string json = JsonConvert.SerializeObject(_levelJsonList, Formatting.Indented);
             StreamWriter streamWriter = new StreamWriter(jsonPath) {AutoFlush = true};
             streamWriter.Write(json);
             streamWriter.Close();
             _leveljsonClass = null;
-            AssetDatabase.Refresh();
+            AssetDatabase.Refresh();*/
+            JsonHelper.JsonWriter(_levelJsonList, Constants.LevelJson);
             AddressableAssetsTool.AddAllJson2AddressGroup();
         }
     }

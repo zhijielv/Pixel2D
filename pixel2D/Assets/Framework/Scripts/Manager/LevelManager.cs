@@ -25,8 +25,8 @@ namespace Framework.Scripts.Manager
 
         public override async Task ManagerInit()
         {
-            levelMaps = JsonHelper.JsonReader<LevelMap>(Constants.Constants.MapJson);
-            leveljsonClasses = JsonHelper.JsonReader<LeveljsonClass>(Constants.Constants.LevelJson);
+            JsonHelper.JsonReader(out levelMaps, Constants.Constants.MapJson);
+            JsonHelper.JsonReader(out leveljsonClasses, Constants.Constants.LevelJson);
             transform.localScale =
                 new Vector3(Common.LevelManagerScale, Common.LevelManagerScale, Common.LevelManagerScale);
             CreateAStarPath();

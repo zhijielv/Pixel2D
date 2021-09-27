@@ -16,6 +16,7 @@ namespace Framework.Scripts.UI.ScriptableObjects
         [ReadOnly] public List<string> widgetList = new List<string>();
         [ReadOnly] public GameObject panelObj;
 
+        public Dictionary<string, object> serializeObj = new Dictionary<string, object>();
         #region Reset RegistPanelObj
 #if UNITY_EDITOR
         [Button("赋值Obj")]

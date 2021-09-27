@@ -105,7 +105,7 @@ namespace Framework.Scripts.Constants
                     throw new ArgumentOutOfRangeException();
             }
 
-            _list = JsonHelper.JsonReader<LanguageItem>(_languageKey);
+            JsonHelper.JsonReader(out _list, _languageKey);
             return base.ManagerInit();
         }
 

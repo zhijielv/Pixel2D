@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: FarsiIran
   m_Data:
     m_SerializedData: []
-  m_GUID: 2b59b66f4737e9d4e9b141aed0f44151
+  m_GUID: e354b2dd09972dc4d8bcb0d7f89f53f5
   m_SerializeEntries:
   - m_GUID: 7227563e596e64d4e97c22b9a82730c0
     m_Address: ErrorCodeLocalization

@@ -70,8 +70,8 @@ namespace Editor.Tools
             Add2AddressablesGroupsByName(viewObjects, "UIAssets");
         }
 
-        public static void Add2AddressablesGroupsByName<T>(List<T> srcList, string addressablesGropsName)
-            where T : UnityEngine.Object
+        private static void Add2AddressablesGroupsByName<T>(List<T> srcList, string addressablesGropsName)
+            where T : Object
         {
             AddressableAssetGroup findGroup =
                 AddressableAssetSettingsDefaultObject.Settings.FindGroup(addressablesGropsName);
@@ -111,7 +111,7 @@ namespace Editor.Tools
         static HashSet<string> excludedExtensions =
             new HashSet<string>(new string[] {".cs", ".js", ".boo", ".exe", ".dll", ".meta"});
 
-        internal static bool IsPathValidForEntry(string path)
+        private static bool IsPathValidForEntry(string path)
         {
             if (string.IsNullOrEmpty(path))
                 return false;
@@ -124,7 +124,7 @@ namespace Editor.Tools
             return !excludedExtensions.Contains(Path.GetExtension(path));
         }
 
-        internal static bool IsPathValidPackageAsset(string path)
+        private static bool IsPathValidPackageAsset(string path)
         {
             string convertPath = path.ToLower().Replace("\\", "/");
             string[] splitPath = convertPath.Split('/');
@@ -147,10 +147,14 @@ namespace Editor.Tools
         public static void AddAllJson2AddressGroup()
         {
             AssetDatabase.Refresh();
-            List<TextAsset> textAssets = AssetDatabase.FindAssets("t:TextAsset", new[] {"Assets/Framework/Json"})
-                .Select(guid =>
-                    AssetDatabase.LoadAssetAtPath<TextAsset>(AssetDatabase.GUIDToAssetPath(guid))).ToList();
-            AddressableAssetsTool.Add2AddressablesGroupsByName(textAssets, "Json");
+
+            List<DefaultAsset> textAssets = new List<DefaultAsset>();
+            foreach (var guid in AssetDatabase.FindAssets("t:DefaultAsset", new[] {"Assets/Framework/Json"}))
+            {
+                textAssets.Add(AssetDatabase.LoadAssetAtPath<DefaultAsset>(AssetDatabase.GUIDToAssetPath(guid)));
+            }
+
+            Add2AddressablesGroupsByName(textAssets, "Json");
         }
 
         /// <summary>

@@ -9,6 +9,7 @@ using UnityEditor;
 using Framework.Scripts.Manager;
 using Newtonsoft.Json;
 using UnityEngine;
+using Object = System.Object;
 
 namespace Framework.Scripts.Utils
 {
@@ -18,10 +19,12 @@ namespace Framework.Scripts.Utils
         /// 运行时直接读取资源包加载json
         /// 编辑器下读取项目路径，不存在的json需要导出新json并存入包
         /// </summary>
+        /// <param name="t"></param>
         /// <param name="jsonPath"></param>
+        /// <param name="isJsonPath">在Assets/Framework/Json/下</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static List<T> JsonReader<T>(string jsonPath)
+        public static void JsonReader<T>(out T t, string jsonPath, bool isJsonPath = true) where T : class
         {
             TextAsset jsonFile = null;
 
@@ -31,7 +34,11 @@ namespace Framework.Scripts.Utils
             }
             else
             {
-                jsonPath = Constants.Constants.JsonFoldreDir + jsonPath + ".json";
+                if(isJsonPath)
+                    jsonPath = Constants.Constants.JsonFoldreDir + jsonPath + ".json";
+                else
+                    jsonPath = jsonPath + ".json";
+                
 #if UNITY_EDITOR
                 jsonFile = !File.Exists(jsonPath)
                     ? new TextAsset("[]")
@@ -39,15 +46,16 @@ namespace Framework.Scripts.Utils
 #endif
             }
 
-            List<T> t = JsonConvert.DeserializeObject<List<T>>(jsonFile.text);
-            return t;
+            t = JsonConvert.DeserializeObject<T>(jsonFile.text);
         }
 
 #if UNITY_EDITOR
-        public static string JsonWriter<T>(List<T> list, string jsonPath)
+        public static string JsonWriter(object list, string jsonPath, bool isJsonPath = true)
         {
-            jsonPath = Constants.Constants.JsonFoldreDir + jsonPath + ".json";
-
+            if(isJsonPath)
+                jsonPath = Constants.Constants.JsonFoldreDir + jsonPath + ".json";
+            else
+                jsonPath = jsonPath + ".json";
             if (!Directory.Exists(jsonPath.Parent()))
             {
                 Logging.Log($"创建 {jsonPath.Parent()}");

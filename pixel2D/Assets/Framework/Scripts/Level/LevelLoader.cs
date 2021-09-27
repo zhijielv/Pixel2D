@@ -42,7 +42,7 @@ namespace Framework.Scripts.Level
         {
             imagePrefab = await Addressables.LoadAssetAsync<GameObject>(Constants.Constants.ObjectUnit).Task;
             mapRoot = transform;
-            _levelMaps = JsonHelper.JsonReader<LevelMap>(Constants.Constants.MapJson);
+            JsonHelper.JsonReader(out _levelMaps, Constants.Constants.MapJson);
         }
         
         [Button("加载关卡", ButtonSizes.Large)]
@@ -72,8 +72,8 @@ namespace Framework.Scripts.Level
             levelName = level.LevelName;
             levelType = level.LevelType;
             LeveljsonClass tmpLeveljsonClass = new LeveljsonClass();
-            var list = JsonHelper.JsonReader<LeveljsonClass>(Constants.Constants.LevelJson);
-            foreach (var leveljsonClass in list)
+            JsonHelper.JsonReader(out List<LeveljsonClass> tmpLeveljsonClass2, Constants.Constants.LevelJson);
+            foreach (var leveljsonClass in tmpLeveljsonClass2)
             {
                 if (leveljsonClass.LevelType != levelType) continue;
                 tmpLeveljsonClass = leveljsonClass;

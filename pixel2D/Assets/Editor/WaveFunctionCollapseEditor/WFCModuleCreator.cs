@@ -26,7 +26,7 @@ namespace Editor.WaveFunctionCollapseEditor
         [ButtonGroup("JsonBtn")]
         public void LoadJson()
         { 
-            ModuleDatas = JsonHelper.JsonReader<ModuleData>("WFCModule");
+            JsonHelper.JsonReader(out ModuleDatas, "WFCModule");
         }
         
         [Button]

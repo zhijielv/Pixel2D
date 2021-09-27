@@ -6,6 +6,7 @@
 
 using System.Linq;
 using Editor.Tools;
+using Editor.Tools.TimelineTool;
 using Editor.WaveFunctionCollapseEditor;
 using Framework.Scripts.Constants;
 using Sirenix.OdinInspector.Editor;
@@ -26,7 +27,8 @@ namespace Editor.LevelEditor
         private MapTool _mapTool;
         private AddressableAssetsTool _addressableAssetsTool;
         private LanguageTool _languageTool;
-        private WFCEditor _wfcEditor;
+        // private WFCEditor _wfcEditor;
+        private TimelineTool _timelineTool;
 
         protected override void OnEnable()
         {
@@ -35,7 +37,8 @@ namespace Editor.LevelEditor
             _mapTool = new MapTool();
             _addressableAssetsTool = new AddressableAssetsTool();
             _languageTool = new LanguageTool();
-            _wfcEditor = new WFCEditor();
+            // _wfcEditor = new WFCEditor();
+            _timelineTool = new TimelineTool();
         }
 
         [MenuItem("Tools/Level Editor %Q")]
@@ -65,11 +68,12 @@ namespace Editor.LevelEditor
             tree.Add("Language Tool", _languageTool);
             
             //地图编辑工具
-            tree.Add("WFC Tool", _wfcEditor);
+            // tree.Add("WFC Tool", _wfcEditor);
             tree.Add("WFCModule Tool", new WFCModuleCreator());
             tree.AddAssetAtPath("Project Common", _configPath + "Common.asset");
             tree.Add("Level Tool", _levelTool);
             tree.Add("Map Tool", _mapTool);
+            tree.Add("Timeline Tool", _timelineTool);
             return tree;
         }
 

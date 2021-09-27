@@ -36,8 +36,8 @@ namespace Framework._3rdParty.WaveFunctionCollapse
                     Bools[i, j] = false;
                 }
             }
-
-            ModuleDatas = JsonHelper.JsonReader<ModuleData>("WFCModule");
+            
+            JsonHelper.JsonReader(out ModuleDatas, "WFCModule");
         }
 
         static Slot DrawSlot(Rect rect, Slot[,] slots, int x, int y)

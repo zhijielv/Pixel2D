@@ -15,20 +15,8 @@ MonoBehaviour:
   m_GroupName: Json
   m_Data:
     m_SerializedData: []
-  m_GUID: 4ea67386082f0a94a9598fc1fb61f1de
-  m_SerializeEntries:
-  - m_GUID: 36f7da5bb72fa204393d094bf46be891
-    m_Address: Level
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
-  - m_GUID: c6c3e92b86323c946bec54cdb001006a
-    m_Address: Map
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
+  m_GUID: 71131dffd90b5134a888f092ee105b35
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cc1ef71ad71ad124cac3229a7e1dd5ba, type: 2}
   m_SchemaSet:
