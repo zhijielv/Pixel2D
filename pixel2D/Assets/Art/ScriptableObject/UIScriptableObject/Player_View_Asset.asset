@@ -20,17 +20,33 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
+    SerializationNodes:
+    - Name: serializeObj
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Object,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   widgetList:
   - Rewired_TouchController
   - SetSpeed_Button
   - LoadLevel_Button
   - LoadAvatar_Button
   - Speed_InputField
-  - Rewired_TouchController
-  - SetSpeed_Button
-  - LoadLevel_Button
-  - LoadAvatar_Button
-  - Speed_InputField
+  - TestExit_Button
   panelObj: {fileID: 1841351538076458365, guid: e4cfd5b8e90507846b853767bff1897f,
     type: 3}

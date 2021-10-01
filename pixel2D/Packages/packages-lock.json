@@ -80,11 +80,11 @@
       "dependencies": {}
     },
     "com.unity.addressables": {
-      "version": "1.18.15",
+      "version": "1.18.16",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.scriptablebuildpipeline": "1.19.1",
+        "com.unity.scriptablebuildpipeline": "1.19.2",
         "com.unity.modules.assetbundle": "1.0.0",
         "com.unity.modules.imageconversion": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0",
@@ -98,6 +98,15 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.cn"
+    },
+    "com.unity.cloudcontentdelivery": {
+      "version": "1.2.5",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.scriptablebuildpipeline": "1.7.2"
+      },
       "url": "https://packages.unity.cn"
     },
     "com.unity.collab-proxy": {
@@ -133,7 +142,7 @@
       "url": "https://packages.unity.cn"
     },
     "com.unity.ide.vscode": {
-      "version": "1.2.3",
+      "version": "1.2.4",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -183,7 +192,7 @@
       "url": "https://packages.unity.cn"
     },
     "com.unity.scriptablebuildpipeline": {
-      "version": "1.19.1",
+      "version": "1.19.2",
       "depth": 1,
       "source": "registry",
       "dependencies": {},

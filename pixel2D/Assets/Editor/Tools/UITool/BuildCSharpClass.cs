@@ -214,8 +214,11 @@ namespace Editor.Tools.UITool
 
             // 添加自定义特性
             CodeAttributeDeclarationCollection collection = new CodeAttributeDeclarationCollection();
-            collection.Add(new CodeAttributeDeclaration("FoldoutGroup",
-                new CodeAttributeArgument(new CodePrimitiveExpression("Member"))));
+            collection.Add(new CodeAttributeDeclaration("FoldoutGroup", new []
+            {
+                new CodeAttributeArgument(new CodePrimitiveExpression("Member")),
+                new CodeAttributeArgument(new CodePrimitiveExpression(true)),
+            }));
             // 添加member
             for (int i = 0; i < tmpMember.Count; i++)
             {

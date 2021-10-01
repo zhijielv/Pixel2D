@@ -20,7 +20,27 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
+    SerializationNodes:
+    - Name: serializeObj
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Object,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   widgetList:
   - BG_Image
   - Top_CustomPanel
@@ -32,9 +52,5 @@ MonoBehaviour:
   - Center_Text
   - CenterRight_Text
   - Bottom_CustomPanel
-  - SelectFont_CustomPanel
-  - Text_Dropdown
-  - Font_Dropdown
-  - ChangeFont_Button
   panelObj: {fileID: 2237329840493786692, guid: 41bae8e906e667a4b8f0abc983a2552c,
     type: 3}
