@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: CoskeySettings
   m_EditorClassIdentifier: Unity.CloudContentDelivery.Editor:CloudContentDelivery:CosKey
-  cosKey: 
-  projectGuid: 
+  cosKey: bb6f174cb0f6f80073855fa7409309e9
+  projectGuid: 6809fe60-ab43-40e1-9b4a-f8d898ca28d0
   backend: 
   oversea: 0
