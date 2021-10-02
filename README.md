@@ -1,4 +1,6 @@
 # pixel2D Project-baozipi
+keystore
+密码：baozipi
 
 2021-3-22 启动
 
