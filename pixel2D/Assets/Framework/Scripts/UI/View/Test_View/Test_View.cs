@@ -1,4 +1,5 @@
 using Framework.Scripts.Manager;
+using UnityEngine.Serialization;
 
 namespace Framework.Scripts.UI.View
 {
@@ -8,10 +9,10 @@ namespace Framework.Scripts.UI.View
     using Base.RedDot;
     using Constants;
     
-    public sealed partial class Test_View : ViewBase
+    public sealed partial class TestView : ViewBase
     {
-        public RedDotBase RedDot;
-        public RedDotBase RedDot2;
+        [FormerlySerializedAs("RedDot")] public RedDotBase redDot;
+        [FormerlySerializedAs("RedDot2")] public RedDotBase redDot2;
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.A))
@@ -29,8 +30,8 @@ namespace Framework.Scripts.UI.View
         {
             // LevelManager.Instance.levelType = LevelType.yanjiang;
             // await LevelManager.Instance.LoadLevel(transform);
-            RedDot.AddRedDotEventListener(Scripts.Constants.EventType.RedDot);
-            RedDot2.AddRedDotEventListener(Scripts.Constants.EventType.StartGame);
+            redDot.AddRedDotEventListener(Scripts.Constants.EventType.RedDot);
+            redDot2.AddRedDotEventListener(Scripts.Constants.EventType.StartGame);
         }
     }
 }

@@ -8,6 +8,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Framework.Scripts.Utils;
 using SRF;
+using UnityEngine.Serialization;
 
 namespace Framework.Scripts.Objects
 {
@@ -17,7 +18,7 @@ namespace Framework.Scripts.Objects
         #region 参数
 
         // Padding value used to prevent the collider from overlapping the environment collider. Overlapped colliders don't work well with ray casts.
-        private const float c_Collider2DSpacing = 0.01f;
+        private const float CCollider2DSpacing = 0.01f;
 
         /// <summary>
         /// Specifies how the object should bounce after hitting another collider.
@@ -29,213 +30,217 @@ namespace Framework.Scripts.Objects
             RandomReflect // Reflect in a random direction. This mode will make the object nonkinematic but for visual only objects such as shells this is preferred.
         }
 
-        [Tooltip("Should the component initialize when enabled?")] [SerializeField]
-        protected bool m_InitializeOnEnable = false;
+        [FormerlySerializedAs("m_InitializeOnEnable")] [Tooltip("Should the component initialize when enabled?")] [SerializeField]
+        protected bool mInitializeOnEnable = false;
 
-        [Tooltip("The mass of the object.")] [SerializeField]
-        protected float m_Mass = 1;
+        [FormerlySerializedAs("m_Mass")] [Tooltip("The mass of the object.")] [SerializeField]
+        protected float mMass = 1;
 
-        [Tooltip("Multiplies the starting velocity by the specified value.")] [SerializeField]
-        protected float m_StartVelocityMultiplier = 1;
+        [FormerlySerializedAs("m_StartVelocityMultiplier")] [Tooltip("Multiplies the starting velocity by the specified value.")] [SerializeField]
+        protected float mStartVelocityMultiplier = 1;
 
-        [Tooltip("The amount of gravity to apply to the object.")] [Range(0, 40)] [SerializeField]
-        protected float m_GravityMagnitude = 0f;
+        [FormerlySerializedAs("m_GravityMagnitude")] [Tooltip("The amount of gravity to apply to the object.")] [Range(0, 40)] [SerializeField]
+        protected float mGravityMagnitude = 0f;
 
-        [Tooltip("The movement speed.")] [SerializeField]
-        protected float m_Speed = 1;
+        [FormerlySerializedAs("m_Speed")] [Tooltip("The movement speed.")] [SerializeField]
+        protected float mSpeed = 1;
 
-        [Tooltip("The rotation speed.")] [SerializeField]
-        protected float m_RotationSpeed = 5;
+        [FormerlySerializedAs("m_RotationSpeed")] [Tooltip("The rotation speed.")] [SerializeField]
+        protected float mRotationSpeed = 5;
 
-        [Tooltip("The amount of damping to apply to the movement.")] [Range(0, 1)] [SerializeField]
-        protected float m_Damping = 0.1f;
+        [FormerlySerializedAs("m_Damping")] [Tooltip("The amount of damping to apply to the movement.")] [Range(0, 1)] [SerializeField]
+        protected float mDamping = 0.1f;
 
-        [Tooltip("Amount of damping to apply to the torque.")] [Range(0, 1)] [SerializeField]
-        protected float m_RotationDamping = 0.1f;
+        [FormerlySerializedAs("m_RotationDamping")] [Tooltip("Amount of damping to apply to the torque.")] [Range(0, 1)] [SerializeField]
+        protected float mRotationDamping = 0.1f;
 
-        [Tooltip("Should the object rotate in the direction that it is moving?")] [SerializeField]
-        protected bool m_RotateInMoveDirection;
+        [FormerlySerializedAs("m_RotateInMoveDirection")] [Tooltip("Should the object rotate in the direction that it is moving?")] [SerializeField]
+        protected bool mRotateInMoveDirection;
 
+        [FormerlySerializedAs("m_SettleThreshold")]
         [Tooltip(
             "When the velocity and torque have a square magnitude value less than the specified value the object will be considered settled.")]
         [SerializeField]
-        protected float m_SettleThreshold;
+        protected float mSettleThreshold;
 
+        [FormerlySerializedAs("m_SidewaysSettleThreshold")]
         [Tooltip(
             "Specifies if the collider should settle on its side or upright. The higher the value the more likely the collider will settle on its side. " +
             "This is only used for CapsuleCollider2Ds and BoxCollider2Ds.")]
         [Range(0, 1)]
         [SerializeField]
-        protected float m_SidewaysSettleThreshold = 0.75f;
+        protected float mSidewaysSettleThreshold = 0.75f;
 
+        [FormerlySerializedAs("m_StartSidewaysVelocityMagnitude")]
         [Tooltip(
             "Starts to rotate to the settle rotation when the velocity magnitude is less than the specified values.")]
         [SerializeField]
-        protected float m_StartSidewaysVelocityMagnitude = 3f;
+        protected float mStartSidewaysVelocityMagnitude = 3f;
 
-        [Tooltip("The layers that the object can collide with.")] [SerializeField]
-        protected LayerMask m_ImpactLayers;
+        [FormerlySerializedAs("m_ImpactLayers")] [Tooltip("The layers that the object can collide with.")] [SerializeField]
+        protected LayerMask mImpactLayers;
 
-        [Tooltip("When a force is applied the multiplier will modify the magnitude of the force.")] [SerializeField]
-        protected float m_ForceMultiplier = 40;
+        [FormerlySerializedAs("m_ForceMultiplier")] [Tooltip("When a force is applied the multiplier will modify the magnitude of the force.")] [SerializeField]
+        protected float mForceMultiplier = 40;
 
-        [Tooltip("Specifies how the object should bounce after hitting another collider.")] [SerializeField]
-        protected BounceMode m_BounceMode = BounceMode.Reflect;
+        [FormerlySerializedAs("m_BounceMode")] [Tooltip("Specifies how the object should bounce after hitting another collider.")] [SerializeField]
+        protected BounceMode mBounceMode = BounceMode.Reflect;
 
+        [FormerlySerializedAs("m_BounceMultiplier")]
         [Tooltip("If the object can bounce, specifies the multiplier to apply to the bounce velocity.")]
         [Range(0, 4)]
         [SerializeField]
-        protected float m_BounceMultiplier = 1;
+        protected float mBounceMultiplier = 1;
 
-        [Tooltip("The maximum number of objects the projectile can collide with at a time.")] [SerializeField]
-        protected int m_MaxCollisionCount = 5;
+        [FormerlySerializedAs("m_MaxCollisionCount")] [Tooltip("The maximum number of objects the projectile can collide with at a time.")] [SerializeField]
+        protected int mMaxCollisionCount = 5;
 
-        [Tooltip("The maximum number of positions any single curve amplitude can contain.")] [SerializeField]
-        protected int m_MaxPositionCount = 150;
+        [FormerlySerializedAs("m_MaxPositionCount")] [Tooltip("The maximum number of positions any single curve amplitude can contain.")] [SerializeField]
+        protected int mMaxPositionCount = 150;
 
         public float Mass
         {
-            get { return m_Mass; }
-            set { m_Mass = value; }
+            get { return mMass; }
+            set { mMass = value; }
         }
 
         public float StartVelocityMultiplier
         {
-            get { return m_StartVelocityMultiplier; }
-            set { m_StartVelocityMultiplier = value; }
+            get { return mStartVelocityMultiplier; }
+            set { mStartVelocityMultiplier = value; }
         }
 
         public float GravityMagnitude
         {
-            get { return m_GravityMagnitude; }
-            set { m_GravityMagnitude = value; }
+            get { return mGravityMagnitude; }
+            set { mGravityMagnitude = value; }
         }
 
         public float Speed
         {
-            get { return m_Speed; }
-            set { m_Speed = value; }
+            get { return mSpeed; }
+            set { mSpeed = value; }
         }
 
         public float RotationSpeed
         {
-            get { return m_RotationSpeed; }
-            set { m_RotationSpeed = value; }
+            get { return mRotationSpeed; }
+            set { mRotationSpeed = value; }
         }
 
         public float Damping
         {
-            get { return m_Damping; }
-            set { m_Damping = value; }
+            get { return mDamping; }
+            set { mDamping = value; }
         }
 
         public float RotationDamping
         {
-            get { return m_RotationDamping; }
-            set { m_RotationDamping = value; }
+            get { return mRotationDamping; }
+            set { mRotationDamping = value; }
         }
 
         public bool RotateInMoveDirection
         {
-            get { return m_RotateInMoveDirection; }
-            set { m_RotateInMoveDirection = value; }
+            get { return mRotateInMoveDirection; }
+            set { mRotateInMoveDirection = value; }
         }
 
         public float SettleThreshold
         {
-            get { return m_SettleThreshold; }
-            set { m_SettleThreshold = value; }
+            get { return mSettleThreshold; }
+            set { mSettleThreshold = value; }
         }
 
         public float SidewaysSettleThreshold
         {
-            get { return m_SidewaysSettleThreshold; }
-            set { m_SidewaysSettleThreshold = value; }
+            get { return mSidewaysSettleThreshold; }
+            set { mSidewaysSettleThreshold = value; }
         }
 
         public float StartSidewaysVelocityMagnitude
         {
-            get { return m_StartSidewaysVelocityMagnitude; }
-            set { m_StartSidewaysVelocityMagnitude = value; }
+            get { return mStartSidewaysVelocityMagnitude; }
+            set { mStartSidewaysVelocityMagnitude = value; }
         }
 
         public LayerMask ImpactLayers
         {
-            get { return m_ImpactLayers; }
-            set { m_ImpactLayers = value; }
+            get { return mImpactLayers; }
+            set { mImpactLayers = value; }
         }
 
         public float ForceMultiplier
         {
-            get { return m_ForceMultiplier; }
-            set { m_ForceMultiplier = value; }
+            get { return mForceMultiplier; }
+            set { mForceMultiplier = value; }
         }
 
         public BounceMode Bounce
         {
-            get { return m_BounceMode; }
-            set { m_BounceMode = value; }
+            get { return mBounceMode; }
+            set { mBounceMode = value; }
         }
 
         public float BounceMultiplier
         {
-            get { return m_BounceMultiplier; }
-            set { m_BounceMultiplier = value; }
+            get { return mBounceMultiplier; }
+            set { mBounceMultiplier = value; }
         }
 
-        protected GameObject m_GameObject;
-        protected Transform m_Transform;
-        protected Collider2D m_Collider2D;
-        protected GameObject m_Originator;
-        protected Transform m_OriginatorTransform;
-        private LineRenderer m_LineRenderer;
+        protected GameObject MGameObject;
+        protected Transform MTransform;
+        protected Collider2D MCollider2D;
+        protected GameObject MOriginator;
+        protected Transform MOriginatorTransform;
+        private LineRenderer _mLineRenderer;
 
-        private RaycastHit2D m_RaycastHit;
-        private Collider2D[] m_Collider2DHit;
-        private List<Vector3> m_Positions;
+        private RaycastHit2D _mRaycastHit;
+        private Collider2D[] _mCollider2DHit;
+        private List<Vector3> _mPositions;
 
-        private Vector3 m_Gravity;
-        protected Vector3 m_NormalizedGravity;
-        protected Vector3 m_Velocity;
-        protected Vector3 m_Torque;
-        private bool m_DeterminedRotation;
-        private bool m_SettleSideways;
-        private bool m_OriginatorCollisionCheck;
+        private Vector3 _mGravity;
+        protected Vector3 MNormalizedGravity;
+        protected Vector3 MVelocity;
+        protected Vector3 MTorque;
+        private bool _mDeterminedRotation;
+        private bool _mSettleSideways;
+        private bool _mOriginatorCollisionCheck;
 
-        private float m_TimeScale;
-        private bool m_AutoDisable;
-        private bool m_MovementSettled;
-        private bool m_RotationSettled;
-        private bool m_InCollision;
-        private bool m_Bounced;
+        private float _mTimeScale;
+        private bool _mAutoDisable;
+        private bool _mMovementSettled;
+        private bool _mRotationSettled;
+        private bool _mInCollision;
+        private bool _mBounced;
 
-        private Transform m_Platform;
-        private Vector3 m_PlatformRelativePosition;
-        private Quaternion m_PrevPlatformRotation;
+        private Transform _mPlatform;
+        private Vector3 _mPlatformRelativePosition;
+        private Quaternion _mPrevPlatformRotation;
 
         public GameObject Originator
         {
-            get { return m_Originator; }
+            get { return MOriginator; }
         }
 
         public Vector3 Velocity
         {
-            get { return m_Velocity; }
+            get { return MVelocity; }
         }
 
         public Vector3 Torque
         {
-            get { return m_Torque; }
+            get { return MTorque; }
         }
 
         public LineRenderer LineRenderer
         {
-            get { return m_LineRenderer; }
+            get { return _mLineRenderer; }
         }
 
         protected bool AutoDisable
         {
-            set { m_AutoDisable = value; }
+            set { _mAutoDisable = value; }
         }
 
         #endregion
@@ -245,7 +250,7 @@ namespace Framework.Scripts.Objects
         /// </summary>
         protected virtual void Awake()
         {
-            m_ImpactLayers = 1 << LayerMask.NameToLayer("Wall");
+            mImpactLayers = 1 << LayerMask.NameToLayer("Wall");
             // The movement will be controlled by the TrajectoryObject.
             var rigidbody = gameObject.GetComponentOrAdd<Rigidbody2D>();
             if (rigidbody != null)
@@ -257,7 +262,7 @@ namespace Framework.Scripts.Objects
             // The object may want to play audio.
             // var hasActiveAudioClipSet = false;
 
-            enabled = m_InitializeOnEnable;
+            enabled = mInitializeOnEnable;
         }
 
         /// <summary>
@@ -265,10 +270,10 @@ namespace Framework.Scripts.Objects
         /// </summary>
         protected virtual void OnEnable()
         {
-            if (m_InitializeOnEnable)
+            if (mInitializeOnEnable)
             {
                 InitializeComponentReferences();
-                Initialize(Vector3.zero, Vector3.zero, null, false, -m_Transform.up);
+                Initialize(Vector3.zero, Vector3.zero, null, false, -MTransform.up);
             }
         }
 
@@ -309,54 +314,54 @@ namespace Framework.Scripts.Objects
         {
             InitializeComponentReferences();
 
-            m_Velocity = velocity / m_Mass * m_StartVelocityMultiplier;
-            m_Torque = torque;
-            if (originator != null && originator != m_Originator)
+            MVelocity = velocity / mMass * mStartVelocityMultiplier;
+            MTorque = torque;
+            if (originator != null && originator != MOriginator)
             {
-                m_Originator = originator;
-                m_OriginatorTransform = m_Originator.transform;
+                MOriginator = originator;
+                MOriginatorTransform = MOriginator.transform;
             }
             else
             {
-                m_NormalizedGravity = defaultNormalizedGravity;
-                m_TimeScale = 1;
-                m_OriginatorTransform = null;
+                MNormalizedGravity = defaultNormalizedGravity;
+                _mTimeScale = 1;
+                MOriginatorTransform = null;
             }
 
-            m_Gravity = m_NormalizedGravity * m_GravityMagnitude;
-            m_OriginatorCollisionCheck = originatorCollisionCheck && m_Originator != null;
+            _mGravity = MNormalizedGravity * mGravityMagnitude;
+            _mOriginatorCollisionCheck = originatorCollisionCheck && MOriginator != null;
 
-            m_Platform = null;
-            m_MovementSettled = m_RotationSettled = false;
-            m_InCollision = false;
-            m_Bounced = false;
-            if (m_Collider2D != null)
+            _mPlatform = null;
+            _mMovementSettled = _mRotationSettled = false;
+            _mInCollision = false;
+            _mBounced = false;
+            if (MCollider2D != null)
             {
-                m_Collider2D.enabled = true;
+                MCollider2D.enabled = true;
             }
 
             enabled = true;
 
             // Set the layer to prevent the current object from getting in the way of the casts.
-            var previousLayer = m_GameObject.layer;
-            m_GameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+            var previousLayer = MGameObject.layer;
+            MGameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
 
             // The object could start in a collision state.
-            if (m_OriginatorCollisionCheck && OverlapCast(m_Transform.position, m_Transform.rotation))
+            if (_mOriginatorCollisionCheck && OverlapCast(MTransform.position, MTransform.rotation))
             {
                 OnCollision(null);
-                if (m_BounceMode == BounceMode.None)
+                if (mBounceMode == BounceMode.None)
                 {
-                    m_MovementSettled = m_RotationSettled = true;
+                    _mMovementSettled = _mRotationSettled = true;
                 }
                 else
                 {
                     // Update the velocity to the reflection direction. Use the originator's forward direction as the normal because the actual collision point is not determined.
-                    m_Velocity = Vector3.Reflect(m_Velocity, -m_OriginatorTransform.forward) * m_BounceMultiplier;
+                    MVelocity = Vector3.Reflect(MVelocity, -MOriginatorTransform.forward) * mBounceMultiplier;
                 }
             }
 
-            m_GameObject.layer = previousLayer;
+            MGameObject.layer = previousLayer;
         }
 
         /// <summary>
@@ -368,24 +373,24 @@ namespace Framework.Scripts.Objects
         private bool OverlapCast(Vector3 position, Quaternion rotation)
         {
             // No need to do a cast if the originator is null.
-            if (m_OriginatorTransform == null)
+            if (MOriginatorTransform == null)
             {
                 return false;
             }
 
             int hit = 0;
 
-            if (m_Collider2D is CircleCollider2D)
+            if (MCollider2D is CircleCollider2D)
             {
-                var sphereCollider2D = m_Collider2D as CircleCollider2D;
+                var sphereCollider2D = MCollider2D as CircleCollider2D;
                 hit = Physics2D.OverlapCircleNonAlloc(
-                    MathUtility.TransformPoint(position, m_Transform.rotation, sphereCollider2D.offset),
-                    sphereCollider2D.radius * MathUtility.ColliderRadiusMultiplier(sphereCollider2D), m_Collider2DHit,
-                    m_ImpactLayers);
+                    MathUtility.TransformPoint(position, MTransform.rotation, sphereCollider2D.offset),
+                    sphereCollider2D.radius * MathUtility.ColliderRadiusMultiplier(sphereCollider2D), _mCollider2DHit,
+                    mImpactLayers);
             }
-            else if (m_Collider2D is CapsuleCollider2D)
+            else if (MCollider2D is CapsuleCollider2D)
             {
-                var capsuleCollider2D = m_Collider2D as CapsuleCollider2D;
+                var capsuleCollider2D = MCollider2D as CapsuleCollider2D;
 
                 Vector3 startEndCap, endEndCap;
                 MathUtility.CapsuleColliderEndCaps(capsuleCollider2D, position, rotation, out startEndCap,
@@ -393,18 +398,18 @@ namespace Framework.Scripts.Objects
                 hit = Physics2D.OverlapCapsuleNonAlloc(startEndCap, endEndCap,
                     capsuleCollider2D.direction,
                     capsuleCollider2D.transform.rotation.z,
-                    m_Collider2DHit,
-                    m_ImpactLayers);
+                    _mCollider2DHit,
+                    mImpactLayers);
             }
-            else if (m_Collider2D is BoxCollider2D)
+            else if (MCollider2D is BoxCollider2D)
             {
-                var boxCollider2D = m_Collider2D as BoxCollider2D;
+                var boxCollider2D = MCollider2D as BoxCollider2D;
                 hit = Physics2D.OverlapBoxNonAlloc(
-                    MathUtility.TransformPoint(position, m_Transform.rotation, boxCollider2D.offset),
+                    MathUtility.TransformPoint(position, MTransform.rotation, boxCollider2D.offset),
                     Vector3.Scale(boxCollider2D.size, boxCollider2D.transform.lossyScale) / 2,
                     boxCollider2D.transform.rotation.z,
-                    m_Collider2DHit,
-                    m_ImpactLayers);
+                    _mCollider2DHit,
+                    mImpactLayers);
             }
 
             if (hit > 0)
@@ -412,7 +417,7 @@ namespace Framework.Scripts.Objects
                 // The TrajectoryObject is only in an overlap state if the object is overlapping a non-character or camera collider.
                 for (int i = 0; i < hit; ++i)
                 {
-                    if (!m_Collider2DHit[i].transform.IsChildOf(m_OriginatorTransform)
+                    if (!_mCollider2DHit[i].transform.IsChildOf(MOriginatorTransform)
 #if FIRST_PERSON_CONTROLLER
                     // The object should not hit any colliders who are a child of the camera.
                     && m_Collider2DHit[i].transform.gameObject.GetCachedParentComponent<FirstPersonController.Character.FirstPersonObjects>() == null
@@ -432,13 +437,13 @@ namespace Framework.Scripts.Objects
         /// </summary>
         protected void InitializeComponentReferences()
         {
-            if (m_GameObject != null)
+            if (MGameObject != null)
             {
                 return;
             }
 
-            m_GameObject = gameObject;
-            m_Transform = transform;
+            MGameObject = gameObject;
+            MTransform = transform;
             var colliders = GetComponents<Collider2D>();
             for (int i = 0; i < colliders.Length; ++i)
             {
@@ -455,12 +460,12 @@ namespace Framework.Scripts.Objects
                     continue;
                 }
 
-                m_Collider2D = colliders[i];
+                MCollider2D = colliders[i];
                 break;
             }
 
-            m_LineRenderer = GetComponent<LineRenderer>();
-            m_Collider2DHit = new Collider2D[m_MaxCollisionCount];
+            _mLineRenderer = GetComponent<LineRenderer>();
+            _mCollider2DHit = new Collider2D[mMaxCollisionCount];
         }
 
         /// <summary>
@@ -469,12 +474,12 @@ namespace Framework.Scripts.Objects
         protected virtual void FixedUpdate()
         {
             // Update the position.
-            var position = m_Transform.position;
-            var rotation = m_Transform.rotation;
+            var position = MTransform.position;
+            var rotation = MTransform.rotation;
 
             // Set the layer to prevent the current object from getting in the way of the casts.
-            var previousLayer = m_GameObject.layer;
-            m_GameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+            var previousLayer = MGameObject.layer;
+            MGameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
             
             if (!Move(ref position, rotation))
             {
@@ -486,29 +491,29 @@ namespace Framework.Scripts.Objects
             // The object may have been disabed within OnCollision. Do not do any more updates for a disabled object.
             if (enabled)
             {
-                if (m_Platform != null)
+                if (_mPlatform != null)
                 {
-                    position += (m_Platform.TransformPoint(m_PlatformRelativePosition) - position);
-                    m_PlatformRelativePosition = m_Platform.InverseTransformPoint(position);
+                    position += (_mPlatform.TransformPoint(_mPlatformRelativePosition) - position);
+                    _mPlatformRelativePosition = _mPlatform.InverseTransformPoint(position);
                 }
                 
-                m_Transform.position = position;
+                MTransform.position = position;
 
                 // Update the rotation.
                 Rotate(position, ref rotation);
-                if (m_Platform != null)
+                if (_mPlatform != null)
                 {
-                    rotation *= (m_Platform.rotation * Quaternion.Inverse(m_PrevPlatformRotation));
-                    m_PrevPlatformRotation = m_Platform.rotation;
+                    rotation *= (_mPlatform.rotation * Quaternion.Inverse(_mPrevPlatformRotation));
+                    _mPrevPlatformRotation = _mPlatform.rotation;
                 }
 
-                m_Transform.rotation = rotation;
+                MTransform.rotation = rotation;
             }
 
-            m_GameObject.layer = previousLayer;
+            MGameObject.layer = previousLayer;
 
             // If both the position and rotation are done making changes then the component can be disabled.
-            if (m_AutoDisable && m_MovementSettled && m_RotationSettled)
+            if (_mAutoDisable && _mMovementSettled && _mRotationSettled)
             {
                 enabled = false;
             }
@@ -523,91 +528,91 @@ namespace Framework.Scripts.Objects
         private bool Move(ref Vector3 position, Quaternion rotation)
         {
             // The object can't move if the movement and rotation has settled.
-            if (m_MovementSettled && m_RotationSettled && m_SettleThreshold > 0)
+            if (_mMovementSettled && _mRotationSettled && mSettleThreshold > 0)
             {
                 return true;
             }
 
             // Stop moving if the velocity is less than a minimum threshold and the object is on the ground.
-            if (m_Velocity.sqrMagnitude < m_SettleThreshold && m_RotationSettled)
+            if (MVelocity.sqrMagnitude < mSettleThreshold && _mRotationSettled)
             {
                 // The object should be on the ground before the object has settled.
-                if (SingleCast(position, rotation, m_NormalizedGravity * c_Collider2DSpacing))
+                if (SingleCast(position, rotation, MNormalizedGravity * CCollider2DSpacing))
                 {
-                    m_MovementSettled = true;
+                    _mMovementSettled = true;
                     return true;
                 }
             }
 
-            var deltaTime = m_TimeScale * Time.fixedDeltaTime * Time.timeScale;
+            var deltaTime = _mTimeScale * Time.fixedDeltaTime * Time.timeScale;
             // todo 速度衰减添加开关
             // The object hasn't settled yet - move based on the velocity.
-            m_Velocity += m_Gravity * deltaTime;
-            m_Velocity *= Mathf.Clamp01(1 - m_Damping * deltaTime);
+            MVelocity += _mGravity * deltaTime;
+            MVelocity *= Mathf.Clamp01(1 - mDamping * deltaTime);
 
             // If the object hits an object then it should either reflect off of that object or stop moving.
-            var targetPosition = position + m_Velocity * m_Speed * deltaTime;
+            var targetPosition = position + MVelocity * mSpeed * deltaTime;
             var direction = targetPosition - position;
             if (SingleCast(position, rotation, direction))
             {
-                if (m_RaycastHit.transform.gameObject.layer == LayerMask.NameToLayer("MovingPlatform"))
+                if (_mRaycastHit.transform.gameObject.layer == LayerMask.NameToLayer("MovingPlatform"))
                 {
-                    if (m_RaycastHit.transform != m_Platform)
+                    if (_mRaycastHit.transform != _mPlatform)
                     {
-                        m_Platform = m_RaycastHit.transform;
-                        m_PlatformRelativePosition = m_Platform.InverseTransformPoint(position);
-                        m_PrevPlatformRotation = m_Platform.rotation;
+                        _mPlatform = _mRaycastHit.transform;
+                        _mPlatformRelativePosition = _mPlatform.InverseTransformPoint(position);
+                        _mPrevPlatformRotation = _mPlatform.rotation;
                     }
                 }
                 else
                 {
-                    m_Platform = null;
+                    _mPlatform = null;
                 }
 
                 // If the object has settled but not disabled a collision will occur every frame. Prevent the effects from playing because of this.
-                if (!m_InCollision)
+                if (!_mInCollision)
                 {
-                    m_InCollision = true;
+                    _mInCollision = true;
 
-                    OnCollision(m_RaycastHit);
+                    OnCollision(_mRaycastHit);
                 }
 
-                if (m_BounceMode != BounceMode.None)
+                if (mBounceMode != BounceMode.None)
                 {
                     Vector3 velocity;
-                    if (m_BounceMode == BounceMode.RandomReflect)
+                    if (mBounceMode == BounceMode.RandomReflect)
                     {
                         // Add ramdomness to the bounce.
                         // This mode should not be used over the network unless it doesn't matter if the object is synchronized (such as a shell).
-                        velocity = Quaternion.AngleAxis(Random.Range(-70, 70), m_RaycastHit.normal) * m_Velocity;
+                        velocity = Quaternion.AngleAxis(Random.Range(-70, 70), _mRaycastHit.normal) * MVelocity;
                     }
                     else
                     {
                         // Reflect.
-                        velocity = m_Velocity;
+                        velocity = MVelocity;
                     }
 
-                    if (m_Velocity.magnitude < m_StartSidewaysVelocityMagnitude)
+                    if (MVelocity.magnitude < mStartSidewaysVelocityMagnitude)
                     {
-                        m_MovementSettled = true;
+                        _mMovementSettled = true;
                     }
 
-                    m_Bounced = true;
+                    _mBounced = true;
                     return false;
                 }
                 else
                 {
-                    m_Velocity = Vector3.zero;
-                    m_Torque = Vector3.zero;
-                    m_MovementSettled = true;
+                    MVelocity = Vector3.zero;
+                    MTorque = Vector3.zero;
+                    _mMovementSettled = true;
                     enabled = false;
                     return true;
                 }
             }
             else
             {
-                m_Platform = null;
-                m_InCollision = false;
+                _mPlatform = null;
+                _mInCollision = false;
             }
 
             position = targetPosition;
@@ -625,7 +630,7 @@ namespace Framework.Scripts.Objects
                 // A Rigidbody2D should be affected by the impact.
                 if (hit.Value.rigidbody != null)
                 {
-                    hit.Value.rigidbody.AddForceAtPosition(m_Velocity, hit.Value.point);
+                    hit.Value.rigidbody.AddForceAtPosition(MVelocity, hit.Value.point);
                 }
             }
         }
@@ -639,7 +644,7 @@ namespace Framework.Scripts.Objects
         /// <returns>The number of hit results.</returns>
         private bool SingleCast(Vector3 position, Quaternion rotation, Vector2 direction)
         {
-            switch (m_Collider2D)
+            switch (MCollider2D)
             {
                 // todo CapsuleCollider2D 碰撞检测
                 /*else if (m_Collider2D is CapsuleCollider2D)
@@ -655,31 +660,31 @@ namespace Framework.Scripts.Objects
                 {
                     float colliderRadiusMultiplier =
                         sphereCollider2D.radius * MathUtility.ColliderRadiusMultiplier(sphereCollider2D);
-                    m_RaycastHit = Physics2D.CircleCast(position,
+                    _mRaycastHit = Physics2D.CircleCast(position,
                         colliderRadiusMultiplier,
-                        direction.normalized, sphereCollider2D.radius, m_ImpactLayers);
+                        direction.normalized, sphereCollider2D.radius, mImpactLayers);
                     break;
                 }
                 case BoxCollider2D mCollider2D:
                 {
                     var boxCollider2D = mCollider2D;
-                    m_RaycastHit = Physics2D.BoxCast(m_Transform.TransformPoint(boxCollider2D.offset),
+                    _mRaycastHit = Physics2D.BoxCast(MTransform.TransformPoint(boxCollider2D.offset),
                         boxCollider2D.size,
                         0,
-                        direction.normalized, 0, m_ImpactLayers);
+                        direction.normalized, 0, mImpactLayers);
                     break;
                 }
                 default:
                     // No collider attached.
-                    m_RaycastHit = Physics2D.Raycast(position, direction.normalized, 0,
-                        m_ImpactLayers);
+                    _mRaycastHit = Physics2D.Raycast(position, direction.normalized, 0,
+                        mImpactLayers);
                     break;
             }
 
             // The object should not collide with the originator to prevent the character from hitting themself.
-            if (m_OriginatorCollisionCheck && m_OriginatorTransform != null)
+            if (_mOriginatorCollisionCheck && MOriginatorTransform != null)
             {
-                if (m_RaycastHit && (m_RaycastHit.transform.IsChildOf(m_OriginatorTransform)
+                if (_mRaycastHit && (_mRaycastHit.transform.IsChildOf(MOriginatorTransform)
 #if FIRST_PERSON_CONTROLLER
                     // The object should not hit any colliders who are a child of the camera.
                     || m_RaycastHit.transform.gameObject.GetCachedParentComponent<FirstPersonController.Character.FirstPersonObjects>() != null
@@ -689,11 +694,11 @@ namespace Framework.Scripts.Objects
                 }
                 else
                 {
-                    m_OriginatorCollisionCheck = false;
+                    _mOriginatorCollisionCheck = false;
                 }
             }
 
-            return m_RaycastHit.transform != null;
+            return _mRaycastHit.transform != null;
         }
 
         /// <summary>
@@ -704,19 +709,19 @@ namespace Framework.Scripts.Objects
         private void Rotate(Vector3 position, ref Quaternion rotation)
         {
             // The object should rotate to the desired direction after it has bounced and the rotation has settled.
-            if ((m_BounceMode == BounceMode.None || m_Bounced) &&
-                (m_Torque.sqrMagnitude < m_SettleThreshold || m_MovementSettled)
+            if ((mBounceMode == BounceMode.None || _mBounced) &&
+                (MTorque.sqrMagnitude < mSettleThreshold || _mMovementSettled)
             )
             {
-                if (m_Collider2D is CapsuleCollider2D || m_Collider2D is BoxCollider2D)
+                if (MCollider2D is CapsuleCollider2D || MCollider2D is BoxCollider2D)
                 {
-                    if (!m_RotationSettled)
+                    if (!_mRotationSettled)
                     {
-                        var up = -m_NormalizedGravity;
+                        var up = -MNormalizedGravity;
                         var normal = up;
-                        if (SingleCast(position, rotation, m_NormalizedGravity * c_Collider2DSpacing))
+                        if (SingleCast(position, rotation, MNormalizedGravity * CCollider2DSpacing))
                         {
-                            normal = m_RaycastHit.normal;
+                            normal = _mRaycastHit.normal;
                         }
 
                         var dot = Mathf.Abs(Vector3.Dot(normal, rotation * Vector3.up));
@@ -727,14 +732,14 @@ namespace Framework.Scripts.Objects
                             var localRotation = MathUtility
                                 .InverseTransformQuaternion(Quaternion.LookRotation(Vector3.forward, up), rotation)
                                 .eulerAngles;
-                            if (!m_DeterminedRotation)
+                            if (!_mDeterminedRotation)
                             {
-                                m_SettleSideways = dot < m_SidewaysSettleThreshold;
-                                m_DeterminedRotation = true;
+                                _mSettleSideways = dot < mSidewaysSettleThreshold;
+                                _mDeterminedRotation = true;
                             }
 
                             localRotation.x = 0;
-                            if (m_SettleSideways)
+                            if (_mSettleSideways)
                             {
                                 // The collider should settle on its side.
                                 localRotation.z = Mathf.Abs(MathUtility.ClampInnerAngle(localRotation.z)) < 90
@@ -749,57 +754,57 @@ namespace Framework.Scripts.Objects
 
                             var target = MathUtility.TransformQuaternion(Quaternion.LookRotation(Vector3.forward, up),
                                 Quaternion.Euler(localRotation));
-                            var deltaTime = m_TimeScale * Time.fixedDeltaTime * Time.timeScale;
-                            rotation = Quaternion.Slerp(rotation, target, m_RotationSpeed * deltaTime);
+                            var deltaTime = _mTimeScale * Time.fixedDeltaTime * Time.timeScale;
+                            rotation = Quaternion.Slerp(rotation, target, mRotationSpeed * deltaTime);
                         }
                         else
                         {
                             // The object has finished rotating.
-                            m_Torque = Vector3.zero;
-                            m_RotationSettled = true;
+                            MTorque = Vector3.zero;
+                            _mRotationSettled = true;
                         }
                     }
                 }
                 else
                 {
-                    m_Torque = Vector3.zero;
-                    m_RotationSettled = true;
+                    MTorque = Vector3.zero;
+                    _mRotationSettled = true;
                 }
             }
 
             // Determine the new rotation.
-            if (m_RotateInMoveDirection && m_Velocity.sqrMagnitude > 0)
+            if (mRotateInMoveDirection && MVelocity.sqrMagnitude > 0)
             {
-                rotation = Quaternion.LookRotation(m_Velocity.normalized, -m_Gravity);
+                rotation = Quaternion.LookRotation(MVelocity.normalized, -_mGravity);
             }
 
-            m_Torque *= Mathf.Clamp01(1 - m_RotationDamping);
-            var targetRotation = rotation * Quaternion.Euler(m_Torque);
+            MTorque *= Mathf.Clamp01(1 - mRotationDamping);
+            var targetRotation = rotation * Quaternion.Euler(MTorque);
 
             // Do not rotate if the collider would intersect with another object. A CircleCollider2D does not need this check.
             var hitCount = 0;
-            if (m_Collider2D is CapsuleCollider2D)
+            if (MCollider2D is CapsuleCollider2D)
             {
                 Vector3 startEndCap, endEndCap;
-                var capsuleCollider2D = m_Collider2D as CapsuleCollider2D;
+                var capsuleCollider2D = MCollider2D as CapsuleCollider2D;
                 MathUtility.CapsuleColliderEndCaps(capsuleCollider2D, position, targetRotation, out startEndCap,
                     out endEndCap);
                 hitCount = Physics2D.OverlapCapsuleNonAlloc(startEndCap, endEndCap,
                     capsuleCollider2D.direction,
                     capsuleCollider2D.size.x * MathUtility.CapsuleColliderHeightMultiplier(capsuleCollider2D),
-                    m_Collider2DHit,
-                    m_ImpactLayers);
+                    _mCollider2DHit,
+                    mImpactLayers);
             }
-            else if (m_Collider2D is BoxCollider2D)
+            else if (MCollider2D is BoxCollider2D)
             {
-                var boxCollider2D = m_Collider2D as BoxCollider2D;
+                var boxCollider2D = MCollider2D as BoxCollider2D;
                 float angle;
-                m_Transform.rotation.ToAngleAxis(out angle, out Vector3 back);
+                MTransform.rotation.ToAngleAxis(out angle, out Vector3 back);
                 hitCount = Physics2D.OverlapBoxNonAlloc(
-                    MathUtility.TransformPoint(position, m_Transform.rotation, boxCollider2D.offset),
+                    MathUtility.TransformPoint(position, MTransform.rotation, boxCollider2D.offset),
                     Vector3.Scale(boxCollider2D.size, boxCollider2D.transform.lossyScale) / 2, angle,
-                    m_Collider2DHit,
-                    m_ImpactLayers);
+                    _mCollider2DHit,
+                    mImpactLayers);
             }
 
             // Apply the rotation if the rotation doesnt intersect any object.

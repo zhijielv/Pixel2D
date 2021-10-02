@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: French
   m_Data:
     m_SerializedData: []
-  m_GUID: aa6a669fee67ffc4b90329fc4658e9b2
+  m_GUID: 29545d63dcf4bf34ea258f33b49d7e28
   m_SerializeEntries:
   - m_GUID: d1db217f384ce3a4f9d86c496ba65699
     m_Address: ErrorCodeLocalization

@@ -10,7 +10,7 @@ namespace Framework.Scripts.Level.LevelItem
     {
         public YanJiang()
         {
-            LevelType = LevelType.yanjiang;
+            LevelType = LevelType.Yanjiang;
         }
     }
 }

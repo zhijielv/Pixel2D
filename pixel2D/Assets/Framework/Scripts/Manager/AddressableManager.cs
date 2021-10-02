@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using System;
 using System.Threading.Tasks;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
@@ -99,6 +100,23 @@ namespace Framework.Scripts.Manager
             if (!_initialized)
                 throw new Exception("AddressableManager has not initialized!");
             await Addressables.LoadSceneAsync(key, loadSceneMode, activateOnLoad).Task;
+        }
+
+        // todo 检查资源是否存在
+        public bool CheckFile<T>(object key, out T result)
+        {
+            AsyncOperationHandle<T> loadAssetAsync;
+            try
+            {
+                loadAssetAsync = Addressables.LoadAssetAsync<T>(key);
+            }
+            catch
+            {
+                result = default;
+                return false;
+            }
+            result = loadAssetAsync.WaitForCompletion();
+            return true;
         }
 
         public void ReleaseInstance(GameObject gameobject)

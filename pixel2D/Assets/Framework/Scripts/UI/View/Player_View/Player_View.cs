@@ -9,6 +9,7 @@ using Cinemachine;
 using DG.Tweening;
 using HutongGames.PlayMaker;
 using Rewired;
+using UnityEngine.Serialization;
 using Keyboard = UnityEngine.InputSystem.Keyboard;
 
 namespace Framework.Scripts.UI.View
@@ -19,7 +20,7 @@ namespace Framework.Scripts.UI.View
 
     public sealed partial class Player_View : ViewBase
     {
-        public string HeroName = "c01";
+        [FormerlySerializedAs("HeroName")] public string heroName = "c01";
         public float speed = 4f;
 
         private void OnEnable()
@@ -142,7 +143,7 @@ namespace Framework.Scripts.UI.View
                 AddressableManager.Instance.ReleaseInstance(ObjectManager.Instance.mainPlayer);
             }
 
-            await ObjectManager.Instance.LoadPlayerAvatar(HeroName, LevelManager.Instance.transform);
+            await ObjectManager.Instance.LoadPlayerAvatar(heroName, LevelManager.Instance.transform);
             FsmFloat fsmSpeed = ObjectManager.Instance.mainPlayer.GetComponent<PlayMakerFSM>().FsmVariables
                 .FindFsmFloat("Speed");
             fsmSpeed.Value = speed;

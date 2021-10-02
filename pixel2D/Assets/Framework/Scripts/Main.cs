@@ -9,6 +9,7 @@ using Framework.Scripts.Constants;
 using Framework.Scripts.Manager;
 using Framework.Scripts.Singleton;
 using Framework.Scripts.UI.View;
+using Sirenix.Utilities;
 using SRF;
 using UnityEngine;
 
@@ -24,7 +25,8 @@ public class Main : ManagerSingleton<Main>
     {
         base.Awake();
         // 初始化进入的界面
-        firstView = Common.IsDebugMode ? AllViewEnum.MaxValue : AllViewEnum.BiaoTi_View;
+        firstView = GlobalConfig<Common>.Instance.isDebugMode ? AllViewEnum.MaxValue : AllViewEnum.BiaoTi_View;
+        
         
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         DontDestroyOnLoad(transform);

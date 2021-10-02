@@ -21,7 +21,8 @@ namespace Editor.LevelEditor
 
     public class LevelEditor : OdinMenuEditorWindow
     {
-        private const string _configPath = "Assets/Plugins/Sirenix/Odin Inspector/Config/Resources/Sirenix/";
+        // private const string _configPath = "Assets/Plugins/Sirenix/Odin Inspector/Config/Resources/Sirenix/";
+        private const string _configPath = "Assets/Art/GlobalConfigs/";
         private const string _editorHelperAssetsPath = "Assets/Editor/LevelEditor/";
         private LevelTool _levelTool;
         private MapTool _mapTool;

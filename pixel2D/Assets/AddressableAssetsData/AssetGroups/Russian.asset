@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: Russian
   m_Data:
     m_SerializedData: []
-  m_GUID: 9e1a3ac5471c65543a0f8dd1e761e47a
+  m_GUID: b1f5c2ec34370484289c9b69e9ce2f2d
   m_SerializeEntries:
   - m_GUID: fee3724f2cbe78f41a3ca4e6397562d0
     m_Address: ErrorCodeLocalization

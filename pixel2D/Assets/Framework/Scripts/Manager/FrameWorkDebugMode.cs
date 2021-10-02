@@ -13,6 +13,7 @@ using Framework.Scripts.Singleton;
 using UnityEngine;
 using System;
 using DG.Tweening;
+using Sirenix.Utilities;
 using UniRx;
 
 namespace Framework.Scripts.Manager
@@ -24,7 +25,7 @@ namespace Framework.Scripts.Manager
 
         public override Task ManagerInit()
         {
-            if (Common.IsDebugMode)
+            if (GlobalConfig<Common>.Instance.isDebugMode)
                 Logging.Log("#####################  Is Debug Mode  #####################");
             else return base.ManagerInit();
             runtimeHierarchy = AddressableManager.Instance.Instantiate("RuntimeHierarchy");

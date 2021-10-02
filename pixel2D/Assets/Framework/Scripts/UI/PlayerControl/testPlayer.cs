@@ -6,12 +6,13 @@
 
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Framework.Scripts.UI.PlayerControl
 {
-    public class testPlayer : MonoBehaviour
+    public class TestPlayer : MonoBehaviour
     {
-        public GameObject Player;
+        [FormerlySerializedAs("Player")] public GameObject player;
 
         private void OnCollisionEnter2D(Collision2D other)
         {

@@ -10,24 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: English
+  m_Name: GlobalConfigs
   m_EditorClassIdentifier: 
-  m_GroupName: English
+  m_GroupName: GlobalConfigs
   m_Data:
     m_SerializedData: []
-  m_GUID: c661f4abfa17dbb4d8c8fca2deb119df
+  m_GUID: 52e530d1dc37e754fa22b0c49d4604cc
   m_SerializeEntries:
-  - m_GUID: f5634520baa113f4b93dd3828605d7df
-    m_Address: en-US
+  - m_GUID: 2816a285511fb0c4aabd69d492aff6f6
+    m_Address: GlobalConfigs
     m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: a68a036f09f207a45ba1eb0be1ffd063
-    m_Address: ErrorCodeLocalization
-    m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - preload
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cc1ef71ad71ad124cac3229a7e1dd5ba, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: d400c328b3091df42a8821402b2efdb7, type: 2}
-    - {fileID: 11400000, guid: d90ec510389285947971d861c1dbb393, type: 2}
+    - {fileID: 11400000, guid: 1677d9428f8c0e74b919cba8afdfd885, type: 2}
+    - {fileID: 11400000, guid: 39e4d82946ead3a4bba68fdbba78fb16, type: 2}

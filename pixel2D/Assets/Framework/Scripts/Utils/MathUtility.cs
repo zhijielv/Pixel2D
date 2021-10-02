@@ -10,9 +10,9 @@ namespace Framework.Scripts.Utils
     {
         // The multiplier when converting from the CharacterLocomotion force to a Rigidbody force.
         public const float RigidbodyForceMultiplier = 50;
-        private static Dictionary<Collider, Transform> m_ColliderTransformMap = new Dictionary<Collider, Transform>();
+        private static Dictionary<Collider, Transform> _mColliderTransformMap = new Dictionary<Collider, Transform>();
 
-        private static Dictionary<Collider2D, Transform> m_Collider2DTransformMap =
+        private static Dictionary<Collider2D, Transform> _mCollider2DTransformMap =
             new Dictionary<Collider2D, Transform>();
 
         /// <summary>
@@ -560,10 +560,10 @@ namespace Framework.Scripts.Utils
         {
             // Use the cached transform for quick lookup.
             Transform transform;
-            if (!m_ColliderTransformMap.TryGetValue(capsuleCollider, out transform))
+            if (!_mColliderTransformMap.TryGetValue(capsuleCollider, out transform))
             {
                 transform = capsuleCollider.transform;
-                m_ColliderTransformMap.Add(capsuleCollider, transform);
+                _mColliderTransformMap.Add(capsuleCollider, transform);
             }
 
             if (capsuleCollider.direction == 1)
@@ -584,10 +584,10 @@ namespace Framework.Scripts.Utils
         {
             // Use the cached transform for quick lookup.
             Transform transform;
-            if (!m_Collider2DTransformMap.TryGetValue(capsuleCollider, out transform))
+            if (!_mCollider2DTransformMap.TryGetValue(capsuleCollider, out transform))
             {
                 transform = capsuleCollider.transform;
-                m_Collider2DTransformMap.Add(capsuleCollider, transform);
+                _mCollider2DTransformMap.Add(capsuleCollider, transform);
             }
 
             if (capsuleCollider.direction == CapsuleDirection2D.Vertical)
@@ -608,10 +608,10 @@ namespace Framework.Scripts.Utils
         {
             // Use the cached transform for quick lookup.
             Transform transform;
-            if (!m_ColliderTransformMap.TryGetValue(collider, out transform))
+            if (!_mColliderTransformMap.TryGetValue(collider, out transform))
             {
                 transform = collider.transform;
-                m_ColliderTransformMap.Add(collider, transform);
+                _mColliderTransformMap.Add(collider, transform);
             }
 
             var lossyScale = transform.lossyScale;
@@ -642,10 +642,10 @@ namespace Framework.Scripts.Utils
         {
             // Use the cached transform for quick lookup.
             Transform transform;
-            if (!m_Collider2DTransformMap.TryGetValue(collider2D, out transform))
+            if (!_mCollider2DTransformMap.TryGetValue(collider2D, out transform))
             {
                 transform = collider2D.transform;
-                m_Collider2DTransformMap.Add(collider2D, transform);
+                _mCollider2DTransformMap.Add(collider2D, transform);
             }
 
             var lossyScale = transform.lossyScale;

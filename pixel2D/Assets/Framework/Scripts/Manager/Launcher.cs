@@ -4,6 +4,7 @@ using Framework.Scripts.Singleton;
 using Framework.Scripts.UI.View;
 using Rewired;
 using Rewired.Integration.UnityUI;
+using Sirenix.Utilities;
 using SRF;
 using UnityEngine;
 
@@ -23,7 +24,7 @@ namespace Framework.Scripts.Manager
         private void StartLauncher()
         {
             Logging.Log("******************** start launcher ********************");
-            if (Common.IsDebugMode)
+            if (GlobalConfig<Common>.Instance.isDebugMode)
             {
                 if (Main.Instance.firstView != AllViewEnum.MaxValue)
                 {
@@ -32,7 +33,7 @@ namespace Framework.Scripts.Manager
             }
             else
             {
-                UiManager.Instance.GetWidget<Player_View>();
+                UiManager.Instance.GetWidget<BiaoTi_View>();
             }
         }
 
@@ -73,6 +74,16 @@ namespace Framework.Scripts.Manager
                 rewiredStandaloneInputModule.RewiredInputManager =
                     Common.RewiredInputManager.GetComponent<InputManager_Base>();
             }
+        }
+
+        private void OnApplicationQuit()
+        {
+            Common.Initialized = false;
+        }
+
+        private void OnDestroy()
+        {
+            Common.Initialized = false;
         }
     }
 }

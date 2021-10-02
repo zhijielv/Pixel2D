@@ -7,9 +7,12 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Framework.Scripts.Manager;
 using Framework.Scripts.Singleton;
 using Framework.Scripts.Utils;
+using Newtonsoft.Json;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace Framework.Scripts.Constants
 {
@@ -105,7 +108,10 @@ namespace Framework.Scripts.Constants
                     throw new ArgumentOutOfRangeException();
             }
 
-            JsonHelper.JsonReader(out _list, _languageKey);
+            // todo 等待AddressableManager功能
+            // JsonHelper.JsonReader(out _list, _languageKey);
+            TextAsset jsonFile = AddressableManager.Instance.LoadAsset<TextAsset>(_languageKey);
+            _list = JsonConvert.DeserializeObject<List<LanguageItem>>(jsonFile.text);
             return base.ManagerInit();
         }
 

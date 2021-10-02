@@ -261,7 +261,7 @@ namespace Framework.Scripts.Manager
         /// <summary>
         /// 定义基于委托函数的事件
         /// </summary>
-        [ShowInInspector, ReadOnly] private EventHandler EventHandle;
+        [ShowInInspector, ReadOnly] private EventHandler _eventHandle;
 
         /// <summary>
         /// 触发监听事件
@@ -274,11 +274,11 @@ namespace Framework.Scripts.Manager
                 if (tmpData.InvokeTime > Time.time)
                     return;
                 
-                EventHandle?.Invoke(this, data);
+                _eventHandle?.Invoke(this, data);
                 tmpData.ResetInvokeTime();
                 return;
             }
-            EventHandle?.Invoke(this, data);
+            _eventHandle?.Invoke(this, data);
         }
 
         /// <summary>
@@ -287,18 +287,18 @@ namespace Framework.Scripts.Manager
         /// <returns></returns>
         public EventHandler GetEventHandler()
         {
-            return EventHandle;
+            return _eventHandle;
         }
 
         public Delegate[] GetEventHandlers()
         {
-            return EventHandle?.GetInvocationList();
+            return _eventHandle?.GetInvocationList();
         }
 
         public bool CheckInEventHandler(EventHandler eventHandler)
         {
-            if (EventHandle == null) return false;
-            var delegates = EventHandle.GetInvocationList();
+            if (_eventHandle == null) return false;
+            var delegates = _eventHandle.GetInvocationList();
             foreach (var t in delegates)
             {
                 if (t is EventHandler tmpEventHandler && !tmpEventHandler.Equals(eventHandler)) continue;
@@ -314,8 +314,8 @@ namespace Framework.Scripts.Manager
         /// <param name="removeHandle"></param>
         public void RemoveListener(EventHandler removeHandle)
         {
-            if (EventHandle != null)
-                EventHandle -= removeHandle;
+            if (_eventHandle != null)
+                _eventHandle -= removeHandle;
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Framework.Scripts.Manager
         /// <param name="addHandle"></param>
         public void AddListener(EventHandler addHandle)
         {
-            EventHandle += addHandle;
+            _eventHandle += addHandle;
         }
     }
     

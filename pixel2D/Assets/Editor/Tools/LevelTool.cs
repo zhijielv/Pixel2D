@@ -23,7 +23,7 @@ namespace Editor.Tools
     public class LevelTool
     {
         [ReadOnly] private string jsonPath = Constants.JsonFoldreDir + Constants.LevelJson + ".json";
-        [OnValueChanged("LoadLevel")] public LevelType levelType = LevelType.ludi;
+        [OnValueChanged("LoadLevel")] public LevelType levelType = LevelType.Ludi;
         [ShowInInspector] public Level Level;
 
         private List<LeveljsonClass> _levelJsonList;

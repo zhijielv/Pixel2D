@@ -407,8 +407,8 @@ namespace Editor.Tools.UITool
             if (!GlobalConfig<UiBuilderSetting>.Instance.isGenerateCode) return;
             GlobalConfig<UiBuilderSetting>.Instance.hasNewUICode = true;
             GlobalConfig<UiScriptableObjectsManager>.Instance.ResetAllViewPrefab();
-            GlobalConfig<UiScriptableObjectsManager>.Instance.ResetAllViewSO();
-            Object[] viewPrefabs = GlobalConfig<UiScriptableObjectsManager>.Instance.UIPrefabs;
+            GlobalConfig<UiScriptableObjectsManager>.Instance.ResetAllViewSo();
+            Object[] viewPrefabs = GlobalConfig<UiScriptableObjectsManager>.Instance.uiPrefabs;
             ReflectSetValue(viewPrefabs);
 
             // 创建SO

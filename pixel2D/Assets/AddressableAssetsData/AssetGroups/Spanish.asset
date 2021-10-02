@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: Spanish
   m_Data:
     m_SerializedData: []
-  m_GUID: 8e9cabc60c0c9604b807f11d5322ae9a
+  m_GUID: b997de3f98fe6924f9181203d7f0d8b7
   m_SerializeEntries:
   - m_GUID: b59d27ba7a184d24c9e18bdedf249f05
     m_Address: ErrorCodeLocalization

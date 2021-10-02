@@ -25,14 +25,14 @@ namespace Framework.Scripts.Manager
         public SpawnPool unitPool;
         public Transform objectUnit;
         [ShowInInspector]
-        public Dictionary<string, SpawnPool> poolDic;
+        public Dictionary<string, SpawnPool> PoolDic;
         
         [ShowInInspector]
         private Dictionary<Type, object> _genericPool;
 
         public override async Task ManagerInit()
         {
-            poolDic = new Dictionary<string, SpawnPool>();
+            PoolDic = new Dictionary<string, SpawnPool>();
             _genericPool = new Dictionary<Type, object>();
             var tempObj = await LoadUnitAsync();
             objectUnit = tempObj.transform;
@@ -133,7 +133,7 @@ namespace Framework.Scripts.Manager
             PrefabPool prefabPool = new PrefabPool(prefabTransform);
             spawnPool._perPrefabPoolOptions.Add(prefabPool);
             spawnPool.CreatePrefabPool(prefabPool);
-            poolDic.Add(spawnPool.poolName, spawnPool);
+            PoolDic.Add(spawnPool.poolName, spawnPool);
             return spawnPool;
         }
 

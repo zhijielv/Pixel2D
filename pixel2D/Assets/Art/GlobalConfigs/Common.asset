@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 666ada942b054810bf940046ca83e421, type: 3}
   m_Name: Common
   m_EditorClassIdentifier: 
+  IsDebugMode: 0

@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: Polish
   m_Data:
     m_SerializedData: []
-  m_GUID: ec6e8c3bd08f819499bfc5c0a0cbf17a
+  m_GUID: 54183f7ae6ce75141bacd55f424c730e
   m_SerializeEntries:
   - m_GUID: f4f86bbaebd5b464b847d09931499e90
     m_Address: ErrorCodeLocalization

@@ -7,6 +7,7 @@ using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
 
 namespace Framework.Scripts.Manager
@@ -15,23 +16,23 @@ namespace Framework.Scripts.Manager
     [SirenixGlobalConfig]
     public class UiScriptableObjectsManager : GlobalConfig<UiScriptableObjectsManager>
     {
-        [ShowInInspector] [ReadOnly] public PanelScriptableObjectBase[] UiScriptableObjectsList;
+        [FormerlySerializedAs("UiScriptableObjectsList")] [ShowInInspector] [ReadOnly] public PanelScriptableObjectBase[] uiScriptableObjectsList;
 
-        [ShowInInspector] [ReadOnly] public Object[] UIPrefabs;
+        [FormerlySerializedAs("UIPrefabs")] [ShowInInspector] [ReadOnly] public Object[] uiPrefabs;
 
         // 刷新列表
 #if UNITY_EDITOR
         [Button("获取所有SO", ButtonSizes.Medium), PropertyOrder(-1)]
-        public void ResetAllViewSO()
+        public void ResetAllViewSo()
         {
-            UiScriptableObjectsList = AssetDatabase.FindAssets("t:PanelScriptableObjectBase")
+            uiScriptableObjectsList = AssetDatabase.FindAssets("t:PanelScriptableObjectBase")
                 .Select(guid =>
                     AssetDatabase.LoadAssetAtPath<PanelScriptableObjectBase>(AssetDatabase.GUIDToAssetPath(guid)))
                 .ToArray();
-            foreach (PanelScriptableObjectBase objectBase in UiScriptableObjectsList)
+            foreach (PanelScriptableObjectBase objectBase in uiScriptableObjectsList)
             {
                 string uiName = objectBase.name.Split(new[] {"_Asset"}, StringSplitOptions.RemoveEmptyEntries)[0];
-                foreach (var o in UIPrefabs)
+                foreach (var o in uiPrefabs)
                 {
                     if (!o.name.Equals(uiName)) continue;
                     objectBase.panelObj = o as GameObject;
@@ -57,12 +58,12 @@ namespace Framework.Scripts.Manager
                 }
             }
 
-            UIPrefabs = tmpObjList.ToArray();
+            uiPrefabs = tmpObjList.ToArray();
         }
 #endif
         public PanelScriptableObjectBase GetUiViewSo(string viewName)
         {
-            foreach (PanelScriptableObjectBase objectBase in UiScriptableObjectsList)
+            foreach (PanelScriptableObjectBase objectBase in uiScriptableObjectsList)
             {
                 if (objectBase.name.Equals(viewName))
                 {
@@ -76,7 +77,7 @@ namespace Framework.Scripts.Manager
 
         public GameObject GetUiViewObj(string viewName)
         {
-            foreach (var uiPrefab in UIPrefabs)
+            foreach (var uiPrefab in uiPrefabs)
             {
                 if (uiPrefab.name.Equals(viewName))
                 {

@@ -17,7 +17,7 @@ namespace Framework.Scripts.Manager
         public List<LeveljsonClass> leveljsonClasses;
         public GameObject levelLoaderObj;
         public bool isLevelLoaded = false;
-        public Level.Level curLevel = null;
+        public Level.Level CurLevel = null;
         public bool init = false;
         public List<LevelMap> levelMaps;
         public int curMapIndex = 0;
@@ -57,8 +57,8 @@ namespace Framework.Scripts.Manager
             
             // Create Level
             // curLevel = await _levelMaps[curMapIndex].Generate2Level(curLevelIndex);
-            curLevel = GetLevelByIndex(curMapIndex, curLevelIndex);
-            loader.level = curLevel;
+            CurLevel = GetLevelByIndex(curMapIndex, curLevelIndex);
+            loader.Level = CurLevel;
             loader.CreateLevel();
             
             // reset Pathfinding
@@ -68,9 +68,9 @@ namespace Framework.Scripts.Manager
         // 创建 A* 寻路组件
         public void CreateAStarPath()
         {
-            GameObject AStarPath = new GameObject("AStarPath");
-            AStarPath.transform.SetParent(transform);
-            AstarPath astarPath = AStarPath.GetComponentOrAdd<AstarPath>();
+            GameObject aStarPath = new GameObject("AStarPath");
+            aStarPath.transform.SetParent(transform);
+            AstarPath astarPath = aStarPath.GetComponentOrAdd<AstarPath>();
             GridGraph gridGraph = astarPath.data.AddGraph(typeof(GridGraph)) as GridGraph;
             // gridGraph 旋转 为2D
             gridGraph.rotation = new Vector3(-90, 270, 90);
@@ -83,7 +83,7 @@ namespace Framework.Scripts.Manager
         // 刷新寻路
         public void ResetPathfindingSize()
         {
-            AstarPath.active.data.gridGraph.SetDimensions(curLevel.Width, curLevel.Height,
+            AstarPath.active.data.gridGraph.SetDimensions(CurLevel.Width, CurLevel.Height,
                 Common.TileSize * Common.LevelManagerScale);
             float tmpSize = AstarPath.active.data.gridGraph.nodeSize;
             AstarPath.active.data.gridGraph.center = new Vector3(-1 * tmpSize / 2, tmpSize / 2, 0);

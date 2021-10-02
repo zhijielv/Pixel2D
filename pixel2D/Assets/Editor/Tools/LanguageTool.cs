@@ -13,6 +13,7 @@ using Framework.Scripts.Constants;
 using Framework.Scripts.Utils;
 using Sirenix.OdinInspector;
 using UnityEditor;
+using UnityEngine;
 
 namespace Editor.Tools
 {
@@ -114,7 +115,7 @@ namespace Editor.Tools
         [Button("读取json表", ButtonSizes.Large)]
         public void ReadJson()
         {
-            JsonHelper.JsonReader(out LanguageItems, "Language/" + LanguageEnum + "/" + LanguageKey);
+            JsonHelper.JsonReader(out LanguageItems, "Assets/Framework/Language/" + LanguageEnum + "/" + LanguageKey, false);
         }
 
         [FoldoutGroup("Export Json")]

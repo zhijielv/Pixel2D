@@ -15,7 +15,7 @@ namespace Framework.Scripts.UI.View
     using UnityEngine;
     using Sirenix.OdinInspector;
     
-    public sealed partial class Test_View : ViewBase
+    public sealed partial class TestView : ViewBase
     {
         // member
         [FoldoutGroup("Member", true)]

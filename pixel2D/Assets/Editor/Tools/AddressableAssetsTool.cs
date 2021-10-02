@@ -60,7 +60,7 @@ namespace Editor.Tools
         {
             GlobalConfig<UiScriptableObjectsManager>.Instance.ResetAllViewPrefab();
             List<Object> list =
-                GlobalConfig<UiScriptableObjectsManager>.Instance.UIPrefabs.ToList();
+                GlobalConfig<UiScriptableObjectsManager>.Instance.uiPrefabs.ToList();
             Add2AddressablesGroupsByName(list, "UIView");
 
             List<PanelScriptableObjectBase> viewObjects = AssetDatabase.FindAssets("t:PanelScriptableObjectBase")

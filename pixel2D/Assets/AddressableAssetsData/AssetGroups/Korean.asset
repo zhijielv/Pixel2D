@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: Korean
   m_Data:
     m_SerializedData: []
-  m_GUID: 9cc4c1275937e5249a618bb9b6711a83
+  m_GUID: 024416c2c0add8842a26a89e79f47f9e
   m_SerializeEntries:
   - m_GUID: d26e424656f7682408505a4cf2230188
     m_Address: ErrorCodeLocalization

@@ -121,7 +121,7 @@ namespace Framework.Scripts.Constants
             Type byName = null;
             if (!Enum.TryParse(typeName, true, out UIConfig tmpUiType) ||
                 Enum.TryParse(typeName, true, out IgnoreUI ignoreUI)) return null;
-            for (UIConfig i = tmpUiType; i < UIConfig.__MaxValue; i++)
+            for (UIConfig i = tmpUiType; i < UIConfig.MaxValue; i++)
             {
                 if (!i.ToString().StartsWith("__")) continue;
                 string[] tmpNameSpace = i.ToString().Split(new[] {"_"}, StringSplitOptions.RemoveEmptyEntries);

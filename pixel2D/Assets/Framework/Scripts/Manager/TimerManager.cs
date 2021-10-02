@@ -16,28 +16,28 @@ namespace Framework.Scripts.Manager
         private readonly List<Timer> _timers = new List<Timer>();
 
         [LabelText("Update事件")] [ShowInInspector]
-        private Dictionary<ScheduledEventBase, EventDataBase> m_ActiveUpdateEvents;
+        private Dictionary<ScheduledEventBase, EventDataBase> _mActiveUpdateEvents;
 
-        private List<ScheduledEventBase> m_RemoveUpdateEvents;
+        private List<ScheduledEventBase> _mRemoveUpdateEvents;
 
         [LabelText("FixedUpdate事件")] [ShowInInspector]
-        private Dictionary<ScheduledEventBase, EventDataBase> m_ActiveFixedUpdateEvents;
+        private Dictionary<ScheduledEventBase, EventDataBase> _mActiveFixedUpdateEvents;
 
-        private List<ScheduledEventBase> m_RemoveFixedUpdateEvents;
+        private List<ScheduledEventBase> _mRemoveFixedUpdateEvents;
 
         public override Task ManagerInit()
         {
-            m_ActiveUpdateEvents = new Dictionary<ScheduledEventBase, EventDataBase>();
-            m_RemoveUpdateEvents = new List<ScheduledEventBase>();
-            m_ActiveFixedUpdateEvents = new Dictionary<ScheduledEventBase, EventDataBase>();
-            m_RemoveFixedUpdateEvents = new List<ScheduledEventBase>();
+            _mActiveUpdateEvents = new Dictionary<ScheduledEventBase, EventDataBase>();
+            _mRemoveUpdateEvents = new List<ScheduledEventBase>();
+            _mActiveFixedUpdateEvents = new Dictionary<ScheduledEventBase, EventDataBase>();
+            _mRemoveFixedUpdateEvents = new List<ScheduledEventBase>();
             return base.ManagerInit();
         }
 
         private void Update()
         {
             // Schedule
-            foreach (var updateEvent in m_ActiveUpdateEvents)
+            foreach (var updateEvent in _mActiveUpdateEvents)
             {
                 Invoke(updateEvent.Key, updateEvent.Value);
             }
@@ -59,7 +59,7 @@ namespace Framework.Scripts.Manager
         private void FixedUpdate()
         {
             // Schedule
-            foreach (var updateEvent in m_ActiveFixedUpdateEvents)
+            foreach (var updateEvent in _mActiveFixedUpdateEvents)
             {
                 Invoke(updateEvent.Key, updateEvent.Value);
             }
@@ -168,10 +168,10 @@ namespace Framework.Scripts.Manager
             switch (scheduledEvent.Location)
             {
                 case ScheduledEventBase.InvokeLocation.Update:
-                    m_ActiveUpdateEvents.Add(scheduledEvent, eventData);
+                    _mActiveUpdateEvents.Add(scheduledEvent, eventData);
                     break;
                 case ScheduledEventBase.InvokeLocation.FixedUpdate:
-                    m_ActiveFixedUpdateEvents.Add(scheduledEvent, eventData);
+                    _mActiveFixedUpdateEvents.Add(scheduledEvent, eventData);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -185,9 +185,9 @@ namespace Framework.Scripts.Manager
             switch (scheduledEvent.Location)
             {
                 case ScheduledEventBase.InvokeLocation.Update:
-                    m_RemoveUpdateEvents.Add(scheduledEvent); break;
+                    _mRemoveUpdateEvents.Add(scheduledEvent); break;
                 case ScheduledEventBase.InvokeLocation.FixedUpdate:
-                    m_RemoveFixedUpdateEvents.Add(scheduledEvent); break;
+                    _mRemoveFixedUpdateEvents.Add(scheduledEvent); break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -197,21 +197,21 @@ namespace Framework.Scripts.Manager
             switch (invokeLocation)
             {
                 case ScheduledEventBase.InvokeLocation.Update:
-                    foreach (ScheduledEventBase scheduledEventBase in m_RemoveUpdateEvents)
+                    foreach (ScheduledEventBase scheduledEventBase in _mRemoveUpdateEvents)
                     {
-                        m_ActiveUpdateEvents.Remove(scheduledEventBase);
+                        _mActiveUpdateEvents.Remove(scheduledEventBase);
                     }
 
-                    m_RemoveUpdateEvents.Clear();
+                    _mRemoveUpdateEvents.Clear();
 
                     break;
                 case ScheduledEventBase.InvokeLocation.FixedUpdate:
-                    foreach (ScheduledEventBase scheduledEventBase in m_RemoveFixedUpdateEvents)
+                    foreach (ScheduledEventBase scheduledEventBase in _mRemoveFixedUpdateEvents)
                     {
-                        m_RemoveFixedUpdateEvents.Remove(scheduledEventBase);
+                        _mRemoveFixedUpdateEvents.Remove(scheduledEventBase);
                     }
 
-                    m_RemoveFixedUpdateEvents.Clear();
+                    _mRemoveFixedUpdateEvents.Clear();
 
                     break;
                 default:
@@ -239,13 +239,13 @@ namespace Framework.Scripts.Manager
         public bool Active { get; set; }
 
         [ShowInInspector, ReadOnly] [LabelText("结束时间")]
-        protected float m_EndTime;
+        protected float MEndTime;
 
         [ShowInInspector, ReadOnly] [LabelText("执行类型")]
-        protected InvokeLocation m_InvokeLocation;
+        protected InvokeLocation MInvokeLocation;
 
-        public float EndTime => m_EndTime;
-        public InvokeLocation Location => m_InvokeLocation;
+        public float EndTime => MEndTime;
+        public InvokeLocation Location => MInvokeLocation;
 
         /// <summary>
         /// Executes the delegate.
@@ -273,8 +273,8 @@ namespace Framework.Scripts.Manager
 
         public void Initialize(float endTime, InvokeLocation invokeLocation, EventHandler eventHandler)
         {
-            m_InvokeLocation = invokeLocation;
-            m_EndTime = endTime;
+            MInvokeLocation = invokeLocation;
+            MEndTime = endTime;
             _delegateEvent = ObjectManager.Get<DelegateEvent>();
             _delegateEvent.AddListener(eventHandler);
         }

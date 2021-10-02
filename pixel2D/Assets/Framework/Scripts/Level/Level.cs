@@ -15,7 +15,7 @@ namespace Framework.Scripts.Level
     public class Level
     {
         [ReadOnly] public string LevelName;
-        [ReadOnly] public LevelType LevelType = LevelType.ludi;
+        [ReadOnly] public LevelType LevelType = LevelType.Ludi;
         [OnValueChanged("ChangeSize")] public int Width = 4;
         [OnValueChanged("ChangeSize")] public int Height = 4;
         
@@ -26,7 +26,7 @@ namespace Framework.Scripts.Level
         // public Dictionary<LevelItemType, int> ItemWidget = new Dictionary<LevelItemType, int>();
 
 
-        public bool showTable = false;
+        public bool ShowTable = false;
 #if UNITY_EDITOR
         [TableMatrix(DrawElementMethod = "DrawTableMatrix")] [ReadOnly]
         [ShowIf("showTable")]  
@@ -212,14 +212,14 @@ namespace Framework.Scripts.Level
             return LevelType;
         }
         
-        public Level GetLevel(LevelType levelType = LevelType.ludi)
+        public Level GetLevel(LevelType levelType = LevelType.Ludi)
         {
             Level level = new Level();
             level.GenerateLevelValueFromJson(GetLeveljsonClass(levelType));
             return level;
         }
 
-        public LeveljsonClass GetLeveljsonClass(LevelType levelType = LevelType.ludi)
+        public LeveljsonClass GetLeveljsonClass(LevelType levelType = LevelType.Ludi)
         {
             LeveljsonClass tmpLeveljsonClass = new LeveljsonClass();
             List<LeveljsonClass> leveljsonClasses = new List<LeveljsonClass>();

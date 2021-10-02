@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: Japanese
   m_Data:
     m_SerializedData: []
-  m_GUID: 8c6bd85e4227f0144b4b8e569c01ee9f
+  m_GUID: 341da8b1ea4eca947b24255002fdc53a
   m_SerializeEntries:
   - m_GUID: 65d6b528b1ec41749a15619296d09f7e
     m_Address: ErrorCodeLocalization

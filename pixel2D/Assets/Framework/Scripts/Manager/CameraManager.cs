@@ -27,7 +27,7 @@ namespace Framework.Scripts.Manager
         public GameObject mouseTarget;
 
         private List<GameObject> _targetList;
-        private const string _followPlayerVCam = "FollowPlayerVCam";
+        private const string FollowPlayerVCam = "FollowPlayerVCam";
 
         public override Task ManagerInit()
         {
@@ -59,8 +59,8 @@ namespace Framework.Scripts.Manager
             if (playerVCamera != null) AddressableManager.Instance.ReleaseInstance(playerVCamera);
             // 设置相机边界
             // 获取Level长宽
-            int width = LevelManager.Instance.levelLoaderObj.GetComponent<LevelLoader>().level.Width;
-            int height = LevelManager.Instance.levelLoaderObj.GetComponent<LevelLoader>().level.Height;
+            int width = LevelManager.Instance.levelLoaderObj.GetComponent<LevelLoader>().Level.Width;
+            int height = LevelManager.Instance.levelLoaderObj.GetComponent<LevelLoader>().Level.Height;
             vCameraCollider = ObjectManager.Instance.LoadUnit(null, LevelManager.Instance.transform, true);
             vCameraCollider.name = "VCamera Collider";
             vCameraCollider.layer = LayerMask.NameToLayer("Ignore Raycast");
@@ -85,7 +85,7 @@ namespace Framework.Scripts.Manager
 
             // 设置相机限制范围
             playerVCamera =
-                await AddressableManager.Instance.InstantiateAsync(_followPlayerVCam, LevelManager.Instance.transform);
+                await AddressableManager.Instance.InstantiateAsync(FollowPlayerVCam, LevelManager.Instance.transform);
             playerVCamera.transform.SetParent(transform);
             playerVCamera.GetComponent<CinemachineConfiner2D>().m_BoundingShape2D = polygonCollider2D;
 

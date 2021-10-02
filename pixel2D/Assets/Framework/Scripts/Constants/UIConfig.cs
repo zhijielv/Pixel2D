@@ -9,13 +9,13 @@
         Image,
         InputField,
         Dropdown,
-        __UnityEngine_UI,
+        UnityEngineUI,
         TMPCustomScroll,
         CustomPanel,
-        __Framework_Scripts_UI_CustomUI,
+        FrameworkScriptsUICustomUI,
         TouchController,
-        __Rewired_ComponentControls,
-        __MaxValue,
+        RewiredComponentControls,
+        MaxValue,
     }
 
     // 不需要自动生成的类型

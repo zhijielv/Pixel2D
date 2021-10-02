@@ -10,9 +10,9 @@ namespace Framework.Scripts.Level.LevelItem
 {
     public enum LevelType
     {
-        ludi = 0,
-        yanjiang,
-        xueshan,
+        Ludi = 0,
+        Yanjiang,
+        Xueshan,
     }
 
     public enum LevelItemType

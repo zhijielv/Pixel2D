@@ -30,7 +30,9 @@ namespace Framework.Scripts.Utils
 
             if (Application.isPlaying)
             {
-                jsonFile = AddressableManager.Instance.LoadAsset<TextAsset>(jsonPath);
+                // todo 等待AddressableManager功能
+                // if(!AddressableManager.Instance.CheckFile(jsonPath, out jsonFile))
+                jsonFile = AddressableManager.Instance.LoadAsset<TextAsset>(jsonPath + ".json");
             }
             else
             {

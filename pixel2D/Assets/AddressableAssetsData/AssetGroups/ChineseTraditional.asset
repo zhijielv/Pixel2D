@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: ChineseTraditional
   m_Data:
     m_SerializedData: []
-  m_GUID: 69b94572bdd2cb94e9403fce205fac53
+  m_GUID: c160b03f083179049b36901ef2e21c5d
   m_SerializeEntries:
   - m_GUID: 827de4d11a547174d8fdf1fd692382f2
     m_Address: ErrorCodeLocalization

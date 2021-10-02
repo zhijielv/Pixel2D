@@ -1,6 +1,7 @@
 ﻿using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Framework.Scripts.Constants
 {
@@ -12,7 +13,7 @@ namespace Framework.Scripts.Constants
         [ShowInInspector] public static float Tolerance = 0.01f;
         
         // Debug模式
-        [ShowInInspector] public static bool IsDebugMode = true;
+        [ShowInInspector] public bool isDebugMode;
 
         // 帧率
         [ShowInInspector] public static int FrameRate;

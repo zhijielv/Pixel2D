@@ -19,7 +19,7 @@ namespace Framework.Scripts.Level
 #endif
         [ReadOnly] public string levelName;
         [ReadOnly] public LevelType levelType;
-        [ShowInInspector] public Level level;
+        [ShowInInspector] public Level Level;
 
         public void Init()
         {
@@ -62,15 +62,15 @@ namespace Framework.Scripts.Level
             }
             // 读取map
             LevelMap levelMap = _levelMaps[mapIndex];
-            level = new Level();
+            Level = new Level();
             LevelMapJsonClass levelMapJsonClass = levelMap[levelIndex];
-            level.LevelName = levelMapJsonClass.LevelName;
-            level.LevelType = levelMapJsonClass.LevelType;
-            level.SetSize(levelMapJsonClass.Width, levelMapJsonClass.Height);
+            Level.LevelName = levelMapJsonClass.LevelName;
+            Level.LevelType = levelMapJsonClass.LevelType;
+            Level.SetSize(levelMapJsonClass.Width, levelMapJsonClass.Height);
 
             // 读取level
-            levelName = level.LevelName;
-            levelType = level.LevelType;
+            levelName = Level.LevelName;
+            levelType = Level.LevelType;
             LeveljsonClass tmpLeveljsonClass = new LeveljsonClass();
             JsonHelper.JsonReader(out List<LeveljsonClass> tmpLeveljsonClass2, Constants.Constants.LevelJson);
             foreach (var leveljsonClass in tmpLeveljsonClass2)
@@ -79,10 +79,10 @@ namespace Framework.Scripts.Level
                 tmpLeveljsonClass = leveljsonClass;
             }
             
-            level.GenerateLevelValueFromJson(tmpLeveljsonClass);
+            Level.GenerateLevelValueFromJson(tmpLeveljsonClass);
 
-            level.SetLevelWall();
-            levelMapJsonClass.SetLevelRoad(level);
+            Level.SetLevelWall();
+            levelMapJsonClass.SetLevelRoad(Level);
             ClearChildren();
             CreateLevel();
         }
@@ -93,14 +93,14 @@ namespace Framework.Scripts.Level
         [Button("创建关卡", ButtonSizes.Large)]
         public void CreateLevel()
         {
-            level.ClearLevelObj();
+            Level.ClearLevelObj();
             // level.ChangeSize(0);
             int tmpObjName = 0;
-            for (int i = 0; i < level.LevelMap.GetLength(0); i++)
+            for (int i = 0; i < Level.LevelMap.GetLength(0); i++)
             {
-                for (int j = 0; j < level.LevelMap.GetLength(1); j++)
+                for (int j = 0; j < Level.LevelMap.GetLength(1); j++)
                 {
-                    List<Sprite> sprites = level.LevelItem[level.LevelMap[i, j]] ?? level.LevelItem[LevelItemType.Road];
+                    List<Sprite> sprites = Level.LevelItem[Level.LevelMap[i, j]] ?? Level.LevelItem[LevelItemType.Road];
                     Sprite sprite = Constants.RandomHelper.GetRandomValueFromList(sprites, 1)[0];
                     GameObject o = Instantiate(imagePrefab, mapRoot);
                     o.name = tmpObjName.ToString();
@@ -108,11 +108,11 @@ namespace Framework.Scripts.Level
                     o.GetComponent<SpriteRenderer>().sprite = sprite;
                     // o.GetComponent<Image>().SetNativeSize();
                     o.GetComponent<Transform>().localPosition = new Vector2(
-                        (i - level.Width / 2.0f) * sprite.rect.width / 100,
-                        -1 * (j - level.Height / 2.0f) * sprite.rect.height / 100);
-                    level.LevelObj.Add(o);
+                        (i - Level.Width / 2.0f) * sprite.rect.width / 100,
+                        -1 * (j - Level.Height / 2.0f) * sprite.rect.height / 100);
+                    Level.LevelObj.Add(o);
 
-                    switch (level.LevelMap[i, j])
+                    switch (Level.LevelMap[i, j])
                     {
                         case LevelItemType.Road:
                             DestroyImmediate(o.GetComponent<Collider2D>()); break;

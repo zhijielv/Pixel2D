@@ -25,14 +25,14 @@ namespace Framework.Scripts.Objects.ObjectsItem
         protected override void Awake()
         {
             base.Awake();
-            m_ImpactLayers |= 1 << LayerMask.NameToLayer("Box") | 1 << LayerMask.NameToLayer("Enemies");
+            mImpactLayers |= 1 << LayerMask.NameToLayer("Box") | 1 << LayerMask.NameToLayer("Enemies");
         }
 
         public override void Initialize(Vector3 velocity, Vector3 torque, GameObject originator,
             bool originatorCollisionCheck)
         {
-            m_Originator = originator;
-            m_OriginatorTransform = m_Originator.transform;
+            MOriginator = originator;
+            MOriginatorTransform = MOriginator.transform;
             base.Initialize(velocity, torque, originator, originatorCollisionCheck);
         }
 

@@ -34,7 +34,7 @@ namespace Framework.Scripts.PlayerControl
         public Sprite currentBullet;
         public float bulletCoolDownTime = 2.0f;
 
-        private IntervalEvent intervalEvent;
+        private IntervalEvent _intervalEvent;
 
         private void Start()
         {
@@ -74,7 +74,7 @@ namespace Framework.Scripts.PlayerControl
 
             // 开火 使用间隔事件（带CD的时间）
             // todo 武器cd
-            intervalEvent = new IntervalEvent(bulletCoolDownTime);
+            _intervalEvent = new IntervalEvent(bulletCoolDownTime);
             EventManager.Instance.AddEventListener(transform, EventType.PlayerWeaponFire, WeaponFire);
 
             GlobalConfig<LevelHelper>.Instance.weaponController = this;
@@ -108,7 +108,7 @@ namespace Framework.Scripts.PlayerControl
         // 左键攻击，对象池创建子弹
         public void OnFireButtonClick(InputActionEventData data)
         {
-            EventManager.Instance.DispatchEvent(transform, EventType.PlayerWeaponFire, intervalEvent);
+            EventManager.Instance.DispatchEvent(transform, EventType.PlayerWeaponFire, _intervalEvent);
             // if (null == currentWeapon || weaponList.Count == 0) return;
             // Transform spawnObj =
             //     bulletPool.Spawn(bullet, currentWeapon.transform.position, currentWeapon.transform.rotation);

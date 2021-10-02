@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 6b408f63b895f4127967b398b457c7d4, type: 3}
   m_Name: CoskeySettings
-  m_EditorClassIdentifier: Unity.CloudContentDelivery.Editor:CloudContentDelivery:CosKey
+  m_EditorClassIdentifier: 
   cosKey: bb6f174cb0f6f80073855fa7409309e9
   projectGuid: 6809fe60-ab43-40e1-9b4a-f8d898ca28d0
-  backend: 
+  backend: cos
   oversea: 0
