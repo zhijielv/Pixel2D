@@ -83,19 +83,23 @@ namespace Framework.Scripts.Manager
 
         #region 泛型类型获取
 
-        public T GetWidget<T>(Enum viewName = null) where T : ViewBase
+        public async Task<T> GetWidget<T>(Enum viewName = null) where T : ViewBase
         {
-            return GetWidgetObj<T>(viewName);
+            return await GetWidgetObj<T>(viewName);
         }
 
         // todo UICanvas Parent
-        public T GetWidgetObj<T>(Enum targetWidgetName = null) where T : ViewBase
+        public async Task<T> GetWidgetObj<T>(Enum targetWidgetName = null) where T : ViewBase
         {
             string viewName = typeof(T).Name;
             if (targetWidgetName == null)
-                return GetOrCreateViewObj(viewName).GetComponent<T>();
+            {
+                GameObject viewObj = await GetOrCreateViewObj(viewName);
+                return viewObj.GetComponent<T>();
+            }
             var widgetName = targetWidgetName.ToString();
-            return GetOrCreateViewObj(viewName, widgetName).GetComponent<T>();
+            GameObject obj = await GetOrCreateViewObj(viewName, widgetName);
+            return obj.GetComponent<T>();
         }
 
         #endregion
@@ -105,7 +109,7 @@ namespace Framework.Scripts.Manager
         #region private
 
         // todo 设置加载View的parent，默认是MainCanvas
-        private GameObject GetOrCreateViewObj(string viewName, string widgetName = null)
+        private async Task<GameObject> GetOrCreateViewObj(string viewName, string widgetName = null)
         {
             ViewBase tempView = GetViewBase(viewName);
             // if (uiList.ContainsKey(viewName))
@@ -116,7 +120,7 @@ namespace Framework.Scripts.Manager
             }
 
             Debug.Log("Create View : " + viewName);
-            GameObject tmpView = AddressableManager.Instance.Instantiate(viewName, Common.MainCanvas.transform);
+            GameObject tmpView = await AddressableManager.Instance.InstantiateAsync(viewName, Common.MainCanvas.transform);
             tmpView.RemoveClone();
             RegistView(tmpView);
             if (widgetName == null)
